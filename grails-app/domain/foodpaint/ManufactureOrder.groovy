@@ -22,9 +22,10 @@ class ManufactureOrder extends DefaultSheet{
     Item item
 
     /*
+    !!!沒有批號
     * 批號
     */
-    Batch batch
+    //Batch batch
 
     /*
     * 生產量

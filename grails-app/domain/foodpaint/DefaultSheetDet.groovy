@@ -9,6 +9,7 @@ class DefaultSheetDet extends DefaultTable{
 	Integer sequence
 
     static constraints = {
+
     	sequence unique:'head'
     }
 }
