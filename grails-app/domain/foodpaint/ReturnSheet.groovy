@@ -6,6 +6,7 @@ package foodpaint
     */
 class ReturnSheet extends DefaultSheet{
 
+	static hasMany=[returnSheetDets:ReturnSheetDet]
     /*
     * 供應商
     */
@@ -13,5 +14,6 @@ class ReturnSheet extends DefaultSheet{
     Supplier supplier
 
     static constraints = {
+        returnSheetDets nullable:true
     }
 }

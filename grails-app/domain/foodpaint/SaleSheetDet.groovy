@@ -6,7 +6,7 @@ package foodpaint
     */
 class SaleSheetDet extends DefaultSheetDet{
 
-
+    static belongsTo=[saleSheet:SaleSheet]
     /*
     * 品項
     */
@@ -31,5 +31,7 @@ class SaleSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
+        sequence unique:'saleSheet'
+
     }
 }

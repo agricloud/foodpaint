@@ -3,6 +3,7 @@ package foodpaint
 class StockInSheetDet extends DefaultSheetDet{
 
 
+    static belongsTo=[stockInSheet:StockInSheet]
     /*
     * 品項編號
     */
@@ -30,7 +31,7 @@ class StockInSheetDet extends DefaultSheetDet{
     static hasOne = [manufactureOrder: ManufactureOrder]
 
     static constraints = {
-
-        stockLocation nullable:true  
+        stockLocation nullable:true      
+        sequence unique:'stockInSheet'
     }
 }

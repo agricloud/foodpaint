@@ -3,6 +3,7 @@ package foodpaint
 class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
+    static belongsTo=[outSrcReturnSheet:OutSrcReturnSheet]
     /*
     * 品項編號
     */
@@ -28,5 +29,7 @@ class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
+        sequence unique:'outSrcReturnSheet'
+
     }
 }

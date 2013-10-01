@@ -7,6 +7,7 @@ package foodpaint
     */
 class OutSrcPurchaseSheet extends DefaultSheet{
 
+	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
     * 進貨廠商
     */
@@ -14,6 +15,7 @@ class OutSrcPurchaseSheet extends DefaultSheet{
 
 
     static constraints = {
+        outSrcPurchaseSheetDets nullable:true
 
     }
 }

@@ -7,7 +7,7 @@ package foodpaint
     */
 class MaterialSheetDet extends DefaultSheetDet{
 
-
+    static belongsTo=[materialSheet:MaterialSheet]
     /*
     * 項次
     */
@@ -37,5 +37,7 @@ class MaterialSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
+        sequence unique:'materialSheet'
+
     }
 }
