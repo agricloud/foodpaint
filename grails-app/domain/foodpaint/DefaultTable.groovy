@@ -37,7 +37,5 @@ class DefaultTable {
     	//temp
     	editor nullable:true
     	creator nullable:true
-    	dateCreated nullable:true
-    	lastUpdated nullable:true
     }
 }
