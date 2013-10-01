@@ -18,7 +18,6 @@ class MaterialSheetDet extends DefaultSheetDet{
     */
     static hasOne = [
         manufactureOrder: ManufactureOrder
-
     ]
 
 

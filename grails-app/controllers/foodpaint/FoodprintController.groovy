@@ -1,5 +1,5 @@
 package foodpaint
-import grails.converters.JSON
+//import grails.converters.JSON
 
 class FoodprintController {
 
@@ -9,16 +9,54 @@ class FoodprintController {
     */
     def queryBatchReport() {
         
-        ReverseTraceController rtrc = new ReverseTraceController()
-        def productSheet = rtrc.querySheetByBatch()
+        params.name="0927-410002"
 
-        // render (contentType: 'text/json') {
-        //     productSheet
-        // }
+        TraceController trc = new TraceController()
 
-        JSON.use('deep')
-        def converter=productSheet as JSON
-        converter.render(response)
+        def reportInfo = [batchSources:[]]
+        def batchNames=[params.name]
+        //查批號來源單據
+        while(batchNames.size() >0){
+            println batchNames
+            println "正在查詢批號${batchNames.get(0)}共有${batchNames.size()}個"
+
+            def batchSheet = trc.querySourceSheetByBatch(batchNames.get(0))
+            batchNames.remove(0)
+            println "剩餘${batchNames.size()}個批號"
+
+            batchSheet.sourceSheet.each{
+                //以來源單據查領料單
+                if(it.instanceOf(StockInSheetDet) || it.instanceOf(OutSrcPurchaseSheetDet) ){
+                    it.manufactureOrder.materialSheetDet.each{
+                        def batchSource = [:]
+                        batchSource.put("object","batchSource")
+                        batchSource.put("batch",batchSheet.batch)
+                        batchSource.put("childBatch",it.batch)
+                        reportInfo.batchSources<< batchSource
+
+                        batchNames<< it.batch.name
+                    }
+                }
+                else{
+                    if(it.instanceOf(PurchaseSheetDet)){
+                        //此批號為進貨單購入
+                    }
+                    else{
+                        println "查無單據類型"
+                    }
+                }
+               
+            }//end each
+            println "${batchNames}更新後尚有${batchNames.size()}個批號"
+        }//end while
+
+        reportInfo.put("item",Item.list())
+        reportInfo.put("batch",Batch.list())
+
+        render (contentType: 'text/json') {
+            reportInfo
+        }
+
 
     }
 
@@ -33,14 +71,14 @@ class FoodprintController {
         println "PurchaseSheet=${PurchaseSheet.count()}"
         println "PurchaseSheetDet=${PurchaseSheetDet.count()}"
         println "OutSrcPurchaseSheet=${OutSrcPurchaseSheet.count()}"
-        // def data=[ DS:DefaultSheet.list(params), dsCount:DefaultSheet.count(), DSD:DefaultSheetDet.list(params), dsdCount:DefaultSheetDet.count()]
+        // def data=[ DS:DefaultSheet.list(params), dsCount:DefaultSheet.count()]//, DSD:DefaultSheetDet.list(params), dsdCount:DefaultSheetDet.count()]
         // def data=[PS:PurchaseSheet.list(params),count:PurchaseSheet.count()]
 
-        def data=[ CO:CustomerOrder.list(params),coCount:CustomerOrder.count(),COD:CustomerOrderDet.list(params),codCount:CustomerOrderDet.count()]
+        // def data=[ CO:CustomerOrder.list(params),coCount:CustomerOrder.count(),COD:CustomerOrderDet.list(params),codCount:CustomerOrderDet.count()]
         // def data=[ MS:MaterialSheet.list(params),msCount:MaterialSheet.count()]
         // def data=[ MSD:MaterialSheetDet.list(params), msdCount:MaterialSheetDet.count() ]
-        //def data=[ SSD:StockInSheetDet.list(params),ssdCount:StockInSheetDet.count()]
-        //def data=[MO:ManufactureOrder.list(params)]
+        def data=[ SSD:StockInSheetDet.list(params),ssdCount:StockInSheetDet.count()]
+        // def data=[MO:ManufactureOrder.list(params)]
 
 //         def data=[]
 //         ManufactureOrder.list(params).each{
@@ -71,7 +109,7 @@ class FoodprintController {
         // def data=[]
         // MaterialSheet.list(params).each{
             
-        //     it.details.each{
+        //     it.materialSheetDets.each{
         //         def ar=[]
         //         println it
         //         println "before:"+it.manufactureOrder.materialSheetDet
@@ -92,12 +130,12 @@ class FoodprintController {
         //     data<< it
         // }
 
-        // render (contentType: 'text/json') {
-        //     data
-        // }
-        JSON.use('deep')
-        def converter=data as JSON
-        converter.render(response)
+        render (contentType: 'text/json') {
+            data
+        }
+        // JSON.use('deep')
+        // def converter=data as JSON
+        // converter.render(response)
 
     }
 

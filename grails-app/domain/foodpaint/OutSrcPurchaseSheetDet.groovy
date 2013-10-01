@@ -22,7 +22,7 @@ class OutSrcPurchaseSheetDet extends DefaultSheetDet{
 
 
     /*
-    * 制令
+    * 製令
     */
     ManufactureOrder manufactureOrder
 
