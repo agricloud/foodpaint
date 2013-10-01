@@ -2,7 +2,6 @@ package foodpaint
 
 class DefaultSheet extends DefaultTable{
 
-	static hasMany=[details:DefaultSheetDet]
     /*
     * 單別
     */

@@ -5,7 +5,7 @@ package foodpaint
     */
 class StockInSheet extends DefaultSheet{
 
-
+	static hasMany=[stockInSheetDets:StockInSheetDet]
     /*
     * 生產線別
     */
@@ -13,5 +13,6 @@ class StockInSheet extends DefaultSheet{
     Workstation workstation
 
     static constraints = {
+        stockInSheetDets nullable:true
     }
 }

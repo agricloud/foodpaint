@@ -7,6 +7,7 @@ package foodpaint
     */
 class SaleSheet extends DefaultSheet{
 
+	static hasMany=[saleSheetDets:SaleSheetDet]
     /*
     * 客戶
     */
@@ -14,5 +15,6 @@ class SaleSheet extends DefaultSheet{
 
 
     static constraints = {
+        saleSheetDets nullable:true
     }
 }

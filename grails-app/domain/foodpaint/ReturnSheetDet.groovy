@@ -7,6 +7,7 @@ package foodpaint
     */
 class ReturnSheetDet extends DefaultSheetDet{
 
+    static belongsTo=[returnSheet:ReturnSheet]
     /*
     * 品項編號
     */
@@ -25,5 +26,7 @@ class ReturnSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
+        sequence unique:'returnSheet'
+
     }
 }
