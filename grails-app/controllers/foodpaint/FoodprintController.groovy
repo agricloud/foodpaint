@@ -1,5 +1,5 @@
 package foodpaint
-//import grails.converters.JSON
+import grails.converters.JSON
 
 class FoodprintController {
 
@@ -53,10 +53,12 @@ class FoodprintController {
         reportInfo.put("item",Item.list())
         reportInfo.put("batch",Batch.list())
 
-        render (contentType: 'text/json') {
-            reportInfo
-        }
-
+        // render (contentType: 'text/json') {
+        //     reportInfo
+        // }
+        JSON.use('deep')
+        def converter=reportInfo as JSON
+        converter.render(response)
 
     }
 

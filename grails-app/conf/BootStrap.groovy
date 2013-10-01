@@ -21,10 +21,10 @@ class BootStrap {
 				def workstation2 = new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
 				
 				def batch1 = new Batch(name:"0927-410002",item:item1).save(failOnError: true, flush: true)
-				def batch2 = new Batch(name:"0927-21006",item:item2,supplier:supplier1).save(failOnError: true, flush: true)
-				def batch3 = new Batch(name:"0927-21007",item:item3,supplier:supplier1).save(failOnError: true, flush: true)
-				def batch4 = new Batch(name:"0927-21010",item:item4,supplier:supplier1).save(failOnError: true, flush: true)
-				def batch5 = new Batch(name:"0927-31001",item:item5,supplier:supplier2).save(failOnError: true, flush: true)
+				def batch2 = new Batch(name:"0927-21006",item:item2).save(failOnError: true, flush: true)
+				def batch3 = new Batch(name:"0927-21007",item:item3).save(failOnError: true, flush: true)
+				def batch4 = new Batch(name:"0927-21010",item:item4).save(failOnError: true, flush: true)
+				def batch5 = new Batch(name:"0927-31001",item:item5).save(failOnError: true, flush: true)
 				def batch6 = new Batch(name:"0927-31002",item:item6).save(failOnError: true, flush: true)
 
 				//def warehouse1 = new Warehouse(name:"W01",title:"原料倉").save(failOnError: true, flush: true)
