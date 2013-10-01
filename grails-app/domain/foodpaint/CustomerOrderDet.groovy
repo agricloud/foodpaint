@@ -17,7 +17,6 @@ class CustomerOrderDet extends DefaultSheetDet{
     */
 	Integer qty
 
-    static belongsTo=[head:CustomerOrderDet]
 
     static constraints = {
         item nullable:true
