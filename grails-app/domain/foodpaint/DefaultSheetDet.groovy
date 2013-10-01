@@ -8,6 +8,10 @@ class DefaultSheetDet extends DefaultTable{
     */
 	Integer sequence
 
+    static mapping = {
+        tablePerHierarchy false
+    }
+
     static constraints = {
     	sequence unique:'head'
     }
