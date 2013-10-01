@@ -18,15 +18,7 @@ class CustomerOrder extends DefaultSheet{
 	*/
 	Date dueDate=new Date()
 
-	/*
-	* 多個訂單單身 
-	*/
-
-	static hasMany=[details:CustomerOrderDet]
-
-
     static constraints = {
     	dueDate nullable:true
-    	customer nullable:true
     }
 }

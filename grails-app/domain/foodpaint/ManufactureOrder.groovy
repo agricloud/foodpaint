@@ -22,12 +22,6 @@ class ManufactureOrder extends DefaultSheet{
     Item item
 
     /*
-    !!!沒有批號
-    * 批號
-    */
-    //Batch batch
-
-    /*
     * 生產量
     */
     Integer qty
@@ -35,5 +29,7 @@ class ManufactureOrder extends DefaultSheet{
 
     static constraints = {
         customerOrderDet nullable:true
+        stockInSheetDet nullable:true
+        materialSheetDet nullable:true
     }
 }

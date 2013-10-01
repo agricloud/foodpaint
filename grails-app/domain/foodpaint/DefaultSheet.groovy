@@ -21,6 +21,6 @@ class DefaultSheet extends DefaultTable{
     static constraints = {
 
     	name unique:'typeName'
-
+        details nullable:true
     }
 }
