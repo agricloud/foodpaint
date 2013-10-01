@@ -14,7 +14,7 @@ class MaterialSheetDet extends DefaultSheetDet{
     Integer sequence
     
     /*
-    * 制令
+    * 製令
     */
     static hasOne = [
         manufactureOrder: ManufactureOrder
