@@ -33,9 +33,5 @@ class DefaultTable {
 	
     static constraints = {
     	site nullable:true
-
-    	//temp
-    	editor nullable:true
-    	creator nullable:true
     }
 }

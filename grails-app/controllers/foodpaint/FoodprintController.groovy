@@ -53,12 +53,39 @@ class FoodprintController {
         reportInfo.put("item",Item.list())
         reportInfo.put("batch",Batch.list())
 
+        JSON.use('deep')
+        def converter = reportInfo as JSON
+        def jsParse = JSON.parse(converter.toString())
+
+        jsParse.item.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+        }
+        jsParse.batch.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+            if(!it.supplier){
+                it.supplier=[:]
+                it.supplier.put("id","null")
+                it.supplier.put("name","null")
+            }
+        }
+
+        converter = jsParse as JSON
+        converter.render(response)
+
         // render (contentType: 'text/json') {
         //     reportInfo
         // }
-        JSON.use('deep')
-        def converter=reportInfo as JSON
-        converter.render(response)
+        // JSON.use('deep')
+        // def converter=reportInfo as JSON
+        // converter.render(response)
 
     }
 

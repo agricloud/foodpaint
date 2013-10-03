@@ -16,9 +16,13 @@ class TraceController {
             if(sourceSheet==null || sourceSheet==[]){
                 println "批號：${batch.name} 查無託外進貨單"
 
-                sourceSheet=OutSrcPurchaseSheetDet.findAllByBatch(batch)
-            }
+                sourceSheet=PurchaseSheetDet.findAllByBatch(batch)
+                if(sourceSheet==null || sourceSheet==[]){
+                    println "批號：${batch.name} 查無進貨單"
 
+                    return null            
+                }
+            }
         }
 
         [sourceSheet:sourceSheet,batch:batch]
