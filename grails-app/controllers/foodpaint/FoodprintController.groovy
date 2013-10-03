@@ -9,12 +9,12 @@ class FoodprintController {
     */
     def queryBatchReport() {
         
-        params.name="0927-410002"
+        //params.name="0927-410002"
 
         TraceController trc = new TraceController()
 
         def reportInfo = [batchSources:[]]
-        def batchNames=[params.name]
+        def batchNames=[params.batch.name]
         //查批號來源單據
         while(batchNames.size() >0){
             println batchNames
@@ -39,6 +39,7 @@ class FoodprintController {
                 }
                 else{
                     if(it.instanceOf(PurchaseSheetDet)){
+                        it.batch.supplier = it.purchaseSheet.supplier
                         //此批號為進貨單購入
                     }
                     else{
