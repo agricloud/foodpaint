@@ -3,6 +3,7 @@ package foodpaint
 class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
+    static belongsTo=[outSrcReturnSheet:OutSrcReturnSheet]
     /*
     * 品項編號
     */
@@ -21,12 +22,14 @@ class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
     /*
-    * 制令
+    * 製令
     */
 	ManufactureOrder manufactureOrder
 
 
 
     static constraints = {
+        sequence unique:'outSrcReturnSheet'
+
     }
 }

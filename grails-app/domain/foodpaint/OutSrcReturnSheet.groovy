@@ -6,9 +6,7 @@ package foodpaint
     */
 class OutSrcReturnSheet extends DefaultSheet{
 
-	static hasMany=[details:OutSrcReturnSheetDet]
-
-
+    static hasMany=[outSrcReturnSheetDets:OutSrcReturnSheetDet]
     /*
     * 退貨廠商
     */
@@ -17,6 +15,7 @@ class OutSrcReturnSheet extends DefaultSheet{
 
 
     static constraints = {
+        outSrcReturnSheetDets nullable:true
 
     }
 }

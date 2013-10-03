@@ -2,7 +2,6 @@ package foodpaint
 
 class DefaultSheet extends DefaultTable{
 
-	static hasMany=[details:DefaultSheetDet]
     /*
     * 單別
     */
@@ -19,6 +18,7 @@ class DefaultSheet extends DefaultTable{
     }
 
     static constraints = {
+
     	name unique:'typeName'
     }
 }

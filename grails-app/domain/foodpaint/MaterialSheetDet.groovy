@@ -7,18 +7,17 @@ package foodpaint
     */
 class MaterialSheetDet extends DefaultSheetDet{
 
-
+    static belongsTo=[materialSheet:MaterialSheet]
     /*
     * 項次
     */
     Integer sequence
     
     /*
-    * 制令
+    * 製令
     */
     static hasOne = [
         manufactureOrder: ManufactureOrder
-
     ]
 
 
@@ -37,5 +36,7 @@ class MaterialSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
+        sequence unique:'materialSheet'
+
     }
 }

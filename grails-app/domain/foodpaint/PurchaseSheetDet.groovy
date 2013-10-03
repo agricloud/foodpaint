@@ -6,6 +6,7 @@ package foodpaint
 class PurchaseSheetDet extends DefaultSheetDet{
 	
 
+    static belongsTo=[purchaseSheet:PurchaseSheet]
     /*
     * 品項編號
     */
@@ -25,5 +26,7 @@ class PurchaseSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
+        sequence unique:'purchaseSheet'
+
     }
 }

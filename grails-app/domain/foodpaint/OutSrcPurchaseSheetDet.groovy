@@ -2,6 +2,7 @@ package foodpaint
 
 class OutSrcPurchaseSheetDet extends DefaultSheetDet{
 
+    static belongsTo=[outSrcPurchaseSheet:OutSrcPurchaseSheet]
     /*
     * 品項編號
     */
@@ -21,12 +22,14 @@ class OutSrcPurchaseSheetDet extends DefaultSheetDet{
 
 
     /*
-    * 制令
+    * 製令
     */
-    static hasOne = [manufactureOrder: ManufactureOrder]
+    ManufactureOrder manufactureOrder
 
 
 
     static constraints = {
+        sequence unique:'outSrcPurchaseSheet'
+
     }
 }
