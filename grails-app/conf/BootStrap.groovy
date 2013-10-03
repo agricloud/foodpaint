@@ -13,9 +13,9 @@ class BootStrap {
 				def item5 = new Item(name:"31001",title:"玉米包材",spec:"環保包材",unit:"才",description:"可自然生物分解，無毒、無害且具備環保功能。 可回收再製、堆肥、掩埋、焚化，使資源能夠回收再利用。 減少二氧化碳的生成，達到節能減碳的作用。").save(failOnError: true, flush: true)
 				def item6 = new Item(name:"31002",title:"玉米半成品",spec:"半成品測試",unit:"kg",description:"半成品測試").save(failOnError: true, flush: true)
 
-				def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:"TW台灣"/*foodpaint.Country.TAIWAN*/).save(failOnError: true, flush: true)
-				def supplier2 = new Supplier(name:"LZ01",title:"里仁生機",country:"JP日本"/*foodpaint.Country.JAPAN*/).save(failOnError: true, flush: true)
-				def supplier3 = new Supplier(name:"ZS01",title:"慈心有機",country:"TW台灣"/*foodpaint.Country.TAIWAN*/).save(failOnError: true, flush: true)
+				def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
+				def supplier2 = new Supplier(name:"LZ01",title:"里仁生機",country:Country.JAPAN).save(failOnError: true, flush: true)
+				def supplier3 = new Supplier(name:"ZS01",title:"慈心有機",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
 				def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
 				def workstation2 = new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
