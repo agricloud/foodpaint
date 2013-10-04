@@ -9,7 +9,7 @@ class FoodprintController {
     */
     def queryBatchReport() {
         
-        //params.name="0927-410002"
+        //params.batch.name="0927-410002"
 
         TraceController trc = new TraceController()
 
