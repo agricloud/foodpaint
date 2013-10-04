@@ -1,11 +1,10 @@
 package foodpaint
 
-class TraceController {
+class TraceService{
 
-    //查出批號之來源單據（逆溯 找出第一階資訊）
-    def querySourceSheetByBatch(String batchName){
+	def querySourceSheetByBatch(String batchName){
         //def productBatch=Batch.findByName(params.batch.id)
-        log.debug "${controllerName}--${actionName}"
+        log.debug "TraceService--querySourceSheetByBatch"
         def batch=Batch.findByName(batchName)
         def sourceSheet=StockInSheetDet.findAllByBatch(batch)
 
@@ -26,10 +25,6 @@ class TraceController {
         }
 
         [sourceSheet:sourceSheet,batch:batch]
-    }
-
-    def queryMaterialSheetByMO(ManufactureOrder mo){
-
     }
 
 }

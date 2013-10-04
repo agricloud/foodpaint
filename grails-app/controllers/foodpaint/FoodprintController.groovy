@@ -3,6 +3,7 @@ import grails.converters.JSON
 
 class FoodprintController {
 
+    def traceService
 
     /*
     * 實作履歷查詢，回傳 json 資料
@@ -11,8 +12,6 @@ class FoodprintController {
         
         //params.batch.name="0927-410002"
 
-        TraceController trc = new TraceController()
-
         def reportInfo = [batchSources:[]]
         def batchNames=[params.batch.name]
         //查批號來源單據
@@ -20,7 +19,7 @@ class FoodprintController {
             println batchNames
             println "正在查詢批號${batchNames.get(0)}共有${batchNames.size()}個"
 
-            def batchSheet = trc.querySourceSheetByBatch(batchNames.get(0))
+            def batchSheet = traceService.querySourceSheetByBatch(batchNames.get(0))
             batchNames.remove(0)
             println "剩餘${batchNames.size()}個批號"
 
