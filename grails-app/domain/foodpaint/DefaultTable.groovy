@@ -34,4 +34,9 @@ class DefaultTable {
     static constraints = {
     	site nullable:true
     }
+
+    transient beforeUpdate = {
+        throw new RuntimeException('update not allowed')
+    }
+
 }

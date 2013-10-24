@@ -1,7 +1,8 @@
 package foodpaint
-import grails.converters.JSON
+import grails.converters.*
+import foodpaint.view.*
 
-class FoodprintController {
+class RestController {
 
     def traceService
 
@@ -9,11 +10,16 @@ class FoodprintController {
      * 實作履歷查詢，回傳 json 資料
      */
     def queryBatchReport() {
-        
+        log.info CustomerOrderView.list().get(0) as XML
+        log.info CustomerOrderDetView.list().get(0) as XML
         //params.batch.name="0927-410002"
 
         def reportInfo = [batchSources:[]]
-        def batchNames=[params.batch.name]
+        def batchNames=[]
+
+        if(params?.batch?.name)batchNames << params.batch.name
+        else batchNames=Batch.list()*.name
+
         //查批號來源單據
         while(batchNames.size() >0){
             log.debug "正在查詢批號${batchNames.get(0)}共有${batchNames.size()}個"

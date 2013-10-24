@@ -1,12 +1,11 @@
-package foodpaint
-
+package foodpaint.view
 /**
  * 履歷明細項目（這邊打類別說明，暫定請蹤影做修改）
  * 
  * @author smlsun@gmail.com, ...
  * @version 1.0
  */
-class Item extends DefaultTable{
+class ItemView {
 
 
     /**
@@ -70,6 +69,16 @@ class Item extends DefaultTable{
     	"品項編號：${name},品項名稱：${title}"
     }
     static mapping = {
+        datasource 'erp'
+        table 'INVMB'
+        version false
+        id generator: 'assigned', name: 'name'
+
+        name column: 'MB001'
+        title column: 'MB002'
+        description column: 'MB003'
+        unit column: 'MB004'
+
 
     }
 

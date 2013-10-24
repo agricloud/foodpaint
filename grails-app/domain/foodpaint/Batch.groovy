@@ -10,7 +10,6 @@ class Batch extends DefaultTable {
 		
 	]
 
-
 	String name
 	Long expectQty = 0
 	Date dueDate

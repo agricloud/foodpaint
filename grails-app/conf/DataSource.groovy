@@ -4,6 +4,15 @@ dataSource {
     username = "sa"
     password = ""
 }
+dataSource_erp {
+    pooled = true
+    driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+    dialect = "org.hibernate.dialect.SQLServerDialect"
+    username = "sa"
+    password = "dsc"
+    dbCreate = "none"
+    url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+}
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false
@@ -16,6 +25,17 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
+
+        // dataSource {
+        //     pooled = true
+        //     driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+        //     dialect = "org.hibernate.dialect.SQLServerDialect"
+        //     username = "sa"
+        //     password = "dsc"
+        //     dbCreate = "create-drop"
+        //     url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=grailsTestDb"
+        // }
+
     }
     test {
         dataSource {
