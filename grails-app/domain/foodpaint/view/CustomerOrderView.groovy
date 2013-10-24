@@ -36,7 +36,7 @@ class CustomerOrderView implements Serializable{
     }
 
     static mapping = {
-        datasource 'erp'
+        // datasource 'erp'
         table 'COPTC'
 
         id composite: ['name', 'typeName']

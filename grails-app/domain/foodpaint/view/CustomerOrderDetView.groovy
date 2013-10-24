@@ -29,7 +29,7 @@ class CustomerOrderDetView implements Serializable{
         // qty nullable:true
     }
     static mapping = {
-        datasource 'erp'
+        // datasource 'erp'
         table 'COPTD'
 
         id composite: ['name', 'typeName']

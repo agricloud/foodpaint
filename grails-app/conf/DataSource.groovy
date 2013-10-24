@@ -21,11 +21,13 @@ hibernate {
 // environment specific settings
 environments {
     development {
+        // 標準
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
 
+        // 測試 mapping 的結果
         // dataSource {
         //     pooled = true
         //     driverClassName = "net.sourceforge.jtds.jdbc.Driver"
