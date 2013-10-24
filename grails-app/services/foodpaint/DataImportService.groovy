@@ -4,6 +4,7 @@ import javax.jws.*
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 import org.grails.cxf.adapter.GrailsCxfMapAdapter
 import groovy.xml.MarkupBuilder
+import grails.converters.*
     /*
     資料匯入 api 以 domain 的結構來設計
     <?xml version="1.0" encoding="UTF-8"?>
@@ -43,7 +44,6 @@ class DataImportService {
     @XmlJavaTypeAdapter(GrailsCxfMapAdapter.class)
 	Map doDataImport(@WebParam(name="xmlString")String xmlString){
 
-		log.info xmlString
 
 		def result=[:]
 
@@ -51,33 +51,60 @@ class DataImportService {
 			def writer = new StringWriter()
 		    def xml = new MarkupBuilder(writer)
 			def records = new XmlParser().parseText(xmlString)
-			def importTable = records.importTable.text()
-			def fields= grailsApplication.getDomainClass('foodpaint.'+importTable).persistentProperties.collect { it.name }
+
+			def importClassList = ['itemView', 'customerOrderView']
+
+			def loopKey
+			
+		
+			importClassList.each{
+
+				if (records[it]){
+					loopKey = it 
+				}
+			}
+
+			def importClass = loopKey[0].toUpperCase() + loopKey[1..-1]
+
+
+			def targetClass = importClass.replace('View','')
+
+
+
+			println importClass
+			println targetClass
+			println loopKey
+
+			def fields= grailsApplication.getDomainClass("foodpaint."+targetClass).persistentProperties.collect { it.name }
 
 			// 動態實體化 domain class
-			// GrailsDomainClass dc = grailsApplication.getDomainClass('foodpaint.'+importTable)
+			// GrailsDomainClass dc = grailsApplication.getDomainClass('foodpaint.'+importClass)
 			
 			// 以 item 為例， dc.clazz.FindByName == Item.FindByName
 			// 建立物件：dc.clazz.newInstance() == new Item()
 			// def newDomainObject = dc.clazz.newInstance()
 
-			log.info "table: ${importTable} fields:${fields}"
+			log.info "table: ${importClass} fields:${fields}"
 
 
 
-			records[importTable.toLowerCase()].eachWithIndex{ record, i ->
+			records[loopKey].eachWithIndex{ record, i ->
 
 				//各 domain 需定義主鍵的索引
 				def domain
-				if(importTable=='Item')
+				if(targetClass=='Item')
 					domain=getItemInstance(record)
-				if(importTable=='Batch')
-					domain=getBatchInstance(record)
+				if(targetClass=='CustomerOrder')
+					domain=getCustomerOrderInstance(record)					
+				// if(targetClass=='Batch')
+				// 	domain=getBatchInstance(record)
 
 
 				// 共用最後進行儲存
 				if(domain){
+					
 					domain.properties=getDomainProperties(record, fields)
+					println domain as JSON
 					domain.save(failOnError:true)
 				}
 			}
@@ -88,13 +115,6 @@ class DataImportService {
 			result.message=e.message
 
 		}
-
-		
-
-
-
-
-
 
 		return result
 
@@ -116,46 +136,49 @@ class DataImportService {
     	item
 
     }
+    def private getCustomerOrderInstance(record) {
 
-    def private getBatchInstance(record){
+		def customerOrder = CustomerOrder.findByNameAndTypeName(record.name.text(),record.typeName.text())
 
-
-
-		def batch = Batch.findByName(record.name.text())
-
-		if(!batch){
-			batch=new Batch(name:record.name.text())
+		if(!customerOrder){
+			customerOrder=new CustomerOrder(name:record.name.text(), typeName:record.typeName.text())
 		}
 
+    	customerOrder
 
-		def itemName=record.item.name.text();
-		def item=Item.findByName(itemName)
+    }
+  //   def private getBatchInstance(record){
+
+
+
+		// def batch = Batch.findByName(record.name.text())
+
+		// if(!batch){
+		// 	batch=new Batch(name:record.name.text())
+		// }
+
+
+		// def itemName=record.item.name.text();
+		// def item=Item.findByName(itemName)
 		
-		// 處理品項關連
-		if(item){
-			batch.item=item
-		}else {
-			throw new Exception("batch.item.name:${itemName} is not exist")
-		}
+		// // 處理品項關連
+		// if(item){
+		// 	batch.item=item
+		// }else {
+		// 	throw new Exception("batch.item.name:${itemName} is not exist")
+		// }
 
 
-		batch
+		// batch
 
-    }
+  //   }
 
-    def private batchSourceImport(xml){
-
-    }
-
-    def private customerOrderImport(xml){
-
-    }
 
 
     def private getDomainProperties(record, fields){
     	def props=[:]
     	fields.each{ field ->
-			// log.info field+"====="+record
+			// println field+"====="+record[field].text()
 			if(record[field] && record[field].text())
 				props[field]=record[field].text()
 		}

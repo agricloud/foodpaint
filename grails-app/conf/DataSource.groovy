@@ -4,15 +4,15 @@ dataSource {
     username = "sa"
     password = ""
 }
-dataSource_erp {
-    pooled = true
-    driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-    dialect = "org.hibernate.dialect.SQLServerDialect"
-    username = "sa"
-    password = "dsc"
-    dbCreate = "none"
-    url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
-}
+// dataSource_erp {
+//     pooled = true
+//     driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+//     dialect = "org.hibernate.dialect.SQLServerDialect"
+//     username = "sa"
+//     password = "dsc"
+//     dbCreate = "none"
+//     url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+// }
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false

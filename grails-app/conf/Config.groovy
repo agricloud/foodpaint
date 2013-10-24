@@ -118,3 +118,6 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+grails.converters.xml.pretty.print = true
+grails.converters.json.pretty.print = true
