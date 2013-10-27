@@ -6,6 +6,16 @@ class RestController {
 
     def traceService
 
+    /**
+     * PING
+     */
+    def ping() {
+        render(contentType: "application/json") {
+            result = true
+            version = "1.0" // FIX ME, change to config value
+        }
+    }
+
     /*
      * 實作履歷查詢，回傳 json 資料
      */
