@@ -20,10 +20,10 @@ class CustomerView {
         
         id generator: 'assigned', name: 'name'
 
-        name column: 'MA001'
-        title column: 'MA003'
-        email column: 'MA009'
-        address column: 'MA023'
+        name column: 'MA001', sqlType: "nchar"
+        title column: 'MA003', sqlType: "nchar"
+        email column: 'MA009', sqlType: "nchar"
+        address column: 'MA023', sqlType: "nchar"
       
     }
 

@@ -48,11 +48,11 @@ class PurchaseSheetView implements Serializable{
         id composite: ['typeName','name']
         version false
 
-        typeName column: 'TG001'
-        name column: 'TG002'
-        incomingDate column: 'TG003'
-        supplierName column: 'TG005'
-        orderDate column: 'TG014'
+        typeName column: 'TG001', sqlType: "nchar"
+        name column: 'TG002', sqlType: "nchar"
+        incomingDate column: 'TG003', sqlType: "nchar"
+        supplierName column: 'TG005', sqlType: "nchar"
+        orderDate column: 'TG014', sqlType: "nchar"
         
     } 
 }
