@@ -49,7 +49,7 @@ class ManufactureOrderView implements Serializable{
         typeName column: 'TA001', sqlType: "nchar"
         name column: 'TA002', sqlType: "nchar"
         itemName  column: 'TA006', sqlType: "nchar"
-        qty column: 'TA015'
+        qty column: 'TA015', sqlType: "numeric"
         
     } 
 }
