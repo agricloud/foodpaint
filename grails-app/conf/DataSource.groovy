@@ -5,20 +5,20 @@ dataSource {
     password = ""
 }
 dataSource_erp {
-    pooled = true
-    driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-    dialect = "foodpaint.MinimalSQLServer2008Dialect"
-    username = "sa"
-    password = "dsc"
-    dbCreate = "validate"
-    url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
-
     // pooled = true
-    // driverClassName = "org.h2.Driver"
+    // driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+    // dialect = "foodpaint.MinimalSQLServer2008Dialect"
     // username = "sa"
-    // password = ""
-    // dbCreate = "update"
-    // url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+    // password = "dsc"
+    // dbCreate = "validate"
+    // url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+
+    pooled = true
+    driverClassName = "org.h2.Driver"
+    username = "sa"
+    password = ""
+    dbCreate = "update"
+    url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -32,18 +32,7 @@ environments {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        }   
-
-        //測試 mapping 的結果
-        // dataSource {
-        //     pooled = true
-        //     driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-        //     dialect = "org.hibernate.dialect.SQLServerDialect"
-        //     username = "sa"
-        //     password = "dsc"
-        //     dbCreate = "create-drop"
-        //     url= "jdbc:jtds:sqlserver://192.168.2.109:1433;databaseName=grails"
-        // }
+        }
 
     }
     test {
