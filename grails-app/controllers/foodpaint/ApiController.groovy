@@ -2,7 +2,7 @@ package foodpaint
 import grails.converters.*
 import foodpaint.view.*
 
-class RestController {
+class ApiController {
 
     def traceService
 
