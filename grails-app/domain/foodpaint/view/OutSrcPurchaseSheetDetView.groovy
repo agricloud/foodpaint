@@ -25,6 +25,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     /*
     * 數量
     */
+    //目前對應ERP單據中的驗收數量
 	Integer qty
 
 
@@ -58,6 +59,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
         sequence column: 'TI003'
         itemName  column: 'TI004'
         batchName column: 'TI010'
+        qty column: 'TI019'
         manufactureOrderTypeName column: 'TI013'
         manufactureOrderName column: 'TI014'
     } 
