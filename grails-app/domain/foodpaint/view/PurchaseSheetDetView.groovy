@@ -42,7 +42,7 @@ class PurchaseSheetDetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'PURTH'
 
         id composite: ['typeName', 'name', 'sequence']

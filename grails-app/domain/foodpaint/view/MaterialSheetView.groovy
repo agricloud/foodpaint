@@ -29,7 +29,7 @@ class MaterialSheetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTC'
 
         id composite: ['typeName','name']

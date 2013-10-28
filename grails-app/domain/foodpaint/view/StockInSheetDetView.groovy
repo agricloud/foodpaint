@@ -52,7 +52,7 @@ class StockInSheetDetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTG'
 
         id composite: ['typeName', 'name', 'sequence']

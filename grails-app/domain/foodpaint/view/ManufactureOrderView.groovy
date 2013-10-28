@@ -40,15 +40,15 @@ class ManufactureOrderView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTA'
 
         id composite: ['typeName','name']
         version false
 
-        typeName column: 'TA001'
-        name column: 'TA002'
-        itemName  column: 'TA006'
+        typeName column: 'TA001', sqlType: "nchar"
+        name column: 'TA002', sqlType: "nchar"
+        itemName  column: 'TA006', sqlType: "nchar"
         qty column: 'TA015'
         
     } 

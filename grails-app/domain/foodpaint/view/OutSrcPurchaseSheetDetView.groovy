@@ -47,7 +47,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTI'
 
         id composite: ['typeName', 'name', 'sequence']

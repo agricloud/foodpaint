@@ -27,7 +27,7 @@ class StockInSheetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTF'
 
         id composite: ['typeName','name']

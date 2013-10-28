@@ -42,14 +42,14 @@ class MaterialSheetDetView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTE'
 
         id composite: ['typeName', 'name', 'sequence']
         version false
 
-        typeName column: 'TE001'
-        name column: 'TE002'
+        typeName column: 'TE001', sqlType: "nchar"
+        name column: 'TE002', sqlType: "nchar"
         sequence column: 'TE003'
         itemName  column: 'TE004'
         batchName column: 'TE010'

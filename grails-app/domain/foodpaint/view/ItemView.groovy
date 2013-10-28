@@ -69,17 +69,17 @@ class ItemView {
     	"品項編號：${name},品項名稱：${title}"
     }
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'INVMB'
         version false
         
         id generator: 'assigned', name: 'name'
 
-        name column: 'MB001'
-        title column: 'MB002'
-        spec column: 'MB003'
-        description column: 'MB009'
-        unit column: 'MB004'
+        name column: 'MB001', sqlType: "nchar"
+        title column: 'MB002', sqlType: "nchar"
+        spec column: 'MB003', sqlType: "nchar"
+        description column: 'MB009', sqlType: "nchar"
+        unit column: 'MB004', sqlType: "nchar"
 
 
     }

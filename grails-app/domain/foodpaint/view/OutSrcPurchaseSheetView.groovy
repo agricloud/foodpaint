@@ -30,7 +30,7 @@ class OutSrcPurchaseSheetView implements Serializable{
 
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'MOCTH'
 
         id composite: ['typeName','name']
