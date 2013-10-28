@@ -18,6 +18,7 @@ class CustomerOrderDetView implements Serializable{
     String name=""
 
     Integer sequence
+    String itemName
 
     /*
     * 訂單數量
@@ -37,6 +38,7 @@ class CustomerOrderDetView implements Serializable{
         name column: 'TD001', sqlType: "nchar"
         typeName column: 'TD002', sqlType: "nchar"
         sequence column: 'TD003', sqlType: "nchar"
+        itemName column: 'TD004', sqlType: "nchar"
 
     }  
 

@@ -52,7 +52,11 @@ class DataImportService {
 		    def xml = new MarkupBuilder(writer)
 			def records = new XmlParser().parseText(xmlString)
 
-			def importClassList = ['itemView', 'customerOrderView']
+			def importClassList = [
+				'itemView',
+				'customerOrderView',
+				'customerOrderDetView'
+			]
 
 			def loopKey
 			
@@ -65,8 +69,6 @@ class DataImportService {
 			}
 
 			def importClass = loopKey[0].toUpperCase() + loopKey[1..-1]
-
-
 			def targetClass = importClass.replace('View','')
 
 
@@ -95,7 +97,10 @@ class DataImportService {
 				if(targetClass=='Item')
 					domain=getItemInstance(record)
 				if(targetClass=='CustomerOrder')
-					domain=getCustomerOrderInstance(record)					
+					domain=getCustomerOrderInstance(record)		
+				if(targetClass=='CustomerOrderDet')
+					domain=getCustomerOrderDetInstance(record)	
+
 				// if(targetClass=='Batch')
 				// 	domain=getBatchInstance(record)
 
@@ -113,6 +118,7 @@ class DataImportService {
 			log.error e.message
 			result.success=false
 			result.message=e.message
+			throw e
 
 		}
 
@@ -147,6 +153,28 @@ class DataImportService {
     	customerOrder
 
     }
+    def private getCustomerOrderDetInstance(record) {
+
+    	def customerOrder = CustomerOrder.findByNameAndTypeName(
+			record.name.text(), record.typeName.text())
+
+		def customerOrderDet = CustomerOrderDet.findByCustomerOrderAndSequence(
+			customerOrder, record.sequence.text())
+
+
+		if(!customerOrderDet){
+			customerOrderDet=new CustomerOrderDet(
+				customerOrder: customerOrder, 
+				sequence: record.sequence.text())
+		}
+
+		def item = Item.findByName(record.itemName.text())
+		customerOrderDet.item = item
+
+    	customerOrderDet
+
+    }
+
   //   def private getBatchInstance(record){
 
 
@@ -179,7 +207,7 @@ class DataImportService {
     	def props=[:]
     	fields.each{ field ->
 			// println field+"====="+record[field].text()
-			if(record[field] && record[field].text())
+			if(record[field] && record[field].text() )
 				props[field]=record[field].text()
 		}
 
