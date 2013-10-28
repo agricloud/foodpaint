@@ -18,7 +18,7 @@ dataSource_erp {
     username = "sa"
     password = ""
     dbCreate = "update"
-    url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+    url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
 }
 hibernate {
     cache.use_second_level_cache = true

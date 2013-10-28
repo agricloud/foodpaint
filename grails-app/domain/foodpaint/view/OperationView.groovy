@@ -11,15 +11,15 @@ class OperationView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'CMSMW'
         version false
         
         id generator: 'assigned', name: 'name'
 
-        name column: 'MW001'
-        title column: 'MW002'
-        description column: 'MW003'
+        name column: 'MW001', sqlType: "nchar"
+        title column: 'MW002', sqlType: "nchar"
+        description column: 'MW003', sqlType: "nchar"
 
     }
 }

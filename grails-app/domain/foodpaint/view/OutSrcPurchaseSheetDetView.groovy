@@ -54,13 +54,13 @@ class OutSrcPurchaseSheetDetView implements Serializable{
         id composite: ['typeName', 'name', 'sequence']
         version false
 
-        typeName column: 'TI001'
-        name column: 'TI002'
-        sequence column: 'TI003'
-        itemName  column: 'TI004'
-        batchName column: 'TI010'
-        qty column: 'TI019'
-        manufactureOrderTypeName column: 'TI013'
-        manufactureOrderName column: 'TI014'
+        typeName column: 'TI001', sqlType: "nchar"
+        name column: 'TI002', sqlType: "nchar"
+        sequence column: 'TI003', sqlType: "nchar"
+        itemName  column: 'TI004', sqlType: "nchar"
+        batchName column: 'TI010', sqlType: "nchar"
+        qty column: 'TI019', sqlType: "numeric"
+        manufactureOrderTypeName column: 'TI013', sqlType: "nchar"
+        manufactureOrderName column: 'TI014', sqlType: "nchar"
     } 
 }

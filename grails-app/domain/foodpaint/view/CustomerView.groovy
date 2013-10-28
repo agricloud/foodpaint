@@ -14,7 +14,7 @@ class CustomerView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'COPMA'
         version false
         

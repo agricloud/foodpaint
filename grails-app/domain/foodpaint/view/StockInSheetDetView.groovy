@@ -58,14 +58,14 @@ class StockInSheetDetView implements Serializable{
         id composite: ['typeName', 'name', 'sequence']
         version false
 
-        typeName column: 'TG001'
-        name column: 'TG002'
-        sequence column: 'TG003'
-        itemName  column: 'TG004'
-        batchName column: 'TG017'
-        warehouseName  column: 'TG010'
-        stockLocationName column: 'TG034'
-        manufactureOrderTypeName column: 'TG014'
-        manufactureOrderName column: 'TG015'
+        typeName column: 'TG001', sqlType: "nchar"
+        name column: 'TG002', sqlType: "nchar"
+        sequence column: 'TG003', sqlType: "nchar"
+        itemName  column: 'TG004', sqlType: "nchar"
+        batchName column: 'TG017', sqlType: "nchar"
+        warehouseName  column: 'TG010', sqlType: "nchar"
+        stockLocationName column: 'TG034', sqlType: "nchar"
+        manufactureOrderTypeName column: 'TG014', sqlType: "nchar"
+        manufactureOrderName column: 'TG015', sqlType: "nchar"
     }    
 }

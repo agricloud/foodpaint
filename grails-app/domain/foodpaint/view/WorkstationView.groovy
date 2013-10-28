@@ -10,7 +10,7 @@ class WorkstationView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'CMSMD'
         version false
         

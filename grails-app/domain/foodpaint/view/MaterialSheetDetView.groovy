@@ -50,10 +50,10 @@ class MaterialSheetDetView implements Serializable{
 
         typeName column: 'TE001', sqlType: "nchar"
         name column: 'TE002', sqlType: "nchar"
-        sequence column: 'TE003'
-        itemName  column: 'TE004'
-        batchName column: 'TE010'
-        manufactureOrderTypeName column: 'TE011'
-        manufactureOrderName column: 'TE012'
+        sequence column: 'TE003', sqlType: "nchar"
+        itemName  column: 'TE004', sqlType: "nchar"
+        batchName column: 'TE010', sqlType: "nchar"
+        manufactureOrderTypeName column: 'TE011', sqlType: "nchar"
+        manufactureOrderName column: 'TE012', sqlType: "nchar"
     }
 }

@@ -27,7 +27,7 @@ class SupplierView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'PURMA'
         version false
         
