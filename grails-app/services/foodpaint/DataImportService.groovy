@@ -54,6 +54,7 @@ class DataImportService {
 
 			def importClassList = [
 				'itemView',
+				'customerView',
 				'customerOrderView',
 				'customerOrderDetView'
 			]
@@ -96,6 +97,8 @@ class DataImportService {
 				def domain
 				if(targetClass=='Item')
 					domain=getItemInstance(record)
+				if(targetClass=='Customer')
+					domain=getCustomerInstance(record)
 				if(targetClass=='CustomerOrder')
 					domain=getCustomerOrderInstance(record)		
 				if(targetClass=='CustomerOrderDet')
@@ -130,7 +133,7 @@ class DataImportService {
 
 	}
 
-
+	//基本資料
     def private getItemInstance(record) {
 
 		def item = Item.findByName(record.name.text())
@@ -142,6 +145,19 @@ class DataImportService {
     	item
 
     }
+
+    def private getCustomerInstance(record) {
+
+		def customer = Customer.findByName(record.name.text())
+
+		if(!customer){
+			customer=new Customer(name:record.name.text())
+		}
+
+    	customer
+
+    }
+    //單據
     def private getCustomerOrderInstance(record) {
 
 		def customerOrder = CustomerOrder.findByNameAndTypeName(record.name.text(),record.typeName.text())

@@ -13,6 +13,7 @@ import foodpaint.view.*
 @TestFor(DataImportService)
 @Mock([
     Item, ItemView, 
+    Customer, CustomerView,
     CustomerOrder, CustomerOrderView,
     CustomerOrderDet, CustomerOrderDetView])
 class DataImportServiceTests {
@@ -33,6 +34,39 @@ class DataImportServiceTests {
     	assert Item.list().size() == 2 
 
     }
+
+    void testCustomerImport() {
+
+        new CustomerView(name:"C01",title:"新鮮超市",email:"test@test.com").save(failOnError: true, flush: true)
+        new CustomerView(name:"C02",title:"頂好超市",address:"台北市忠孝東路999號").save(failOnError: true, flush: true)
+
+        def customerViewXml = CustomerView.list() as XML
+
+        println customerViewXml.toString()
+
+        service.doDataImport(customerViewXml.toString())
+
+        assert Customer.list().size() == 2 
+
+    }
+    /*
+    //最後做 需檢查ＥＲＰ國家別建置方式
+    void testSupplierImport() {
+
+        new SupplierView(name:"FJ01",title:"福智麻園",country:"台灣").save(failOnError: true, flush: true)
+        new SupplierView().save(failOnError: true, flush: true)
+
+        def itemViewXml = ItemView.list() as XML
+
+        println itemViewXml.toString()
+
+        service.doDataImport(itemViewXml.toString())
+
+        assert Item.list().size() == 2 
+
+    }
+    */
+
     void testCustomerOrderImport() {
 
         
@@ -50,6 +84,8 @@ class DataImportServiceTests {
         assert CustomerOrder.list().size() == 2 
 
     }
+
+
     void testCustomerOrderDetImport() {
         new Item(name:"item",title:"item").save(failOnError: true, flush: true)
         
