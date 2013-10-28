@@ -33,9 +33,9 @@ class StockInSheetView implements Serializable{
         id composite: ['typeName','name']
         version false
 
-        typeName column: 'TF001'
-        name column: 'TF002'
-        workstationName column: 'TF011'
+        typeName column: 'TF001', sqlType: "nchar"
+        name column: 'TF002', sqlType: "nchar"
+        workstationName column: 'TF011', sqlType: "nchar"
         
     }    
 }

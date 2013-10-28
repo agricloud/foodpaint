@@ -35,9 +35,9 @@ class MaterialSheetView implements Serializable{
         id composite: ['typeName','name']
         version false
 
-        typeName column: 'TC001'
-        name column: 'TC002'
-        workstationName column: 'TC005'
+        typeName column: 'TC001', sqlType: "nchar"
+        name column: 'TC002', sqlType: "nchar"
+        workstationName column: 'TC005', sqlType: "nchar"
         
     } 
 }

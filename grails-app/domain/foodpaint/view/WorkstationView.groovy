@@ -10,14 +10,14 @@ class WorkstationView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'CMSMD'
         version false
         
         id generator: 'assigned', name: 'name'
 
-        name column: 'MD001'
-        title column: 'MD002'
+        name column: 'MD001', sqlType: "nchar"
+        title column: 'MD002', sqlType: "nchar"
 
     }
 }

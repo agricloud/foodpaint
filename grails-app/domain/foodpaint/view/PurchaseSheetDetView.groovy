@@ -48,12 +48,12 @@ class PurchaseSheetDetView implements Serializable{
         id composite: ['typeName', 'name', 'sequence']
         version false
 
-        typeName column: 'TH001'
-        name column: 'TH002'
-        sequence column: 'TH003'
-        itemName  column: 'TH004'
-        batchName column: 'TH010'
-        qty column: 'TH007'
+        typeName column: 'TH001', sqlType: "nchar"
+        name column: 'TH002', sqlType: "nchar"
+        sequence column: 'TH003', sqlType: "nchar"
+        itemName  column: 'TH004', sqlType: "nchar"
+        batchName column: 'TH010', sqlType: "nchar"
+        qty column: 'TH007', sqlType: "numeric"
 
     }   
 

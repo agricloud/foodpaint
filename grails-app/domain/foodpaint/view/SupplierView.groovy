@@ -27,14 +27,14 @@ class SupplierView {
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'PURMA'
         version false
         
         id generator: 'assigned', name: 'name'
 
-        name column: 'MA001'
-        title column: 'MA003'
-        country column: 'MA006'
+        name column: 'MA001', sqlType: "nchar"
+        title column: 'MA003', sqlType: "nchar"
+        country column: 'MA006', sqlType: "nchar"
     }
 }

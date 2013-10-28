@@ -36,9 +36,9 @@ class OutSrcPurchaseSheetView implements Serializable{
         id composite: ['typeName','name']
         version false
 
-        typeName column: 'TH001'
-        name column: 'TH002'
-        supplierName column: 'TH005'
+        typeName column: 'TH001', sqlType: "nchar"
+        name column: 'TH002', sqlType: "nchar"
+        supplierName column: 'TH005', sqlType: "nchar"
         
     }      
 }
