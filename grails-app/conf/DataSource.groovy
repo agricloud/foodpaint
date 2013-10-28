@@ -25,9 +25,9 @@ environments {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        }
+        }   
 
-        // 測試 mapping 的結果
+        //測試 mapping 的結果
         // dataSource {
         //     pooled = true
         //     driverClassName = "net.sourceforge.jtds.jdbc.Driver"
@@ -35,11 +35,12 @@ environments {
         //     username = "sa"
         //     password = "dsc"
         //     dbCreate = "create-drop"
-        //     url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=grailsTestDb"
+        //     url= "jdbc:jtds:sqlserver://192.168.2.109:1433;databaseName=grails"
         // }
 
     }
     test {
+
         dataSource {
             dbCreate = "update"
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
