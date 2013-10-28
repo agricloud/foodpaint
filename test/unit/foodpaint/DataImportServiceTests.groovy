@@ -55,12 +55,11 @@ class DataImportServiceTests {
         
         new CustomerOrder(typeName:"A11",name:"98100900003").save(failOnError: true, flush: true)
 
-        def customerOrderDetView = new CustomerOrderDetView(typeName: "A11", name: "98100900003", sequence:1)
-        def customerOrderDetView2 = new CustomerOrderDetView(typeName: "A11", name: "98100900003", sequence:2)
-        customerOrderDetView.itemName = "item"
-        customerOrderDetView2.itemName = "item"
-        customerOrderDetView.save(failOnError: true, flush: true)
-        customerOrderDetView2.save(failOnError: true, flush: true)
+        def customerOrderDetView = new CustomerOrderDetView(typeName: "A11", name: "98100900003",
+            sequence:1, itemName : "item").save(failOnError: true, flush: true)
+        def customerOrderDetView2 = new CustomerOrderDetView(typeName: "A11", name: "98100900003",
+            sequence:2, itemName : "item").save(failOnError: true, flush: true)
+
 
         def customerOrderDetViewXml = CustomerOrderDetView.list() as XML
 
@@ -69,7 +68,8 @@ class DataImportServiceTests {
 
         service.doDataImport(customerOrderDetViewXml.toString())
 
-        assert CustomerOrderDetView.list().size() == 2 
+        assert CustomerOrderDet.list().size() == 2 
+
 
     }
     // void testBatchImport() {

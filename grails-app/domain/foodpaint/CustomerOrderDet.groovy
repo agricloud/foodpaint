@@ -6,6 +6,9 @@ package foodpaint
     */
 class CustomerOrderDet extends DefaultSheetDet{
 
+
+
+
     CustomerOrder customerOrder
     /*
     * 關連品項編號
@@ -20,6 +23,6 @@ class CustomerOrderDet extends DefaultSheetDet{
     static constraints = {
         item nullable:true
         qty nullable:true
-        sequence unique:'customerOrder'
+        sequence(unique:['name','typeName'])
     }
 }
