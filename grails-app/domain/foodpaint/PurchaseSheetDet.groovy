@@ -26,7 +26,6 @@ class PurchaseSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
-        sequence unique:'purchaseSheet'
 
     }
 }

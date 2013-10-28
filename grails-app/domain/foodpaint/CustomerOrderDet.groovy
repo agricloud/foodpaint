@@ -23,6 +23,6 @@ class CustomerOrderDet extends DefaultSheetDet{
     static constraints = {
         item nullable:true
         qty nullable:true
-        sequence(unique:['name','typeName'])
+        
     }
 }

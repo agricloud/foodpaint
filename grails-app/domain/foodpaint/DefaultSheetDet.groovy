@@ -21,5 +21,6 @@ class DefaultSheetDet extends DefaultTable{
     }
 
     static constraints = {
+    	sequence(unique:['name','typeName'])
     }
 }

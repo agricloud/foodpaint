@@ -26,7 +26,6 @@ class ReturnSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
-        sequence unique:'returnSheet'
 
     }
 }

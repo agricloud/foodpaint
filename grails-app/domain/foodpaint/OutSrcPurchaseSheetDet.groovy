@@ -29,7 +29,6 @@ class OutSrcPurchaseSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
-        sequence unique:'outSrcPurchaseSheet'
 
     }
 }
