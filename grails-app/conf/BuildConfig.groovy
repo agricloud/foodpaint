@@ -100,5 +100,7 @@ grails.project.dependency.resolution = {
         compile ":cxf:1.1.1"
 
         compile ":crypto:2.0"
+
+        compile ":quartz:1.0-RC13"
     }
 }

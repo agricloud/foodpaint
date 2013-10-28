@@ -73,11 +73,6 @@ class DataImportService {
 			def targetClass = importClass.replace('View','')
 
 
-
-			println importClass
-			println targetClass
-			println loopKey
-
 			def fields= grailsApplication.getDomainClass("foodpaint."+targetClass).persistentProperties.collect { it.name }
 
 			// 動態實體化 domain class
@@ -87,11 +82,14 @@ class DataImportService {
 			// 建立物件：dc.clazz.newInstance() == new Item()
 			// def newDomainObject = dc.clazz.newInstance()
 
-			log.info "table: ${importClass} fields:${fields}"
+			log.info "table: ${importClass} size:${records[loopKey].size()}"
+			log.info "fields:${fields}"
 
 
 
 			records[loopKey].eachWithIndex{ record, i ->
+
+				if(i % 100 == 0 )log.info "import ${importClass}: ${i} / ${records[loopKey].size()}"
 
 				//各 domain 需定義主鍵的索引
 				def domain
@@ -111,7 +109,7 @@ class DataImportService {
 				// 共用最後進行儲存
 				if(domain){
 					domain.properties=getDomainProperties(record, fields)
-					println domain as JSON
+					// println domain as JSON
 					domain.save(failOnError:true, flush: true)
 				}
 
