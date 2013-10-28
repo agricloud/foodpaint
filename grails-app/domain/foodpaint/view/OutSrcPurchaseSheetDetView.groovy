@@ -2,6 +2,20 @@ package foodpaint.view
 
 class OutSrcPurchaseSheetDetView implements Serializable{
 
+
+    /*
+    * 單別
+    */
+    String typeName
+
+
+    /*
+    * 單號
+    */
+    String name
+
+    Integer sequence
+
     /*
     * 品項編號
     */
