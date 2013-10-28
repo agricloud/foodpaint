@@ -106,12 +106,11 @@ class DataImportService {
 
 
 				// 共用最後進行儲存
-				if(domain){
-					
-					domain.properties=getDomainProperties(record, fields)
-					println domain as JSON
-					domain.save(failOnError:true)
-				}
+
+				domain.properties=getDomainProperties(record, fields)
+				println domain as JSON
+				domain.save(failOnError:true, flush: true)
+
 			}
 			result.success=true
 		}catch(e){
@@ -154,24 +153,28 @@ class DataImportService {
 
     }
     def private getCustomerOrderDetInstance(record) {
+    	println "start get Instance"
 
-    	def customerOrder = CustomerOrder.findByNameAndTypeName(
-			record.name.text(), record.typeName.text())
+    	def customerOrder = CustomerOrder.findByTypeNameAndName(
+			record.typeName.text(), record.name.text())
 
 		def customerOrderDet = CustomerOrderDet.findByCustomerOrderAndSequence(
 			customerOrder, record.sequence.text())
 
 
 		if(!customerOrderDet){
-			customerOrderDet=new CustomerOrderDet(
-				customerOrder: customerOrder, 
-				sequence: record.sequence.text())
+			customerOrderDet=new CustomerOrderDet(customerOrder:customerOrder, sequence: record.sequence.text())
+
 		}
 
 		def item = Item.findByName(record.itemName.text())
 		customerOrderDet.item = item
 
-    	customerOrderDet
+		// customerOrder.addToCustomerOrderDets(customerOrderDet)
+
+
+
+    	customerOrder
 
     }
 

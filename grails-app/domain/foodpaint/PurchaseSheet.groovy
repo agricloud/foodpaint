@@ -6,7 +6,7 @@ package foodpaint
 class PurchaseSheet extends DefaultSheet{
 
 
-    static hasMany=[purchaseSheetDets:PurchaseSheetDet]
+    static hasMany=[purchaseSheetDet:PurchaseSheetDet]
     /*
     * 供應商
     */
@@ -29,6 +29,6 @@ class PurchaseSheet extends DefaultSheet{
 
     
     static constraints = {
-        purchaseSheetDets nullable:true
+        purchaseSheetDet nullable:true
     }
 }

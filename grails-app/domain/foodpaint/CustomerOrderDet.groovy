@@ -6,7 +6,7 @@ package foodpaint
     */
 class CustomerOrderDet extends DefaultSheetDet{
 
-    static belongsTo=[customerOrder:CustomerOrder]
+    CustomerOrder customerOrder
     /*
     * 關連品項編號
     */
