@@ -37,7 +37,7 @@ class BootStrap {
 
 				// //訂單
 				// def customerOrder1 = new CustomerOrder(typeName:"A11",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
-				def customerOrderView1 = new CustomerOrderView(typeName:"A11",name:"98100900001").save(failOnError: true, flush: true)
+				// def customerOrderView1 = new CustomerOrderView(typeName:"A11",name:"98100900001").save(failOnError: true, flush: true)
 				// def customerOrderDet11 = new CustomerOrderDet(customerOrder:customerOrder1,sequence:1,item:item1,qty:3000).save(failOnError: true, flush: true)
 
 				// //進貨單
