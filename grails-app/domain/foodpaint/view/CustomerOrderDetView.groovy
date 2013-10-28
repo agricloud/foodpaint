@@ -32,7 +32,7 @@ class CustomerOrderDetView implements Serializable{
         // datasource 'erp'
         table 'COPTD'
 
-        id composite: ['name', 'typeName']
+        id composite: ['typeName', 'name', 'sequence']
         version false
         name column: 'TD001'
         typeName column: 'TD002'

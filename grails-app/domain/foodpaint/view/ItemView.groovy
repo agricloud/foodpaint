@@ -27,7 +27,7 @@ class ItemView {
     /*
     * 規格敘述
     */
-    // String spec=""
+    String spec=""
 
 
     /*
@@ -77,7 +77,8 @@ class ItemView {
 
         name column: 'MB001'
         title column: 'MB002'
-        description column: 'MB003'
+        spec column: 'MB003'
+        description column: 'MB009'
         unit column: 'MB004'
 
 
