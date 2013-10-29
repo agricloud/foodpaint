@@ -20,13 +20,19 @@ import foodpaint.view.*
     Batch,
     CustomerOrder, CustomerOrderView,
     CustomerOrderDet, CustomerOrderDetView,
+    PurchaseSheet, PurchaseSheetView,
+    PurchaseSheetDet, PurchaseSheetDetView,
+    StockInSheet, StockInSheetView,
+    StockInSheetDet, StockInSheetDetView,
+    OutSrcPurchaseSheet, OutSrcPurchaseSheetView,
+    OutSrcPurchaseSheetDet, OutSrcPurchaseSheetDetView,
     ManufactureOrder,ManufactureOrderView,
     MaterialSheet,MaterialSheetView,
     MaterialSheetDet,MaterialSheetDetView])
 class DataImportServiceTests {
 
 
-
+/*
     void testItemImport() {
 
         new ItemView(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -145,7 +151,45 @@ class DataImportServiceTests {
 
 
     }
+*/
+    void testPurchaseSheetImport() {
+        new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
+        new PurchaseSheetView(typeName:"B21",name:"98100900001",supplierName:"FJ01",incomingDate:"2009/10/09",orderDate:"2009/10/09").save(failOnError: true, flush: true)
+        new PurchaseSheetView(typeName:"B21",name:"98100900002",supplierName:"FJ01",incomingDate:"2009/10/09",orderDate:"2009/10/09").save(failOnError: true, flush: true)
+
+        def viewXml = PurchaseSheetView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert PurchaseSheet.list().size() == 2 
+
+    }
+
+    void testPurchaseSheetDetImport() {
+        def supplier1=new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
+
+        new PurchaseSheet(typeName:"B21",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
+        
+        new Item(name:"21006",title:"芝麻有機肥").save(failOnError: true, flush: true)
+        new Item(name:"21007",title:"黃豆有機肥").save(failOnError: true, flush: true)
+
+        new PurchaseSheetDetView(typeName:"B21",name:"98100900001",sequence:1,itemName:"21006",batchName:"0927-21006",qty:10000).save(failOnError: true, flush: true)
+        new PurchaseSheetDetView(typeName:"B21",name:"98100900001",sequence:2,itemName:"21007",batchName:"0927-21007",qty:10000).save(failOnError: true, flush: true)
+        
+        def viewXml = PurchaseSheetDetView.list() as XML
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert PurchaseSheetDet.list().size() == 2 
+
+    }
+/*
     void testManufactureOrderImport() {
         new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
         new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -193,8 +237,6 @@ class DataImportServiceTests {
         new Batch(name:"0927-21006",item:item2).save(failOnError: true, flush: true)
         new Batch(name:"0927-21007",item:item3).save(failOnError: true, flush: true)
             
-
-
         new ManufactureOrder(typeName:"C11",name:"98100900001",item:i1,qty:1000).save(failOnError: true, flush: true)
 
         def w1=new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
@@ -217,7 +259,7 @@ class DataImportServiceTests {
 
     }
 
-
+*/
 
     // void testBatchImport() {
     //     def writer = new StringWriter()

@@ -60,6 +60,12 @@ class DataImportService {
 				'supplierView',
 				'customerOrderView',
 				'customerOrderDetView',
+				'purchaseSheetView',
+				'purchaseSheetDetView',
+				'StockInSheetView',
+				'StockInSheetDetView',
+				'OutSrcPurchaseSheetView',
+				'OutSrcPurchaseDetView',
 				'manufactureOrderView',
 				'materialSheetView',
 				'materialSheetDetView'
@@ -112,7 +118,19 @@ class DataImportService {
 				if(targetClass=='CustomerOrder')
 					domain=getCustomerOrderInstance(record)		
 				if(targetClass=='CustomerOrderDet')
-					domain=getCustomerOrderDetInstance(record)	
+					domain=getCustomerOrderDetInstance(record)
+				if(targetClass=='PurchaseSheet')
+					domain=getPurchaseSheetInstance(record)		
+				if(targetClass=='PurchaseSheetDet')
+					domain=getPurchaseSheetDetInstance(record)
+				if(targetClass=='StockInSheet')
+					domain=getPurchaseSheetInstance(record)		
+				if(targetClass=='StockInSheetDet')
+					domain=getPurchaseSheetDetInstance(record)
+				if(targetClass=='OutSrcPurchaseSheet')
+					domain=getOutSrcPurchaseSheetInstance(record)		
+				if(targetClass=='OutSrcPurchaseSheetDet')
+					domain=getOutSrcPurchaseSheetDetInstance(record)
 				if(targetClass=='ManufactureOrder')
 					domain=getManufactureOrderInstance(record)	
 				if(targetClass=='MaterialSheet')
@@ -147,6 +165,27 @@ class DataImportService {
 
 
 
+	}
+
+	def private getBatchInstance(record, object){
+		println record
+
+		def batch = Batch.findByName(record.batchName.text())
+
+		if(!batch){
+			batch=new Batch(name:record.name.text())
+		}
+
+		batch.item = object.item
+
+		if(object.instanceOf(PurchaseSheetDet)){
+			batch.supplier = object.purchaseSheet.supplier
+		}
+		if(object.instanceOf(StockInSheetDet)){
+			//batch.manufactureDate
+		}
+
+		batch.save(failOnError:true, flush: true)
 	}
 
 	//基本資料
@@ -240,6 +279,51 @@ class DataImportService {
 		customerOrderDet.customerOrder = customerOrder
 
     	customerOrderDet
+
+    }
+
+    def private getPurchaseSheetInstance(record) {
+
+		def object = PurchaseSheet.findByNameAndTypeName(record.name.text(),record.typeName.text())
+
+		if(!object){
+			object=new PurchaseSheet(name:record.name.text(), typeName:record.typeName.text())
+		}
+
+		def supplier =Supplier.findByName(record.supplierName.text())
+
+		object.supplier = supplier
+
+    	object
+
+    }
+
+    def private getPurchaseSheetDetInstance(record) {
+
+		def object = PurchaseSheetDet.findByTypeNameAndNameAndSequence(
+			record.typeName.text(), record.name.text(), record.sequence.text())
+
+
+		if(!object){
+			object = new PurchaseSheetDet(
+				typeName: record.typeName.text(), name: record.name.text(), sequence: record.sequence.text())
+
+		}
+
+		def purchaseSheet = PurchaseSheet.findByTypeNameAndName(
+			record.typeName.text(), record.name.text())
+
+		def item = Item.findByName(record.itemName.text())
+		
+		object.item = item
+		object.purchaseSheet = purchaseSheet
+
+		//產生batch
+		def batch = getBatchInstance(record,object)
+
+		object.batch = batch
+
+    	object
 
     }
 
