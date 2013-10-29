@@ -59,7 +59,8 @@ class DataImportService {
 				'operationView',
 				'supplierView',
 				'customerOrderView',
-				'customerOrderDetView'
+				'customerOrderDetView',
+				'manufactureOrderView'
 			]
 
 			def loopKey
@@ -110,6 +111,8 @@ class DataImportService {
 					domain=getCustomerOrderInstance(record)		
 				if(targetClass=='CustomerOrderDet')
 					domain=getCustomerOrderDetInstance(record)	
+				if(targetClass=='ManufactureOrder')
+					domain=getManufactureOrderInstance(record)	
 
 				// if(targetClass=='Batch')
 				// 	domain=getBatchInstance(record)
@@ -234,6 +237,21 @@ class DataImportService {
 
     }
 
+    def private getManufactureOrderInstance(record) {
+
+		def object = ManufactureOrder.findByNameAndTypeName(record.name.text(),record.typeName.text())
+
+		if(!object){
+			object=new ManufactureOrder(name:record.name.text(), typeName:record.typeName.text())
+		}
+
+		def item =Item.findByName(record.itemName.text())
+
+		object.item = item
+
+    	object
+
+    }
   //   def private getBatchInstance(record){
 
 

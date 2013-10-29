@@ -18,7 +18,8 @@ import foodpaint.view.*
     Operation,OperationView,
     Supplier,SupplierView,
     CustomerOrder, CustomerOrderView,
-    CustomerOrderDet, CustomerOrderDetView])
+    CustomerOrderDet, CustomerOrderDetView,
+    ManufactureOrder,ManufactureOrderView])
 class DataImportServiceTests {
 
 
@@ -139,6 +140,25 @@ class DataImportServiceTests {
 
         assert CustomerOrderDet.list().size() == 2 
 
+
+    }
+
+    void testManufactureOrderImport() {
+        new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
+        new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
+
+        new ManufactureOrderView(typeName:"C11",name:"98100900001",itemName:"410001",qty:1000).save(failOnError: true, flush: true)
+        new ManufactureOrderView(typeName:"C11",name:"98100900002",itemName:"410002",qty:5000).save(failOnError: true, flush: true)
+
+
+        def viewXml = ManufactureOrderView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert ManufactureOrder.list().size() == 2 
 
     }
     // void testBatchImport() {
