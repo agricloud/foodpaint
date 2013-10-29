@@ -4,22 +4,7 @@ dataSource {
     username = "sa"
     password = ""
 }
-dataSource_erp {
-    pooled = true
-    driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-    dialect = "foodpaint.MinimalSQLServer2008Dialect"
-    username = "sa"
-    password = "dsc"
-    dbCreate = "validate"
-    url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
 
-    // pooled = true
-    // driverClassName = "org.h2.Driver"
-    // username = "sa"
-    // password = ""
-    // dbCreate = "update"
-    // url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-}
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false
@@ -33,7 +18,22 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
+        dataSource_erp {
+            // pooled = true
+            // driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+            // dialect = "foodpaint.MinimalSQLServer2008Dialect"
+            // username = "sa"
+            // password = "dsc"
+            // dbCreate = "validate"
+            // url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
 
+            pooled = true
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
+            dbCreate = "update"
+            url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+        }
     }
     test {
 
@@ -41,6 +41,15 @@ environments {
             dbCreate = "update"
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
+        dataSource_erp {
+
+            pooled = true
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
+            dbCreate = "update"
+            url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+        }        
     }
     production {
         dataSource {
@@ -49,6 +58,7 @@ environments {
             pooled = true
             properties {
                maxActive = -1
+            
                minEvictableIdleTimeMillis=1800000
                timeBetweenEvictionRunsMillis=1800000
                numTestsPerEvictionRun=3
