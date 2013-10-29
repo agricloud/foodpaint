@@ -65,7 +65,7 @@ class DataImportService {
 				'stockInSheetView',
 				'stockInSheetDetView',
 				'outSrcPurchaseSheetView',
-				'outSrcPurchaseDetView',
+				'outSrcPurchaseSheetDetView',
 				'manufactureOrderView',
 				'materialSheetView',
 				'materialSheetDetView'
@@ -380,6 +380,55 @@ class DataImportService {
 
     }
 
+    def private getOutSrcPurchaseSheetInstance(record) {
+
+		def object = OutSrcPurchaseSheet.findByNameAndTypeName(record.name.text(),record.typeName.text())
+
+		if(!object){
+			object=new OutSrcPurchaseSheet(name:record.name.text(), typeName:record.typeName.text())
+		}
+
+		def supplier =Supplier.findByName(record.supplierName.text())
+
+		object.supplier = supplier
+
+    	object
+
+    }
+
+    def private getOutSrcPurchaseSheetDetInstance(record) {
+
+		def object = OutSrcPurchaseSheetDet.findByTypeNameAndNameAndSequence(
+			record.typeName.text(), record.name.text(), record.sequence.text())
+
+
+		if(!object){
+			object = new OutSrcPurchaseSheetDet(
+				typeName: record.typeName.text(), name: record.name.text(), sequence: record.sequence.text())
+
+		}
+
+		def outSrcPurchaseSheet = OutSrcPurchaseSheet.findByTypeNameAndName(
+			record.typeName.text(), record.name.text())
+
+		def item = Item.findByName(record.itemName.text())
+
+		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
+				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
+
+		
+		object.item = item
+		object.outSrcPurchaseSheet = outSrcPurchaseSheet
+		object.manufactureOrder = manufactureOrder
+
+		//產生batch
+		def batch = getBatchInstance(record,object)
+
+		object.batch = batch
+
+    	object
+
+    }
 
     def private getManufactureOrderInstance(record) {
 
