@@ -18,6 +18,7 @@ class CustomerOrderDetView implements Serializable{
     String name=""
 
     Integer sequence
+    String itemName
 
     /*
     * 訂單數量
@@ -29,14 +30,15 @@ class CustomerOrderDetView implements Serializable{
         // qty nullable:true
     }
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'COPTD'
 
-        id composite: ['name', 'typeName']
+        id composite: ['typeName', 'name', 'sequence']
         version false
-        name column: 'TD001'
-        typeName column: 'TD002'
-        sequence column: 'TD003'
+        name column: 'TD001', sqlType: "nchar"
+        typeName column: 'TD002', sqlType: "nchar"
+        sequence column: 'TD003', sqlType: "nchar"
+        itemName column: 'TD004', sqlType: "nchar"
 
     }  
 

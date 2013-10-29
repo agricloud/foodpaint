@@ -36,15 +36,15 @@ class CustomerOrderView implements Serializable{
     }
 
     static mapping = {
-        // datasource 'erp'
+        datasource 'erp'
         table 'COPTC'
 
         id composite: ['name', 'typeName']
         version false
 
-        name column: 'TC001'
-        typeName column: 'TC002'
-        customerName column: 'TC004'
+        name column: 'TC001', sqlType: "nchar"
+        typeName column: 'TC002', sqlType: "nchar"
+        customerName column: 'TC004', sqlType: "nchar"
 
     }    
 }

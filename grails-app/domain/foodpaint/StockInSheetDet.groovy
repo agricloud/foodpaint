@@ -32,6 +32,5 @@ class StockInSheetDet extends DefaultSheetDet{
 
     static constraints = {
         stockLocation nullable:true      
-        sequence unique:'stockInSheet'
     }
 }

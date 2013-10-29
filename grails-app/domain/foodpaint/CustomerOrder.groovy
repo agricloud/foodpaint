@@ -6,7 +6,7 @@ package foodpaint
     */
 class CustomerOrder extends DefaultSheet{
 
-	static hasMany=[customerOrderDets:CustomerOrderDet]
+	static hasMany=[customerOrderDet:CustomerOrderDet]
 	/*
 	* 客戶編號
 	*/
@@ -23,6 +23,6 @@ class CustomerOrder extends DefaultSheet{
     static constraints = {
     	dueDate nullable:true
     	customer nullable:true
-    	customerOrderDets nullable:true
+    	//customerOrderDets nullable:true
     }
 }

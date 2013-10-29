@@ -11,8 +11,8 @@ class Batch extends DefaultTable {
 	]
 
 	String name
-	Long expectQty = 0
-	Date dueDate
+	Long expectQty = 0//ERP無此資料
+	Date dueDate //與過期日期的區別？
 
 
     /*
@@ -38,7 +38,7 @@ class Batch extends DefaultTable {
     */
    	Supplier supplier
 
-   	    /*
+   	/*
     * 供應商所屬國家
     */
 	String country = foodpaint.Country.TAIWAN

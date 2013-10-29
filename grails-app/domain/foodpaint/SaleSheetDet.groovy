@@ -31,7 +31,6 @@ class SaleSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
-        sequence unique:'saleSheet'
 
     }
 }

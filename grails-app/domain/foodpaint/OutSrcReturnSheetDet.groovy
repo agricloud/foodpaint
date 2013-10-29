@@ -29,7 +29,6 @@ class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
-        sequence unique:'outSrcReturnSheet'
 
     }
 }

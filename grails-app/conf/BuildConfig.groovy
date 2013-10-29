@@ -8,6 +8,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.server.port.http = 8180
+grails.project.war.file = "target/${appName}.war"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 if(grailsVersion == "2.3.0"){
@@ -100,5 +101,7 @@ grails.project.dependency.resolution = {
         compile ":cxf:1.1.1"
 
         compile ":crypto:2.0"
+
+        compile ":quartz:1.0-RC13"
     }
 }

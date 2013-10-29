@@ -5,7 +5,7 @@ package foodpaint
     */
 class MaterialSheet extends DefaultSheet{
 
-	static hasMany=[materialSheetDets:MaterialSheetDet]
+	static hasMany=[materialSheetDet:MaterialSheetDet]
     /*
     * 生產線別，加工廠商
     */
@@ -13,7 +13,7 @@ class MaterialSheet extends DefaultSheet{
 
 
     static constraints = {
-        materialSheetDets nullable:true
+        materialSheetDet nullable:true
         
     }
 }
