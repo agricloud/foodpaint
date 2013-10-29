@@ -151,7 +151,7 @@ class DataImportServiceTests {
 
 
     }
-*/
+
     void testPurchaseSheetImport() {
         new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
@@ -189,6 +189,102 @@ class DataImportServiceTests {
         assert PurchaseSheetDet.list().size() == 2 
 
     }
+
+    void testStockInSheetImport() {
+        new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+
+        new StockInSheetView(typeName:"BD31",name:"98100900001",workstationName:"workstation1").save(failOnError: true, flush: true)
+        new StockInSheetView(typeName:"BD31",name:"98100900002",workstationName:"workstation1").save(failOnError: true, flush: true)
+
+        def viewXml = StockInSheetView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert StockInSheet.list().size() == 2 
+
+    }
+
+    void testStockInSheetDetImport() {
+        def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+
+        def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
+        def item6 = new Item(name:"31002",title:"玉米半成品",spec:"半成品測試",unit:"kg",description:"半成品測試").save(failOnError: true, flush: true)
+
+
+        new ManufactureOrder(typeName:"C11",name:"98100900001",item:item1,qty:1000).save(failOnError: true, flush: true)
+        new ManufactureOrder(typeName:"C11",name:"98100900002",item:item6,qty:1000).save(failOnError: true, flush: true)
+
+        new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
+        
+        new StockInSheetDetView(typeName:"BD31",name:"98100900001",sequence:1,batchName:"0927-31002",itemName:"31002",
+                warehouse:"warehouse2", manufactureOrderTypeName:"C11",manufactureOrderName:"98100900002").save(failOnError: true, flush: true)
+        
+        new StockInSheet(typeName:"BD31",name:"98100900002",workstation:workstation1).save(failOnError: true, flush: true)
+        
+        new StockInSheetDetView(typeName:"BD31",name:"98100900002",sequence:1,batchName:"0927-410002",itemName:"410002",
+                warehouse:"warehouse3", manufactureOrderTypeName:"C11",manufactureOrderName:"98100900001").save(failOnError: true, flush: true)
+
+        def viewXml = StockInSheetDetView.list() as XML
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert StockInSheetDet.list().size() == 2 
+
+    }
+*/
+
+    void testStockInSheetImport() {
+        new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+
+        new StockInSheetView(typeName:"BD31",name:"98100900001",workstationName:"workstation1").save(failOnError: true, flush: true)
+        new StockInSheetView(typeName:"BD31",name:"98100900002",workstationName:"workstation1").save(failOnError: true, flush: true)
+
+        def viewXml = StockInSheetView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert StockInSheet.list().size() == 2 
+
+    }
+
+    void testStockInSheetDetImport() {
+        def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+
+        def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
+        def item6 = new Item(name:"31002",title:"玉米半成品",spec:"半成品測試",unit:"kg",description:"半成品測試").save(failOnError: true, flush: true)
+
+
+        new ManufactureOrder(typeName:"C11",name:"98100900001",item:item1,qty:1000).save(failOnError: true, flush: true)
+        new ManufactureOrder(typeName:"C11",name:"98100900002",item:item6,qty:1000).save(failOnError: true, flush: true)
+
+        new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
+        
+        new StockInSheetDetView(typeName:"BD31",name:"98100900001",sequence:1,batchName:"0927-31002",itemName:"31002",
+                warehouse:"warehouse2", manufactureOrderTypeName:"C11",manufactureOrderName:"98100900002").save(failOnError: true, flush: true)
+        
+        new StockInSheet(typeName:"BD31",name:"98100900002",workstation:workstation1).save(failOnError: true, flush: true)
+        
+        new StockInSheetDetView(typeName:"BD31",name:"98100900002",sequence:1,batchName:"0927-410002",itemName:"410002",
+                warehouse:"warehouse3", manufactureOrderTypeName:"C11",manufactureOrderName:"98100900001").save(failOnError: true, flush: true)
+
+        def viewXml = StockInSheetDetView.list() as XML
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert StockInSheetDet.list().size() == 2 
+
+    }
+
 /*
     void testManufactureOrderImport() {
         new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)

@@ -62,10 +62,10 @@ class DataImportService {
 				'customerOrderDetView',
 				'purchaseSheetView',
 				'purchaseSheetDetView',
-				'StockInSheetView',
-				'StockInSheetDetView',
-				'OutSrcPurchaseSheetView',
-				'OutSrcPurchaseDetView',
+				'stockInSheetView',
+				'stockInSheetDetView',
+				'outSrcPurchaseSheetView',
+				'outSrcPurchaseDetView',
 				'manufactureOrderView',
 				'materialSheetView',
 				'materialSheetDetView'
@@ -124,9 +124,9 @@ class DataImportService {
 				if(targetClass=='PurchaseSheetDet')
 					domain=getPurchaseSheetDetInstance(record)
 				if(targetClass=='StockInSheet')
-					domain=getPurchaseSheetInstance(record)		
+					domain=getStockInSheetInstance(record)		
 				if(targetClass=='StockInSheetDet')
-					domain=getPurchaseSheetDetInstance(record)
+					domain=getStockInSheetDetInstance(record)
 				if(targetClass=='OutSrcPurchaseSheet')
 					domain=getOutSrcPurchaseSheetInstance(record)		
 				if(targetClass=='OutSrcPurchaseSheetDet')
@@ -168,7 +168,6 @@ class DataImportService {
 	}
 
 	def private getBatchInstance(record, object){
-		println record
 
 		def batch = Batch.findByName(record.batchName.text())
 
@@ -182,7 +181,11 @@ class DataImportService {
 			batch.supplier = object.purchaseSheet.supplier
 		}
 		if(object.instanceOf(StockInSheetDet)){
-			//batch.manufactureDate
+			//batch.manufactureDate=//尚未定義此資料來源
+		}
+		if(object.instanceOf(OutSrcPurchaseSheetDet)){
+			batch.supplier = object.outSrcPurchaseSheet.supplier
+			//batch.manufactureDate=//尚未定義此資料來源
 		}
 
 		batch.save(failOnError:true, flush: true)
@@ -326,6 +329,57 @@ class DataImportService {
     	object
 
     }
+
+    def private getStockInSheetInstance(record) {
+
+		def object = StockInSheet.findByNameAndTypeName(record.name.text(),record.typeName.text())
+
+		if(!object){
+			object=new StockInSheet(name:record.name.text(), typeName:record.typeName.text())
+		}
+
+		def workstation =Workstation.findByName(record.workstationName.text())
+
+		object.workstation = workstation
+
+    	object
+
+    }
+
+    def private getStockInSheetDetInstance(record) {
+
+		def object = StockInSheetDet.findByTypeNameAndNameAndSequence(
+			record.typeName.text(), record.name.text(), record.sequence.text())
+
+
+		if(!object){
+			object = new StockInSheetDet(
+				typeName: record.typeName.text(), name: record.name.text(), sequence: record.sequence.text())
+
+		}
+
+		def stockInSheet = StockInSheet.findByTypeNameAndName(
+			record.typeName.text(), record.name.text())
+
+		def item = Item.findByName(record.itemName.text())
+
+		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
+				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
+
+		
+		object.item = item
+		object.stockInSheet = stockInSheet
+		object.manufactureOrder = manufactureOrder
+
+		//產生batch
+		def batch = getBatchInstance(record,object)
+
+		object.batch = batch
+
+    	object
+
+    }
+
 
     def private getManufactureOrderInstance(record) {
 
