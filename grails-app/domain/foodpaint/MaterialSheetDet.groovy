@@ -26,7 +26,6 @@ class MaterialSheetDet extends DefaultSheetDet{
     Item item
 
     static constraints = {
-        sequence unique:'materialSheet'
 
     }
 }

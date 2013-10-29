@@ -60,7 +60,9 @@ class DataImportService {
 				'supplierView',
 				'customerOrderView',
 				'customerOrderDetView',
-				'manufactureOrderView'
+				'manufactureOrderView',
+				'materialSheetView',
+				'materialSheetDetView'
 			]
 
 			def loopKey
@@ -113,6 +115,10 @@ class DataImportService {
 					domain=getCustomerOrderDetInstance(record)	
 				if(targetClass=='ManufactureOrder')
 					domain=getManufactureOrderInstance(record)	
+				if(targetClass=='MaterialSheet')
+					domain=getMaterialSheetInstance(record)		
+				if(targetClass=='MaterialSheetDet')
+					domain=getMaterialSheetDetInstance(record)	
 
 				// if(targetClass=='Batch')
 				// 	domain=getBatchInstance(record)
@@ -121,7 +127,7 @@ class DataImportService {
 				// 共用最後進行儲存
 				if(domain){
 					domain.properties=getDomainProperties(record, fields)
-					// println domain as JSON
+					println domain as JSON
 					domain.save(failOnError:true, flush: true)
 				}
 
@@ -252,6 +258,52 @@ class DataImportService {
     	object
 
     }
+
+    def private getMaterialSheetInstance(record) {
+
+		def object = MaterialSheet.findByNameAndTypeName(record.name.text(),record.typeName.text())
+
+		if(!object){
+			object=new MaterialSheet(name:record.name.text(), typeName:record.typeName.text())
+		}
+
+		def workstation =Workstation.findByName(record.workstationName.text())
+
+		object.workstation = workstation
+
+    	object
+
+    }
+
+    def private getMaterialSheetDetInstance(record) {
+
+		def object = MaterialSheetDet.findByTypeNameAndNameAndSequence(
+			record.typeName.text(), record.name.text(), record.sequence.text())
+
+
+		if(!object){
+			object = new MaterialSheetDet(
+				typeName: record.typeName.text(), name: record.name.text(), sequence: record.sequence.text())
+
+		}
+
+		def materialSheet = MaterialSheet.findByTypeNameAndName(
+			record.typeName.text(), record.name.text())
+
+		def item = Item.findByName(record.itemName.text())
+		def batch = Batch.findByName(record.batchName.text())
+		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
+				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
+
+		object.item = item
+		object.batch = batch
+		object.materialSheet = materialSheet
+		object.manufactureOrder = manufactureOrder
+
+    	object
+
+    }
+
   //   def private getBatchInstance(record){
 
 

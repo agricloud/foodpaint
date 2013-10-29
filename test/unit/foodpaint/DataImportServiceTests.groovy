@@ -17,9 +17,12 @@ import foodpaint.view.*
     Workstation,WorkstationView,
     Operation,OperationView,
     Supplier,SupplierView,
+    Batch,
     CustomerOrder, CustomerOrderView,
     CustomerOrderDet, CustomerOrderDetView,
-    ManufactureOrder,ManufactureOrderView])
+    ManufactureOrder,ManufactureOrderView,
+    MaterialSheet,MaterialSheetView,
+    MaterialSheetDet,MaterialSheetDetView])
 class DataImportServiceTests {
 
 
@@ -161,6 +164,61 @@ class DataImportServiceTests {
         assert ManufactureOrder.list().size() == 2 
 
     }
+
+    void testMaterialSheetImport() {
+        new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+        new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
+
+
+        new MaterialSheetView(typeName:"D11",name:"98100900001",workstationName:"workstation1").save(failOnError: true, flush: true)
+        new MaterialSheetView(typeName:"D11",name:"98100900002",workstationName:"workstation2").save(failOnError: true, flush: true)
+
+        def viewXml = MaterialSheetView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert MaterialSheet.list().size() == 2 
+
+    }
+
+    void testMaterialSheetDetImport() {
+
+        def i1=new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
+        def item2=new Item(name:"21006",title:"芝麻有機肥").save(failOnError: true, flush: true)
+        def item3=new Item(name:"21007",title:"黃豆有機肥").save(failOnError: true, flush: true)
+
+        new Batch(name:"0927-21006",item:item2).save(failOnError: true, flush: true)
+        new Batch(name:"0927-21007",item:item3).save(failOnError: true, flush: true)
+            
+
+
+        new ManufactureOrder(typeName:"C11",name:"98100900001",item:i1,qty:1000).save(failOnError: true, flush: true)
+
+        def w1=new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+
+        new MaterialSheet(typeName:"D11",name:"98100900001",workstation:w1).save(failOnError: true, flush: true)
+
+        new MaterialSheetDetView(typeName:"D11",name:"98100900001",sequence:1,itemName:"21006",batchName:"0927-21006",
+                manufactureOrderTypeName:"C11",manufactureOrderName:"98100900001").save(failOnError: true, flush: true)
+        new MaterialSheetDetView(typeName:"D11",name:"98100900001",sequence:2,itemName:"21007",batchName:"0927-21007",
+                manufactureOrderTypeName:"C11",manufactureOrderName:"98100900001").save(failOnError: true, flush: true)
+
+        def viewXml = MaterialSheetDetView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert MaterialSheetDet.list().size() == 2 
+
+    }
+
+
+
     // void testBatchImport() {
     //     def writer = new StringWriter()
     //     def xml = new MarkupBuilder(writer)
