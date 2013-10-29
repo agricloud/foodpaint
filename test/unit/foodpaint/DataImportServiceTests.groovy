@@ -32,7 +32,7 @@ import foodpaint.view.*
 class DataImportServiceTests {
 
 
-/*
+
     void testItemImport() {
 
         new ItemView(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -236,7 +236,7 @@ class DataImportServiceTests {
         assert StockInSheetDet.list().size() == 2 
 
     }
-*/
+
 
     void testOutSrcPurchaseSheetImport() {
         new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
@@ -276,7 +276,7 @@ class DataImportServiceTests {
 
     }
 
-/*
+
     void testManufactureOrderImport() {
         new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
         new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -346,7 +346,7 @@ class DataImportServiceTests {
 
     }
 
-*/
+
 
     // void testBatchImport() {
     //     def writer = new StringWriter()
