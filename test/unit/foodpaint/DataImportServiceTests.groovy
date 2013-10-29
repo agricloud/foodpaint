@@ -14,6 +14,8 @@ import foodpaint.view.*
 @Mock([
     Item, ItemView, 
     Customer, CustomerView,
+    Workstation,WorkstationView,
+    Operation,OperationView,
     CustomerOrder, CustomerOrderView,
     CustomerOrderDet, CustomerOrderDetView])
 class DataImportServiceTests {
@@ -49,6 +51,37 @@ class DataImportServiceTests {
         assert Customer.list().size() == 2 
 
     }
+
+    void testWorkstationImport() {
+
+        new WorkstationView(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+        new WorkstationView(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
+
+        def viewXml = WorkstationView.list() as XML
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert Workstation.list().size() == 2 
+
+    }
+
+    void testOperationImport() {
+
+        new OperationView(name:"operation1",title:"施肥",description:"施肥肥").save(failOnError: true, flush: true)
+        new OperationView(name:"operation2",title:"翻土",description:"翻土土").save(failOnError: true, flush: true)
+
+        def viewXml = OperationView.list() as XML
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert Operation.list().size() == 2 
+
+    }
+
     /*
     //最後做 需檢查ＥＲＰ國家別建置方式
     void testSupplierImport() {

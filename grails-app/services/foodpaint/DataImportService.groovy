@@ -55,6 +55,8 @@ class DataImportService {
 			def importClassList = [
 				'itemView',
 				'customerView',
+				'workstationView',
+				'operationView',
 				'customerOrderView',
 				'customerOrderDetView'
 			]
@@ -97,6 +99,11 @@ class DataImportService {
 					domain=getItemInstance(record)
 				if(targetClass=='Customer')
 					domain=getCustomerInstance(record)
+				if(targetClass=='Workstation')
+					domain=getWorkstationInstance(record)
+				if(targetClass=='Operation')
+					domain=getOperationInstance(record)
+
 				if(targetClass=='CustomerOrder')
 					domain=getCustomerOrderInstance(record)		
 				if(targetClass=='CustomerOrderDet')
@@ -155,6 +162,29 @@ class DataImportService {
     	customer
 
     }
+
+    def private getWorkstationInstance(record) {
+
+		def object = Workstation.findByName(record.name.text())
+
+		if(!object){
+			object=new Workstation(name:record.name.text())
+		}
+
+    	object
+    }
+
+    def private getOperationInstance(record) {
+
+		def object = Operation.findByName(record.name.text())
+
+		if(!object){
+			object=new Operation(name:record.name.text())
+		}
+		
+    	object
+    }
+
     //單據
     def private getCustomerOrderInstance(record) {
 
