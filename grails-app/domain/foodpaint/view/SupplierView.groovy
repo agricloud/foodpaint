@@ -18,7 +18,8 @@ class SupplierView {
     /*
     * 供應商所屬國家
     */
-	String country
+    //暫時預設為台灣，稍後決定如何與ＥＲＰ關聯
+	String country="TAIWAN"
 
 
 
@@ -35,6 +36,6 @@ class SupplierView {
 
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
-        country column: 'MA006', sqlType: "nchar"
+        //country column: 'MA006', sqlType: "nchar"
     }
 }

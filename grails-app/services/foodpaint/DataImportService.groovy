@@ -57,6 +57,7 @@ class DataImportService {
 				'customerView',
 				'workstationView',
 				'operationView',
+				'supplierView',
 				'customerOrderView',
 				'customerOrderDetView'
 			]
@@ -103,7 +104,8 @@ class DataImportService {
 					domain=getWorkstationInstance(record)
 				if(targetClass=='Operation')
 					domain=getOperationInstance(record)
-
+				if(targetClass=='Supplier')
+					domain=getSupplierInstance(record)
 				if(targetClass=='CustomerOrder')
 					domain=getCustomerOrderInstance(record)		
 				if(targetClass=='CustomerOrderDet')
@@ -180,6 +182,17 @@ class DataImportService {
 
 		if(!object){
 			object=new Operation(name:record.name.text())
+		}
+		
+    	object
+    }
+
+    def private getSupplierInstance(record) {
+
+		def object = Supplier.findByName(record.name.text())
+
+		if(!object){
+			object=new Supplier(name:record.name.text())
 		}
 		
     	object

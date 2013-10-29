@@ -16,6 +16,7 @@ import foodpaint.view.*
     Customer, CustomerView,
     Workstation,WorkstationView,
     Operation,OperationView,
+    Supplier,SupplierView,
     CustomerOrder, CustomerOrderView,
     CustomerOrderDet, CustomerOrderDetView])
 class DataImportServiceTests {
@@ -82,23 +83,22 @@ class DataImportServiceTests {
 
     }
 
-    /*
-    //最後做 需檢查ＥＲＰ國家別建置方式
+
     void testSupplierImport() {
 
-        new SupplierView(name:"FJ01",title:"福智麻園",country:"台灣").save(failOnError: true, flush: true)
-        new SupplierView().save(failOnError: true, flush: true)
+        new SupplierView(name:"FJ01",title:"福智麻園",country:"TAIWAN").save(failOnError: true, flush: true)
+        new SupplierView(name:"LZ01",title:"里仁生機",country:"JAPAN").save(failOnError: true, flush: true)
 
-        def itemViewXml = ItemView.list() as XML
+        def viewXml = SupplierView.list() as XML
 
-        println itemViewXml.toString()
+        println viewXml.toString()
 
-        service.doDataImport(itemViewXml.toString())
+        service.doDataImport(viewXml.toString())
 
-        assert Item.list().size() == 2 
+        assert Supplier.list().size() == 2 
 
     }
-    */
+
 
     void testCustomerOrderImport() {
 
