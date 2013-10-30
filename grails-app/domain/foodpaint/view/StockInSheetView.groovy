@@ -1,10 +1,11 @@
 package foodpaint.view
-
     /*
     * 入庫單
     */
 class StockInSheetView implements Serializable{
 
+    Integer flag
+    
     /*
     * 單別
     */
@@ -29,10 +30,10 @@ class StockInSheetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTF'
-
-        id composite: ['typeName','name']
         version false
 
+        id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TF001', sqlType: "nchar"
         name column: 'TF002', sqlType: "nchar"
         workstationName column: 'TF011', sqlType: "nchar"

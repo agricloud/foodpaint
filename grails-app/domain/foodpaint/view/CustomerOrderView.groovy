@@ -6,6 +6,8 @@ package foodpaint.view
     */
 class CustomerOrderView implements Serializable{
 
+
+    Integer flag
     /*
     * 單別
     */
@@ -38,10 +40,10 @@ class CustomerOrderView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'COPTC'
-
-        id composite: ['name', 'typeName']
         version false
 
+        id composite: ['name', 'typeName']
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'TC001', sqlType: "nchar"
         typeName column: 'TC002', sqlType: "nchar"
         customerName column: 'TC004', sqlType: "nchar"

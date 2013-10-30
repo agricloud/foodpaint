@@ -2,6 +2,8 @@ package foodpaint.view
 
 class StockInSheetDetView implements Serializable{
 
+    Integer flag
+    
     /*
     * 單別
     */
@@ -54,10 +56,10 @@ class StockInSheetDetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTG'
-
-        id composite: ['typeName', 'name', 'sequence']
         version false
 
+        id composite: ['typeName', 'name', 'sequence']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TG001', sqlType: "nchar"
         name column: 'TG002', sqlType: "nchar"
         sequence column: 'TG003', sqlType: "nchar"

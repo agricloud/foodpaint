@@ -1,12 +1,10 @@
 package foodpaint.view
-
-
-
     /*
     * 託外進貨單
     */
 class OutSrcPurchaseSheetView implements Serializable{
 
+    Integer flag
     /*
     * 單別
     */
@@ -32,10 +30,10 @@ class OutSrcPurchaseSheetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTH'
-
-        id composite: ['typeName','name']
         version false
 
+        id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TH001', sqlType: "nchar"
         name column: 'TH002', sqlType: "nchar"
         supplierName column: 'TH005', sqlType: "nchar"

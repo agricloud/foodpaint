@@ -2,6 +2,8 @@ package foodpaint
 
 class DefaultTable {
 
+	Integer flag
+
     /**
      * 廠別
      */
@@ -27,12 +29,15 @@ class DefaultTable {
 	 */
 	Date lastUpdated
 
+
+
     static mapping = {
         tablePerHierarchy false
     }
 	
     static constraints = {
     	site nullable:true
+    	//flag nullable:true
     }
 
 }

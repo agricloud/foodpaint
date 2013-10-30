@@ -44,10 +44,7 @@ class DataImportService {
     @XmlJavaTypeAdapter(GrailsCxfMapAdapter.class)
 	Map doDataImport(@WebParam(name="xmlString")String xmlString){
 
-
 		def result=[:]
-
-			
 			
 			def writer = new StringWriter()
 		    def xml = new MarkupBuilder(writer)
@@ -146,7 +143,9 @@ class DataImportService {
 
 					// 共用最後進行儲存
 					if(domain){
+						domain.flag=record.flag.text().toInteger()
 						domain.properties=getDomainProperties(record, fields)
+						log.info domain as JSON
 						domain.save(failOnError:true, flush: true)
 					}
 
@@ -178,6 +177,7 @@ class DataImportService {
 			batch=new Batch(name:record.batchName.text())
 		}
 
+		batch.flag=0
 		batch.item = object.item
 
 		if(object.instanceOf(PurchaseSheetDet)){
@@ -190,8 +190,11 @@ class DataImportService {
 			batch.supplier = object.outSrcPurchaseSheet.supplier
 			//batch.manufactureDate=//尚未定義此資料來源
 		}
+		
+		log.info batch as JSON
 
 		batch.save(failOnError:true, flush: true)
+		
 	}
 
 	//基本資料
@@ -571,7 +574,7 @@ class DataImportService {
     	def props=[:]
     	fields.each{ field ->
 			// println field+"====="+record[field].text()
-			if(record[field] && record[field].text() && !field.contains("Date")){
+			if(record[field] && record[field].text() && !field.contains("Date") && !field.contains("flag")){
 				props[field]=record[field].text()
 			}
 		}

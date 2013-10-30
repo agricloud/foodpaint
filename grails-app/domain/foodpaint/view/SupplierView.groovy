@@ -3,6 +3,8 @@ package foodpaint.view
 
 class SupplierView {
 
+    Integer flag
+    
     /*
     * 編號
     */
@@ -33,7 +35,7 @@ class SupplierView {
         version false
         
         id generator: 'assigned', name: 'name'
-
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
         //country column: 'MA006', sqlType: "nchar"
