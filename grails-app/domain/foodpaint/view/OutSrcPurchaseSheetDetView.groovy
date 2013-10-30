@@ -2,7 +2,7 @@ package foodpaint.view
 
 class OutSrcPurchaseSheetDetView implements Serializable{
 
-    Integer version
+    Integer flag
 
     /*
     * 單別
@@ -51,7 +51,8 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTI'
-        version column: 'FLAG', sqlType:"numeric"
+        version false
+        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
         typeName column: 'TI001', sqlType: "nchar"

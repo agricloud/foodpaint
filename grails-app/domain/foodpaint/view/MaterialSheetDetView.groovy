@@ -7,7 +7,7 @@ package foodpaint.view
     */
 class MaterialSheetDetView implements Serializable{
 
-    Integer version
+    Integer flag
 
     /*
     * 單別
@@ -45,7 +45,8 @@ class MaterialSheetDetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTE'
-        version column: 'FLAG', sqlType:"numeric"
+        version false
+        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
         typeName column: 'TE001', sqlType: "nchar"

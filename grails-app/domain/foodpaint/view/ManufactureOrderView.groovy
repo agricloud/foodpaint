@@ -6,7 +6,8 @@ package foodpaint.view
     */
 class ManufactureOrderView implements Serializable{
 
-    Integer version
+    Integer flag
+    
     /*
     * 訂單單身
     */
@@ -43,7 +44,8 @@ class ManufactureOrderView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTA'
-        version column: 'FLAG', sqlType:"numeric"
+        version false
+        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
         typeName column: 'TA001', sqlType: "nchar"

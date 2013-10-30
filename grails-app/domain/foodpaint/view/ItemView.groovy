@@ -7,7 +7,7 @@ package foodpaint.view
  */
 class ItemView {
 
-    Integer version
+    Integer flag
 
     /**
      * 項目名稱，必填欄位
@@ -72,7 +72,8 @@ class ItemView {
     static mapping = {
         datasource 'erp'
         table 'INVMB'
-        version column: 'FLAG', sqlType:"numeric"
+        version false
+        flag column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
         name column: 'MB001', sqlType: "nchar"
