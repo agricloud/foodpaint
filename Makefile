@@ -40,10 +40,10 @@ remote_user=demo
 # 	ssh -t ${remote_user}@${remote_addr} 'sudo mkdir -p /usr/share/tomcat7/.grails/projects/extrails/searchable-index/production/index/product && sudo chgrp -R tomcat7 /usr/share/tomcat7 && sudo chmod -R 770 /usr/share/tomcat7'
 
 
-# remote-dbinit:
-# 	CREATE DATABASE extrails DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-# 	create user 'extrails'@'localhost' identified by 'mvagusta';
-# 	grant all on *.* to 'extrails'@'localhost';
+remote-dbinit:
+	CREATE DATABASE foodpaint DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	create user 'foodpaint'@'localhost' identified by 'foodpaint';
+	grant all on *.* to 'foodpaint'@'localhost';
 	
 
 
@@ -75,8 +75,8 @@ war:
 
 deployWar:
 	#cp ~/.grails/extrails-config.groovy /usr/share/tomcat6/.grails/
-	#scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
-	ssh -t ${remote_user}@${remote_addr} 'cd ~/ && sudo cp foodpaint.war /var/lib/tomcat6/webapps/ && sudo service tomcat6 restart'
+	scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
+	ssh -t ${remote_user}@${remote_addr} 'cd ~/ && sudo rm -rf /var/lib/tomcat6/webapps/foodpaint && sudo cp foodpaint.war /var/lib/tomcat6/webapps/ && sudo service tomcat6 restart'
 
 		
 

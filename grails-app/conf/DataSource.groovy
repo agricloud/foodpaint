@@ -54,35 +54,32 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
+            driverClassName = "com.mysql.jdbc.Driver"
+            //dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            //dialect = org.hibernate.dialect.MySQLMyISAMDialect
+            // logSql = true
+            username = "foodpaint"
+            password = "foodpaint"
+            url = "jdbc:mysql://localhost/foodpaint?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
             properties {
-               maxActive = -1
-            
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
+                minEvictableIdleTimeMillis=1800000
+                timeBetweenEvictionRunsMillis=1800000
+                numTestsPerEvictionRun=3
+                testOnBorrow=true
+                testWhileIdle=true
+                testOnReturn=true
+                validationQuery="SELECT 1"
             }
         }
         dataSource_erp {
-            dbCreate = "update"
-            url = "jdbc:h2:prodErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
-            properties {
-               maxActive = -1
-            
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
-            }
+            driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+            dialect = "foodpaint.MinimalSQLServer2008Dialect"
+            username = "sa"
+            password = "dsc"
+            dbCreate = "validate"
+            url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
         }
     }
 }

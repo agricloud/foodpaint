@@ -33,7 +33,7 @@ class StockInSheetDetView implements Serializable{
     * 庫別
     */
 
-    String warehouse
+    String warehouseName
 
     /*
     * 儲位

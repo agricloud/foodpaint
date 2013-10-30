@@ -20,8 +20,6 @@ class ApiController {
      * 實作履歷查詢，回傳 json 資料
      */
     def queryBatchReport() {
-        log.info CustomerOrderView.list().get(0) as XML
-        log.info CustomerOrderDetView.list().get(0) as XML
         //params.batch.name="0927-410002"
 
         def reportInfo = [batchSources:[]]

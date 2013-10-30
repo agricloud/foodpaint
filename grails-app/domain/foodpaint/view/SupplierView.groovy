@@ -19,7 +19,7 @@ class SupplierView {
     * 供應商所屬國家
     */
     //暫時預設為台灣，稍後決定如何與ＥＲＰ關聯
-	String country="TAIWAN"
+	// String country="TAIWAN"
 
 
 
