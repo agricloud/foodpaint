@@ -175,7 +175,7 @@ class DataImportService {
 		def batch = Batch.findByName(record.batchName.text())
 
 		if(!batch){
-			batch=new Batch(name:record.name.text())
+			batch=new Batch(name:record.batchName.text())
 		}
 
 		batch.item = object.item
