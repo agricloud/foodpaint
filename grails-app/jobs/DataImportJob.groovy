@@ -10,40 +10,66 @@ class DataImportJob {
 
     def group = "MyGroup"
     def execute(){
-		log.info "ItemView.count() = ${ItemView.count()}"
-		dataImportService.doDataImport((ItemView.list() as XML).toString());
 
+    	if(ItemView.count()>0){
+			log.info "ItemView.count() = ${ItemView.count()}"
+			dataImportService.doDataImport((ItemView.list() as XML).toString());
+		}
+
+		if(WorkstationView.count()>0){
 		log.info "WorkstationView.count() = ${WorkstationView.count()}"
 		dataImportService.doDataImport((WorkstationView.list() as XML).toString());
+		}
 
-		log.info "OperationView.count() = ${OperationView.count()}"
-		dataImportService.doDataImport((OperationView.list() as XML).toString());
-		
-		log.info "SupplierView.count() = ${SupplierView.count()}"
-		dataImportService.doDataImport((SupplierView.list() as XML).toString());
+		if(OperationView.count()>0){
+			log.info "OperationView.count() = ${OperationView.count()}"
+			dataImportService.doDataImport((OperationView.list() as XML).toString());
+		}
 
-		log.info "CustomerView.count() = ${CustomerView.count()}"
-		dataImportService.doDataImport((CustomerView.list() as XML).toString());
+		if(SupplierView.count()>0){
+			log.info "SupplierView.count() = ${SupplierView.count()}"
+			dataImportService.doDataImport((SupplierView.list() as XML).toString());
+		}
 
-		log.info "CustomerOrderView.count() = ${CustomerOrderView.count()}"
-		dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
+		if(CustomerView.count()>0){
+			log.info "CustomerView.count() = ${CustomerView.count()}"
+			dataImportService.doDataImport((CustomerView.list() as XML).toString());
+		}
 
-		log.info "CustomerOrderDetView.count() = ${CustomerOrderDetView.count()}"
-		dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
-		
-		log.info "ManufactureOrderView.count() = ${ManufactureOrderView.count()}"
-		dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
+		if(CustomerOrderView.count()>0){
+			log.info "CustomerOrderView.count() = ${CustomerOrderView.count()}"
+			dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
+		}
 
-		log.info "PurchaseSheetView.count() = ${PurchaseSheetView.count()}"
-		dataImportService.doDataImport((PurchaseSheetView.list() as XML).toString());
-		log.info "PurchaseSheetDetView.count() = ${PurchaseSheetDetView.count()}"	
-		dataImportService.doDataImport((PurchaseSheetDetView.list() as XML).toString());
+		if(CustomerOrderDetView.count()>0){
+			log.info "CustomerOrderDetView.count() = ${CustomerOrderDetView.count()}"
+			dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
+		}
 
-		log.info "StockInSheetView.count() = ${StockInSheetView.count()}"
-		dataImportService.doDataImport((StockInSheetView.list() as XML).toString());
-		log.info "StockInSheetDetView.count() = ${StockInSheetDetView.count()}"
-		dataImportService.doDataImport((StockInSheetDetView.list() as XML).toString());
+		if(ManufactureOrderView.count()>0){	
+			log.info "ManufactureOrderView.count() = ${ManufactureOrderView.count()}"
+			dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
+		}
 
+		if(PurchaseSheetView.count()>0){
+			log.info "PurchaseSheetView.count() = ${PurchaseSheetView.count()}"
+			dataImportService.doDataImport((PurchaseSheetView.list() as XML).toString());
+		}
+
+		if(PurchaseSheetDetView.count()>0){
+			log.info "PurchaseSheetDetView.count() = ${PurchaseSheetDetView.count()}"	
+			dataImportService.doDataImport((PurchaseSheetDetView.list() as XML).toString());
+		}
+
+		if(StockInSheetView.count()>0){
+			log.info "StockInSheetView.count() = ${StockInSheetView.count()}"
+			dataImportService.doDataImport((StockInSheetView.list() as XML).toString());
+		}
+
+		if(StockInSheetDetView.count()>0){
+			log.info "StockInSheetDetView.count() = ${StockInSheetDetView.count()}"
+			dataImportService.doDataImport((StockInSheetDetView.list() as XML).toString());
+		}
 		
 		if(OutSrcPurchaseSheetView.count()>0){
 			log.info "OutSrcPurchaseSheetView.count() = ${OutSrcPurchaseSheetView.count()}"
