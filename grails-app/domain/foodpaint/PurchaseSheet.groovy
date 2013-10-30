@@ -30,5 +30,6 @@ class PurchaseSheet extends DefaultSheet{
     
     static constraints = {
         purchaseSheetDet nullable:true
+        supplier  nullable:true
     }
 }

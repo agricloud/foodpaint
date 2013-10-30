@@ -19,20 +19,20 @@ environments {
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
         dataSource_erp {
-            // pooled = true
-            // driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-            // dialect = "foodpaint.MinimalSQLServer2008Dialect"
-            // username = "sa"
-            // password = "dsc"
-            // dbCreate = "validate"
-            // url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
-
             pooled = true
-            driverClassName = "org.h2.Driver"
+            driverClassName = "net.sourceforge.jtds.jdbc.Driver"
+            dialect = "foodpaint.MinimalSQLServer2008Dialect"
             username = "sa"
-            password = ""
-            dbCreate = "create-drop"
-            url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            password = "dsc"
+            dbCreate = "validate"
+            url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+
+            // pooled = true
+            // driverClassName = "org.h2.Driver"
+            // username = "sa"
+            // password = ""
+            // dbCreate = "create-drop"
+            // url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
     test {
