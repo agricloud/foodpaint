@@ -10,29 +10,29 @@ class DataImportJob {
 
     def group = "MyGroup"
     def execute(){
-		// log.info "ItemView.count() = ${ItemView.count()}"
-		// dataImportService.doDataImport((ItemView.list() as XML).toString());
+		log.info "ItemView.count() = ${ItemView.count()}"
+		dataImportService.doDataImport((ItemView.list() as XML).toString());
 
-		// log.info "WorkstationView.count() = ${WorkstationView.count()}"
-		// dataImportService.doDataImport((WorkstationView.list() as XML).toString());
+		log.info "WorkstationView.count() = ${WorkstationView.count()}"
+		dataImportService.doDataImport((WorkstationView.list() as XML).toString());
 
-		// log.info "OperationView.count() = ${OperationView.count()}"
-		// dataImportService.doDataImport((OperationView.list() as XML).toString());
+		log.info "OperationView.count() = ${OperationView.count()}"
+		dataImportService.doDataImport((OperationView.list() as XML).toString());
 		
-		// log.info "SupplierView.count() = ${SupplierView.count()}"
-		// dataImportService.doDataImport((SupplierView.list() as XML).toString());
+		log.info "SupplierView.count() = ${SupplierView.count()}"
+		dataImportService.doDataImport((SupplierView.list() as XML).toString());
 
-		// log.info "CustomerView.count() = ${CustomerView.count()}"
-		// dataImportService.doDataImport((CustomerView.list() as XML).toString());
+		log.info "CustomerView.count() = ${CustomerView.count()}"
+		dataImportService.doDataImport((CustomerView.list() as XML).toString());
 
-		// log.info "CustomerOrderView.count() = ${CustomerOrderView.count()}"
-		// dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
+		log.info "CustomerOrderView.count() = ${CustomerOrderView.count()}"
+		dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
 
-		// log.info "CustomerOrderDetView.count() = ${CustomerOrderDetView.count()}"
-		// dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
+		log.info "CustomerOrderDetView.count() = ${CustomerOrderDetView.count()}"
+		dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
 		
-		// log.info "ManufactureOrderView.count() = ${ManufactureOrderView.count()}"
-		// dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
+		log.info "ManufactureOrderView.count() = ${ManufactureOrderView.count()}"
+		dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
 
 		log.info "PurchaseSheetView.count() = ${PurchaseSheetView.count()}"
 		dataImportService.doDataImport((PurchaseSheetView.list() as XML).toString());
