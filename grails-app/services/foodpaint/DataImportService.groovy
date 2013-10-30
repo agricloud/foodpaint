@@ -203,6 +203,8 @@ class DataImportService {
 			item=new Item(name:record.name.text())
 		}
 
+		item.flag=record.flag.text()
+
     	item
 
     }
@@ -571,7 +573,7 @@ class DataImportService {
     	def props=[:]
     	fields.each{ field ->
 			// println field+"====="+record[field].text()
-			if(record[field] && record[field].text() && !field.contains("Date")){
+			if(record[field] && record[field].text() && !field.contains("Date") && !field.contains("flag")){
 				props[field]=record[field].text()
 			}
 		}
