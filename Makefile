@@ -41,6 +41,7 @@ remote_user=demo
 
 
 remote-dbinit:
+	mysql -u root -p
 	CREATE DATABASE foodpaint DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 	create user 'foodpaint'@'localhost' identified by 'foodpaint';
 	grant all on *.* to 'foodpaint'@'localhost';
