@@ -31,12 +31,12 @@ import foodpaint.view.*
     MaterialSheetDet,MaterialSheetDetView])
 class DataImportServiceTests {
 
-/*
+
 
     void testItemImport() {
 
-        new ItemView(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
-        new ItemView(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
+        new ItemView(name:"410001",flag:5,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
+        new ItemView(name:"410002",flag:6,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
 
         def itemViewXml = ItemView.list() as XML
 
@@ -47,7 +47,7 @@ class DataImportServiceTests {
     	assert Item.list().size() == 2 
 
     }
-
+/*
     void testCustomerImport() {
 
         new CustomerView(name:"C01",title:"新鮮超市",email:"test@test.com").save(failOnError: true, flush: true)
@@ -151,7 +151,7 @@ class DataImportServiceTests {
 
 
     }
-*/
+
     void testPurchaseSheetImport() {
         // 預設時區，避免 json 轉換自動扣除 8 小時(台灣 +8:00)
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
@@ -171,6 +171,7 @@ class DataImportServiceTests {
         assert PurchaseSheet.list().size() == 2 
 
     }
+*/
 /*
     void testPurchaseSheetDetImport() {
         def supplier1=new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)

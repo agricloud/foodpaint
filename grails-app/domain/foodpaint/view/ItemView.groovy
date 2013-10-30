@@ -73,9 +73,9 @@ class ItemView {
         datasource 'erp'
         table 'INVMB'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'MB001', sqlType: "nchar"
         title column: 'MB002', sqlType: "nchar"
         spec column: 'MB003', sqlType: "nchar"

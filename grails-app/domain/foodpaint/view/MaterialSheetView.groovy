@@ -32,9 +32,9 @@ class MaterialSheetView implements Serializable{
         datasource 'erp'
         table 'MOCTC'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TC001', sqlType: "nchar"
         name column: 'TC002', sqlType: "nchar"
         workstationName column: 'TC005', sqlType: "nchar"

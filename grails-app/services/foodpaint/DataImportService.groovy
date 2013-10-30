@@ -44,14 +44,13 @@ class DataImportService {
     @XmlJavaTypeAdapter(GrailsCxfMapAdapter.class)
 	Map doDataImport(@WebParam(name="xmlString")String xmlString){
 
-
 		def result=[:]
-
-			
 			
 			def writer = new StringWriter()
 		    def xml = new MarkupBuilder(writer)
 			def records = new XmlParser().parseText(xmlString)
+
+			log.info records
 
 			def importClassList = [
 				'itemView',
@@ -571,7 +570,7 @@ class DataImportService {
     def private getDomainProperties(record, fields){
     	def props=[:]
     	fields.each{ field ->
-			println field+"====="+record[field].text()
+			// println field+"====="+record[field].text()
 			if(record[field] && record[field].text() && !field.contains("Date")){
 				props[field]=record[field].text()
 			}

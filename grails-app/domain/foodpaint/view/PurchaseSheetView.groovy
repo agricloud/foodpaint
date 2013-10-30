@@ -45,9 +45,9 @@ class PurchaseSheetView implements Serializable{
         datasource 'erp'
         table 'PURTG'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TG001', sqlType: "nchar"
         name column: 'TG002', sqlType: "nchar"
         incomingDate column: 'TG003', sqlType: "nchar"

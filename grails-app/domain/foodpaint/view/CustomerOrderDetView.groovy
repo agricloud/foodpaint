@@ -35,9 +35,9 @@ class CustomerOrderDetView implements Serializable{
         datasource 'erp'
         table 'COPTD'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
         
         id composite: ['typeName', 'name', 'sequence']
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'TD001', sqlType: "nchar"
         typeName column: 'TD002', sqlType: "nchar"
         sequence column: 'TD003', sqlType: "nchar"

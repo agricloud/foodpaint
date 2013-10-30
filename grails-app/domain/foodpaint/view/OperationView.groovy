@@ -15,9 +15,9 @@ class OperationView {
         datasource 'erp'
         table 'CMSMW'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'MW001', sqlType: "nchar"
         title column: 'MW002', sqlType: "nchar"
         description column: 'MW003', sqlType: "nchar"

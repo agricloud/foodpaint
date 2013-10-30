@@ -57,9 +57,9 @@ class StockInSheetDetView implements Serializable{
         datasource 'erp'
         table 'MOCTG'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TG001', sqlType: "nchar"
         name column: 'TG002', sqlType: "nchar"
         sequence column: 'TG003', sqlType: "nchar"

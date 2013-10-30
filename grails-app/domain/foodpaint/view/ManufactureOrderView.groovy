@@ -45,9 +45,9 @@ class ManufactureOrderView implements Serializable{
         datasource 'erp'
         table 'MOCTA'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TA001', sqlType: "nchar"
         name column: 'TA002', sqlType: "nchar"
         itemName  column: 'TA006', sqlType: "nchar"

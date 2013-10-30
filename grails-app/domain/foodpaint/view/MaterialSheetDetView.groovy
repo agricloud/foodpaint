@@ -46,9 +46,9 @@ class MaterialSheetDetView implements Serializable{
         datasource 'erp'
         table 'MOCTE'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TE001', sqlType: "nchar"
         name column: 'TE002', sqlType: "nchar"
         sequence column: 'TE003', sqlType: "nchar"

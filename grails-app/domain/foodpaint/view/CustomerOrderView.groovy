@@ -41,9 +41,9 @@ class CustomerOrderView implements Serializable{
         datasource 'erp'
         table 'COPTC'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['name', 'typeName']
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'TC001', sqlType: "nchar"
         typeName column: 'TC002', sqlType: "nchar"
         customerName column: 'TC004', sqlType: "nchar"

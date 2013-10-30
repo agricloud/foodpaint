@@ -31,9 +31,9 @@ class OutSrcPurchaseSheetView implements Serializable{
         datasource 'erp'
         table 'MOCTH'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TH001', sqlType: "nchar"
         name column: 'TH002', sqlType: "nchar"
         supplierName column: 'TH005', sqlType: "nchar"

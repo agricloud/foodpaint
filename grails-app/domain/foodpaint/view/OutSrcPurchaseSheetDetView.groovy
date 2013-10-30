@@ -52,9 +52,9 @@ class OutSrcPurchaseSheetDetView implements Serializable{
         datasource 'erp'
         table 'MOCTI'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
+        flag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TI001', sqlType: "nchar"
         name column: 'TI002', sqlType: "nchar"
         sequence column: 'TI003', sqlType: "nchar"

@@ -37,6 +37,7 @@ class DefaultTable {
 	
     static constraints = {
     	site nullable:true
+    	//flag nullable:true
     }
 
     transient beforeUpdate = {

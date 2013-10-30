@@ -15,9 +15,9 @@ class WorkstationView {
         datasource 'erp'
         table 'CMSMD'
         version false
-        flag column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
+        flag column: 'FLAG', sqlType:"numeric"
         name column: 'MD001', sqlType: "nchar"
         title column: 'MD002', sqlType: "nchar"
 
