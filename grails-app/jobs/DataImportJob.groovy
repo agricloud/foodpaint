@@ -5,13 +5,13 @@ import foodpaint.view.*
 class DataImportJob {
     def dataImportService
     static triggers = {
-        simple name: 'mySimpleTrigger', startDelay: 1000, repeatInterval: 600000  
+        simple name: 'mySimpleTrigger', startDelay: 60000, repeatInterval: 600000  
     }
 
     def group = "MyGroup"
     def execute(){
-  //       log.info "ItemView.list().size() = ${ItemView.list().size()}"
-  //       dataImportService.doDataImport((ItemView.list() as XML).toString());
+		// log.info "ItemView.list().size() = ${ItemView.list().size()}"
+		// dataImportService.doDataImport((ItemView.list() as XML).toString());
 
 		// log.info "WorkstationView.list().size() = ${WorkstationView.list().size()}"
 		// dataImportService.doDataImport((WorkstationView.list() as XML).toString());
