@@ -281,6 +281,9 @@ class DataImportService {
 
 		def item = Item.findByName(record.itemName.text())
 
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
+		if(!customerOrder) throw new Exception("訂單單頭不存在：單別：${record.typeName.text()},單號：${record.name.text()}")
+
 		customerOrderDet.item = item
 		customerOrderDet.customerOrder = customerOrder
 
@@ -297,6 +300,8 @@ class DataImportService {
 		}
 
 		def supplier =Supplier.findByName(record.supplierName.text())
+
+		if(!supplier) throw new Exception("供應商不存在：${record.supplierName.text()}")
 
 		object.supplier = supplier
 
@@ -335,8 +340,13 @@ class DataImportService {
 		object.item = item
 		object.purchaseSheet = purchaseSheet
 
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
+		if(!purchaseSheet) throw new Exception("進貨單單頭不存在：單別：${record.typeName.text()},單號：${record.name.text()}")
+	
 		//產生batch
 		def batch = getBatchInstance(record,object)
+
+		if(!batch) throw new Exception("批號無法建立：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
 
 		object.batch = batch
 
@@ -383,6 +393,8 @@ class DataImportService {
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
 		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
+		if(!stockInSheet) throw new Exception("入庫單單頭不存在：單別：${record.typeName.text()},單號：${record.name.text()}")
+		if(!manufactureOrder) throw new Exception("製令不存在：單別：${record.manufactureOrderTypeName.text()},單號：${record.manufactureOrderName.text()}")
 		
 		object.item = item
 		object.stockInSheet = stockInSheet
@@ -408,6 +420,8 @@ class DataImportService {
 		}
 
 		def supplier =Supplier.findByName(record.supplierName.text())
+
+		if(!supplier) throw new Exception("供應商不存在：${record.supplierName.text()}")
 
 		object.supplier = supplier
 
@@ -435,6 +449,9 @@ class DataImportService {
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
+		if(!outSrcPurchaseSheet) throw new Exception("託外進貨單單頭不存在：單別：${record.typeName.text()},單號：${record.name.text()}")
+		if(!manufactureOrder) throw new Exception("製令不存在：單別：${record.manufactureOrderTypeName.text()},單號：${record.manufactureOrderName.text()}")
 		
 		object.item = item
 		object.outSrcPurchaseSheet = outSrcPurchaseSheet
@@ -442,6 +459,8 @@ class DataImportService {
 
 		//產生batch
 		def batch = getBatchInstance(record,object)
+
+		if(!batch) throw new Exception("批號無法建立：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
 
 		object.batch = batch
 
@@ -458,6 +477,8 @@ class DataImportService {
 		}
 
 		def item =Item.findByName(record.itemName.text())
+
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
 
 		object.item = item
 
@@ -504,9 +525,10 @@ class DataImportService {
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
 
-		if(!workstation) throw new Exception("工作站不存在：${record.workstationName.text()}")
 		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
-		if(!batch) throw new Exception("批號無法建立：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
+		if(!batch) throw new Exception("批號不存在：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
+		if(!materialSheet) throw new Exception("領料單單頭不存在：單別：${record.typeName.text()},單號：${record.name.text()}")
+		if(!manufactureOrder) throw new Exception("製令不存在：單別：${record.manufactureOrderTypeName.text()},單號：${record.manufactureOrderName.text()}")
 
 		object.item = item
 		object.batch = batch
