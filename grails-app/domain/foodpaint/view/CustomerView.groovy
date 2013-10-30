@@ -1,6 +1,8 @@
 package foodpaint.view
 
 class CustomerView {
+
+    Integer version
 	String name
 	String title = ""
 	String email=""
@@ -16,10 +18,10 @@ class CustomerView {
     static mapping = {
         datasource 'erp'
         table 'COPMA'
-        version false
+        version column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
-
+        
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
         email column: 'MA009', sqlType: "nchar"

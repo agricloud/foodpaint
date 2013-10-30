@@ -1,12 +1,10 @@
 package foodpaint.view
-
-
-
     /*
     * 託外進貨單
     */
 class OutSrcPurchaseSheetView implements Serializable{
 
+    Integer version
     /*
     * 單別
     */

@@ -3,6 +3,7 @@ package foodpaint.view
 
 class SupplierView {
 
+    Integer version
     /*
     * 編號
     */
@@ -30,10 +31,9 @@ class SupplierView {
     static mapping = {
         datasource 'erp'
         table 'PURMA'
-        version false
+        version column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
-
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
         //country column: 'MA006', sqlType: "nchar"

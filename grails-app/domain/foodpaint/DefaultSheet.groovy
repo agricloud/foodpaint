@@ -13,6 +13,8 @@ class DefaultSheet extends DefaultTable{
     */
     String name=""
 
+    Integer version
+
     static mapping = {
         tablePerHierarchy false
     }

@@ -5,7 +5,7 @@ package foodpaint.view
     */
 class PurchaseSheetDetView implements Serializable{
 	
-
+    Integer version
     /*
     * 單別
     */
@@ -44,10 +44,9 @@ class PurchaseSheetDetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'PURTH'
+        version column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName', 'name', 'sequence']
-        version false
-
         typeName column: 'TH001', sqlType: "nchar"
         name column: 'TH002', sqlType: "nchar"
         sequence column: 'TH003', sqlType: "nchar"

@@ -2,6 +2,7 @@ package foodpaint.view
 
 class WorkstationView {
 
+    Integer version
 	String name
 	String title
 	
@@ -12,10 +13,9 @@ class WorkstationView {
     static mapping = {
         datasource 'erp'
         table 'CMSMD'
-        version false
+        version column: 'FLAG', sqlType:"numeric"
         
         id generator: 'assigned', name: 'name'
-
         name column: 'MD001', sqlType: "nchar"
         title column: 'MD002', sqlType: "nchar"
 

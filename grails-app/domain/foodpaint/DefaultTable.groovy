@@ -27,6 +27,8 @@ class DefaultTable {
 	 */
 	Date lastUpdated
 
+	Integer version
+
     static mapping = {
         tablePerHierarchy false
     }

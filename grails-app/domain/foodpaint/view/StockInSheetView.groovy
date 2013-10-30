@@ -1,5 +1,6 @@
 package foodpaint.view
 
+    Integer version
     /*
     * 入庫單
     */
@@ -29,10 +30,9 @@ class StockInSheetView implements Serializable{
     static mapping = {
         datasource 'erp'
         table 'MOCTF'
+        version column: 'FLAG', sqlType:"numeric"
 
         id composite: ['typeName','name']
-        version false
-
         typeName column: 'TF001', sqlType: "nchar"
         name column: 'TF002', sqlType: "nchar"
         workstationName column: 'TF011', sqlType: "nchar"
