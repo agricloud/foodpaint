@@ -95,30 +95,68 @@ environments {
 }
 
 // log4j configuration
-log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+environments {
+ 
+    development {
+        log4j = {
+            appenders {
+                file name: 'grailsfile', file: 'target/grails.log'
+                file name: 'rootlog', file: 'target/root.log'
+                file name: 'devfile', file: 'target/development.log'
+                console name:'stdout',
 
-    info "grails.app"
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+            }
+            root { error 'stdout', 'rootlog' }
+            info additivity: false, grailsfile: 'org.codehaus.groovy.grails.commons'
+            all additivity: false, devfile: [
+                'grails.app.controllers',
+                'grails.app.domain',
+                'grails.app.services',
+                'grails.app.taglib',
+                'grails.app.conf',
+                'grails.app.filters'
+            ]
+        }
+    }
+ 
+    test {
+        log4j = {
+            appenders {
+                file name: 'grailsfile', file: 'target/grails.log'
+                file name: 'rootlog', file: 'target/root.log'
+                file name: 'testfile', file: 'target/test.log'
+                console name:'stdout',
+                
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+            }
+            root { error 'stdout', 'rootlog' }
+            info additivity: false, grailsfile: 'org.codehaus.groovy.grails.commons'
+            all additivity: false, testfile: [
+                'grails.app.controllers',
+                'grails.app.domain',
+                'grails.app.services',
+                'grails.app.taglib',
+                'grails.app.conf',
+                'grails.app.filters'
+            ]
+     
+        }
+    }
+    production {
+        grails.logging.jul.usebridge = false
+        log4j = {
+            appenders {
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+            }
+            root { 
+                error()
+            }
+        }
 
-    debug "grails.app.controllers",
-          "grails.app.services"
-
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+    }
 }
+
 
 grails.converters.xml.pretty.print = true
 grails.converters.json.pretty.print = true

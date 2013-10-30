@@ -10,51 +10,60 @@ class DataImportJob {
 
     def group = "MyGroup"
     def execute(){
-  //       log.info "ItemView.list().size() = ${ItemView.list().size()}"
-  //       dataImportService.doDataImport((ItemView.list() as XML).toString());
+		// log.info "ItemView.count() = ${ItemView.count()}"
+		// dataImportService.doDataImport((ItemView.list() as XML).toString());
 
-		// log.info "WorkstationView.list().size() = ${WorkstationView.list().size()}"
+		// log.info "WorkstationView.count() = ${WorkstationView.count()}"
 		// dataImportService.doDataImport((WorkstationView.list() as XML).toString());
 
-		// log.info "OperationView.list().size() = ${OperationView.list().size()}"
+		// log.info "OperationView.count() = ${OperationView.count()}"
 		// dataImportService.doDataImport((OperationView.list() as XML).toString());
 		
-		// log.info "SupplierView.list().size() = ${SupplierView.list().size()}"
+		// log.info "SupplierView.count() = ${SupplierView.count()}"
 		// dataImportService.doDataImport((SupplierView.list() as XML).toString());
 
-		// log.info "CustomerView.list().size() = ${CustomerView.list().size()}"
+		// log.info "CustomerView.count() = ${CustomerView.count()}"
 		// dataImportService.doDataImport((CustomerView.list() as XML).toString());
 
-		// log.info "CustomerOrderView.list().size() = ${CustomerOrderView.list().size()}"
+		// log.info "CustomerOrderView.count() = ${CustomerOrderView.count()}"
 		// dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
 
-		// log.info "CustomerOrderDetView.list().size() = ${CustomerOrderDetView.list().size()}"
+		// log.info "CustomerOrderDetView.count() = ${CustomerOrderDetView.count()}"
 		// dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
 		
-		// log.info "ManufactureOrderView.list().size() = ${ManufactureOrderView.list().size()}"
+		// log.info "ManufactureOrderView.count() = ${ManufactureOrderView.count()}"
 		// dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
 
-		log.info "PurchaseSheetView.list().size() = ${PurchaseSheetView.list().size()}"
+		log.info "PurchaseSheetView.count() = ${PurchaseSheetView.count()}"
 		dataImportService.doDataImport((PurchaseSheetView.list() as XML).toString());
-		log.info "PurchaseSheetDetView.list().size() = ${PurchaseSheetDetView.list().size()}"	
+		log.info "PurchaseSheetDetView.count() = ${PurchaseSheetDetView.count()}"	
 		dataImportService.doDataImport((PurchaseSheetDetView.list() as XML).toString());
 
-		log.info "StockInSheetView.list().size() = ${StockInSheetView.list().size()}"
+		log.info "StockInSheetView.count() = ${StockInSheetView.count()}"
 		dataImportService.doDataImport((StockInSheetView.list() as XML).toString());
-		log.info "StockInSheetDetView.list().size() = ${StockInSheetDetView.list().size()}"
+		log.info "StockInSheetDetView.count() = ${StockInSheetDetView.count()}"
 		dataImportService.doDataImport((StockInSheetDetView.list() as XML).toString());
 
-		log.info "OutSrcPurchaseSheetView.list().size() = ${OutSrcPurchaseSheetView.list().size()}"
-		dataImportService.doDataImport((OutSrcPurchaseSheetView.list() as XML).toString());
-		log.info "OutSrcPurchaseSheetDetView.list().size() = ${OutSrcPurchaseSheetDetView.list().size()}"	
-		dataImportService.doDataImport((OutSrcPurchaseSheetDetView.list() as XML).toString());
+		
+		if(OutSrcPurchaseSheetView.count()>0){
+			log.info "OutSrcPurchaseSheetView.count() = ${OutSrcPurchaseSheetView.count()}"
+			dataImportService.doDataImport((OutSrcPurchaseSheetView.list() as XML).toString());
+		}
+		if(OutSrcPurchaseSheetDetView.count()>0){
+			log.info "OutSrcPurchaseSheetDetView.count() = ${OutSrcPurchaseSheetDetView.count()}"	
+			dataImportService.doDataImport((OutSrcPurchaseSheetDetView.list() as XML).toString());
+		}
 
-		log.info "MaterialSheetView.list().size() = ${MaterialSheetView.list().size()}"
-		dataImportService.doDataImport((MaterialSheetView.list() as XML).toString());
-		log.info "MaterialSheetDetView.list().size() = ${MaterialSheetDetView.list().size()}"				
-		dataImportService.doDataImport((MaterialSheetDetView.list() as XML).toString());
-	
+		if(MaterialSheetView.count()>0){
+			log.info "MaterialSheetView.count() = ${MaterialSheetView.count()}"
+			dataImportService.doDataImport((MaterialSheetView.list() as XML).toString());
+		}
 
+		if(MaterialSheetDetView.count()>0){
+			log.info "MaterialSheetDetView.count() = ${MaterialSheetDetView.list().size()}"				
+			dataImportService.doDataImport((MaterialSheetDetView.list() as XML).toString());
+		}	
+		println "import finish!!!!"
 
     }
 }

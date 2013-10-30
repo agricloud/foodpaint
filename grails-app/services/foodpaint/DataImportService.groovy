@@ -47,7 +47,8 @@ class DataImportService {
 
 		def result=[:]
 
-		try {		
+			
+			
 			def writer = new StringWriter()
 		    def xml = new MarkupBuilder(writer)
 			def records = new XmlParser().parseText(xmlString)
@@ -100,64 +101,66 @@ class DataImportService {
 
 
 			records[loopKey].eachWithIndex{ record, i ->
+				try {
 
-				if(i % 100 == 0 )log.info "import ${importClass}: ${i} / ${records[loopKey].size()}"
+					if(i % 100 == 0 )log.info "import ${importClass}: ${i} / ${records[loopKey].size()}"
 
-				//各 domain 需定義主鍵的索引
-				def domain
-				if(targetClass=='Item')
-					domain=getItemInstance(record)
-				if(targetClass=='Customer')
-					domain=getCustomerInstance(record)
-				if(targetClass=='Workstation')
-					domain=getWorkstationInstance(record)
-				if(targetClass=='Operation')
-					domain=getOperationInstance(record)
-				if(targetClass=='Supplier')
-					domain=getSupplierInstance(record)
-				if(targetClass=='CustomerOrder')
-					domain=getCustomerOrderInstance(record)		
-				if(targetClass=='CustomerOrderDet')
-					domain=getCustomerOrderDetInstance(record)
-				if(targetClass=='PurchaseSheet')
-					domain=getPurchaseSheetInstance(record)		
-				if(targetClass=='PurchaseSheetDet')
-					domain=getPurchaseSheetDetInstance(record)
-				if(targetClass=='StockInSheet')
-					domain=getStockInSheetInstance(record)		
-				if(targetClass=='StockInSheetDet')
-					domain=getStockInSheetDetInstance(record)
-				if(targetClass=='OutSrcPurchaseSheet')
-					domain=getOutSrcPurchaseSheetInstance(record)		
-				if(targetClass=='OutSrcPurchaseSheetDet')
-					domain=getOutSrcPurchaseSheetDetInstance(record)
-				if(targetClass=='ManufactureOrder')
-					domain=getManufactureOrderInstance(record)	
-				if(targetClass=='MaterialSheet')
-					domain=getMaterialSheetInstance(record)		
-				if(targetClass=='MaterialSheetDet')
-					domain=getMaterialSheetDetInstance(record)	
+					//各 domain 需定義主鍵的索引
+					def domain
+					if(targetClass=='Item')
+						domain=getItemInstance(record)
+					if(targetClass=='Customer')
+						domain=getCustomerInstance(record)
+					if(targetClass=='Workstation')
+						domain=getWorkstationInstance(record)
+					if(targetClass=='Operation')
+						domain=getOperationInstance(record)
+					if(targetClass=='Supplier')
+						domain=getSupplierInstance(record)
+					if(targetClass=='CustomerOrder')
+						domain=getCustomerOrderInstance(record)		
+					if(targetClass=='CustomerOrderDet')
+						domain=getCustomerOrderDetInstance(record)
+					if(targetClass=='PurchaseSheet')
+						domain=getPurchaseSheetInstance(record)		
+					if(targetClass=='PurchaseSheetDet')
+						domain=getPurchaseSheetDetInstance(record)
+					if(targetClass=='StockInSheet')
+						domain=getStockInSheetInstance(record)		
+					if(targetClass=='StockInSheetDet')
+						domain=getStockInSheetDetInstance(record)
+					if(targetClass=='OutSrcPurchaseSheet')
+						domain=getOutSrcPurchaseSheetInstance(record)		
+					if(targetClass=='OutSrcPurchaseSheetDet')
+						domain=getOutSrcPurchaseSheetDetInstance(record)
+					if(targetClass=='ManufactureOrder')
+						domain=getManufactureOrderInstance(record)	
+					if(targetClass=='MaterialSheet')
+						domain=getMaterialSheetInstance(record)		
+					if(targetClass=='MaterialSheetDet')
+						domain=getMaterialSheetDetInstance(record)	
 
-				// if(targetClass=='Batch')
-				// 	domain=getBatchInstance(record)
+					// if(targetClass=='Batch')
+					// 	domain=getBatchInstance(record)
 
 
-				// 共用最後進行儲存
-				if(domain){
-					domain.properties=getDomainProperties(record, fields)
-					log.info domain as JSON
-					domain.save(failOnError:true, flush: true)
+					// 共用最後進行儲存
+					if(domain){
+						domain.properties=getDomainProperties(record, fields)
+						domain.save(failOnError:true, flush: true)
+					}
+
+				}catch(e){
+
+					log.error e.message
+					result.success=false
+					result.message=e.message
+
 				}
 
 			}
 			result.success=true
-		}catch(e){
-			log.error e.message
-			result.success=false
-			result.message=e.message
-			throw e
 
-		}
 
 		return result
 
@@ -326,6 +329,8 @@ class DataImportService {
 			record.typeName.text(), record.name.text())
 
 		def item = Item.findByName(record.itemName.text())
+
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
 		
 		object.item = item
 		object.purchaseSheet = purchaseSheet
@@ -348,6 +353,8 @@ class DataImportService {
 		}
 
 		def workstation =Workstation.findByName(record.workstationName.text())
+
+		if(!workstation) throw new Exception("工作站不存在：${record.workstationName.text()}")
 
 		object.workstation = workstation
 
@@ -375,6 +382,7 @@ class DataImportService {
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
 		
 		object.item = item
 		object.stockInSheet = stockInSheet
@@ -382,6 +390,8 @@ class DataImportService {
 
 		//產生batch
 		def batch = getBatchInstance(record,object)
+
+		if(!batch) throw new Exception("批號無法建立：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
 
 		object.batch = batch
 
@@ -465,6 +475,8 @@ class DataImportService {
 
 		def workstation =Workstation.findByName(record.workstationName.text())
 
+		if(!workstation) throw new Exception("工作站不存在：${record.workstationName.text()}")
+
 		object.workstation = workstation
 
     	object
@@ -490,6 +502,11 @@ class DataImportService {
 		def batch = Batch.findByName(record.batchName.text())
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
+
+
+		if(!workstation) throw new Exception("工作站不存在：${record.workstationName.text()}")
+		if(!item) throw new Exception("品項不存在：${record.itemName.text()}")
+		if(!batch) throw new Exception("批號無法建立：批號：${record.batchName.text()}，品項：${record.itemName.text()}")
 
 		object.item = item
 		object.batch = batch

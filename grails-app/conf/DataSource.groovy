@@ -32,7 +32,7 @@ environments {
             // driverClassName = "org.h2.Driver"
             // username = "sa"
             // password = ""
-            // dbCreate = "update"
+            // dbCreate = "create-drop"
             // url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
