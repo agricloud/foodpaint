@@ -297,6 +297,15 @@ class DataImportService {
 
 		object.supplier = supplier
 
+		//日期轉換
+		// println "dateXML==="+record.incomingDate.text()
+		def incomingDate= Date.parse('yyyyMMdd',record.incomingDate.text())
+		// println "date==="+incomingDate
+		def orderDate = Date.parse('yyyyMMdd',record.orderDate.text())
+
+		object.incomingDate = incomingDate
+		object.orderDate = orderDate
+
     	object
 
     }
@@ -523,8 +532,9 @@ class DataImportService {
     	def props=[:]
     	fields.each{ field ->
 			// println field+"====="+record[field].text()
-			if(record[field] && record[field].text() )
+			if(record[field] && record[field].text() && !field.contains("Date")){
 				props[field]=record[field].text()
+			}
 		}
 
 		props
