@@ -25,7 +25,8 @@ environments {
             username = "sa"
             password = "dsc"
             dbCreate = "validate"
-            url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+            // url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
+            url= "jdbc:jtds:sqlserver://192.168.2.109:1433;databaseName=GinPin"
 
             // pooled = true
             // driverClassName = "org.h2.Driver"
