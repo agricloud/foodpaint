@@ -10,29 +10,29 @@ class DataImportJob {
 
     def group = "MyGroup"
     def execute(){
-        log.info "ItemView.list().size() = ${ItemView.list().size()}"
-        dataImportService.doDataImport((ItemView.list() as XML).toString());
+  //       log.info "ItemView.list().size() = ${ItemView.list().size()}"
+  //       dataImportService.doDataImport((ItemView.list() as XML).toString());
 
-		log.info "WorkstationView.list().size() = ${WorkstationView.list().size()}"
-		dataImportService.doDataImport((WorkstationView.list() as XML).toString());
+		// log.info "WorkstationView.list().size() = ${WorkstationView.list().size()}"
+		// dataImportService.doDataImport((WorkstationView.list() as XML).toString());
 
-		log.info "OperationView.list().size() = ${OperationView.list().size()}"
-		dataImportService.doDataImport((OperationView.list() as XML).toString());
+		// log.info "OperationView.list().size() = ${OperationView.list().size()}"
+		// dataImportService.doDataImport((OperationView.list() as XML).toString());
 		
-		log.info "SupplierView.list().size() = ${SupplierView.list().size()}"
-		dataImportService.doDataImport((SupplierView.list() as XML).toString());
+		// log.info "SupplierView.list().size() = ${SupplierView.list().size()}"
+		// dataImportService.doDataImport((SupplierView.list() as XML).toString());
 
-		log.info "CustomerView.list().size() = ${CustomerView.list().size()}"
-		dataImportService.doDataImport((CustomerView.list() as XML).toString());
+		// log.info "CustomerView.list().size() = ${CustomerView.list().size()}"
+		// dataImportService.doDataImport((CustomerView.list() as XML).toString());
 
-		log.info "CustomerOrderView.list().size() = ${CustomerOrderView.list().size()}"
-		dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
+		// log.info "CustomerOrderView.list().size() = ${CustomerOrderView.list().size()}"
+		// dataImportService.doDataImport((CustomerOrderView.list() as XML).toString());
 
-		log.info "CustomerOrderDetView.list().size() = ${CustomerOrderDetView.list().size()}"
-		dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
+		// log.info "CustomerOrderDetView.list().size() = ${CustomerOrderDetView.list().size()}"
+		// dataImportService.doDataImport((CustomerOrderDetView.list() as XML).toString());
 		
-		log.info "ManufactureOrderView.list().size() = ${ManufactureOrderView.list().size()}"
-		dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
+		// log.info "ManufactureOrderView.list().size() = ${ManufactureOrderView.list().size()}"
+		// dataImportService.doDataImport((ManufactureOrderView.list() as XML).toString());
 
 		log.info "PurchaseSheetView.list().size() = ${PurchaseSheetView.list().size()}"
 		dataImportService.doDataImport((PurchaseSheetView.list() as XML).toString());

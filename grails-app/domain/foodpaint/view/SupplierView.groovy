@@ -12,7 +12,7 @@ class SupplierView {
     /*
     * 名稱
     */
-	String title
+	String title = ""
 
 
     /*

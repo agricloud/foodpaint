@@ -19,7 +19,7 @@ class Supplier extends DefaultTable{
     /*
     * 名稱
     */
-	String title
+	String title = ""
 
 
     /*

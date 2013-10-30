@@ -2,7 +2,7 @@ package foodpaint
 
 class Customer extends DefaultTable{
 	String name
-	String title
+	String title = ""
 	String email=""
 	String address=""
 

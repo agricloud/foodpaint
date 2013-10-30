@@ -145,7 +145,7 @@ class DataImportService {
 				// 共用最後進行儲存
 				if(domain){
 					domain.properties=getDomainProperties(record, fields)
-					println domain as JSON
+					log.info domain as JSON
 					domain.save(failOnError:true, flush: true)
 				}
 

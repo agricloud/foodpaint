@@ -2,7 +2,7 @@ package foodpaint.view
 
 class CustomerView {
 	String name
-	String title
+	String title = ""
 	String email=""
 	String address=""
 
