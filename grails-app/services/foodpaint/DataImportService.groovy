@@ -50,8 +50,6 @@ class DataImportService {
 		    def xml = new MarkupBuilder(writer)
 			def records = new XmlParser().parseText(xmlString)
 
-			log.info records
-
 			def importClassList = [
 				'itemView',
 				'customerView',
@@ -145,6 +143,7 @@ class DataImportService {
 
 					// 共用最後進行儲存
 					if(domain){
+						domain.flag=record.flag.text().toInteger()
 						domain.properties=getDomainProperties(record, fields)
 						log.info domain as JSON
 						domain.save(failOnError:true, flush: true)
@@ -178,6 +177,7 @@ class DataImportService {
 			batch=new Batch(name:record.batchName.text())
 		}
 
+		batch.flag=0
 		batch.item = object.item
 
 		if(object.instanceOf(PurchaseSheetDet)){
@@ -190,8 +190,11 @@ class DataImportService {
 			batch.supplier = object.outSrcPurchaseSheet.supplier
 			//batch.manufactureDate=//尚未定義此資料來源
 		}
+		
+		log.info batch as JSON
 
 		batch.save(failOnError:true, flush: true)
+		
 	}
 
 	//基本資料
@@ -202,8 +205,6 @@ class DataImportService {
 		if(!item){
 			item=new Item(name:record.name.text())
 		}
-
-		item.flag=record.flag.text()
 
     	item
 
