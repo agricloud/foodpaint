@@ -2,6 +2,8 @@ package foodpaint
 
 class DefaultTable {
 
+	Integer version
+
     /**
      * 廠別
      */
@@ -27,7 +29,7 @@ class DefaultTable {
 	 */
 	Date lastUpdated
 
-	Integer version
+
 
     static mapping = {
         tablePerHierarchy false

@@ -147,6 +147,7 @@ class DataImportService {
 					// 共用最後進行儲存
 					if(domain){
 						domain.properties=getDomainProperties(record, fields)
+						log.info domain as JSON
 						domain.save(failOnError:true, flush: true)
 					}
 
@@ -570,7 +571,7 @@ class DataImportService {
     def private getDomainProperties(record, fields){
     	def props=[:]
     	fields.each{ field ->
-			// println field+"====="+record[field].text()
+			println field+"====="+record[field].text()
 			if(record[field] && record[field].text() && !field.contains("Date")){
 				props[field]=record[field].text()
 			}

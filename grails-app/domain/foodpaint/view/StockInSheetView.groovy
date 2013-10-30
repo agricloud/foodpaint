@@ -1,11 +1,10 @@
 package foodpaint.view
-
-    Integer version
     /*
     * 入庫單
     */
 class StockInSheetView implements Serializable{
 
+    Integer version
     /*
     * 單別
     */
