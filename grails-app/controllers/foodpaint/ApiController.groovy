@@ -22,7 +22,7 @@ class ApiController {
     def queryBatchReport() {
         //params.batch.name="0927-410002"
 
-        def reportInfo = [batchSources:[]]
+        def reportInfo = [batchSource:[]]
         def batchNames=[]
 
         if(params?.batch?.name)batchNames << params.batch.name
@@ -44,7 +44,7 @@ class ApiController {
                         batchSource.put("object","batchSource")
                         batchSource.put("batch",batchSheet.batch)
                         batchSource.put("childBatch",it.batch)
-                        reportInfo.batchSources<< batchSource
+                        reportInfo.batchSource<< batchSource
 
                         batchNames<< it.batch.name
                     }
@@ -64,6 +64,10 @@ class ApiController {
         }//end while
 
         reportInfo.put("item",Item.list())
+        reportInfo.put("workstation",Workstation.list())
+        reportInfo.put("operation",Operation.list())
+        reportInfo.put("supplier",Supplier.list())
+        reportInfo.put("customer",Customer.list())
         reportInfo.put("batch",Batch.list())
 
         JSON.use('deep')
@@ -71,6 +75,34 @@ class ApiController {
         def jsParse = JSON.parse(converter.toString())
 
         jsParse.item.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+        }
+        jsParse.workstation.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+        }
+        jsParse.operation.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+        }
+        jsParse.supplier.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+        }
+        jsParse.customer.each{
             if(!it.site){
                 it.site=[:]
                 it.site.put("id","null")
@@ -88,6 +120,17 @@ class ApiController {
                 it.supplier.put("id","null")
                 it.supplier.put("name","null")
             }
+        }
+        jsParse.batchSource.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+            if(!it.lastUpdated)
+                it.lastUpdated=new Date()
+            if(!it.dateCreated)
+                it.dateCreated=new Date()
         }
 
         converter = jsParse as JSON
