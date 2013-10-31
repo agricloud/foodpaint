@@ -9,15 +9,15 @@ class TraceService{
         def sourceSheet=StockInSheetDet.findAllByBatch(batch)
 
         if(sourceSheet==null || sourceSheet==[]){
-            println "批號：${batch.name} 查無入庫單"
+            log.debug "批號：${batch.name} 查無入庫單"
             sourceSheet=OutSrcPurchaseSheetDet.findAllByBatch(batch)
 
             if(sourceSheet==null || sourceSheet==[]){
-                println "批號：${batch.name} 查無託外進貨單"
+                log.debug "批號：${batch.name} 查無託外進貨單"
 
                 sourceSheet=PurchaseSheetDet.findAllByBatch(batch)
                 if(sourceSheet==null || sourceSheet==[]){
-                    println "批號：${batch.name} 查無進貨單"
+                    log.debug "批號：${batch.name} 查無進貨單"
 
                     return null            
                 }
