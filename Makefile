@@ -91,6 +91,21 @@ log:
 install:
 	make remote-init done
 
+
+loglink:
+	- mkdir ~/Library/Logs/foodpaint
+	- touch target/development.log
+	- touch target/test.log
+	- touch target/grails.log
+	- touch target/root.log
+	- touch target/stacktrace.log
+	- ln ~/projects/foodpaint/target/development.log ~/Library/Logs/foodpaint/development.log
+	- ln ~/projects/foodpaint/target/grails.log ~/Library/Logs/foodpaint/grails.log
+	- ln ~/projects/foodpaint/target/root.log ~/Library/Logs/foodpaint/root.log
+	- ln ~/projects/foodpaint/target/stacktrace.log ~/Library/Logs/foodpaint/stacktrace.log
+	- ln ~/projects/foodpaint/target/test.log ~/Library/Logs/foodpaint/test.log
+
+
 # remote-deploy:
 # 	ssh -t ${remote_user}@${remote_addr} 'cd extrails && make update && sudo make deploy'
 
