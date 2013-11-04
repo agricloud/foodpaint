@@ -69,6 +69,7 @@ class ApiController {
         reportInfo.put("supplier",Supplier.list())
         reportInfo.put("customer",Customer.list())
         reportInfo.put("batch",Batch.list())
+        reportInfo.put("batchRoute",BatchRoute.list())
 
         JSON.use('deep')
         def converter = reportInfo as JSON
@@ -131,6 +132,27 @@ class ApiController {
                 it.lastUpdated=new Date()
             if(!it.dateCreated)
                 it.dateCreated=new Date()
+        }
+        jsParse.batchSource.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+            if(!it.lastUpdated)
+                it.lastUpdated=new Date()
+            if(!it.dateCreated)
+                it.dateCreated=new Date()
+            if(!it.supplier){
+                it.supplier=[:]
+                it.supplier.put("id","null")
+                it.supplier.put("name","null")
+            }
+            if(!it.workstation){
+                it.workstation=[:]
+                it.workstation.put("id","null")
+                it.workstation.put("name","null")
+            }
         }
 
         converter = jsParse as JSON
