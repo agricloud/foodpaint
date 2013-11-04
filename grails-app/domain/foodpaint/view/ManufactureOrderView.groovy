@@ -6,7 +6,7 @@ package foodpaint.view
     */
 class ManufactureOrderView implements Serializable{
 
-    Integer flag
+    Integer importFlag
     
     /*
     * 訂單單身
@@ -47,7 +47,7 @@ class ManufactureOrderView implements Serializable{
         version false
 
         id composite: ['typeName','name']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TA001', sqlType: "nchar"
         name column: 'TA002', sqlType: "nchar"
         itemName  column: 'TA006', sqlType: "nchar"

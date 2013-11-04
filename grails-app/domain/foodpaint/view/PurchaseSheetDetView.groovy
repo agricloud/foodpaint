@@ -5,7 +5,7 @@ package foodpaint.view
     */
 class PurchaseSheetDetView implements Serializable{
 	
-    Integer flag
+    Integer importFlag
     /*
     * 單別
     */
@@ -47,7 +47,7 @@ class PurchaseSheetDetView implements Serializable{
         version false
 
         id composite: ['typeName', 'name', 'sequence']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TH001', sqlType: "nchar"
         name column: 'TH002', sqlType: "nchar"
         sequence column: 'TH003', sqlType: "nchar"

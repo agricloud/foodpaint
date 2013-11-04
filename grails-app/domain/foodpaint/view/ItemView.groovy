@@ -7,7 +7,7 @@ package foodpaint.view
  */
 class ItemView {
 
-    Integer flag
+    Integer importFlag
 
     /**
      * 項目名稱，必填欄位
@@ -75,7 +75,7 @@ class ItemView {
         version false
         
         id generator: 'assigned', name: 'name'
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         name column: 'MB001', sqlType: "nchar"
         title column: 'MB002', sqlType: "nchar"
         spec column: 'MB003', sqlType: "nchar"

@@ -20,6 +20,7 @@ class ApiController {
      * 實作履歷查詢，回傳 json 資料
      */
     def queryBatchReport() {
+
         //params.batch.name="0927-410002"
 
         def reportInfo = [batchSource:[]]
@@ -69,6 +70,7 @@ class ApiController {
         reportInfo.put("supplier",Supplier.list())
         reportInfo.put("customer",Customer.list())
         reportInfo.put("batch",Batch.list())
+        reportInfo.put("batchRoute",BatchRoute.list())
 
         JSON.use('deep')
         def converter = reportInfo as JSON
@@ -132,7 +134,28 @@ class ApiController {
             if(!it.dateCreated)
                 it.dateCreated=new Date()
         }
-
+        jsParse.batchRoute.each{
+            if(!it.site){
+                it.site=[:]
+                it.site.put("id","null")
+                it.site.put("name","null")
+            }
+            if(!it.lastUpdated)
+                it.lastUpdated=new Date()
+            if(!it.dateCreated)
+                it.dateCreated=new Date()
+            if(!it.supplier){
+                it.supplier=[:]
+                it.supplier.put("id","null")
+                it.supplier.put("name","null")
+            }
+            if(!it.workstation){
+                it.workstation=[:]
+                it.workstation.put("id","null")
+                it.workstation.put("name","null")
+            }
+        }
+        println "import data to Foodprint finished!!"
         converter = jsParse as JSON
         converter.render(response)
 

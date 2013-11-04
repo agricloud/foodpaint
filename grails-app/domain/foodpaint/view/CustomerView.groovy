@@ -2,7 +2,7 @@ package foodpaint.view
 
 class CustomerView {
 
-    Integer flag
+    Integer importFlag
 	String name
 	String title = ""
 	String email=""
@@ -21,7 +21,7 @@ class CustomerView {
         version false
         
         id generator: 'assigned', name: 'name'
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
         email column: 'MA009', sqlType: "nchar"

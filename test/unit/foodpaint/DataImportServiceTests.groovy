@@ -12,6 +12,7 @@ import foodpaint.view.*
  */
 @TestFor(DataImportService)
 @Mock([
+    DefaultTable,
     Item, ItemView, 
     Customer, CustomerView,
     Workstation,WorkstationView,
@@ -27,12 +28,13 @@ import foodpaint.view.*
     OutSrcPurchaseSheet, OutSrcPurchaseSheetView,
     OutSrcPurchaseSheetDet, OutSrcPurchaseSheetDetView,
     ManufactureOrder,ManufactureOrderView,
+    BatchRoute,ManufactureOrderRouteView,
     MaterialSheet,MaterialSheetView,
     MaterialSheetDet,MaterialSheetDetView])
 class DataImportServiceTests {
 
-
-
+//ps. 使用defaultTable.importFlag 無法使用unit test測試
+/*
     void testItemImport() {
 
         new ItemView(name:"410001",flag:5,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -47,7 +49,7 @@ class DataImportServiceTests {
     	assert Item.list().size() == 2 
 
     }
-/*
+
     void testCustomerImport() {
 
         new CustomerView(name:"C01",title:"新鮮超市",email:"test@test.com").save(failOnError: true, flush: true)
@@ -299,6 +301,59 @@ class DataImportServiceTests {
         assert ManufactureOrder.list().size() == 2 
 
     }
+*/
+
+    void testManufactureOrderRouteImport() {
+
+        //廠內製令
+        new Operation(name:"operation1",title:"施肥",description:"施肥肥",importFlag:1).save(failOnError: true, flush: true)
+        
+
+        def workstation1 = new Workstation(name:"workstation1",title:"民雄線A",importFlag:1).save(failOnError: true, flush: true)
+
+        def item1 = new Item(name:"410001",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。",importFlag:1).save(failOnError: true, flush: true)
+
+        def mo1 = new ManufactureOrder(typeName:"C11",name:"98100900001",item:item1,qty:1000,importFlag:1).save(failOnError: true, flush: true)
+
+        def batch1 = new Batch(name:"0927-410001",item:item1,importFlag:1).save(failOnError: true, flush: true)
+
+        def sis1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1,importFlag:1).save(failOnError: true, flush: true)
+        
+        new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:sis1,
+                batch:batch1,item:item1,warehouse:"warehouse2", manufactureOrder:mo1,importFlag:1).save(failOnError: true, flush: true)
+
+
+        new Operation(name:"operation2",title:"翻土",description:"翻土土",importFlag:1).save(failOnError: true, flush: true)
+
+        def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN,importFlag:1).save(failOnError: true, flush: true)
+
+        def item2 = new Item(name:"410002",title:"華珍玉米2",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。",importFlag:1).save(failOnError: true, flush: true)
+
+        def mo2 = new ManufactureOrder(typeName:"C11",name:"98100900002",item:item2,qty:1000,importFlag:1).save(failOnError: true, flush: true)
+
+        def batch2 = new Batch(name:"0927-410002",item:item2,importFlag:1).save(failOnError: true, flush: true)  
+
+        def osps1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1,importFlag:1).save(failOnError: true, flush: true)
+
+        new OutSrcPurchaseSheetDet(typeName:"BD32",name:"98100900001",sequence:1,outSrcPurchaseSheet:osps1,
+                item:item2,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
+
+
+        new ManufactureOrderRouteView(typeName:"C11",name:"98100900001",sequence:1,operationName:"operation1",makerType:1,makerName:"workstation1",importFlag:1).save(failOnError: true, flush: true)
+        new ManufactureOrderRouteView(typeName:"C11",name:"98100900002",sequence:1,operationName:"operation2",makerType:2,makerName:"FJ01",importFlag:1).save(failOnError: true, flush: true)
+
+
+        def viewXml = ManufactureOrderRouteView.list() as XML
+
+
+        println viewXml.toString()
+
+        service.doDataImport(viewXml.toString())
+
+        assert BatchRoute.list().size() == 2 
+
+    }
+/*    
 
     void testMaterialSheetImport() {
         new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)

@@ -5,7 +5,7 @@ package foodpaint.view
     */
 class PurchaseSheetView implements Serializable{
 
-    Integer flag
+    Integer importFlag
     /*
     * 單別
     */
@@ -47,7 +47,7 @@ class PurchaseSheetView implements Serializable{
         version false
 
         id composite: ['typeName','name']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TG001', sqlType: "nchar"
         name column: 'TG002', sqlType: "nchar"
         incomingDate column: 'TG003', sqlType: "nchar"
