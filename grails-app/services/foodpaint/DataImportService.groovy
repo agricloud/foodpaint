@@ -65,8 +65,10 @@ class DataImportService {
 				'outSrcPurchaseSheetView',
 				'outSrcPurchaseSheetDetView',
 				'manufactureOrderView',
+				'manufactureOrderRouteView',
 				'materialSheetView',
 				'materialSheetDetView'
+
 			]
 
 			def loopKey
@@ -80,11 +82,17 @@ class DataImportService {
 			}
 
 			def importClass = loopKey[0].toUpperCase() + loopKey[1..-1]
-			def targetClass = importClass.replace('View','')
+			def targetClass
 
+			if(loopKey!='manufactureOrderRouteView'){
+				targetClass = importClass.replace('View','')
+			}
+			else{
+				targetClass = "BatchRoute"
+			}
 
-			def fields= grailsApplication.getDomainClass("foodpaint."+targetClass).persistentProperties.collect { it.name }
-
+			def fields = grailsApplication.getDomainClass("foodpaint."+targetClass).persistentProperties.collect { it.name }
+	
 			// 動態實體化 domain class
 			// GrailsDomainClass dc = grailsApplication.getDomainClass('foodpaint.'+importClass)
 			
@@ -131,7 +139,9 @@ class DataImportService {
 					if(targetClass=='OutSrcPurchaseSheetDet')
 						domain=getOutSrcPurchaseSheetDetInstance(record)
 					if(targetClass=='ManufactureOrder')
-						domain=getManufactureOrderInstance(record)	
+						domain=getManufactureOrderInstance(record)
+					if(targetClass=='BatchRoute')
+						domain=getBatchRouteInstance(record)	
 					if(targetClass=='MaterialSheet')
 						domain=getMaterialSheetInstance(record)		
 					if(targetClass=='MaterialSheetDet')
@@ -143,7 +153,7 @@ class DataImportService {
 
 					// 共用最後進行儲存
 					if(domain){
-						domain.flag=record.flag.text().toInteger()
+						domain.importFlag=record.importFlag.text().toInteger()
 						domain.properties=getDomainProperties(record, fields)
 						log.info domain as JSON
 						domain.save(failOnError:true, flush: true)
@@ -163,10 +173,6 @@ class DataImportService {
 
 		return result
 
-
-
-
-
 	}
 
 	def private getBatchInstance(record, object){
@@ -175,9 +181,10 @@ class DataImportService {
 
 		if(!batch){
 			batch=new Batch(name:record.batchName.text())
+			batch.importFlag = -1
 		}
 
-		batch.flag=0
+		batch.importFlag = batch.importFlag++
 		batch.item = object.item
 
 		if(object.instanceOf(PurchaseSheetDet)){
@@ -195,6 +202,57 @@ class DataImportService {
 
 		batch.save(failOnError:true, flush: true)
 		
+	}
+
+	def private getBatchRouteInstance(record){
+		//找出符合的製令或託外製令
+		//找出進貨單或託外進貨單包含此製令的
+		//找出批號
+
+		def sheets = StockInSheetDet.where{
+			manufactureOrder.name == record.name.text() &&
+			manufactureOrder.typeName == record.typeName.text()
+		}
+
+		if(!sheets){
+			sheets = OutSrcPurchaseSheetDet.where{
+				manufactureOrder.name == record.name.text() &&
+				manufactureOrder.typeName == record.typeName.text()
+			}
+		}
+
+		if(sheets){
+			sheets.each{
+				def batch = it.batch
+				def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
+				if(!batchRoute){
+					batchRoute = new BatchRoute(batch:batch,sequence:record.sequence.text().toInteger())
+				}
+
+				batchRoute.importFlag = record.importFlag.text().toInteger()
+
+				def operation = Operation.findByName(record.operationName.text())
+				batchRoute.operation = operation
+
+				//廠內製程
+				if(record.makerType.text()=='1'){
+					def workstation = Workstation.findByName(record.makerName.text())
+					batchRoute.workstation = workstation
+				}
+				//託外製程
+				if(record.makerType.text()=='2'){
+					def supplier = Supplier.findByName(record.makerName.text())
+					batchRoute.supplier = supplier
+				}
+
+				log.info batchRoute as JSON
+
+				batchRoute.save(failOnError:true, flush: true)
+
+			}//end each
+		}//end if
+
+		return null
 	}
 
 	//基本資料
@@ -574,7 +632,7 @@ class DataImportService {
     	def props=[:]
     	fields.each{ field ->
 			// println field+"====="+record[field].text()
-			if(record[field] && record[field].text() && !field.contains("Date") && !field.contains("flag")){
+			if(record[field] && record[field].text() && !field.contains("Date") && !field.contains("importFlag")){
 				props[field]=record[field].text()
 			}
 		}
