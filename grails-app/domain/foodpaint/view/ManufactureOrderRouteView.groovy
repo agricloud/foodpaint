@@ -6,7 +6,7 @@ package foodpaint.view
     */
 class ManufactureOrderRouteView implements Serializable{
 
-    Integer flag
+    Integer importFlag
 
     /*
     * 單別
@@ -32,12 +32,13 @@ class ManufactureOrderRouteView implements Serializable{
     /*
     * 製程性質 1.廠內 2.託外
     */
-    String type
+    String makerType
 
     /*
     * 工作站/廠商代號
     */
     String makerName
+
 
     static constraints = {
 
@@ -49,12 +50,12 @@ class ManufactureOrderRouteView implements Serializable{
         version false
 
         id composite: ['typeName','name','sequence']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TA001', sqlType: "nchar"
         name column: 'TA002', sqlType: "nchar"
         sequence  column: 'TA003', sqlType: "nchar"
         operationName column: 'TA004', sqlType: "nchar"
-        type column: 'TA005', sqlType: "nchar"
+        makerType column: 'TA005', sqlType: "nchar"
         makerName column: 'TA006', sqlType: "nchar"
         
     } 

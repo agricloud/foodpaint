@@ -2,7 +2,7 @@ package foodpaint
 
 class DefaultTable {
 
-	Integer flag
+	Integer importFlag
 
     /**
      * 廠別

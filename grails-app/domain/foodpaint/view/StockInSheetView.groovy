@@ -4,7 +4,7 @@ package foodpaint.view
     */
 class StockInSheetView implements Serializable{
 
-    Integer flag
+    Integer importFlag
     
     /*
     * 單別
@@ -33,7 +33,7 @@ class StockInSheetView implements Serializable{
         version false
 
         id composite: ['typeName','name']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         typeName column: 'TF001', sqlType: "nchar"
         name column: 'TF002', sqlType: "nchar"
         workstationName column: 'TF011', sqlType: "nchar"

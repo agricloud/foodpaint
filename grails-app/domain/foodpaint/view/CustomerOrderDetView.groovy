@@ -7,7 +7,7 @@ package foodpaint.view
 class CustomerOrderDetView implements Serializable{
 
 
-    Integer flag
+    Integer importFlag
     /*
     * 單別
     */
@@ -37,7 +37,7 @@ class CustomerOrderDetView implements Serializable{
         version false
         
         id composite: ['typeName', 'name', 'sequence']
-        flag column: 'FLAG', sqlType:"numeric"
+        importFlag column: 'FLAG', sqlType:"numeric"
         name column: 'TD001', sqlType: "nchar"
         typeName column: 'TD002', sqlType: "nchar"
         sequence column: 'TD003', sqlType: "nchar"
