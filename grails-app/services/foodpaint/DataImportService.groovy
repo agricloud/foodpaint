@@ -205,16 +205,16 @@ class DataImportService {
 	}
 
 	def private getBatchRouteInstance(record){
-		//找出符合的製令或託外製令
-		//找出進貨單或託外進貨單包含此製令的
+		//從進貨單或託外進貨單中找出製令符合的
 		//找出批號
 
+		//log.info "製令製程單別單號"+record.typeName.text()+"/"+record.name.text()
 		def sheets = StockInSheetDet.where{
 			manufactureOrder.name == record.name.text() &&
 			manufactureOrder.typeName == record.typeName.text()
 		}
 
-		if(!sheets){
+		if(!sheets || sheets.count()==0){
 			sheets = OutSrcPurchaseSheetDet.where{
 				manufactureOrder.name == record.name.text() &&
 				manufactureOrder.typeName == record.typeName.text()
@@ -223,6 +223,7 @@ class DataImportService {
 
 		if(sheets){
 			sheets.each{
+				//log.info "入庫單、託外進貨單單別單號"+it.typeName+"/"+it.name
 				def batch = it.batch
 				def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
 				if(!batchRoute){
