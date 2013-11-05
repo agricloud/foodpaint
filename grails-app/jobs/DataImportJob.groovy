@@ -80,6 +80,11 @@ class DataImportJob {
 			dataImportService.doDataImport((OutSrcPurchaseSheetDetView.list() as XML).toString());
 		}
 
+		if(ManufactureOrderRouteView.count()>0){	
+			log.info "ManufactureOrderRouteView.count() = ${ManufactureOrderRouteView.count()}"
+			dataImportService.doDataImport((ManufactureOrderRouteView.list() as XML).toString());
+		}
+
 		if(MaterialSheetView.count()>0){
 			log.info "MaterialSheetView.count() = ${MaterialSheetView.count()}"
 			dataImportService.doDataImport((MaterialSheetView.list() as XML).toString());
