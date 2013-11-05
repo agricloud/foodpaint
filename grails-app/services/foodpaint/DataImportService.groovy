@@ -246,6 +246,12 @@ class DataImportService {
 					batchRoute.supplier = supplier
 				}
 
+				def startDate= Date.parse('yyyyMMdd',record.startDate.text())
+				def endDate = Date.parse('yyyyMMdd',record.endDate.text())
+
+				batchRoute.startDate = startDate
+				batchRoute.endDate = endDate
+
 				log.info batchRoute as JSON
 
 				batchRoute.save(failOnError:true, flush: true)
