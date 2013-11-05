@@ -102,11 +102,11 @@ loglink:
 	- touch target/grails.log
 	- touch target/root.log
 	- touch target/stacktrace.log
-	- ln ~/projects/foodpaint/target/development.log ~/Library/Logs/foodpaint/development.log
-	- ln ~/projects/foodpaint/target/grails.log ~/Library/Logs/foodpaint/grails.log
-	- ln ~/projects/foodpaint/target/root.log ~/Library/Logs/foodpaint/root.log
-	- ln ~/projects/foodpaint/target/stacktrace.log ~/Library/Logs/foodpaint/stacktrace.log
-	- ln ~/projects/foodpaint/target/test.log ~/Library/Logs/foodpaint/test.log
+	- ln target/development.log ~/Library/Logs/foodpaint/development.log
+	- ln target/grails.log ~/Library/Logs/foodpaint/grails.log
+	- ln target/root.log ~/Library/Logs/foodpaint/root.log
+	- ln target/stacktrace.log ~/Library/Logs/foodpaint/stacktrace.log
+	- ln target/test.log ~/Library/Logs/foodpaint/test.log
 
 
 # remote-deploy:
