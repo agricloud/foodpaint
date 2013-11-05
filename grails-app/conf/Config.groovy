@@ -142,9 +142,6 @@ environments {
         // TODO: grails.serverURL = "http://www.changeme.com"
 
         log4j = {
-            appenders {
-                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
-            }
             root { 
                 error()
             }

@@ -34,10 +34,7 @@ remote_user=demo
 # 	service tomcat7 restart
 
 
-# remote-init:
-# 	ssh -t ${remote_user}@${remote_addr} 'git clone git@github.com:smlsunxie/extrails.git'
-# 	ssh -t ${remote_user}@${remote_addr} 'mkdir ~/extrails/target && mkdir ~/.grails'
-# 	ssh -t ${remote_user}@${remote_addr} 'sudo mkdir -p /usr/share/tomcat7/.grails/projects/extrails/searchable-index/production/index/product && sudo chgrp -R tomcat7 /usr/share/tomcat7 && sudo chmod -R 770 /usr/share/tomcat7'
+
 
 
 remote-dbinit:
@@ -63,9 +60,9 @@ remote-dbinit:
 # 	mysqld_safe5 &
 # 	rabbitmq-server &
 remote-init:
-	ssh -t ${remote_user}@${remote_addr} 'sudo chgrp -R tomcat6 /usr/share/tomcat6 && sudo chmod -R 770 /usr/share/tomcat6'
-	ssh -t ${remote_user}@${remote_addr} 'sudo chgrp -R tomcat6 /var/lib/tomcat6 && sudo chmod -R 770 /var/lib/tomcat6'
-
+	ssh -t ${remote_user}@${remote_addr} 'sudo mkdir -p /usr/share/tomcat6/.grails \
+	&& sudo chgrp -R tomcat6 /usr/share/tomcat6 \
+	&& sudo chmod -R 770 /usr/share/tomcat6'
 
 clean:
 	grails clean
@@ -76,9 +73,15 @@ war:
 
 
 deployWar:
-	#cp ~/.grails/extrails-config.groovy /usr/share/tomcat6/.grails/
+	scp ~/.grails/foodpaint-config.groovy ${remote_user}@${remote_addr}:~/
 	scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
-	ssh -t ${remote_user}@${remote_addr} 'cd ~/ && sudo rm -rf /var/lib/tomcat6/webapps/foodpaint && sudo cp foodpaint.war /var/lib/tomcat6/webapps/ && sudo service tomcat6 restart'
+
+	ssh -t ${remote_user}@${remote_addr} \
+	'cd ~/ \
+	&& sudo rm -rf /var/lib/tomcat6/webapps/foodpaint \
+	&& sudo cp foodpaint.war /var/lib/tomcat6/webapps/ \
+	&& sudo cp foodpaint-config.groovy /usr/share/tomcat6/.grails/ \
+	&& sudo service tomcat6 restart'
 
 		
 
