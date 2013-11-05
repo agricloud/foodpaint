@@ -26,6 +26,6 @@ class ReturnSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
-
+        batch nullable:true
     }
 }

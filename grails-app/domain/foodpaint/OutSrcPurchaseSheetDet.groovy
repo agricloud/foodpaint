@@ -29,6 +29,6 @@ class OutSrcPurchaseSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
-
+        batch nullable:true
     }
 }

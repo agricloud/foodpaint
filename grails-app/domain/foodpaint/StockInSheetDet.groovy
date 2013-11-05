@@ -31,6 +31,7 @@ class StockInSheetDet extends DefaultSheetDet{
     static hasOne = [manufactureOrder: ManufactureOrder]
 
     static constraints = {
+        batch nullable:true
         stockLocation nullable:true      
     }
 }

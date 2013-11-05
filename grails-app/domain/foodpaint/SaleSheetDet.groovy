@@ -31,6 +31,6 @@ class SaleSheetDet extends DefaultSheetDet{
     Integer qty
 
     static constraints = {
-
+        batch nullable:true
     }
 }

@@ -29,6 +29,6 @@ class OutSrcReturnSheetDet extends DefaultSheetDet{
 
 
     static constraints = {
-
+        batch nullable:true
     }
 }

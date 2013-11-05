@@ -26,6 +26,6 @@ class MaterialSheetDet extends DefaultSheetDet{
     Item item
 
     static constraints = {
-
+        batch nullable:true
     }
 }
