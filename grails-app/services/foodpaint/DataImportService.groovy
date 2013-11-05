@@ -154,19 +154,16 @@ class DataImportService {
 
 					// 共用最後進行儲存
 					if(domain){
-						
 
 						domain.importFlag=record.importFlag.text().toInteger()
 						domain.properties=getDomainProperties(record, fields)
 						log.info domain as JSON
 
-						if (!domain.validate() | !domain.save(flush: true)){
+						if (!domain.validate() || !domain.save(flush: true)){
 				            domain.errors.allErrors.each{ 
-
 				                log.error messageSource.getMessage(it, Locale.getDefault())
 				            }
 						}
-
 
 					}
 
@@ -183,32 +180,42 @@ class DataImportService {
 	}
 
 	def private getBatchInstance(record, object){
+		//如果批號欄位沒有資料則不新增batch
+		//但單據仍會儲存
+		if(record.batchName.text() || record.batchName.text().trim()){
+			def batch = Batch.findByName(record.batchName.text())
 
-		def batch = Batch.findByName(record.batchName.text())
+			if(!batch){
+				batch=new Batch(name:record.batchName.text())
+				batch.importFlag = -1
+			}
 
-		if(!batch){
-			batch=new Batch(name:record.batchName.text())
-			batch.importFlag = -1
+			batch.importFlag = batch.importFlag++
+			batch.item = object.item
+
+			if(object.instanceOf(PurchaseSheetDet)){
+				batch.supplier = object.purchaseSheet.supplier
+			}
+			if(object.instanceOf(StockInSheetDet)){
+				//batch.manufactureDate=//尚未定義此資料來源
+			}
+			if(object.instanceOf(OutSrcPurchaseSheetDet)){
+				batch.supplier = object.outSrcPurchaseSheet.supplier
+				//batch.manufactureDate=//尚未定義此資料來源
+			}
+			
+			log.info batch as JSON
+
+			if (!batch.validate() || !batch.save(flush: true)){
+				batch.errors.allErrors.each{ 
+					log.error messageSource.getMessage(it, Locale.getDefault())
+				}
+			}
+			else
+				return batch
 		}
-
-		batch.importFlag = batch.importFlag++
-		batch.item = object.item
-
-		if(object.instanceOf(PurchaseSheetDet)){
-			batch.supplier = object.purchaseSheet.supplier
-		}
-		if(object.instanceOf(StockInSheetDet)){
-			//batch.manufactureDate=//尚未定義此資料來源
-		}
-		if(object.instanceOf(OutSrcPurchaseSheetDet)){
-			batch.supplier = object.outSrcPurchaseSheet.supplier
-			//batch.manufactureDate=//尚未定義此資料來源
-		}
-		
-		log.info batch as JSON
-
-		batch.save(failOnError:true, flush: true)
-		
+		else
+			return null
 	}
 
 	def private getBatchRouteInstance(record){
@@ -231,38 +238,45 @@ class DataImportService {
 		if(sheets){
 			sheets.each{
 				//log.info "入庫單、託外進貨單單別單號"+it.typeName+"/"+it.name
-				def batch = it.batch
-				def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
-				if(!batchRoute){
-					batchRoute = new BatchRoute(batch:batch,sequence:record.sequence.text().toInteger())
-				}
+				if(it.batch){
+					def batch = it.batch
+					def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
+					if(!batchRoute){
+						batchRoute = new BatchRoute(batch:batch,sequence:record.sequence.text().toInteger())
+					}
 
-				batchRoute.importFlag = record.importFlag.text().toInteger()
+					batchRoute.importFlag = record.importFlag.text().toInteger()
 
-				def operation = Operation.findByName(record.operationName.text())
-				batchRoute.operation = operation
+					def operation = Operation.findByName(record.operationName.text())
+					batchRoute.operation = operation
 
-				//廠內製程
-				if(record.makerType.text()=='1'){
-					def workstation = Workstation.findByName(record.makerName.text())
-					batchRoute.workstation = workstation
-				}
-				//託外製程
-				if(record.makerType.text()=='2'){
-					def supplier = Supplier.findByName(record.makerName.text())
-					batchRoute.supplier = supplier
-				}
+					//廠內製程
+					if(record.makerType.text()=='1'){
+						def workstation = Workstation.findByName(record.makerName.text())
+						batchRoute.workstation = workstation
+					}
+					//託外製程
+					if(record.makerType.text()=='2'){
+						def supplier = Supplier.findByName(record.makerName.text())
+						batchRoute.supplier = supplier
+					}
 
-				def startDate= Date.parse('yyyyMMdd',record.startDate.text())
-				def endDate = Date.parse('yyyyMMdd',record.endDate.text())
+					def startDate= Date.parse('yyyyMMdd',record.startDate.text())
+					def endDate = Date.parse('yyyyMMdd',record.endDate.text())
 
-				batchRoute.startDate = startDate
-				batchRoute.endDate = endDate
+					batchRoute.startDate = startDate
+					batchRoute.endDate = endDate
 
-				log.info batchRoute as JSON
+					log.info batchRoute as JSON
 
-				batchRoute.save(failOnError:true, flush: true)
-
+					if (!batchRoute.validate() || !batchRoute.save(flush: true)){
+						batchRoute.errors.allErrors.each{ 
+							log.error messageSource.getMessage(it, Locale.getDefault())
+						}
+					}
+					else
+						return batchRoute
+				}//end if
 			}//end each
 		}//end if
 
@@ -415,7 +429,6 @@ class DataImportService {
 		//產生batch
 		def batch = getBatchInstance(record,object)
 
-
 		object.batch = batch
 
     	object
@@ -475,7 +488,7 @@ class DataImportService {
     }
 
     def private getOutSrcPurchaseSheetInstance(record) {
-
+    	
 		def object = OutSrcPurchaseSheet.findByNameAndTypeName(record.name.text(),record.typeName.text())
 
 		if(!object){
