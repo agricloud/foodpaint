@@ -6,6 +6,6 @@ class Workstation extends DefaultTable{
 	String title
 
     static constraints = {
-    	name unique:true
+    	name unique:true, blank: false
     }
 }

@@ -8,7 +8,7 @@ class Customer extends DefaultTable{
 
 
     static constraints = {
-    	name unique:true
+    	name unique:true, blank: false
     	email nullable:true
     	address nullable:true
     }

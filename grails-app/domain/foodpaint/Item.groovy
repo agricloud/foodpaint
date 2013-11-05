@@ -58,7 +58,7 @@ class Item extends DefaultTable{
      * 有效起始與結束日期可以不設定
      */
 	static constraints = {
-		name unique: true, nullable: false
+		name unique: true, blank: false
         title nullable: true
         description nullable: true
         unit nullable: true
