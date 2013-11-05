@@ -20,20 +20,11 @@ environments {
         }
         dataSource_erp {
             pooled = true
-            driverClassName = "net.sourceforge.jtds.jdbc.Driver"
-            dialect = "foodpaint.MinimalSQLServer2008Dialect"
+            driverClassName = "org.h2.Driver"
             username = "sa"
-            password = "dsc"
-            dbCreate = "validate"
-            // url= "jdbc:jtds:sqlserver://192.168.1.15:1433;databaseName=Leader"
-            url= "jdbc:jtds:sqlserver://192.168.2.109:1433;databaseName=GinPin"
-
-            // pooled = true
-            // driverClassName = "org.h2.Driver"
-            // username = "sa"
-            // password = ""
-            // dbCreate = "create-drop"
-            // url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            password = ""
+            dbCreate = "create-drop"
+            url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
     test {
@@ -57,7 +48,7 @@ environments {
             dbCreate = "update"
             pooled = true
             driverClassName = "com.mysql.jdbc.Driver"
-            //dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             //dialect = org.hibernate.dialect.MySQLMyISAMDialect
             // logSql = true
             username = "foodpaint"

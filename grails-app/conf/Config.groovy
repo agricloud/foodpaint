@@ -2,14 +2,14 @@
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
 
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+grails.config.locations = [ "classpath:${appName}-config.properties",
+                            "classpath:${appName}-config.groovy",
+                            "file:${userHome}/.grails/${appName}-config.properties",
+                            "file:${userHome}/.grails/${appName}-config.groovy"]
 
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
+if (System.properties["${appName}.config.location"]) {
+   grails.config.locations << "file:" + System.properties["${appName}.config.location"]
+}
 
 grails.app.context = '/'
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
@@ -84,20 +84,11 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.hibernate.cache.queries = false
 
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-    }
-    production {
-        grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
-        
-    }
-}
-
-// log4j configuration
-environments {
  
     development {
+        grails.logging.jul.usebridge = true
+        grails.converters.default.pretty.print = true
+
         log4j = {
             appenders {
                 file name: 'grailsfile', file: 'target/grails.log'
@@ -105,7 +96,7 @@ environments {
                 file name: 'devfile', file: 'target/development.log'
                 console name:'stdout',
 
-                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
             }
             root { error 'stdout', 'rootlog' }
             info additivity: false, grailsfile: 'org.codehaus.groovy.grails.commons'
@@ -119,6 +110,7 @@ environments {
                 'grails.app.jobs'
             ]
         }
+
     }
  
     test {
@@ -129,7 +121,7 @@ environments {
                 file name: 'testfile', file: 'target/test.log'
                 console name:'stdout',
                 
-                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
             }
             root { error 'stdout', 'rootlog' }
             info additivity: false, grailsfile: 'org.codehaus.groovy.grails.commons'
@@ -144,11 +136,14 @@ environments {
      
         }
     }
+
     production {
         grails.logging.jul.usebridge = false
+        // TODO: grails.serverURL = "http://www.changeme.com"
+
         log4j = {
             appenders {
-                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}:%L %m%n")
+                layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
             }
             root { 
                 error()
@@ -157,7 +152,3 @@ environments {
 
     }
 }
-
-
-grails.converters.xml.pretty.print = true
-grails.converters.json.pretty.print = true
