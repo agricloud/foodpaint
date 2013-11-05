@@ -39,6 +39,18 @@ class ManufactureOrderRouteView implements Serializable{
     */
     String makerName
 
+    /*
+    * 實際開工日
+    */
+
+    String startDate
+
+
+    /*
+    * 實際完工日
+    */
+    String endDate
+
 
     static constraints = {
 
@@ -57,6 +69,8 @@ class ManufactureOrderRouteView implements Serializable{
         operationName column: 'TA004', sqlType: "nchar"
         makerType column: 'TA005', sqlType: "nchar"
         makerName column: 'TA006', sqlType: "nchar"
+        startDate column: 'TA030', sqlType: "nchar"
+        endDate column: 'TA031', sqlType: "nchar"
         
     } 
 }
