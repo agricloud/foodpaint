@@ -1,5 +1,5 @@
 #remote_addr=192.168.0.107
-remote_addr=192.168.1.18
+remote_addr=140.125.94.78
 remote_user=demo
 
 
@@ -73,17 +73,20 @@ war:
 
 
 deployWar:
-	scp ~/.grails/foodpaint-config.groovy ${remote_user}@${remote_addr}:~/
 	scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
 
 	ssh -t ${remote_user}@${remote_addr} \
 	'cd ~/ \
 	&& sudo rm -rf /var/lib/tomcat6/webapps/foodpaint \
 	&& sudo cp foodpaint.war /var/lib/tomcat6/webapps/ \
-	&& sudo cp foodpaint-config.groovy /usr/share/tomcat6/.grails/ \
 	&& sudo service tomcat6 restart'
 
-		
+deployConfig:
+	scp ~/.grails/foodpaint-config.groovy ${remote_user}@${remote_addr}:~/
+
+	ssh -t ${remote_user}@${remote_addr} \
+	'sudo cp foodpaint-config.groovy /usr/share/tomcat6/.grails/ \
+	&& sudo service tomcat6 restart'		
 
 done:
 	make clean war deployWar
