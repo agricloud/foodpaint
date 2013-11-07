@@ -175,4 +175,22 @@ class ApiController {
     def queryBatchTrace() {
 
     }
+
+    def querySheetByBatch(String batchName){
+        println "查詢批號單據中....批號="+batchName
+
+        def sheet
+
+        sheet = StockInSheetDet.findByBatch(Batch.findByName(batchName))
+        if(!sheet){
+            sheet = OutSrcPurchaseSheetDet.findByBatch(Batch.findByName(batchName))
+            if(!sheet)
+                sheet = PurchaseSheetDet.findByBatch(Batch.findByName(batchName))
+        }
+
+        render (contentType: 'text/json') {
+            [sheet:sheet]
+        }
+
+    }
 }
