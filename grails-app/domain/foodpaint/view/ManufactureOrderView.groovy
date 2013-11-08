@@ -36,6 +36,11 @@ class ManufactureOrderView implements Serializable{
     //目前使用ERP預計產量欄位
     Integer qty
 
+    /*
+    * 預計批號
+    */
+    String batchName
+
 
     static constraints = {
         //customerOrderDet nullable:true
@@ -52,6 +57,7 @@ class ManufactureOrderView implements Serializable{
         name column: 'TA002', sqlType: "nchar"
         itemName  column: 'TA006', sqlType: "nchar"
         qty column: 'TA015', sqlType: "numeric"
+        batchName  column: 'TA063', sqlType: "nchar"
         
     } 
 }

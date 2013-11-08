@@ -39,13 +39,21 @@ class ApiController {
 
             batchSheet.sourceSheet.each{
                 //以來源單據查領料單
-                if(it.instanceOf(StockInSheetDet) || it.instanceOf(OutSrcPurchaseSheetDet) ){
-                    it.manufactureOrder.materialSheetDet.each{
+                if(it.instanceOf(StockInSheetDet) || it.instanceOf(OutSrcPurchaseSheetDet) || it.instanceOf(ManufactureOrder)){
+                    def mo
+                    if(it.instanceOf(ManufactureOrder))
+                        mo=it
+                    else
+                        mo=it.manufactureOrder
+
+                    mo.materialSheetDet.each{
                         def batchSource = [:]
                         batchSource.put("object","batchSource")
                         batchSource.put("batch",batchSheet.batch)
                         batchSource.put("childBatch",it.batch)
                         reportInfo.batchSource<< batchSource
+
+                        println it as JSON
 
                         batchNames<< it.batch.name
                     }
@@ -186,8 +194,10 @@ class ApiController {
             sheet = OutSrcPurchaseSheetDet.findByBatch(Batch.findByName(batchName))
             if(!sheet)
                 sheet = PurchaseSheetDet.findByBatch(Batch.findByName(batchName))
+                if(!sheet)
+                    sheet = ManufactureOrder.findByBatch(Batch.findByName(batchName))
         }
-
+        println "查詢批號單據中....單別單號="+sheet.typeName+sheet.name
         render (contentType: 'text/json') {
             [sheet:sheet]
         }

@@ -85,7 +85,7 @@ class DataImportService {
 			def importClass = loopKey[0].toUpperCase() + loopKey[1..-1]
 			def targetClass
 
-			if(loopKey!='manufactureOrderRouteView'){
+			if(importClass!='ManufactureOrderRouteView'){
 				targetClass = importClass.replace('View','')
 			}
 			else{
@@ -549,8 +549,15 @@ class DataImportService {
 
 		def item =Item.findByName(record.itemName.text())
 
-
 		object.item = item
+
+		def batch = Batch.findByName(record.batchName.text())
+
+		if(!batch){
+			batch = getBatchInstance(record,object)
+		}
+
+		object.batch = batch
 
     	object
 
