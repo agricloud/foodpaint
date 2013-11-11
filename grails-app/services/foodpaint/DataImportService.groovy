@@ -171,7 +171,7 @@ class DataImportService {
 					log.error e.message
 				}
 
-			}
+			}//end records
 			result.success=true
 
 
@@ -223,21 +223,44 @@ class DataImportService {
 		//找出批號
 
 		//log.info "製令製程單別單號"+record.typeName.text()+"/"+record.name.text()
+
 		def sheets = StockInSheetDet.where{
 			manufactureOrder.name == record.name.text() &&
 			manufactureOrder.typeName == record.typeName.text()
 		}
 
-		if(!sheets || sheets.count()==0){
+		
+
+		if(!sheets.exists() || !sheets.list()[0].batch){
 			sheets = OutSrcPurchaseSheetDet.where{
 				manufactureOrder.name == record.name.text() &&
 				manufactureOrder.typeName == record.typeName.text()
 			}
 		}
 
+		//預計批號情況，無入庫單、託外進貨單應改查製令
+		if(!sheets.exists()|| !sheets.list()[0].batch){
+			sheets = ManufactureOrder.where{
+				name == record.name.text() &&
+				typeName == record.typeName.text()
+			}
+		}
+
+		// Criteria參考寫法
+		// def criteria =OutSrcPurchaseSheetDet.createCriteria()
+		// def sheets = criteria.list{
+		// 	manufactureOrder{
+		// 		eq("name",record.name.text())
+		// 		and{
+		// 			eq("typeName",record.typeName.text())
+		// 		}
+		// 	}
+		// }
+
 		if(sheets){
+			//之後可能有多張進貨單，應加入處理方式
 			sheets.each{
-				//log.info "入庫單、託外進貨單單別單號"+it.typeName+"/"+it.name
+				//log.info "入庫單、託外進貨單、製令單別單號"+it.typeName+"/"+it.name
 				if(it.batch){
 					def batch = it.batch
 					def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
@@ -260,18 +283,20 @@ class DataImportService {
 						def supplier = Supplier.findByName(record.makerName.text())
 						batchRoute.supplier = supplier
 					}
-
-					def startDate= Date.parse('yyyyMMdd',record.startDate.text())
-					def endDate = Date.parse('yyyyMMdd',record.endDate.text())
-
-					batchRoute.startDate = startDate
-					batchRoute.endDate = endDate
+					if(record.startDate.text().trim()){
+						def startDate= Date.parse('yyyyMMdd',record.startDate.text())
+						batchRoute.startDate = startDate
+					}
+					if(record.endDate.text().trim()){
+						def endDate = Date.parse('yyyyMMdd',record.endDate.text())
+						batchRoute.endDate = endDate
+					}
 
 					log.info batchRoute as JSON
 
 					if (!batchRoute.validate() || !batchRoute.save(flush: true)){
-						batchRoute.errors.allErrors.each{ 
-							log.error messageSource.getMessage(it, Locale.getDefault())
+						batchRoute.errors.allErrors.each{ err ->
+							log.error messageSource.getMessage(err, Locale.getDefault())
 						}
 					}
 					else
@@ -279,6 +304,9 @@ class DataImportService {
 				}//end if
 			}//end each
 		}//end if
+		else{
+			log.error "製令製程："+record.typeName.text()+record.name.text()+record.sequence.text()+"查無相關單據批號"
+		}
 
 		return null
 	}
