@@ -2,7 +2,7 @@ package foodpaint.view
 
 class OperationView {
 
-    Integer importFlag
+    Integer importFlag = -1
 	String name //製程編號
 	String title="" //製程名稱
 	String description="" // 製程敘述

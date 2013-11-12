@@ -6,7 +6,7 @@ package foodpaint.view
     */
 class ManufactureOrderRouteView implements Serializable{
 
-    Integer importFlag
+    Integer importFlag = -1
 
     /*
     * 單別
@@ -53,6 +53,8 @@ class ManufactureOrderRouteView implements Serializable{
 
 
     static constraints = {
+        startDate nullable: true
+        endDate nullable: true
 
     }
 

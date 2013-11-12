@@ -28,7 +28,7 @@ class Item extends DefaultTable{
     /*
     * 規格敘述
     */
-    // String spec=""
+    String spec=""
 
 
     /*

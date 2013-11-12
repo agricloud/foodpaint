@@ -6,7 +6,7 @@ package foodpaint.view
     */
 class ManufactureOrderView implements Serializable{
 
-    Integer importFlag
+    Integer importFlag = -1
     
     /*
     * 訂單單身

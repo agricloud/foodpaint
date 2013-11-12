@@ -94,7 +94,6 @@ environments {
                 file name: 'grailsfile', file: 'target/grails.log'
                 file name: 'rootlog', file: 'target/root.log'
                 file name: 'devfile', file: 'target/development.log'
-                console name:'stdout',
 
                 layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
             }
@@ -114,12 +113,13 @@ environments {
     }
  
     test {
+        grails.logging.jul.usebridge = true
+        grails.converters.default.pretty.print = true
         log4j = {
             appenders {
                 file name: 'grailsfile', file: 'target/grails.log'
                 file name: 'rootlog', file: 'target/root.log'
                 file name: 'testfile', file: 'target/test.log'
-                console name:'stdout',
                 
                 layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2} %m%n")
             }

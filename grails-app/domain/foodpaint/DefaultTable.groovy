@@ -2,7 +2,7 @@ package foodpaint
 
 class DefaultTable {
 
-	Integer importFlag
+	Integer importFlag = -1
 
     /**
      * 廠別
@@ -33,10 +33,12 @@ class DefaultTable {
 
     static mapping = {
         tablePerHierarchy false
+        importFlag  defaultValue: -1
     }
 	
     static constraints = {
     	site nullable:true
+    	
     	//flag nullable:true
     }
 

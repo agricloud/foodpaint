@@ -2,7 +2,7 @@ package foodpaint.view
 
 class OutSrcPurchaseSheetDetView implements Serializable{
 
-    Integer importFlag
+    Integer importFlag = -1
 
     /*
     * 單別

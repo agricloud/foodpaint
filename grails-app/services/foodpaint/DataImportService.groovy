@@ -5,42 +5,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 import org.grails.cxf.adapter.GrailsCxfMapAdapter
 import groovy.xml.MarkupBuilder
 import grails.converters.*
-    /*
-    資料匯入 api 以 domain 的結構來設計
-    <?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<importTable>item</importTable>
-			<item>
-				<name></name>
-				<title></title>
-				...
-				<unit></unit>
-			</item>
-			...
-			<item>
-				<name></name>
-				<title></title>
-				...
-				<unit></unit>
-			</item>
-		</root>
-
-	如果欄位屬於 doamin 
-    <?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<importTable>batch</importTable>
-			<batch>
-				<item>
-					<name>itemA<name>
-				</item>
-			</batch>
-		</root>
-    */
 
 class DataImportService {
 	static expose = ['cxf']
+	
 	def grailsApplication
 	def messageSource
+	def batchService
 
     @XmlJavaTypeAdapter(GrailsCxfMapAdapter.class)
 	Map doDataImport(@WebParam(name="xmlString")String xmlString){
@@ -93,13 +64,6 @@ class DataImportService {
 			}
 
 			def fields = grailsApplication.getDomainClass("foodpaint."+targetClass).persistentProperties.collect { it.name }
-	
-			// 動態實體化 domain class
-			// GrailsDomainClass dc = grailsApplication.getDomainClass('foodpaint.'+importClass)
-			
-			// 以 item 為例， dc.clazz.FindByName == Item.FindByName
-			// 建立物件：dc.clazz.newInstance() == new Item()
-			// def newDomainObject = dc.clazz.newInstance()
 
 			log.info "table: ${importClass} size:${records[loopKey].size()}"
 			log.info "fields:${fields}"
@@ -148,9 +112,6 @@ class DataImportService {
 					if(targetClass=='MaterialSheetDet')
 						domain=getMaterialSheetDetInstance(record)	
 
-					// if(targetClass=='Batch')
-					// 	domain=getBatchInstance(record)
-
 
 					// 共用最後進行儲存
 					if(domain){
@@ -179,44 +140,7 @@ class DataImportService {
 
 	}
 
-	def private getBatchInstance(record, object){
-		//如果批號欄位沒有資料則不新增batch
-		//但單據仍會儲存
-		if(record.batchName.text() || record.batchName.text().trim()){
-			def batch = Batch.findByName(record.batchName.text())
 
-			if(!batch){
-				batch=new Batch(name:record.batchName.text())
-				batch.importFlag = -1
-			}
-
-			batch.importFlag = batch.importFlag++
-			batch.item = object.item
-
-			if(object.instanceOf(PurchaseSheetDet)){
-				batch.supplier = object.purchaseSheet.supplier
-			}
-			if(object.instanceOf(StockInSheetDet)){
-				//batch.manufactureDate=//尚未定義此資料來源
-			}
-			if(object.instanceOf(OutSrcPurchaseSheetDet)){
-				batch.supplier = object.outSrcPurchaseSheet.supplier
-				//batch.manufactureDate=//尚未定義此資料來源
-			}
-			
-			log.info batch as JSON
-
-			if (!batch.validate() || !batch.save(flush: true)){
-				batch.errors.allErrors.each{ 
-					log.error messageSource.getMessage(it, Locale.getDefault())
-				}
-			}
-			else
-				return batch
-		}
-		else
-			return null
-	}
 
 	def private getBatchRouteInstance(record){
 		//從進貨單或託外進貨單中找出製令符合的
@@ -246,21 +170,10 @@ class DataImportService {
 			}
 		}
 
-		// Criteria參考寫法
-		// def criteria =OutSrcPurchaseSheetDet.createCriteria()
-		// def sheets = criteria.list{
-		// 	manufactureOrder{
-		// 		eq("name",record.name.text())
-		// 		and{
-		// 			eq("typeName",record.typeName.text())
-		// 		}
-		// 	}
-		// }
 
 		if(sheets){
 			//之後可能有多張進貨單，應加入處理方式
 			sheets.each{
-				//log.info "入庫單、託外進貨單、製令單別單號"+it.typeName+"/"+it.name
 				if(it.batch){
 					def batch = it.batch
 					def batchRoute = BatchRoute.findByBatchAndSequence(batch,record.sequence.text().toInteger())
@@ -452,10 +365,11 @@ class DataImportService {
 		
 		object.item = item
 		object.purchaseSheet = purchaseSheet
+		
 
-	
 		//產生batch
-		def batch = getBatchInstance(record,object)
+		def batch = batchService.findOrCreateBatchInstanceByXml(record,object)
+
 
 		object.batch = batch
 
@@ -506,7 +420,7 @@ class DataImportService {
 		object.manufactureOrder = manufactureOrder
 
 		//產生batch
-		def batch = getBatchInstance(record,object)
+		def batch = batchService.findOrCreateBatchInstanceByXml(record,object)
 
 
 		object.batch = batch
@@ -558,7 +472,7 @@ class DataImportService {
 		object.manufactureOrder = manufactureOrder
 
 		//產生batch
-		def batch = getBatchInstance(record,object)
+		def batch = batchService.findOrCreateBatchInstanceByXml(record,object)
 
 
 		object.batch = batch
@@ -575,6 +489,8 @@ class DataImportService {
 			object=new ManufactureOrder(name:record.name.text(), typeName:record.typeName.text())
 		}
 
+		object.qty = record.qty.text().toInteger();
+
 		def item =Item.findByName(record.itemName.text())
 
 		object.item = item
@@ -582,7 +498,7 @@ class DataImportService {
 		def batch = Batch.findByName(record.batchName.text())
 
 		if(!batch){
-			batch = getBatchInstance(record,object)
+			batch = batchService.findOrCreateBatchInstanceByXml(record,object)
 		}
 
 		object.batch = batch
@@ -638,31 +554,6 @@ class DataImportService {
     	object
 
     }
-
-  //   def private getBatchInstance(record){
-
-
-
-		// def batch = Batch.findByName(record.name.text())
-
-		// if(!batch){
-		// 	batch=new Batch(name:record.name.text())
-		// }
-
-
-		// def itemName=record.item.name.text();
-		// def item=Item.findByName(itemName)
-		
-		// // 處理品項關連
-		// if(item){
-		// 	batch.item=item
-		// }else {
-		// }
-
-
-		// batch
-
-  //   }
 
 
 
