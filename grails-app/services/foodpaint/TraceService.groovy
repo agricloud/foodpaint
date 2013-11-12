@@ -1,10 +1,13 @@
 package foodpaint
 
+import grails.converters.*
+
 class TraceService{
 
     //追溯單據產生BatchSource關聯
     def generateBatchSourceInstance(){
-        def reportInfo = [batchSource:[]]
+        println "BatchSource---generating!!"   
+
         def batchNames=Batch.list()*.name
 
         //查批號來源單據
@@ -24,16 +27,24 @@ class TraceService{
                     else
                         mo=it.manufactureOrder
 
-                    mo.materialSheetDet.each{
-                        def batchSource = new BatchSource(batch:batchSheet.batch,childBatch:it.batch)
+                    log.debug MaterialSheetDet.findByManufactureOrder(mo) as JSON
 
+                    log.debug "嘿，12345678899999999豬豬豬豬豬豬"
+                    log.debug it as JSON
+                    log.debug mo.materialSheetDet as JSON
+
+                    mo.materialSheetDet.each{
+                         log.debug "嘿，你為什麼不印?ㄅㄅ "
+                        def batchSource = new BatchSource(batch:batchSheet.batch, childBatch:it.batch)
+                        log.debug "嘿，你為什麼不印?"
                         if (!batchSource.validate() || !batchSource.save(flush: true)){
+                            log.debug "有問題啊～～～～～～～～～"
                             batchSource.errors.allErrors.each{ 
                                 log.error messageSource.getMessage(it, Locale.getDefault())
                             }
                         }
-
-                        //log.debug it as JSON
+                        log.debug "嘿，你為什麼不印"
+                        log.debug batchSource as JSON
 
                         batchNames<< it.batch.name
                     }

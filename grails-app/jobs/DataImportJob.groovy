@@ -96,9 +96,18 @@ class DataImportJob {
 			dataImportService.doDataImport((MaterialSheetDetView.list() as XML).toString());
 		}
 
-		log.info "BatchSource---generating!!"				
+		log.info "BatchSource---generating!!"	
 		traceService.generateBatchSourceInstance();
 		
+		ManufactureOrder.list().each{
+			log.debug it.id+"/"+it.typeName+"-"+it.name
+		}
+
+		log.debug "超級分隔線噢喔噢！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！"
+
+		MaterialSheetDet.list().each{
+			log.debug it.manufactureOrder.id+"/"+it.manufactureOrder.typeName+"-"+it.manufactureOrder.name
+		}
 		println "import finish!!!!"
 
     }
