@@ -21,8 +21,8 @@ class ApiController {
      */
     def queryBatchReport() {
 
-        //params.batch.name="0927-410002"
-
+        
+/*
         def reportInfo = [batchSource:[]]
         def batchNames=[]
 
@@ -53,7 +53,7 @@ class ApiController {
                         batchSource.put("childBatch",it.batch)
                         reportInfo.batchSource<< batchSource
 
-                        println it as JSON
+                        //log.debug it as JSON
 
                         batchNames<< it.batch.name
                     }
@@ -71,7 +71,8 @@ class ApiController {
             }//end each
             log.debug "${batchNames}更新後尚有${batchNames.size()}個批號"
         }//end while
-
+*/
+        def reportInfo = [:]
         reportInfo.put("item",Item.list())
         reportInfo.put("workstation",Workstation.list())
         reportInfo.put("operation",Operation.list())
@@ -79,6 +80,7 @@ class ApiController {
         reportInfo.put("customer",Customer.list())
         reportInfo.put("batch",Batch.list())
         reportInfo.put("batchRoute",BatchRoute.list())
+        reportInfo.put("batchSource",BatchSource.list())
 
         JSON.use('deep')
         def converter = reportInfo as JSON
@@ -163,7 +165,7 @@ class ApiController {
                 it.workstation.put("name","null")
             }
         }
-        println "import data to Foodprint finished!!"
+        println "feed data to Foodprint finished!!"
         converter = jsParse as JSON
         converter.render(response)
 
@@ -176,15 +178,13 @@ class ApiController {
 
     }
 
-    /*
-     * 根據批號，品項查詢追溯資料
-     */
 
-    def queryBatchTrace() {
-
-    }
-
-    def querySheetByBatch(String batchName){
+    def querySourceSheetByBatch(String batchName){
+     
+        render (contentType: 'text/json') {
+            [sheet:traceService.querySourceSheetByBatch(batchName).sourceSheet]
+        }
+        /*
         println "查詢批號單據中....批號="+batchName
 
         def sheet
@@ -201,6 +201,6 @@ class ApiController {
         render (contentType: 'text/json') {
             [sheet:sheet]
         }
-
+        */
     }
 }
