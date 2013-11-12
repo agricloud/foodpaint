@@ -17,26 +17,26 @@ class BootStrap {
 
 		environments {
 			development {
-				def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
-				def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
-				def item3 = new Item(name:"item3",title:"柚子").save(failOnError: true, flush: true)
-				def item4 = new Item(name:"item4",title:"balasun").save(failOnError: true, flush: true)
-				def item5 = new Item(name:"item5",title:"colasun").save(failOnError: true, flush: true)
+				// def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
+				// def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+				// def item3 = new Item(name:"item3",title:"柚子").save(failOnError: true, flush: true)
+				// def item4 = new Item(name:"item4",title:"balasun").save(failOnError: true, flush: true)
+				// def item5 = new Item(name:"item5",title:"colasun").save(failOnError: true, flush: true)
 
-				def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
-				def supplier2 = new Supplier(name:"LZ01",title:"里仁生機",country:Country.JAPAN).save(failOnError: true, flush: true)
-				def supplier3 = new Supplier(name:"ZS01",title:"慈心有機",country:Country.TAIWAN).save(failOnError: true, flush: true)
+				// def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
+				// def supplier2 = new Supplier(name:"LZ01",title:"里仁生機",country:Country.JAPAN).save(failOnError: true, flush: true)
+				// def supplier3 = new Supplier(name:"ZS01",title:"慈心有機",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
-				def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
-				def workstation2 = new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
+				// def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
+				// def workstation2 = new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
 				
-				def customer1 = new Customer(name:"C01",title:"新鮮超市").save(failOnError: true, flush: true)
-				def customer2 = new Customer(name:"C02",title:"頂好超市").save(failOnError: true, flush: true)
+				// def customer1 = new Customer(name:"C01",title:"新鮮超市").save(failOnError: true, flush: true)
+				// def customer2 = new Customer(name:"C02",title:"頂好超市").save(failOnError: true, flush: true)
 
-				def operation1=new Operation(name:"operation1",title:"施肥").save(failOnError: true, flush: true)
-				def operation2=new Operation(name:"operation2",title:"翻土").save(failOnError: true, flush: true)
-				def operation3=new Operation(name:"operation3",title:"病蟲害防治").save(failOnError: true, flush: true)
-				def operation4=new Operation(name:"operation4",title:"檢驗").save(failOnError: true, flush: true)
+				// def operation1=new Operation(name:"operation1",title:"施肥").save(failOnError: true, flush: true)
+				// def operation2=new Operation(name:"operation2",title:"翻土").save(failOnError: true, flush: true)
+				// def operation3=new Operation(name:"operation3",title:"病蟲害防治").save(failOnError: true, flush: true)
+				// def operation4=new Operation(name:"operation4",title:"檢驗").save(failOnError: true, flush: true)
 
 
 				// //訂單
