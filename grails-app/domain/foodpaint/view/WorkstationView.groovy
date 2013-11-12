@@ -2,7 +2,7 @@ package foodpaint.view
 
 class WorkstationView {
 
-    Integer importFlag
+    Integer importFlag = -1
     
 	String name
 	String title

@@ -5,7 +5,7 @@ package foodpaint.view
     */
 class MaterialSheetView implements Serializable{
 
-    Integer importFlag
+    Integer importFlag = -1
 
     /*
     * 單別

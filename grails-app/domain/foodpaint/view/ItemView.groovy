@@ -7,7 +7,7 @@ package foodpaint.view
  */
 class ItemView {
 
-    Integer importFlag
+    Integer importFlag = -1
 
     /**
      * 項目名稱，必填欄位

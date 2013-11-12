@@ -3,7 +3,7 @@ package foodpaint.view
 
 class SupplierView {
 
-    Integer importFlag
+    Integer importFlag = -1
     
     /*
     * 編號
