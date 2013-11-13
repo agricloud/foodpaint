@@ -544,7 +544,8 @@ class DataImportService {
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
-
+		//由於Job匯入階段Grails尚未自動產生關聯，在此處指定關聯。
+		manufactureOrder.addToMaterialSheetDets(object).save()
 
 		object.item = item
 		object.batch = batch

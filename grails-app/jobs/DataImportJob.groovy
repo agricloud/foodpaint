@@ -3,7 +3,10 @@ import foodpaint.*
 import foodpaint.view.*
 
 class DataImportJob {
+	
     def dataImportService
+    def traceService
+
     static triggers = {
         simple name: 'mySimpleTrigger', startDelay: 1000, repeatInterval: 600000  
     }
@@ -94,6 +97,10 @@ class DataImportJob {
 			log.info "MaterialSheetDetView.count() = ${MaterialSheetDetView.list().size()}"				
 			dataImportService.doDataImport((MaterialSheetDetView.list() as XML).toString());
 		}
+
+		//產生batchSource
+		log.info "BatchSource Generate"
+        traceService.generateBatchSourceInstance()
 
 		println "import finish!!!!"
 
