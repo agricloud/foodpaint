@@ -18,22 +18,22 @@ class ApiController {
     }
 
     /*
-     * 實作履歷查詢，回傳 json 資料
+     * 匯出履歷相關資料
      */
-    def queryBatchReport() {
+    def exportData() {
 
-        def reportInfo = [:]
-        reportInfo.put("item",Item.list())
-        reportInfo.put("workstation",Workstation.list())
-        reportInfo.put("operation",Operation.list())
-        reportInfo.put("supplier",Supplier.list())
-        reportInfo.put("customer",Customer.list())
-        reportInfo.put("batch",Batch.list())
-        reportInfo.put("batchRoute",BatchRoute.list())
-        reportInfo.put("batchSource",BatchSource.list())
+        def data = [:]
+        data.put("item",Item.list())
+        data.put("workstation",Workstation.list())
+        data.put("operation",Operation.list())
+        data.put("supplier",Supplier.list())
+        data.put("customer",Customer.list())
+        data.put("batch",Batch.list())
+        data.put("batchRoute",BatchRoute.list())
+        data.put("batchSource",BatchSource.list())
 
         JSON.use('deep')
-        def converter = reportInfo as JSON
+        def converter = data as JSON
         def jsParse = JSON.parse(converter.toString())
 
         jsParse.item.each{
@@ -120,10 +120,10 @@ class ApiController {
         converter.render(response)
 
         // render (contentType: 'text/json') {
-        //     reportInfo
+        //     data
         // }
         // JSON.use('deep')
-        // def converter=reportInfo as JSON
+        // def converter=data as JSON
         // converter.render(response)
 
     }
