@@ -8,8 +8,33 @@ public enum Country {
 }
 
 
-class Supplier extends DefaultTable{
+class Supplier {
+    Integer importFlag = -1
 
+    /**
+     * 廠別
+     */
+    Site site
+
+    /**
+     * 修改者
+     */
+    String editor = ""
+
+    /**
+     * 建立者
+     */
+    String creator = ""
+
+    /**
+     * 建立日期（自動欄位）
+     */
+    Date dateCreated
+
+    /**
+     * 修改日期（自動欄位）
+     */
+    Date lastUpdated
     /*
     * 編號
     */
@@ -28,8 +53,11 @@ class Supplier extends DefaultTable{
 	Country country=Country.TAIWAN
 
 
-
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
     static constraints = {
+        site nullable:true
     	name unique: true, blank: false
     }
 }

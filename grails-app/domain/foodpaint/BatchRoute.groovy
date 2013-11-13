@@ -1,6 +1,32 @@
 package foodpaint
 
-class BatchRoute extends DefaultTable{
+class BatchRoute {
+    Integer importFlag = -1
+
+    /**
+     * 廠別
+     */
+    Site site
+
+    /**
+     * 修改者
+     */
+    String editor = ""
+
+    /**
+     * 建立者
+     */
+    String creator = ""
+
+    /**
+     * 建立日期（自動欄位）
+     */
+    Date dateCreated
+
+    /**
+     * 修改日期（自動欄位）
+     */
+    Date lastUpdated
 
 	static belongsTo=[batch:Batch]
 	Workstation workstation
@@ -19,9 +45,12 @@ class BatchRoute extends DefaultTable{
     */
 	Date endDate
 
-	 
+    static mapping = {
+        importFlag  defaultValue: -1
+    }	 
 
     static constraints = {
+        site nullable:true
     	sequence unique:'batch'
     	startDate nullable:true
     	endDate nullable:true

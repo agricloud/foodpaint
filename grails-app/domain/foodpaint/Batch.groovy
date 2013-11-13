@@ -3,7 +3,33 @@ package foodpaint
  public enum BatchType {
     PRODUCT
 }
-class Batch extends DefaultTable {
+class Batch  {
+	Integer importFlag = -1
+
+    /**
+     * 廠別
+     */
+	Site site
+
+    /**
+     * 修改者
+     */
+	String editor = ""
+
+	/**
+	 * 建立者
+	 */
+	String creator = ""
+
+	/**
+	 * 建立日期（自動欄位）
+	 */
+	Date dateCreated
+
+	/**
+	 * 修改日期（自動欄位）
+	 */
+	Date lastUpdated
 
 	static belongsTo = [
 		item: Item,
@@ -43,9 +69,12 @@ class Batch extends DefaultTable {
     */
 	String country = foodpaint.Country.TAIWAN
 
-
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
 
 	static constraints = {
+		site nullable:true
 		name 				unique: true, blank: false
 
 		dueDate 			nullable: true

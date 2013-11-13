@@ -6,7 +6,33 @@ package foodpaint
  * @author smlsun@gmail.com, ...
  * @version 1.0
  */
-class Item extends DefaultTable{
+class Item {
+    Integer importFlag = -1
+
+    /**
+     * 廠別
+     */
+    Site site
+
+    /**
+     * 修改者
+     */
+    String editor = ""
+
+    /**
+     * 建立者
+     */
+    String creator = ""
+
+    /**
+     * 建立日期（自動欄位）
+     */
+    Date dateCreated
+
+    /**
+     * 修改日期（自動欄位）
+     */
+    Date lastUpdated
 
 
     /**
@@ -52,12 +78,15 @@ class Item extends DefaultTable{
 	// Date effectEndDate
 
 
-
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
     /**
      * 廠別可以不設定<br/>
      * 有效起始與結束日期可以不設定
      */
 	static constraints = {
+        site nullable:true
 		name unique: true, blank: false
         title nullable: true
         description nullable: true
@@ -68,9 +97,6 @@ class Item extends DefaultTable{
 	}
 	public String toString(){
     	"品項編號：${name},品項名稱：${title}"
-    }
-    static mapping = {
-
     }
 
 }
