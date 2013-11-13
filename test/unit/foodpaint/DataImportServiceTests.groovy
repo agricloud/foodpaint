@@ -399,13 +399,8 @@ class DataImportServiceTests {
 
         service.doDataImport(viewXml.toString())
 
-        println "我是分隔線"
-
-        println MaterialSheetDet.list()
-
-
         assert MaterialSheetDet.list().size() == 2 
-        // assert mo.materialSheetDets.size() == 2 
+        assert mo.materialSheetDets.size() == 2 
 
     }
 

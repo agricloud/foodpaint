@@ -37,8 +37,8 @@ class ManufactureOrderController {
             manufactureOrderJson["item.unit"] = manufactureOrder.item.unit
             manufactureOrderJson["item.description"] = manufactureOrder.item.description
 
-            manufactureOrderJson["batch.id"] = manufactureOrder.batch.id
-            manufactureOrderJson["batch.name"] = manufactureOrder.batch.name
+            manufactureOrderJson["batch.id"] = manufactureOrder?.batch?.id
+            manufactureOrderJson["batch.name"] = manufactureOrder?.batch?.name
 
             render (contentType: 'application/json') {
                 [success: true,data:manufactureOrderJson]
