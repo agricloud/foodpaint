@@ -42,7 +42,7 @@ class OutSrcPurchaseSheet {
     * 單號
     */
     String name=""
-	static hasMany=[outSrcPurchaseSheetDet:OutSrcPurchaseSheetDet]
+	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
     * 進貨廠商
     */
@@ -54,7 +54,7 @@ class OutSrcPurchaseSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        outSrcPurchaseSheetDet nullable:true
+        outSrcPurchaseSheetDets nullable:true
 
     }
 }

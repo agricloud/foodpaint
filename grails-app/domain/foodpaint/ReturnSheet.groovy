@@ -41,7 +41,7 @@ class ReturnSheet {
     * 單號
     */
     String name=""
-	static hasMany=[returnSheetDet:ReturnSheetDet]
+	static hasMany=[returnSheetDets:ReturnSheetDet]
     /*
     * 供應商
     */
@@ -53,6 +53,6 @@ class ReturnSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        returnSheetDet nullable:true
+        returnSheetDets nullable:true
     }
 }

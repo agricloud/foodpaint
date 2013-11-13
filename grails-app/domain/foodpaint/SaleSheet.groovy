@@ -42,7 +42,7 @@ class SaleSheet {
     * 單號
     */
     String name=""
-	static hasMany=[saleSheetDet:SaleSheetDet]
+	static hasMany=[saleSheetDets:SaleSheetDet]
     /*
     * 客戶
     */
@@ -54,6 +54,6 @@ class SaleSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        saleSheetDet nullable:true
+        saleSheetDets nullable:true
     }
 }

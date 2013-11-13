@@ -41,7 +41,7 @@ class OutSrcReturnSheet {
     * 單號
     */
     String name=""
-    static hasMany=[outSrcReturnSheetDet:OutSrcReturnSheetDet]
+    static hasMany=[outSrcReturnSheetDets:OutSrcReturnSheetDet]
     /*
     * 退貨廠商
     */
@@ -54,7 +54,7 @@ class OutSrcReturnSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        outSrcReturnSheetDet nullable:true
+        outSrcReturnSheetDets nullable:true
 
     }
 }

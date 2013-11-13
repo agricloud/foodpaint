@@ -47,8 +47,8 @@ class ManufactureOrder {
     CustomerOrderDet customerOrderDet
 
     static hasMany = [
-        stockInSheetDet: StockInSheetDet,
-        materialSheetDet: MaterialSheetDet
+        stockInSheetDets: StockInSheetDet,
+        materialSheetDets: MaterialSheetDet
     ]
 
     /*
@@ -73,8 +73,8 @@ class ManufactureOrder {
         name unique:'typeName'
         site nullable:true
         customerOrderDet nullable:true
-        stockInSheetDet nullable:true
-        materialSheetDet nullable:true
+        stockInSheetDets nullable:true
+        materialSheetDets nullable:true
         batch nullable:true
     }
 }

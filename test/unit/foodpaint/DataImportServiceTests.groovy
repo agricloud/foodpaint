@@ -6,13 +6,13 @@ import grails.test.mixin.*
 import org.junit.*
 import grails.converters.*
 import foodpaint.view.*
+import common.*
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(DataImportService)
 @Mock([
-    DefaultTable,
     Item, ItemView, 
     Customer, CustomerView,
     Workstation,WorkstationView,
@@ -30,11 +30,12 @@ import foodpaint.view.*
     ManufactureOrder,ManufactureOrderView,
     BatchRoute,ManufactureOrderRouteView,
     MaterialSheet,MaterialSheetView,
-    MaterialSheetDet,MaterialSheetDetView])
+    MaterialSheetDet,MaterialSheetDetView, 
+    BatchService, DomainService])
 class DataImportServiceTests {
 
 //ps. 使用defaultTable.importFlag 無法使用unit test測試
-/*
+
     void testItemImport() {
 
         new ItemView(name:"410001",flag:5,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -173,8 +174,7 @@ class DataImportServiceTests {
         assert PurchaseSheet.list().size() == 2 
 
     }
-*/
-/*
+
     void testPurchaseSheetDetImport() {
         def supplier1=new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
@@ -287,8 +287,8 @@ class DataImportServiceTests {
         new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
         new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
 
-        new ManufactureOrderView(typeName:"C11",name:"98100900001",itemName:"410001",qty:1000).save(failOnError: true, flush: true)
-        new ManufactureOrderView(typeName:"C11",name:"98100900002",itemName:"410002",qty:5000).save(failOnError: true, flush: true)
+        new ManufactureOrderView(typeName:"C11",name:"98100900001",itemName:"410001",qty:1000, batchName: 'batch1').save(failOnError: true, flush: true)
+        new ManufactureOrderView(typeName:"C11",name:"98100900002",itemName:"410002",qty:5000, batchName: 'batch2').save(failOnError: true, flush: true)
 
 
         def viewXml = ManufactureOrderView.list() as XML
@@ -301,8 +301,7 @@ class DataImportServiceTests {
         assert ManufactureOrder.list().size() == 2 
 
     }
-*/
-/*
+
 
     void testManufactureOrderRouteImport() {
 
@@ -354,9 +353,7 @@ class DataImportServiceTests {
         assert BatchRoute.list().size() == 2 
 
     }
-*/
-    
-/*
+
     void testMaterialSheetImport() {
         new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
         new Workstation(name:"workstation2",title:"慈心有機").save(failOnError: true, flush: true)
@@ -375,7 +372,7 @@ class DataImportServiceTests {
         assert MaterialSheet.list().size() == 2 
 
     }
-*/
+
     void testMaterialSheetDetImport() {
 
         def i1=new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種",importFlag:1).save(failOnError: true, flush: true)
@@ -406,51 +403,10 @@ class DataImportServiceTests {
 
         println MaterialSheetDet.list()
 
-        println "我是分隔線"
-
-        println mo as JSON
 
         assert MaterialSheetDet.list().size() == 2 
+        // assert mo.materialSheetDets.size() == 2 
 
     }
 
-
-
-    // void testBatchImport() {
-    //     def writer = new StringWriter()
-    //     def xml = new MarkupBuilder(writer)
-
-    //     new Item(name:'item1').save()
-
-    //     xml.root(){
-    //         importTable('Batch')
-    //         batch{
-    //             name("batch1")
-    //             // 日期格式
-    //             dueDate(new Date())
-    //             item{
-    //                 name("item1")
-    //             }
-    //         }
-    //         batch{
-    //             name("batch2")
-    //             item{
-    //                 name("item1")
-    //             }
-    //         }
-    //         batch{
-    //             name("batch3")
-    //             item{
-    //                 name("item2")
-    //             }
-    //         }
-    //     }
-
-
-    //     service.doDataImport(writer.toString())
-
-
-    //     assert Batch.list().size() == 2 
-
-    // }
 }

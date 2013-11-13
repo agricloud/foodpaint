@@ -41,7 +41,7 @@ class CustomerOrder {
     * 單號
     */
     String name=""
-	static hasMany=[customerOrderDet:CustomerOrderDet]
+	static hasMany=[customerOrderDets:CustomerOrderDet]
 	/*
 	* 客戶編號
 	*/

@@ -118,7 +118,7 @@ class DataImportService {
 
 						domain.importFlag=record.importFlag.text().toInteger()
 						domain.properties=getDomainProperties(record, fields)
-						log.info domain as JSON
+						// log.info domain as JSON
 
 						if (!domain.validate() || !domain.save(flush: true)){
 				            domain.errors.allErrors.each{ 

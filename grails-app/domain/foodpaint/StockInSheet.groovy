@@ -40,7 +40,7 @@ class StockInSheet {
     * 單號
     */
     String name=""
-	static hasMany=[stockInSheetDet:StockInSheetDet]
+	static hasMany=[stockInSheetDets:StockInSheetDet]
     /*
     * 生產線別
     */
@@ -52,6 +52,6 @@ class StockInSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        stockInSheetDet nullable:true
+        stockInSheetDets nullable:true
     }
 }

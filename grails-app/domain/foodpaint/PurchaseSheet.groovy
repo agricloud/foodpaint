@@ -41,7 +41,7 @@ class PurchaseSheet {
     */
     String name=""
 
-    static hasMany=[purchaseSheetDet:PurchaseSheetDet]
+    static hasMany=[purchaseSheetDets:PurchaseSheetDet]
     /*
     * 供應商
     */
@@ -68,7 +68,7 @@ class PurchaseSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        purchaseSheetDet nullable:true
+        purchaseSheetDets nullable:true
         supplier  nullable:true
     }
 }

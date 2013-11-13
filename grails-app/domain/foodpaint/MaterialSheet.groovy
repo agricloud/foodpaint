@@ -40,7 +40,7 @@ class MaterialSheet {
     * 單號
     */
     String name=""
-	static hasMany=[materialSheetDet:MaterialSheetDet]
+	static hasMany=[materialSheetDets:MaterialSheetDet]
     /*
     * 生產線別，加工廠商
     */
@@ -52,7 +52,7 @@ class MaterialSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
-        materialSheetDet nullable:true
+        materialSheetDets nullable:true
         
     }
 }
