@@ -71,6 +71,9 @@ clean:
 war:
 	grails war
 
+test:
+	grails test-app
+
 
 deployWar:
 	scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
