@@ -20,8 +20,12 @@ class BatchService {
 			if(sheet.instanceOf(PurchaseSheetDet)){
 				batch.supplier = sheet.purchaseSheet.supplier
 			}
+			if(sheet.instanceOf(StockInSheetDet)){
+				batch.manufactureDate = sheet.stockInSheet.stockInDate
+			}
 			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
 				batch.supplier = sheet.outSrcPurchaseSheet.supplier
+				batch.manufactureDate = sheet.outSrcPurchaseSheet.outSrcPurchaseDate
 			}
 			if(sheet.instanceOf(ManufactureOrder)){
 				batch.expectQty = sheet.qty
@@ -56,8 +60,12 @@ class BatchService {
 			if(sheet.instanceOf(PurchaseSheetDet)){
 				batch.supplier = sheet.purchaseSheet.supplier
 			}
+			if(sheet.instanceOf(StockInSheetDet)){
+				batch.manufactureDate = sheet.stockInSheet.stockInDate
+			}
 			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
 				batch.supplier = sheet.outSrcPurchaseSheet.supplier
+				batch.manufactureDate = sheet.outSrcPurchaseSheet.outSrcPurchaseDate
 			}
 			if(sheet.instanceOf(ManufactureOrder)){
 				batch.expectQty = sheet.qty

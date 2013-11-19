@@ -48,6 +48,11 @@ class OutSrcPurchaseSheet {
     */
 	Supplier supplier
 
+    /*
+    * 託外進貨日期
+    */
+    Date outSrcPurchaseDate
+
     static mapping = {
         importFlag  defaultValue: -1
     }

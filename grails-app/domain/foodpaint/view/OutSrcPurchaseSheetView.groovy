@@ -21,6 +21,11 @@ class OutSrcPurchaseSheetView implements Serializable{
     */
 	String supplierName
 
+    /*
+    * 託外進貨日期
+    */
+    String outSrcPurchaseDate
+
 
     static constraints = {
 
@@ -37,6 +42,7 @@ class OutSrcPurchaseSheetView implements Serializable{
         typeName column: 'TH001', sqlType: "nchar"
         name column: 'TH002', sqlType: "nchar"
         supplierName column: 'TH005', sqlType: "nchar"
+        outSrcPurchaseDate column: 'TH003', sqlType: "nchar"
         
     }      
 }

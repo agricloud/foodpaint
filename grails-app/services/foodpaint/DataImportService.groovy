@@ -390,6 +390,11 @@ class DataImportService {
 
 		object.workstation = workstation
 
+		if(record.stockInDate.text().trim()){
+			def stockInDate = Date.parse('yyyyMMdd',record.stockInDate.text())
+			object.stockInDate = stockInDate
+		}
+
     	object
 
     }
@@ -422,7 +427,6 @@ class DataImportService {
 		//產生batch
 		def batch = batchService.findOrCreateBatchInstanceByXml(record,object)
 
-
 		object.batch = batch
 
     	object
@@ -439,8 +443,12 @@ class DataImportService {
 
 		def supplier =Supplier.findByName(record.supplierName.text())
 
-
 		object.supplier = supplier
+		
+		if(record.outSrcPurchaseDate.text().trim()){
+			def outSrcPurchaseDate = Date.parse('yyyyMMdd',record.outSrcPurchaseDate.text())
+			object.outSrcPurchaseDate = outSrcPurchaseDate
+		}
 
     	object
 

@@ -22,6 +22,11 @@ class StockInSheetView implements Serializable{
     */
     String workstationName
 
+    /*
+    * 入庫日期
+    */
+    String stockInDate
+
 
     static constraints = {
 
@@ -37,6 +42,7 @@ class StockInSheetView implements Serializable{
         typeName column: 'TF001', sqlType: "nchar"
         name column: 'TF002', sqlType: "nchar"
         workstationName column: 'TF011', sqlType: "nchar"
+        stockInDate column: 'TF003', sqlType: "nchar"
         
     }    
 }
