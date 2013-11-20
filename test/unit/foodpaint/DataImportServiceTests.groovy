@@ -868,10 +868,8 @@ class DataImportServiceTests {
         new OutSrcPurchaseSheetDet(typeName:"BD32",name:"98100900001",sequence:1,outSrcPurchaseSheet:osps1,
                 item:item2,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
 
-
-        //沒有建立 ManufactureOrderRouteView 單純使用 xmlString 會有錯
-        new ManufactureOrderRouteView(typeName:"C11",name:"98100900001",sequence:1,operationName:"operation1",makerType:1,makerName:"workstation1",importFlag:1).save(failOnError: true, flush: true)
-        new ManufactureOrderRouteView(typeName:"C11",name:"98100900002",sequence:1,operationName:"operation2",makerType:2,makerName:"FJ01",importFlag:1).save(failOnError: true, flush: true)
+        // new ManufactureOrderRouteView(typeName:"C11",name:"98100900001",sequence:1,operationName:"operation1",makerType:1,makerName:"workstation1",importFlag:1).save(failOnError: true, flush: true)
+        // new ManufactureOrderRouteView(typeName:"C11",name:"98100900002",sequence:1,operationName:"operation2",makerType:2,makerName:"FJ01",importFlag:1).save(failOnError: true, flush: true)
 
         // def viewXml = ManufactureOrderRouteView.list() as XML
         // println viewXml.toString()
