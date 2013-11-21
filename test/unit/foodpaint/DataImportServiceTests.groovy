@@ -34,8 +34,6 @@ import common.*
     BatchService, DomainService])
 class DataImportServiceTests {
 
-//ps. 使用defaultTable.importFlag 無法使用unit test測試
-
     void testItemImport() {
 
         // new ItemView(name:"410001",flag:5,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)

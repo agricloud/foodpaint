@@ -205,9 +205,6 @@ class DataImportService {
 						batchRoute.endDate = endDate
 					}
 
-					//註記：log... as JSON 無法 pass test-run
-					//log.info batchRoute as JSON
-
 					if (!batchRoute.validate() || !batchRoute.save(flush: true)){
 						batchRoute.errors.allErrors.each{ err ->
 							log.error messageSource.getMessage(err, Locale.getDefault())
