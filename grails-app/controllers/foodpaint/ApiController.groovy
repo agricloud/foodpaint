@@ -1,5 +1,6 @@
 package foodpaint
 import grails.converters.*
+import org.codehaus.groovy.grails.web.json.*;
 import foodpaint.view.*
 
 class ApiController {
@@ -32,7 +33,7 @@ class ApiController {
         data.put("batchRoute",BatchRoute.list())
         data.put("batchSource",BatchSource.list())
 
-        JSON.use('deep')
+
         def converter = data as JSON
         def jsParse = JSON.parse(converter.toString())
 

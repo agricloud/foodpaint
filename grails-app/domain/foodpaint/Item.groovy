@@ -1,5 +1,5 @@
 package foodpaint
-
+import grails.converters.*
 /**
  * 履歷明細項目（這邊打類別說明，暫定請蹤影做修改）
  * 
@@ -97,6 +97,23 @@ class Item {
 	}
 	public String toString(){
     	"品項編號：${name},品項名稱：${title}"
+    }
+   // JSON definition of the User object
+    static {
+
+        JSON.registerObjectMarshaller(Item) {
+            def result = [:]
+
+            result.id = it.id
+            result.name = it.name
+            result.title = it.title
+            result.spec = it.spec
+            result.unit = it.unit
+            result.description = it.description
+
+            result
+        }
+
     }
 
 }
