@@ -1,13 +1,6 @@
-def grails23x = (grailsVersion.startsWith("2.3"))
-def grails22x = (grailsVersion.startsWith("2.2"))
 
-if (grails23x) {
-    grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
-}
-else {
-    // Grails version is 2.2.x
-    grails.servlet.version = "2.5" // Change depending on target container compliance (2.5 or 3.0)
-}
+grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
+
 
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
@@ -19,25 +12,22 @@ grails.server.port.http = 8180
 grails.project.war.file = "target/${appName}.war"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-if (grails23x) {
-    grails.project.fork = [
-        // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
-        //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 
-        // configure settings for the test-app JVM, uses the daemon by default
-        test: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
-        // configure settings for the run-app JVM
-        run: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
-        // configure settings for the run-war JVM
-        war: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
-        // configure settings for the Console UI JVM
-        console: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256]
-    ]
-    grails.project.dependency.resolver = "maven" // or ivy
-}else {
-    // grails.project.fork.run=true
-    // grails.project.fork.run= [maxMemory:512, minMemory:64, debug:true, maxPerm:256 ]
-}
+grails.project.fork = [
+    // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
+    //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
+
+    // configure settings for the test-app JVM, uses the daemon by default
+    test: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
+    // configure settings for the run-app JVM
+    run: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
+    // configure settings for the run-war JVM
+    war: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
+    // configure settings for the Console UI JVM
+    console: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256]
+]
+grails.project.dependency.resolver = "maven" // or ivy
+
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
@@ -71,38 +61,22 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        if (grails23x) {
-            // plugins for the build system only
-            build ':tomcat:7.0.47'
-            
 
-            // plugins for the compile step
-            compile ":scaffolding:2.0.0"
-            compile ':cache:1.1.1'
+        // plugins for the build system only
+        build ':tomcat:7.0.47'
+        
 
-            // plugins needed at runtime but not for compilation
-            runtime ':hibernate:3.6.10.4'
-            // compile ':hibernate4:4.1.11.4'
-            runtime ":database-migration:1.3.5"
-            runtime ":jquery:1.10.2"
-            runtime ":resources:1.2"
-        }else {
-            runtime ":hibernate:$grailsVersion"
-            runtime ":jquery:1.8.3"
-            runtime ":resources:1.2"
+        // plugins for the compile step
+        compile ":scaffolding:2.0.0"
+        compile ':cache:1.1.1'
 
-            // Uncomment these (or add new ones) to enable additional resources capabilities
-            //runtime ":zipped-resources:1.0"
-            //runtime ":cached-resources:1.0"
-            //runtime ":yui-minify-resources:0.1.4"
+        // plugins needed at runtime but not for compilation
+        runtime ':hibernate:3.6.10.4'
+        // compile ':hibernate4:4.1.11.4'
+        runtime ":database-migration:1.3.5"
+        runtime ":jquery:1.10.2"
+        runtime ":resources:1.2"
 
-            build ":tomcat:$grailsVersion"
-
-            runtime ":database-migration:1.2.1"
-
-            compile ':cache:1.0.1'
-
-        }
 
         runtime ":cors:1.1.0"
 
