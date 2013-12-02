@@ -60,9 +60,9 @@ remote-dbinit:
 # 	mysqld_safe5 &
 # 	rabbitmq-server &
 remote-init:
-	ssh -t ${remote_user}@${remote_addr} 'sudo mkdir -p /usr/share/tomcat6/.grails \
-	&& sudo chgrp -R tomcat6 /usr/share/tomcat6 \
-	&& sudo chmod -R 770 /usr/share/tomcat6'
+	ssh -t ${remote_user}@${remote_addr} 'sudo mkdir -p /usr/share/tomcat7/.grails \
+	&& sudo chgrp -R tomcat7 /usr/share/tomcat7 \
+	&& sudo chmod -R 770 /usr/share/tomcat7'
 
 clean:
 	grails clean
@@ -71,7 +71,7 @@ clean:
 war:
 	grails war
 
-test:
+runtest:
 	grails test-app
 
 
@@ -80,22 +80,22 @@ deployWar:
 
 	ssh -t ${remote_user}@${remote_addr} \
 	'cd ~/ \
-	&& sudo rm -rf /var/lib/tomcat6/webapps/foodpaint \
-	&& sudo cp foodpaint.war /var/lib/tomcat6/webapps/ \
-	&& sudo service tomcat6 restart'
+	&& sudo rm -rf /var/lib/tomcat7/webapps/foodpaint \
+	&& sudo cp foodpaint.war /var/lib/tomcat7/webapps/ \
+	&& sudo service tomcat7 restart'
 
 deployConfig:
 	scp ~/.grails/foodpaint-config.groovy ${remote_user}@${remote_addr}:~/
 
 	ssh -t ${remote_user}@${remote_addr} \
-	'sudo cp foodpaint-config.groovy /usr/share/tomcat6/.grails/ \
-	&& sudo service tomcat6 restart'		
+	'sudo cp foodpaint-config.groovy /usr/share/tomcat7/.grails/ \
+	&& sudo service tomcat7 restart'		
 
 done:
-	make clean war deployWar
+	make clean runtest war deployWar
 
 log:
-	ssh -t ${remote_user}@${remote_addr} 'sudo tail -f /var/lib/tomcat6/logs/catalina.out'
+	ssh -t ${remote_user}@${remote_addr} 'sudo tail -f /var/lib/tomcat7/logs/catalina.out'
 
 install:
 	make remote-init done
