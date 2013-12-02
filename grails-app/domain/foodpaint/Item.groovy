@@ -1,12 +1,39 @@
 package foodpaint
-
+import grails.converters.*
 /**
  * 履歷明細項目（這邊打類別說明，暫定請蹤影做修改）
  * 
  * @author smlsun@gmail.com, ...
  * @version 1.0
  */
-class Item extends DefaultTable{
+class Item {
+    Integer importFlag = -1
+
+    /**
+     * 廠別
+     */
+    Site site
+
+    /**
+     * 修改者
+     */
+    String editor = ""
+
+    /**
+     * 建立者
+     */
+    String creator = ""
+
+    /**
+     * 建立日期（自動欄位）
+     */
+    Date dateCreated
+
+    /**
+     * 修改日期（自動欄位）
+     */
+    Date lastUpdated
+
 
     /**
      * 項目名稱，必填欄位
@@ -16,12 +43,12 @@ class Item extends DefaultTable{
     /**
      * 項目標題
      */
-	String title=""
+	String title
 
 	/**
 	 * 項目描述說明文字
 	 */
-	String description = ""
+	String description
 
 
     /*
@@ -33,36 +60,60 @@ class Item extends DefaultTable{
     /*
     * 單位
     */
-    String unit=""
+    String unit
 
     /**
      * 記錄期限多少天數
      */
-	Long dueDays
+	// Long dueDays
 
 	/**
 	 * 有效起始日期
 	 */
-	Date effectStartDate
+	// Date effectStartDate
 
 	/**
 	 * 有效結束日期
 	 */
-	Date effectEndDate
+	// Date effectEndDate
 
 
-
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
     /**
      * 廠別可以不設定<br/>
      * 有效起始與結束日期可以不設定
      */
 	static constraints = {
-		name unique: true
-		dueDays nullable: true
-		effectStartDate nullable: true
-		effectEndDate nullable: true
+        site nullable:true
+		name unique: true, blank: false
+        title nullable: true
+        description nullable: true
+        unit nullable: true
+		// dueDays nullable: true
+		// effectStartDate nullable: true
+		// effectEndDate nullable: true
 	}
 	public String toString(){
     	"品項編號：${name},品項名稱：${title}"
     }
+   // JSON definition of the User object
+    static {
+
+        JSON.registerObjectMarshaller(Item) {
+            def result = [:]
+
+            result.id = it.id
+            result.name = it.name
+            result.title = it.title
+            result.spec = it.spec
+            result.unit = it.unit
+            result.description = it.description
+
+            result
+        }
+
+    }
+
 }

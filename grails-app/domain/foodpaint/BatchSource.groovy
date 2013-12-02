@@ -1,6 +1,11 @@
 package foodpaint
 
-class DefaultTable {
+
+    /*
+    * 記錄生產的 batch 是由哪些元物料的 batch 所組成
+    */
+class BatchSource {
+	Integer importFlag = -1
 
     /**
      * 廠別
@@ -27,11 +32,13 @@ class DefaultTable {
 	 */
 	Date lastUpdated
 
+	static belongsTo = [batch: Batch]
+	Batch childBatch
     static mapping = {
-        tablePerHierarchy false
+        importFlag  defaultValue: -1
     }
-	
     static constraints = {
     	site nullable:true
+    	childBatch unique: 'batch' 
     }
 }

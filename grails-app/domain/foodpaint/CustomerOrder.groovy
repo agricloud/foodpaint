@@ -4,10 +4,44 @@ package foodpaint
     /*
     * 客戶訂單
     */
-class CustomerOrder extends DefaultSheet{
+class CustomerOrder {
+	Integer importFlag = -1
+
+    /**
+     * 廠別
+     */
+	Site site
+
+    /**
+     * 修改者
+     */
+	String editor = ""
+
+	/**
+	 * 建立者
+	 */
+	String creator = ""
+
+	/**
+	 * 建立日期（自動欄位）
+	 */
+	Date dateCreated
+
+	/**
+	 * 修改日期（自動欄位）
+	 */
+	Date lastUpdated
+    /*
+    * 單別
+    */
+    String typeName=""
 
 
-
+    /*
+    * 單號
+    */
+    String name=""
+	static hasMany=[customerOrderDets:CustomerOrderDet]
 	/*
 	* 客戶編號
 	*/
@@ -18,15 +52,16 @@ class CustomerOrder extends DefaultSheet{
 	*/
 	Date dueDate=new Date()
 
-	/*
-	* 多個訂單單身 
-	*/
 
-	static hasMany=[details:CustomerOrderDet]
-
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
 
     static constraints = {
+    	name unique:'typeName'
+    	site nullable:true
     	dueDate nullable:true
     	customer nullable:true
+    	//customerOrderDets nullable:true
     }
 }
