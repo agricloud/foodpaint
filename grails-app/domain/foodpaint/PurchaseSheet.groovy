@@ -14,12 +14,12 @@ class PurchaseSheet {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -68,6 +68,8 @@ class PurchaseSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         purchaseSheetDets nullable:true
         supplier  nullable:true
     }

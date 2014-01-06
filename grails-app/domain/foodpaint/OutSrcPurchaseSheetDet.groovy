@@ -11,12 +11,12 @@ class OutSrcPurchaseSheetDet{
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -72,6 +72,8 @@ class OutSrcPurchaseSheetDet{
     static constraints = {
         sequence(unique:['name','typeName'])
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         batch nullable:true
     }
 }

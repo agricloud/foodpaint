@@ -19,12 +19,12 @@ class Supplier {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -58,6 +58,8 @@ class Supplier {
     }
     static constraints = {
         site nullable:true
+        editor nullable:true
+        creator nullable:true
     	name unique: true, blank: false
     }
 }
