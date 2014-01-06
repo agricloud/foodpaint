@@ -12,7 +12,7 @@ class ManufactureOrderControllerTests {
 
     def populateValidParams(params) {
         assert params != null
-        params["nameType"] = 'MO'
+        params["typeName"] = 'MO'
         params["name"] = 'MO0001'
         params["qty"] = 123
 
