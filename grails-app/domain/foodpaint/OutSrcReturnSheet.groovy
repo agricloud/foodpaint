@@ -34,13 +34,13 @@ class OutSrcReturnSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
     static hasMany=[outSrcReturnSheetDets:OutSrcReturnSheetDet]
     /*
     * 退貨廠商

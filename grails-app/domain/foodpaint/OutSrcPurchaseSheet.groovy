@@ -35,13 +35,13 @@ class OutSrcPurchaseSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
     * 進貨廠商

@@ -33,13 +33,13 @@ class PurchaseSheetDet{
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */

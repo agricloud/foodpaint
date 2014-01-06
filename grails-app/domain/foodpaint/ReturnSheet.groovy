@@ -34,13 +34,13 @@ class ReturnSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[returnSheetDets:ReturnSheetDet]
     /*
     * 供應商

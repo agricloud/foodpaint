@@ -33,13 +33,13 @@ class MaterialSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[materialSheetDets:MaterialSheetDet]
     /*
     * 生產線別，加工廠商

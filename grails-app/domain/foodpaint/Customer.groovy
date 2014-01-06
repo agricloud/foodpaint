@@ -28,9 +28,9 @@ class Customer {
 	 */
 	Date lastUpdated
 	String name
-	String title = ""
-	String email=""
-	String address=""
+	String title
+	String email
+	String address
 
     static mapping = {
         importFlag  defaultValue: -1

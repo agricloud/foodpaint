@@ -35,13 +35,13 @@ class SaleSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[saleSheetDets:SaleSheetDet]
     /*
     * 客戶

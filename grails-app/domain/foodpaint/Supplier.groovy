@@ -44,7 +44,7 @@ class Supplier {
     /*
     * 名稱
     */
-	String title = ""
+	String title
 
 
     /*

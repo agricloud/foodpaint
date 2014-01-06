@@ -34,13 +34,13 @@ class ManufactureOrder {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
     /*
     * 訂單單身
     */
