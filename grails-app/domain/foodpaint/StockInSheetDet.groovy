@@ -12,12 +12,12 @@ class StockInSheetDet{
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -31,13 +31,13 @@ class StockInSheetDet{
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
@@ -74,6 +74,8 @@ class StockInSheetDet{
     static constraints = {
         sequence(unique:['name','typeName'])
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         batch nullable:true
         stockLocation nullable:true      
     }
