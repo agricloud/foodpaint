@@ -14,12 +14,12 @@ class StockInSheet {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -33,13 +33,13 @@ class StockInSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[stockInSheetDets:StockInSheetDet]
     /*
     * 生產線別
@@ -59,6 +59,8 @@ class StockInSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         stockInSheetDets nullable:true
     }
 }

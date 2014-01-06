@@ -15,12 +15,12 @@ class CustomerOrder {
     /**
      * 修改者
      */
-	String editor = ""
+	String editor
 
 	/**
 	 * 建立者
 	 */
-	String creator = ""
+	String creator
 
 	/**
 	 * 建立日期（自動欄位）
@@ -34,13 +34,13 @@ class CustomerOrder {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[customerOrderDets:CustomerOrderDet]
 	/*
 	* 客戶編號
@@ -58,6 +58,9 @@ class CustomerOrder {
     }
 
     static constraints = {
+        site nullable:true
+        editor nullable:true
+        creator nullable:true
     	name unique:'typeName'
     	site nullable:true
     	dueDate nullable:true

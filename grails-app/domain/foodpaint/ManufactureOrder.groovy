@@ -15,12 +15,12 @@ class ManufactureOrder {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -34,13 +34,13 @@ class ManufactureOrder {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
     /*
     * 訂單單身
     */
@@ -72,6 +72,8 @@ class ManufactureOrder {
     static constraints = {
         name unique:'typeName'
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         customerOrderDet nullable:true
         stockInSheetDets nullable:true
         materialSheetDets nullable:true

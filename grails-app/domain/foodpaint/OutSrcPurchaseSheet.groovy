@@ -16,12 +16,12 @@ class OutSrcPurchaseSheet {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -35,13 +35,13 @@ class OutSrcPurchaseSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
     * 進貨廠商
@@ -59,6 +59,8 @@ class OutSrcPurchaseSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         outSrcPurchaseSheetDets nullable:true
 
     }

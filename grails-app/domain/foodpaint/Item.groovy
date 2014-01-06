@@ -17,12 +17,12 @@ class Item {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -54,7 +54,7 @@ class Item {
     /*
     * 規格敘述
     */
-    String spec=""
+    String spec
 
 
     /*
@@ -87,9 +87,12 @@ class Item {
      */
 	static constraints = {
         site nullable:true
+        editor nullable:true
+        creator nullable:true
 		name unique: true, blank: false
         title nullable: true
         description nullable: true
+        spec nullable: true
         unit nullable: true
 		// dueDays nullable: true
 		// effectStartDate nullable: true
