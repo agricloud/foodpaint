@@ -30,6 +30,8 @@ class Workstation {
 
 	String name
 	String title
+	String description
+	
     static mapping = {
         importFlag  defaultValue: -1
     }
@@ -38,5 +40,6 @@ class Workstation {
         editor nullable:true
         creator nullable:true
     	name unique:true, blank: false
+    	description nullable:true
     }
 }

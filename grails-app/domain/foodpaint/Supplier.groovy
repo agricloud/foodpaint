@@ -1,12 +1,5 @@
+
 package foodpaint
-
-
-public enum Country {
-    TAIWAN,
-    JAPAN,
-    CHINA
-}
-
 
 class Supplier {
     Integer importFlag = -1
@@ -46,6 +39,10 @@ class Supplier {
     */
 	String title
 
+    String tel
+    String email
+    String address
+
 
     /*
     * 供應商所屬國家
@@ -61,5 +58,8 @@ class Supplier {
         editor nullable:true
         creator nullable:true
     	name unique: true, blank: false
+        tel nullable:true
+        email nullable:true
+        address nullable:true
     }
 }

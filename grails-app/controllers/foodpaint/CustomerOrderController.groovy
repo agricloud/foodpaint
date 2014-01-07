@@ -29,13 +29,9 @@ class CustomerOrderController {
 
 
         if(customerOrder){   
-            def customerOrderJson =  JSON.parse((customerOrder as JSON).toString())
-            customerOrderJson["customer.id"] = customerOrder.customer.id
-            customerOrderJson["customer.name"] = customerOrder.customer.name
-            customerOrderJson["customer.title"] = customerOrder.customer.title
 
             render (contentType: 'application/json') {
-                [success: true,data:customerOrderJson]
+                [success: true,data:customerOrder]
             }
         }else {
             render (contentType: 'application/json') {
@@ -45,7 +41,8 @@ class CustomerOrderController {
     }
     def create(){
 
-        def mcustomerOrder=new CustomerOrder()        
+        def customerOrder=new CustomerOrder() 
+        println customerOrder       
         render (contentType: 'application/json') {
             [success: true,data:customerOrder]
         }

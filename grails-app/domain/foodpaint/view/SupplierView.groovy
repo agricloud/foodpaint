@@ -14,7 +14,11 @@ class SupplierView {
     /*
     * 名稱
     */
-	String title = ""
+	String title
+
+    String tel
+    String email
+    String address
 
 
     /*
@@ -39,5 +43,8 @@ class SupplierView {
         name column: 'MA001', sqlType: "nchar"
         title column: 'MA003', sqlType: "nchar"
         //country column: 'MA006', sqlType: "nchar"
+        tel column: 'MA008', sqlType: "nchar"
+        email column: 'MA011', sqlType: "nchar"
+        address column: 'MA014', sqlType: "nchar"
     }
 }
