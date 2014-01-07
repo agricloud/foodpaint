@@ -10,15 +10,7 @@ class BootStrap {
     	// 預設時區，避免 json 轉換自動扣除 8 小時(台灣 +8:00)
     	TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
-		JSON.registerObjectMarshaller(ManufactureOrder) {
-		    def result = convertService.domainParseMap(it)
-		    result
-		}
-
-		JSON.registerObjectMarshaller(CustomerOrder) {
-		    def result = convertService.domainParseMap(it)
-		    result
-		}
+    	jsonParseDefine()
 
 		environments {
 			development {
@@ -95,5 +87,44 @@ class BootStrap {
     def destroy = {
     }
 
+    private jsonParseDefine(){
+        // JSON.registerObjectMarshaller(User) {
+        //     convertService.userParseJson(it)
+        // }
+        JSON.registerObjectMarshaller(Customer) {
+            convertService.customerParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Batch) {
+            convertService.batchParseJson(it)
+        }
+        JSON.registerObjectMarshaller(BatchRoute) {
+            convertService.batchRouteParseJson(it)
+        }
+        JSON.registerObjectMarshaller(BatchSource) {
+            convertService.batchSourceParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Item) {
+            convertService.itemParseJson(it)
+        }
+        JSON.registerObjectMarshaller(ItemRoute) {
+            convertService.itemRouteParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Workstation) {
+            convertService.workstationParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Supplier) {
+            convertService.supplierParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Operation) {
+            convertService.operationParseJson(it)
+        }
+        //sheets
+        JSON.registerObjectMarshaller(CustomerOrder) {
+            convertService.customerOrderParseJson(it)
+        }
+        JSON.registerObjectMarshaller(ManufactureOrder) {
+            convertService.manufactureOrderParseJson(it)
+        }
 
+    }
 }

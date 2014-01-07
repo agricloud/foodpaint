@@ -29,19 +29,9 @@ class ManufactureOrderController {
 
 
         if(manufactureOrder){   
-            def manufactureOrderJson =  JSON.parse((manufactureOrder as JSON).toString())
-            manufactureOrderJson["item.id"] = manufactureOrder.item.id
-            manufactureOrderJson["item.name"] = manufactureOrder.item.name
-            manufactureOrderJson["item.title"] = manufactureOrder.item.title
-            manufactureOrderJson["item.spec"] = manufactureOrder.item.spec
-            manufactureOrderJson["item.unit"] = manufactureOrder.item.unit
-            manufactureOrderJson["item.description"] = manufactureOrder.item.description
-
-            manufactureOrderJson["batch.id"] = manufactureOrder?.batch?.id
-            manufactureOrderJson["batch.name"] = manufactureOrder?.batch?.name
 
             render (contentType: 'application/json') {
-                [success: true,data:manufactureOrderJson]
+                [success: true,data:manufactureOrder]
             }
         }else {
             render (contentType: 'application/json') {
