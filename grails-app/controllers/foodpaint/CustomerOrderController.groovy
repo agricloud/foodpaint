@@ -29,7 +29,7 @@ class CustomerOrderController {
 
 
         if(customerOrder){   
-            
+
             render (contentType: 'application/json') {
                 [success: true,data:customerOrder]
             }
@@ -41,7 +41,8 @@ class CustomerOrderController {
     }
     def create(){
 
-        def mcustomerOrder=new CustomerOrder()        
+        def customerOrder=new CustomerOrder() 
+        println customerOrder       
         render (contentType: 'application/json') {
             [success: true,data:customerOrder]
         }
