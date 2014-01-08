@@ -122,6 +122,9 @@ class BootStrap {
         JSON.registerObjectMarshaller(CustomerOrder) {
             convertService.customerOrderParseJson(it)
         }
+        JSON.registerObjectMarshaller(CustomerOrderDet) {
+            convertService.customerOrderDetParseJson(it)
+        }
         JSON.registerObjectMarshaller(ManufactureOrder) {
             convertService.manufactureOrderParseJson(it)
         }

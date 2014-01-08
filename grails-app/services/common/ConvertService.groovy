@@ -334,6 +334,38 @@ class ConvertService {
 		result
     }
 
+    def customerOrderDetParseJson(customerOrderDet){
+    	def result = [:]
+
+    	result.dateCreated = customerOrderDet.dateCreated
+	    result.lastUpdated = customerOrderDet.lastUpdated
+	    result.site = customerOrderDet.site
+
+        result.id = customerOrderDet.id
+    	result.name = customerOrderDet.name
+		result.typeName = customerOrderDet.typeName
+		result.sequence = customerOrderDet.sequence
+		
+		result.customerOrder = customerOrderDet.customerOrder
+		result["customerOrder.id"] = customerOrderDet.customerOrder.id
+        result["customerOrder.name"] = customerOrderDet.customerOrder.name
+        result["customerOrder.typeName"] = customerOrderDet.customerOrder.typeName
+
+		if(customerOrderDet.item){
+			result.item = customerOrderDet.item
+			result["item.id"] = customerOrderDet.item.id
+	        result["item.name"] = customerOrderDet.item.name
+	        result["item.title"] = customerOrderDet.item.title
+	        result["item.spec"] = customerOrderDet.item.spec
+	        result["item.unit"] = customerOrderDet.item.unit
+	        result["item.description"] = customerOrderDet.item.description
+	    }
+
+	    result.qty = customerOrderDet.qty
+
+		result
+    }
+
     def manufactureOrderParseJson(manufactureOrder){
     	def result = [:]
 
