@@ -6,16 +6,10 @@ import grails.converters.JSON
 class CustomerOrderController {
 
     def domainService
-    def batchService
 
-
-    def index(Integer max) {
-
-
+    def index = {
 
         def list = CustomerOrder.createCriteria().list(params,params.criteria)
-
-
         render (contentType: 'application/json') {
             [customerOrderInstanceList: list, customerOrderInstanceTotal: list.totalCount]
         }
@@ -23,10 +17,8 @@ class CustomerOrderController {
 
         
     }
-    def show(Long id){
-
-        def customerOrder=CustomerOrder.findById(id);
-
+    def show = {
+        def customerOrder=CustomerOrder.get(params.id)
 
         if(customerOrder){   
 
@@ -39,46 +31,47 @@ class CustomerOrderController {
             }          
         }
     }
-    def create(){
+
+    def create = {
 
         def customerOrder=new CustomerOrder() 
-        println customerOrder       
+
         render (contentType: 'application/json') {
             [success: true,data:customerOrder]
         }
     }
 
-    def save(){
-        def customerOrderInstance=new CustomerOrder(params)
+    def save = {
+        def customerOrder=new CustomerOrder(params)
 
         render (contentType: 'application/json') {
-            domainService.save(customerOrderInstance)
+            domainService.save(customerOrder)
         }
     }
 
 
-    def update(){
-        def  customerOrderInstance = CustomerOrder.findById(params.id)
-        customerOrderInstance.properties = params
+    def update = {
+
+        def  customerOrder= CustomerOrder.get(params.id)
+        customerOrder.properties = params
         render (contentType: 'application/json') {
-            domainService.save(customerOrderInstance)
+            domainService.save(customerOrder)
         }         
     }
 
 
 
-    def delete(){
+    def delete = {
         
-        def  customerOrderInstance = CustomerOrder.findById(params.id)
+        def  customerOrder = CustomerOrder.get(params.id)
 
         def result
         try {
-            
-            result = domainService.delete(customerOrderInstance)
+            result = domainService.delete(customerOrder)
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [customerOrderInstance, e])
+            def msg = message(code: 'default.message.delete.failed', args: [customerOrder, e])
             result = [success:false, message: msg] 
         }
         

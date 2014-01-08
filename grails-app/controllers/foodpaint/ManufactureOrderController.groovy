@@ -9,12 +9,9 @@ class ManufactureOrderController {
     def batchService
 
 
-    def index(Integer max) {
-
-
+    def index = {
 
         def list = ManufactureOrder.createCriteria().list(params,params.criteria)
-
 
         render (contentType: 'application/json') {
             [manufactureOrderInstanceList: list, manufactureOrderInstanceTotal: list.totalCount]
@@ -23,9 +20,9 @@ class ManufactureOrderController {
 
         
     }
-    def show(Long id){
+    def show = {
 
-        def manufactureOrder=ManufactureOrder.findById(id);
+        def manufactureOrder=ManufactureOrder.get(params.id);
 
 
         if(manufactureOrder){   
@@ -39,7 +36,7 @@ class ManufactureOrderController {
             }          
         }
     }
-    def create(){
+    def create = {
 
         def manufactureOrder=new ManufactureOrder()        
         render (contentType: 'application/json') {
@@ -47,41 +44,41 @@ class ManufactureOrderController {
         }
     }
 
-    def save(){
-        def manufactureOrderInstance=new ManufactureOrder(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrderInstance)
+    def save = {
+        def manufactureOrder=new ManufactureOrder(params)
+        def batch = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrder)
  
-        manufactureOrderInstance.batch = (Batch) batch
+        manufactureOrder.batch = (Batch) batch
 
         render (contentType: 'application/json') {
-            domainService.save(manufactureOrderInstance)
+            domainService.save(manufactureOrder)
         }
     }
 
 
-    def update(){
+    def update = {
+
         log.info params.effectStartDate
-        def  manufactureOrderInstance = ManufactureOrder.findById(params.id)
-        manufactureOrderInstance.properties = params
+        def  manufactureOrder = ManufactureOrder.get(params.id)
+        manufactureOrder.properties = params
         render (contentType: 'application/json') {
-            domainService.save(manufactureOrderInstance)
+            domainService.save(manufactureOrder)
         }         
     }
 
 
-
-    def delete(){
+    def delete = {
         
-        def  manufactureOrderInstance = ManufactureOrder.findById(params.id)
+        def  manufactureOrder = ManufactureOrder.get(params.id)
 
         def result
         try {
             
-            result = domainService.delete(manufactureOrderInstance)
+            result = domainService.delete(manufactureOrder)
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [manufactureOrderInstance, e])
+            def msg = message(code: 'default.message.delete.failed', args: [manufactureOrder, e])
             result = [success:false, message: msg] 
         }
         
