@@ -51,6 +51,8 @@ class CustomerOrderController {
 
 
     def update = {
+        println 'i am here'
+        println "params == ${params}"
 
         def  customerOrder= CustomerOrder.get(params.id)
         customerOrder.properties = params

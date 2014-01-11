@@ -6,9 +6,9 @@ class ExtJSFilters {
         all(controller:'*', action:'*') {
             before = {
 
-
                 params.each {
                     key, value ->
+                    println key+","+value
                     // Transform value from Ext JS to Grails date style 
                     // 時區 (\+|\-)\d\d:\d\d
                     if (value ==~ /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d$/) {
@@ -21,6 +21,7 @@ class ExtJSFilters {
                         params[key] = Date.parse('yyyy-MM-dd', value)
                         log.info "Found ${value} is a Ext JS date format, transform into Grails style"
                     }
+
 
 
 

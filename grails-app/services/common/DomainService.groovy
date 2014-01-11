@@ -32,7 +32,7 @@ class DomainService {
         def success
         def errors=[:]
         def msg
-        Object[] args = [domainObject];
+        Object[] args = [domainObject]
 
         if (!domainObject) {
 

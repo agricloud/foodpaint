@@ -65,6 +65,6 @@ class CustomerOrder {
     	site nullable:true
     	dueDate nullable:true
     	customer nullable:true
-    	//customerOrderDets nullable:true
+    	customerOrderDets nullable:true
     }
 }
