@@ -42,7 +42,7 @@ class ConvertService {
 	    result.expectQty = batch.expectQty
 	    result.manufactureDate = batch.manufactureDate
 	    result.expirationDate = batch.expirationDate
-	    result.remark = batch.remark
+	    // result.remark = batch.remark
 	    if(batch.item){
 	        result["item.id"] = batch.item.id
 	        result["item.name"] = batch.item.name
@@ -83,7 +83,7 @@ class ConvertService {
 		    result["batch.expectQty"] = batchSource.batch.expectQty
 		    result["batch.manufactureDate"] = batchSource.batch.manufactureDate
 		    result["batch.expirationDate"] = batchSource.batch.expirationDate
-		    result["batch.remark"] = batchSource.batch.remark
+		    // result["batch.remark"] = batchSource.batch.remark
 
 		    if(batchSource.batch.item){
 		        result["batch.item.id"] = batchSource.batch.item.id
@@ -112,7 +112,7 @@ class ConvertService {
 		    result["childBatch.expectQty"] = batchSource.childBatch.expectQty
 		    result["childBatch.manufactureDate"] = batchSource.childBatch.manufactureDate
 		    result["childBatch.expirationDate"] = batchSource.childBatch.expirationDate
-		    result["childBatch.remark"] = batchSource.childBatch.remark
+		    // result["childBatch.remark"] = batchSource.childBatch.remark
 		    if(batchSource.childBatch.item){
 		        result["childBatch.item.id"] = batchSource.childBatch.item.id
 		        result["childBatch.item.name"] = batchSource.childBatch.item.name
