@@ -47,7 +47,7 @@ class Supplier {
     /*
     * 供應商所屬國家
     */
-	Country country=Country.TAIWAN
+	Country country=foodpaint.Country.TAIWAN
 
 
     static mapping = {
