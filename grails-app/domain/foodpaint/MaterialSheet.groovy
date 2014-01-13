@@ -14,12 +14,12 @@ class MaterialSheet {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -33,13 +33,13 @@ class MaterialSheet {
     /*
     * 單別
     */
-    String typeName=""
+    String typeName
 
 
     /*
     * 單號
     */
-    String name=""
+    String name
 	static hasMany=[materialSheetDets:MaterialSheetDet]
     /*
     * 生產線別，加工廠商
@@ -52,6 +52,8 @@ class MaterialSheet {
     static constraints = {
         name unique:'typeName'
         site nullable:true
+        editor nullable:true
+        creator nullable:true
         materialSheetDets nullable:true
         
     }

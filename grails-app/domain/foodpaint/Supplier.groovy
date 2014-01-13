@@ -1,12 +1,5 @@
+
 package foodpaint
-
-
-public enum Country {
-    TAIWAN,
-    JAPAN,
-    CHINA
-}
-
 
 class Supplier {
     Integer importFlag = -1
@@ -19,12 +12,12 @@ class Supplier {
     /**
      * 修改者
      */
-    String editor = ""
+    String editor
 
     /**
      * 建立者
      */
-    String creator = ""
+    String creator
 
     /**
      * 建立日期（自動欄位）
@@ -44,13 +37,17 @@ class Supplier {
     /*
     * 名稱
     */
-	String title = ""
+	String title
+
+    String tel
+    String email
+    String address
 
 
     /*
     * 供應商所屬國家
     */
-	Country country=Country.TAIWAN
+	Country country=foodpaint.Country.TAIWAN
 
 
     static mapping = {
@@ -58,6 +55,11 @@ class Supplier {
     }
     static constraints = {
         site nullable:true
+        editor nullable:true
+        creator nullable:true
     	name unique: true, blank: false
+        tel nullable:true
+        email nullable:true
+        address nullable:true
     }
 }
