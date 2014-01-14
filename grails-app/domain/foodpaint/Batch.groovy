@@ -67,7 +67,7 @@ class Batch  {
    	/*
     * 供應商所屬國家
     */
-	String country = foodpaint.Country.TAIWAN
+	Country country = foodpaint.Country.TAIWAN
 
     static mapping = {
         importFlag  defaultValue: -1
