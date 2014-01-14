@@ -12,11 +12,13 @@ class CustomerOrderDetController {
         def customerOrder = CustomerOrder.get(params.customerOrder.id)
 
         if(customerOrder){
-            def customerOrderDet = customerOrder.customerOrderDets
+            
+            def customerOrderDet = CustomerOrderDet.findAllByCustomerOrder(customerOrder)
 
             render (contentType: 'application/json') {
                [success: true, data:customerOrderDet, total: customerOrderDet.size()]
             }
+
         }
         else{
             render (contentType: 'application/json') {
@@ -53,7 +55,7 @@ class CustomerOrderDetController {
 
             customerOrderDet.typeName = customerOrderDet.customerOrder.typeName
             customerOrderDet.name = customerOrderDet.customerOrder.name
-            
+
             if(customerOrderDet.customerOrder.customerOrderDets)
                 customerOrderDet.sequence = customerOrderDet.customerOrder.customerOrderDets*.sequence.max()+1
             else customerOrderDet.sequence = 1
