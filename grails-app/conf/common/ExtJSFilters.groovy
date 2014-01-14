@@ -8,7 +8,7 @@ class ExtJSFilters {
 
                 params.each {
                     key, value ->
-                    println key+","+value
+
                     // Transform value from Ext JS to Grails date style 
                     // 時區 (\+|\-)\d\d:\d\d
                     if (value ==~ /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d$/) {

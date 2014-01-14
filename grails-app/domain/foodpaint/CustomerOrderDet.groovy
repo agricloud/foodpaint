@@ -45,7 +45,7 @@ class CustomerOrderDet{
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
-    Integer sequence
+    int sequence
 
 
     CustomerOrder customerOrder
@@ -57,7 +57,8 @@ class CustomerOrderDet{
     /*
     * 訂單數量
     */
-	Integer qty
+	long qty
+
     static mapping = {
         importFlag  defaultValue: -1
     }

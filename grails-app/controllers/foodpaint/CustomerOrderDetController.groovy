@@ -14,9 +14,6 @@ class CustomerOrderDetController {
         if(customerOrder){
             def customerOrderDet = customerOrder.customerOrderDets
 
-            println customerOrder
-            println customerOrder.customerOrderDets
-
             render (contentType: 'application/json') {
                [success: true, data:customerOrderDet, total: customerOrderDet.size()]
             }
@@ -54,6 +51,9 @@ class CustomerOrderDetController {
 
             def customerOrderDet= new CustomerOrderDet(params)
 
+            customerOrderDet.typeName = customerOrderDet.customerOrder.typeName
+            customerOrderDet.name = customerOrderDet.customerOrder.name
+            
             if(customerOrderDet.customerOrder.customerOrderDets)
                 customerOrderDet.sequence = customerOrderDet.customerOrder.customerOrderDets*.sequence.max()+1
             else customerOrderDet.sequence = 1
