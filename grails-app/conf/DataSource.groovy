@@ -13,6 +13,28 @@ hibernate {
 }
 // environment specific settings
 environments {
+    dbToUpdate {
+        // 標準
+        dataSource {
+            pooled = true
+            username = "root"
+            password = "mvagusta"
+            dbCreate = ''
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            url = "jdbc:mysql://127.0.0.1:3306/foodpaintold?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
+        }
+
+        dataSource_erp {
+            pooled = true
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
+            dbCreate = "create-drop"
+            url = "jdbc:h2:mem:devErpDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+        }
+    }
+   
     development {
         // 標準
         dataSource {
