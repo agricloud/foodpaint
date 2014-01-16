@@ -4,7 +4,7 @@ package foodpaint
     * 進貨單身
     */
 class PurchaseSheetDet{
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別
@@ -43,7 +43,7 @@ class PurchaseSheetDet{
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
-    Integer sequence	
+    int sequence	
 
     static belongsTo=[purchaseSheet:PurchaseSheet]
     /*
@@ -61,7 +61,7 @@ class PurchaseSheetDet{
     /*
     * 進貨數量
     */
-    Integer qty
+    int qty
 
     static mapping = {
         importFlag  defaultValue: -1

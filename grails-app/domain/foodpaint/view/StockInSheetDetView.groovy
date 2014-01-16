@@ -2,7 +2,7 @@ package foodpaint.view
 
 class StockInSheetDetView implements Serializable{
 
-    Integer importFlag = -1
+    int importFlag = -1
     
     /*
     * 單別
@@ -16,7 +16,7 @@ class StockInSheetDetView implements Serializable{
     String name
 
 
-    Integer sequence
+    int sequence
 
     /*
     * 品項編號

@@ -2,7 +2,7 @@ package foodpaint
 
 class StockInSheetDet{
 
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別
@@ -41,7 +41,7 @@ class StockInSheetDet{
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
-    Integer sequence
+    int sequence
     static belongsTo=[stockInSheet:StockInSheet]
     /*
     * 品項編號

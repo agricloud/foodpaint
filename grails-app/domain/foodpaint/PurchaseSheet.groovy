@@ -4,7 +4,7 @@ package foodpaint
     * 進貨單
     */
 class PurchaseSheet {
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

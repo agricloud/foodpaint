@@ -4,7 +4,7 @@ package foodpaint
     PRODUCT
 }
 class Batch  {
-	Integer importFlag = -1
+	int importFlag = -1
 
     /**
      * 廠別
@@ -37,7 +37,7 @@ class Batch  {
 	]
 
 	String name
-	Long expectQty = 0//ERP無此資料
+	long expectQty = 0//ERP無此資料
 	Date dueDate //與過期日期的區別？
 
 

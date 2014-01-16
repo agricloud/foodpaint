@@ -7,7 +7,7 @@ import grails.converters.*
  * @version 1.0
  */
 class Item {
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

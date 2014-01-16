@@ -1,7 +1,7 @@
 package foodpaint
 
 class OutSrcReturnSheetDet{
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別
@@ -41,7 +41,7 @@ class OutSrcReturnSheetDet{
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
-    Integer sequence
+    int sequence
     static belongsTo=[outSrcReturnSheet:OutSrcReturnSheet]
     /*
     * 品項編號
@@ -51,7 +51,7 @@ class OutSrcReturnSheetDet{
     /*
     * 數量
     */
-	Integer qty
+	int qty
 
 
     /*

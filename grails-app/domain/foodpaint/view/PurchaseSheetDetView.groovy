@@ -5,7 +5,7 @@ package foodpaint.view
     */
 class PurchaseSheetDetView implements Serializable{
 	
-    Integer importFlag = -1
+    int importFlag = -1
     /*
     * 單別
     */
@@ -17,7 +17,7 @@ class PurchaseSheetDetView implements Serializable{
     */
     String name
 
-    Integer sequence
+    int sequence
 
     /*
     * 品項編號
@@ -34,7 +34,7 @@ class PurchaseSheetDetView implements Serializable{
     /*
     * 進貨數量
     */
-    Integer qty
+    int qty
 
 
     static constraints = {

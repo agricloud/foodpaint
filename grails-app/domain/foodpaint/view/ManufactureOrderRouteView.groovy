@@ -6,7 +6,7 @@ package foodpaint.view
     */
 class ManufactureOrderRouteView implements Serializable{
 
-    Integer importFlag = -1
+    int importFlag = -1
 
     /*
     * 單別

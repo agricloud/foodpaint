@@ -4,7 +4,7 @@ package foodpaint
     * 領退料單頭
     */
 class MaterialSheet {
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

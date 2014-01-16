@@ -5,7 +5,7 @@ package foodpaint
     * 製造命令
     */
 class ManufactureOrder {
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

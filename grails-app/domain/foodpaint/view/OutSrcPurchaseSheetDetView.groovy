@@ -2,7 +2,7 @@ package foodpaint.view
 
 class OutSrcPurchaseSheetDetView implements Serializable{
 
-    Integer importFlag = -1
+    int importFlag = -1
 
     /*
     * 單別
@@ -15,7 +15,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     */
     String name
 
-    Integer sequence
+    int sequence
 
     /*
     * 品項編號
@@ -27,7 +27,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     * 數量
     */
     //目前對應ERP單據中的驗收數量
-	Integer qty
+	int qty
 
 
     /*

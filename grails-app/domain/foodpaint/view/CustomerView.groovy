@@ -2,7 +2,7 @@ package foodpaint.view
 
 class CustomerView {
 
-    Integer importFlag = -1
+    int importFlag = -1
 	String name
 	String title = ""
 	String email=""

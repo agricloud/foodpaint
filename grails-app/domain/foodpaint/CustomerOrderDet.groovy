@@ -5,7 +5,7 @@ package foodpaint
     * 客戶訂單單身
     */
 class CustomerOrderDet{
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

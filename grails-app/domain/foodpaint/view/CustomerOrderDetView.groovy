@@ -7,7 +7,7 @@ package foodpaint.view
 class CustomerOrderDetView implements Serializable{
 
 
-    Integer importFlag = -1
+    int importFlag = -1
     /*
     * 單別
     */
@@ -19,7 +19,7 @@ class CustomerOrderDetView implements Serializable{
     */
     String name=""
 
-    Integer sequence
+    int sequence
     String itemName
 
     /*

@@ -1,7 +1,7 @@
 package foodpaint
 
 class BatchRoute {
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別

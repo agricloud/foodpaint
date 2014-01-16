@@ -6,7 +6,7 @@ package foodpaint
     * 退貨單身
     */
 class ReturnSheetDet{
-    Integer importFlag = -1
+    int importFlag = -1
 
     /**
      * 廠別
@@ -45,7 +45,7 @@ class ReturnSheetDet{
     /*
     * 訂單項次，取訂單編號最大單身項次 +1
     */
-    Integer sequence
+    int sequence
     static belongsTo=[returnSheet:ReturnSheet]
     /*
     * 品項編號
@@ -62,7 +62,7 @@ class ReturnSheetDet{
     /*
     * 進貨數量
     */
-    Integer qty
+    int qty
     static mapping = {
         importFlag  defaultValue: -1
     }
