@@ -63,6 +63,9 @@ class MaterialSheetDet{
     * 品項編號，材料編號
     */
     Item item
+
+    long qty = 0
+
     static mapping = {
         importFlag  defaultValue: -1
     }
@@ -72,5 +75,6 @@ class MaterialSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        qty min: 0L
     }
 }

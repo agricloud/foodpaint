@@ -45,6 +45,7 @@ class MaterialSheet {
     * 生產線別，加工廠商
     */
     Workstation workstation
+    
     static mapping = {
         importFlag  defaultValue: -1
     }

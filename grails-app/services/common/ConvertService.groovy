@@ -395,4 +395,69 @@ class ConvertService {
 		result
     }
 
+    def materialSheetParseJson(materialSheet){
+    	def result = [:]
+
+    	result.dateCreated = materialSheet.dateCreated
+	    result.lastUpdated = materialSheet.lastUpdated
+	    result.site = materialSheet.site
+
+        result.id = materialSheet.id
+    	result.name = materialSheet.name
+		result.typeName = materialSheet.typeName
+
+		if(materialSheet.workstation){
+			result.workstation = materialSheet.workstation
+			result["workstation.id"] = materialSheet.workstation.id
+	        result["workstation.name"] = materialSheet.workstation.name
+	        result["workstation.title"] = materialSheet.workstation.title
+	    }
+
+		result
+    }
+
+    def materialSheetDetParseJson(materialSheetDet){
+    	def result = [:]
+
+    	result.dateCreated = materialSheetDet.dateCreated
+	    result.lastUpdated = materialSheetDet.lastUpdated
+	    result.site = materialSheetDet.site
+
+        result.id = materialSheetDet.id
+    	result.name = materialSheetDet.name
+		result.typeName = materialSheetDet.typeName
+		result.sequence = materialSheetDet.sequence
+
+		result.materialSheet = materialSheetDet.materialSheet
+		result["materialSheet.id"] = materialSheetDet.materialSheet.id
+
+		if(materialSheetDet.manufactureOrder){
+			result.manufactureOrder = materialSheetDet.manufactureOrder
+			result["manufactureOrder.id"] = materialSheetDet.manufactureOrder.id
+	        result["manufactureOrder.name"] = materialSheetDet.manufactureOrder.name
+	        result["manufactureOrder.typeName"] = materialSheetDet.manufactureOrder.typeName
+	    }
+
+	    if(materialSheetDet.batch){
+			result.batch = materialSheetDet.batch
+			result["batch.id"] = materialSheetDet.batch.id
+	        result["batch.name"] = materialSheetDet.batch.name
+	    }
+
+
+		if(materialSheetDet.item){
+			result.item = materialSheetDet.item
+			result["item.id"] = materialSheetDet.item.id
+	        result["item.name"] = materialSheetDet.item.name
+	        result["item.title"] = materialSheetDet.item.title
+	        result["item.spec"] = materialSheetDet.item.spec
+	        result["item.unit"] = materialSheetDet.item.unit
+	        result["item.description"] = materialSheetDet.item.description
+	    }
+
+	    result.qty = materialSheetDet.qty
+
+		result
+    }
+
 }

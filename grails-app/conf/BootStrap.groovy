@@ -20,6 +20,7 @@ class BootStrap {
 				def item3 = new Item(name:"paintitem3",title:"柚子").save(failOnError: true, flush: true)
 				def item4 = new Item(name:"paintitem4",title:"balasun").save(failOnError: true, flush: true)
 				def item5 = new Item(name:"paintitem5",title:"colasun").save(failOnError: true, flush: true)
+				def item6 = new Item(name:"paintitem6",title:"番茄").save(failOnError: true, flush: true)
 
 				def supplier1 = new Supplier(name:"paintFJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 				def supplier2 = new Supplier(name:"paintLZ01",title:"里仁生機",country:Country.JAPAN).save(failOnError: true, flush: true)
@@ -46,25 +47,29 @@ class BootStrap {
 				def manufactureOrder1 = new ManufactureOrder(typeName:"C11",name:"98100900001",item:item5,qty:1000).save(failOnError: true, flush: true)
 				def manufactureOrder2 = new ManufactureOrder(typeName:"C11",name:"98100900002",item:item1,qty:5000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
 
-				/*
+				def batch2 = new Batch(name:"paintbatch2", item:item2).save(failOnError: true, flush: true)
+				def batch3 = new Batch(name:"paintbatch3", item:item3).save(failOnError: true, flush: true)
+				def batch4 = new Batch(name:"paintbatch4", item:item4).save(failOnError: true, flush: true)
+				def batch5 = new Batch(name:"paintbatch5", item:item5).save(failOnError: true, flush: true)
+				def batch6 = new Batch(name:"paintbatch6", item:item6).save(failOnError: true, flush: true)
+				
 				//進貨單
 				def purchaseSheet1 = new PurchaseSheet(typeName:"B21",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
-				def purchaseSheetDet11 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,sequence:1,item:item2,batch:batch2,qty:10000).save(failOnError: true, flush: true)
-				def purchaseSheetDet12 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,sequence:2,item:item3,batch:batch3,qty:10000).save(failOnError: true, flush: true)
-				def purchaseSheetDet13 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,sequence:3,item:item4,batch:batch4,qty:10000).save(failOnError: true, flush: true)
+				def purchaseSheetDet11 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:1,item:item2,batch:batch2,qty:10000).save(failOnError: true, flush: true)
+				def purchaseSheetDet12 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:2,item:item3,batch:batch3,qty:10000).save(failOnError: true, flush: true)
+				def purchaseSheetDet13 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:3,item:item4,batch:batch4,qty:10000).save(failOnError: true, flush: true)
 				def purchaseSheet2 = new PurchaseSheet(typeName:"B21",name:"98100900002",supplier:supplier2).save(failOnError: true, flush: true)
-				def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,sequence:1,item:item5,batch:batch5,qty:10000).save(failOnError: true, flush: true)
-
+				def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:1,item:item5,batch:batch5,qty:10000).save(failOnError: true, flush: true)		
 						
 				//領料單
 				def materialSheet1 = new MaterialSheet(typeName:"D11",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
-				def materialSheetDet11 = new MaterialSheetDet(materialSheet:materialSheet1,sequence:1,item:item2,batch:batch2,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
-				def materialSheetDet12 = new MaterialSheetDet(materialSheet:materialSheet1,sequence:2,item:item3,batch:batch3,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
-				def materialSheetDet13 = new MaterialSheetDet(materialSheet:materialSheet1,sequence:3,item:item4,batch:batch4,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+				def materialSheetDet11 = new MaterialSheetDet(materialSheet:materialSheet1,typeName:"D11",name:"98100900001",sequence:1,item:item2,batch:batch2,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+				def materialSheetDet12 = new MaterialSheetDet(materialSheet:materialSheet1,typeName:"D11",name:"98100900001",sequence:2,item:item3,batch:batch3,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+				def materialSheetDet13 = new MaterialSheetDet(materialSheet:materialSheet1,typeName:"D11",name:"98100900001",sequence:3,item:item4,batch:batch4,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
 				def materialSheet2 = new MaterialSheet(typeName:"D11",name:"98100900002",workstation:workstation2).save(failOnError: true, flush: true)
-				def materialSheetDet21 = new MaterialSheetDet(materialSheet:materialSheet2,sequence:1,item:item5,batch:batch5,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
-				def materialSheetDet22 = new MaterialSheetDet(materialSheet:materialSheet2,sequence:2,item:item6,batch:batch6,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
-
+				def materialSheetDet21 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:1,item:item5,batch:batch5,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				def materialSheetDet22 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:2,item:item6,batch:batch6,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				/*
 				//入庫單
 				def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
 				def stockInSheetDet11 = new StockInSheetDet(stockInSheet:stockInSheet1,sequence:1,batch:batch6,item:item6,warehouse:"warehouse2",manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
@@ -128,6 +133,12 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(ManufactureOrder) {
             convertService.manufactureOrderParseJson(it)
+        }
+        JSON.registerObjectMarshaller(MaterialSheet) {
+            convertService.materialSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(MaterialSheetDet) {
+            convertService.materialSheetDetParseJson(it)
         }
 
     }
