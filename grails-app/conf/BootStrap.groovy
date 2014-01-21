@@ -60,6 +60,7 @@ class BootStrap {
 				def purchaseSheetDet13 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:3,item:item4,batch:batch4,qty:10000).save(failOnError: true, flush: true)
 				def purchaseSheet2 = new PurchaseSheet(typeName:"B21",name:"98100900002",supplier:supplier2).save(failOnError: true, flush: true)
 				def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:1,item:item5,batch:batch5,qty:10000).save(failOnError: true, flush: true)		
+				def purchaseSheetDet22 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:2,item:item6,batch:batch6,qty:10000).save(failOnError: true, flush: true)		
 						
 				//領料單
 				def materialSheet1 = new MaterialSheet(typeName:"D11",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
@@ -139,6 +140,12 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(MaterialSheetDet) {
             convertService.materialSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseSheet) {
+            convertService.purchaseSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseSheetDet) {
+            convertService.purchaseSheetDetParseJson(it)
         }
 
     }

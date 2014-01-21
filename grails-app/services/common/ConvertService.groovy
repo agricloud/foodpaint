@@ -323,14 +323,15 @@ class ConvertService {
         result.id = customerOrder.id
     	result.name = customerOrder.name
 		result.typeName = customerOrder.typeName
+		result.dueDate = customerOrder.dueDate
+
 		if(customerOrder.customer){
 			result.customer = customerOrder.customer
 			result["customer.id"] = customerOrder.customer.id
 	        result["customer.name"] = customerOrder.customer.name
 	        result["customer.title"] = customerOrder.customer.title
 	    }
-		result.dueDate = customerOrder.dueDate
-
+		
 		result
     }
 
@@ -345,6 +346,7 @@ class ConvertService {
     	result.name = customerOrderDet.name
 		result.typeName = customerOrderDet.typeName
 		result.sequence = customerOrderDet.sequence
+		result.qty = customerOrderDet.qty
 		
 		result.customerOrder = customerOrderDet.customerOrder
 		result["customerOrder.id"] = customerOrderDet.customerOrder.id
@@ -361,8 +363,6 @@ class ConvertService {
 	        result["item.description"] = customerOrderDet.item.description
 	    }
 
-	    result.qty = customerOrderDet.qty
-
 		result
     }
 
@@ -376,6 +376,8 @@ class ConvertService {
         result.id = manufactureOrder.id
     	result.name = manufactureOrder.name
 		result.typeName = manufactureOrder.typeName
+		result.qty = manufactureOrder.qty
+
 		if(manufactureOrder.item){
 			result.item = manufactureOrder.item
 			result["item.id"] = manufactureOrder.item.id
@@ -390,8 +392,7 @@ class ConvertService {
 	        result["batch.id"] = manufactureOrder.batch.id
 	        result["batch.name"] = manufactureOrder.batch.name
 	    }
-		result.qty = manufactureOrder.qty
-
+		
 		result
     }
 
@@ -427,6 +428,7 @@ class ConvertService {
     	result.name = materialSheetDet.name
 		result.typeName = materialSheetDet.typeName
 		result.sequence = materialSheetDet.sequence
+		result.qty = materialSheetDet.qty
 
 		result.materialSheet = materialSheetDet.materialSheet
 		result["materialSheet.id"] = materialSheetDet.materialSheet.id
@@ -455,7 +457,65 @@ class ConvertService {
 	        result["item.description"] = materialSheetDet.item.description
 	    }
 
-	    result.qty = materialSheetDet.qty
+		result
+    }
+
+    def purchaseSheetParseJson(purchaseSheet){
+    	def result = [:]
+
+    	result.dateCreated = purchaseSheet.dateCreated
+	    result.lastUpdated = purchaseSheet.lastUpdated
+	    result.site = purchaseSheet.site
+
+        result.id = purchaseSheet.id
+    	result.name = purchaseSheet.name
+		result.typeName = purchaseSheet.typeName
+		result.incomingDate = purchaseSheet.incomingDate
+
+		if(purchaseSheet.supplier){
+			result.supplier = purchaseSheet.supplier
+			result["supplier.id"] = purchaseSheet.supplier.id
+	        result["supplier.name"] = purchaseSheet.supplier.name
+	        result["supplier.title"] = purchaseSheet.supplier.title
+	    }
+
+		result
+    }
+
+    def purchaseSheetDetParseJson(purchaseSheetDet){
+    	def result = [:]
+
+    	result.dateCreated = purchaseSheetDet.dateCreated
+	    result.lastUpdated = purchaseSheetDet.lastUpdated
+	    result.site = purchaseSheetDet.site
+
+        result.id = purchaseSheetDet.id
+    	result.name = purchaseSheetDet.name
+		result.typeName = purchaseSheetDet.typeName
+		result.sequence = purchaseSheetDet.sequence
+
+		result.purchaseSheet = purchaseSheetDet.purchaseSheet
+		result["purchaseSheet.id"] = purchaseSheetDet.purchaseSheet.id
+
+
+	    if(purchaseSheetDet.batch){
+			result.batch = purchaseSheetDet.batch
+			result["batch.id"] = purchaseSheetDet.batch.id
+	        result["batch.name"] = purchaseSheetDet.batch.name
+	    }
+
+
+		if(purchaseSheetDet.item){
+			result.item = purchaseSheetDet.item
+			result["item.id"] = purchaseSheetDet.item.id
+	        result["item.name"] = purchaseSheetDet.item.name
+	        result["item.title"] = purchaseSheetDet.item.title
+	        result["item.spec"] = purchaseSheetDet.item.spec
+	        result["item.unit"] = purchaseSheetDet.item.unit
+	        result["item.description"] = purchaseSheetDet.item.description
+	    }
+
+	    result.qty = purchaseSheetDet.qty
 
 		result
     }
