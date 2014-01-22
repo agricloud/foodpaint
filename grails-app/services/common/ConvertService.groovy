@@ -446,7 +446,6 @@ class ConvertService {
 	        result["batch.name"] = materialSheetDet.batch.name
 	    }
 
-
 		if(materialSheetDet.item){
 			result.item = materialSheetDet.item
 			result["item.id"] = materialSheetDet.item.id
@@ -496,7 +495,7 @@ class ConvertService {
 
 		result.purchaseSheet = purchaseSheetDet.purchaseSheet
 		result["purchaseSheet.id"] = purchaseSheetDet.purchaseSheet.id
-
+		result.qty = purchaseSheetDet.qty
 
 	    if(purchaseSheetDet.batch){
 			result.batch = purchaseSheetDet.batch
@@ -515,7 +514,69 @@ class ConvertService {
 	        result["item.description"] = purchaseSheetDet.item.description
 	    }
 
-	    result.qty = purchaseSheetDet.qty
+		result
+    }
+
+    def stockInSheetParseJson(stockInSheet){
+    	def result = [:]
+
+    	result.dateCreated = stockInSheet.dateCreated
+	    result.lastUpdated = stockInSheet.lastUpdated
+	    result.site = stockInSheet.site
+
+        result.id = stockInSheet.id
+    	result.name = stockInSheet.name
+		result.typeName = stockInSheet.typeName
+		result.stockInDate = stockInSheet.stockInDate
+
+		if(stockInSheet.workstation){
+			result.workstation = stockInSheet.workstation
+			result["workstation.id"] = stockInSheet.workstation.id
+	        result["workstation.name"] = stockInSheet.workstation.name
+	        result["workstation.title"] = stockInSheet.workstation.title
+	    }
+
+		result
+    }
+
+    def stockInSheetDetParseJson(stockInSheetDet){
+    	def result = [:]
+
+    	result.dateCreated = stockInSheetDet.dateCreated
+	    result.lastUpdated = stockInSheetDet.lastUpdated
+	    result.site = stockInSheetDet.site
+
+        result.id = stockInSheetDet.id
+    	result.name = stockInSheetDet.name
+		result.typeName = stockInSheetDet.typeName
+		result.sequence = stockInSheetDet.sequence
+		result.qty = stockInSheetDet.qty
+
+		result.stockInSheet = stockInSheetDet.stockInSheet
+		result["stockInSheet.id"] = stockInSheetDet.stockInSheet.id
+
+		if(stockInSheetDet.manufactureOrder){
+			result.manufactureOrder = stockInSheetDet.manufactureOrder
+			result["manufactureOrder.id"] = stockInSheetDet.manufactureOrder.id
+	        result["manufactureOrder.name"] = stockInSheetDet.manufactureOrder.name
+	        result["manufactureOrder.typeName"] = stockInSheetDet.manufactureOrder.typeName
+	    }
+
+	    if(stockInSheetDet.batch){
+			result.batch = stockInSheetDet.batch
+			result["batch.id"] = stockInSheetDet.batch.id
+	        result["batch.name"] = stockInSheetDet.batch.name
+	    }
+
+		if(stockInSheetDet.item){
+			result.item = stockInSheetDet.item
+			result["item.id"] = stockInSheetDet.item.id
+	        result["item.name"] = stockInSheetDet.item.name
+	        result["item.title"] = stockInSheetDet.item.title
+	        result["item.spec"] = stockInSheetDet.item.spec
+	        result["item.unit"] = stockInSheetDet.item.unit
+	        result["item.description"] = stockInSheetDet.item.description
+	    }
 
 		result
     }

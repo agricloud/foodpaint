@@ -48,6 +48,8 @@ class StockInSheetDetView implements Serializable{
     String manufactureOrderTypeName
     String manufactureOrderName
 
+    // long qty
+
     static constraints = {
         stockLocationName nullable:true      
 

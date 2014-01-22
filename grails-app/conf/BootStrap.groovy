@@ -44,9 +44,10 @@ class BootStrap {
 				def customerOrderDet11 = new CustomerOrderDet(customerOrder:customerOrder1,typeName:"A11",name:"98100900001",sequence:1,item:item1,qty:3000).save(failOnError: true, flush: true)
 
 				//製令
-				def manufactureOrder1 = new ManufactureOrder(typeName:"C11",name:"98100900001",item:item5,qty:1000).save(failOnError: true, flush: true)
+				def manufactureOrder1 = new ManufactureOrder(typeName:"C11",name:"98100900001",item:item1,qty:1000).save(failOnError: true, flush: true)
 				def manufactureOrder2 = new ManufactureOrder(typeName:"C11",name:"98100900002",item:item1,qty:5000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
 
+				def batch1 = new Batch(name:"paintbatch1", item:item1).save(failOnError: true, flush: true)
 				def batch2 = new Batch(name:"paintbatch2", item:item2).save(failOnError: true, flush: true)
 				def batch3 = new Batch(name:"paintbatch3", item:item3).save(failOnError: true, flush: true)
 				def batch4 = new Batch(name:"paintbatch4", item:item4).save(failOnError: true, flush: true)
@@ -70,21 +71,21 @@ class BootStrap {
 				def materialSheet2 = new MaterialSheet(typeName:"D11",name:"98100900002",workstation:workstation2).save(failOnError: true, flush: true)
 				def materialSheetDet21 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:1,item:item5,batch:batch5,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 				def materialSheetDet22 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:2,item:item6,batch:batch6,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
-				/*
+				
 				//入庫單
 				def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
-				def stockInSheetDet11 = new StockInSheetDet(stockInSheet:stockInSheet1,sequence:1,batch:batch6,item:item6,warehouse:"warehouse2",manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
-				//def stockInSheet2 = new StockInSheet(workstation:workstation1).save(failOnError: true, flush: true)
-				//def stockInSheetDet21 = new StockInSheetDet(stockInSheet:stockInSheet2,batch:batch1,item:item1,warehouse:warehouse3,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch1,item:item1,warehouse:"warehouse2",manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+				def stockInSheet2 = new StockInSheet(typeName:"BD31",name:"98100900002",workstation:workstation1).save(failOnError: true, flush: true)
+				def stockInSheetDet21 = new StockInSheetDet(typeName:"BD31",name:"98100900002",sequence:1,stockInSheet:stockInSheet2,batch:batch1,item:item1,warehouse:"warehouse3",manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 				
-				//託外進貨單
-				def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier3).save(failOnError: true, flush: true)
-				def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,sequence:1,item:item1,batch:batch1,qty:5000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				// //託外進貨單
+				// def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier3).save(failOnError: true, flush: true)
+				// def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,sequence:1,item:item1,batch:batch1,qty:5000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
-				//銷貨單	
-				def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
-				def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
-				*/
+				// //銷貨單	
+				// def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
+				// def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
+				
 				
 
 			}
@@ -146,6 +147,12 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(PurchaseSheetDet) {
             convertService.purchaseSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(StockInSheet) {
+            convertService.stockInSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(StockInSheetDet) {
+            convertService.stockInSheetDetParseJson(it)
         }
 
     }
