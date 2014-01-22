@@ -60,9 +60,9 @@ class ReturnSheetDet{
 
 
     /*
-    * 進貨數量
+    * 退貨數量
     */
-    int qty
+    long qty
     static mapping = {
         importFlag  defaultValue: -1
     }

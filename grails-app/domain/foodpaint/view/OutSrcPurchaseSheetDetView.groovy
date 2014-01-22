@@ -27,7 +27,7 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     * 數量
     */
     //目前對應ERP單據中的驗收數量
-	int qty
+	long qty
 
 
     /*

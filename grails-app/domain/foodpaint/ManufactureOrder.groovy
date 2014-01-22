@@ -59,7 +59,7 @@ class ManufactureOrder {
     /*
     * 生產量
     */
-    Integer qty
+    long qty
 
     /*
     * 預計批號

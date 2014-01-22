@@ -34,7 +34,7 @@ class ManufactureOrderView implements Serializable{
     * 生產量
     */
     //目前使用ERP預計產量欄位
-    int qty
+    long qty
 
     /*
     * 預計批號

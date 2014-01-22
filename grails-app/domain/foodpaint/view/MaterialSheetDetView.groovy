@@ -37,6 +37,8 @@ class MaterialSheetDetView implements Serializable{
     */
     String itemName
 
+    long qty
+
 
     static constraints = {
 

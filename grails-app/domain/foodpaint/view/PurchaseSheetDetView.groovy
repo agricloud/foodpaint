@@ -34,7 +34,7 @@ class PurchaseSheetDetView implements Serializable{
     /*
     * 進貨數量
     */
-    int qty
+    long qty
 
 
     static constraints = {
