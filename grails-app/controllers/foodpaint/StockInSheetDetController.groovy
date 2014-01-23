@@ -73,21 +73,21 @@ class StockInSheetDetController {
     }
 
     def save = {
-        def purchaseSheetDet=new StockInSheetDet(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
-        purchaseSheetDet.batch = (Batch) batch
+        def stockInSheetDet=new StockInSheetDet(params)
+        def batch = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+        stockInSheetDet.batch = (Batch) batch
         render (contentType: 'application/json') {
-            domainService.save(purchaseSheetDet)
+            domainService.save(stockInSheetDet)
         }
     }
 
 
     def update = {
 
-        def  purchaseSheetDet = StockInSheetDet.get(params.id)
-        purchaseSheetDet.properties = params
+        def  stockInSheetDet = StockInSheetDet.get(params.id)
+        stockInSheetDet.properties = params
         render (contentType: 'application/json') {
-            domainService.save(purchaseSheetDet)
+            domainService.save(stockInSheetDet)
         }         
     }
 
@@ -95,16 +95,16 @@ class StockInSheetDetController {
 
     def delete = {
 
-        def  purchaseSheetDet = StockInSheetDet.get(params.id)
+        def  stockInSheetDet = StockInSheetDet.get(params.id)
 
         def result
         try {
             
-            result = domainService.delete(purchaseSheetDet)
+            result = domainService.delete(stockInSheetDet)
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [purchaseSheetDet, e.getMessage()])
+            def msg = message(code: 'default.message.delete.failed', args: [stockInSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         
