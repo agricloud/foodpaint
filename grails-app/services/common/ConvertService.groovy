@@ -581,4 +581,68 @@ class ConvertService {
 		result
     }
 
+    def outSrcPurchaseSheetParseJson(outSrcPurchaseSheet){
+    	def result = [:]
+
+    	result.dateCreated = outSrcPurchaseSheet.dateCreated
+	    result.lastUpdated = outSrcPurchaseSheet.lastUpdated
+	    result.site = outSrcPurchaseSheet.site
+
+        result.id = outSrcPurchaseSheet.id
+    	result.name = outSrcPurchaseSheet.name
+		result.typeName = outSrcPurchaseSheet.typeName
+		result.outSrcPurchaseDate = outSrcPurchaseSheet.outSrcPurchaseDate
+
+		if(outSrcPurchaseSheet.supplier){
+			result.supplier = outSrcPurchaseSheet.supplier
+			result["supplier.id"] = outSrcPurchaseSheet.supplier.id
+	        result["supplier.name"] = outSrcPurchaseSheet.supplier.name
+	        result["supplier.title"] = outSrcPurchaseSheet.supplier.title
+	    }
+
+		result
+    }
+
+    def outSrcPurchaseSheetDetParseJson(outSrcPurchaseSheetDet){
+    	def result = [:]
+
+    	result.dateCreated = outSrcPurchaseSheetDet.dateCreated
+	    result.lastUpdated = outSrcPurchaseSheetDet.lastUpdated
+	    result.site = outSrcPurchaseSheetDet.site
+
+        result.id = outSrcPurchaseSheetDet.id
+    	result.name = outSrcPurchaseSheetDet.name
+		result.typeName = outSrcPurchaseSheetDet.typeName
+		result.sequence = outSrcPurchaseSheetDet.sequence
+		result.qty = outSrcPurchaseSheetDet.qty
+
+		result.outSrcPurchaseSheet = outSrcPurchaseSheetDet.outSrcPurchaseSheet
+		result["outSrcPurchaseSheet.id"] = outSrcPurchaseSheetDet.outSrcPurchaseSheet.id
+
+		if(outSrcPurchaseSheetDet.manufactureOrder){
+			result.manufactureOrder = outSrcPurchaseSheetDet.manufactureOrder
+			result["manufactureOrder.id"] = outSrcPurchaseSheetDet.manufactureOrder.id
+	        result["manufactureOrder.name"] = outSrcPurchaseSheetDet.manufactureOrder.name
+	        result["manufactureOrder.typeName"] = outSrcPurchaseSheetDet.manufactureOrder.typeName
+	    }
+
+	    if(outSrcPurchaseSheetDet.batch){
+			result.batch = outSrcPurchaseSheetDet.batch
+			result["batch.id"] = outSrcPurchaseSheetDet.batch.id
+	        result["batch.name"] = outSrcPurchaseSheetDet.batch.name
+	    }
+
+		if(outSrcPurchaseSheetDet.item){
+			result.item = outSrcPurchaseSheetDet.item
+			result["item.id"] = outSrcPurchaseSheetDet.item.id
+	        result["item.name"] = outSrcPurchaseSheetDet.item.name
+	        result["item.title"] = outSrcPurchaseSheetDet.item.title
+	        result["item.spec"] = outSrcPurchaseSheetDet.item.spec
+	        result["item.unit"] = outSrcPurchaseSheetDet.item.unit
+	        result["item.description"] = outSrcPurchaseSheetDet.item.description
+	    }
+
+		result
+    }
+
 }

@@ -78,9 +78,9 @@ class BootStrap {
 				def stockInSheet2 = new StockInSheet(typeName:"BD31",name:"98100900002",workstation:workstation1).save(failOnError: true, flush: true)
 				def stockInSheetDet21 = new StockInSheetDet(typeName:"BD31",name:"98100900002",sequence:1,stockInSheet:stockInSheet2,batch:batch1,item:item1,warehouse:"warehouse3",manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 				
-				// //託外進貨單
-				// def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier3).save(failOnError: true, flush: true)
-				// def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,sequence:1,item:item1,batch:batch1,qty:5000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				//託外進貨單
+				def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier3).save(failOnError: true, flush: true)
+				def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:5000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
 				// //銷貨單	
 				// def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
@@ -154,6 +154,13 @@ class BootStrap {
         JSON.registerObjectMarshaller(StockInSheetDet) {
             convertService.stockInSheetDetParseJson(it)
         }
+        JSON.registerObjectMarshaller(OutSrcPurchaseSheet) {
+            convertService.outSrcPurchaseSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(OutSrcPurchaseSheetDet) {
+            convertService.outSrcPurchaseSheetDetParseJson(it)
+        }
+
 
     }
 }
