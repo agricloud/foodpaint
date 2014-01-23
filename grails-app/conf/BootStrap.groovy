@@ -83,8 +83,8 @@ class BootStrap {
 				def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:5000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
 				// //銷貨單	
-				// def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
-				// def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
+				def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
+				def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
 				
 				
 
@@ -159,6 +159,12 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(OutSrcPurchaseSheetDet) {
             convertService.outSrcPurchaseSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleSheet) {
+            convertService.saleSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleSheetDet) {
+            convertService.saleSheetDetParseJson(it)
         }
 
 

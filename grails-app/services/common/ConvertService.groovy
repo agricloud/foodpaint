@@ -645,4 +645,71 @@ class ConvertService {
 		result
     }
 
+    def saleSheetParseJson(saleSheet){
+    	def result = [:]
+
+    	result.dateCreated = saleSheet.dateCreated
+	    result.lastUpdated = saleSheet.lastUpdated
+	    result.site = saleSheet.site
+
+        result.id = saleSheet.id
+    	result.name = saleSheet.name
+		result.typeName = saleSheet.typeName
+		result.saleDate = saleSheet.saleDate
+
+		if(saleSheet.customer){
+			result.customer = saleSheet.customer
+			result["customer.id"] = saleSheet.customer.id
+	        result["customer.name"] = saleSheet.customer.name
+	        result["customer.title"] = saleSheet.customer.title
+	    }
+
+		result
+    }
+
+    def saleSheetDetParseJson(saleSheetDet){
+    	def result = [:]
+
+    	result.dateCreated = saleSheetDet.dateCreated
+	    result.lastUpdated = saleSheetDet.lastUpdated
+	    result.site = saleSheetDet.site
+
+        result.id = saleSheetDet.id
+    	result.name = saleSheetDet.name
+		result.typeName = saleSheetDet.typeName
+		result.sequence = saleSheetDet.sequence
+		result.qty = saleSheetDet.qty
+
+		result.saleSheet = saleSheetDet.saleSheet
+		result["saleSheet.id"] = saleSheetDet.saleSheet.id
+
+		if(saleSheetDet.customerOrderDet){
+			result.customerOrderDet = saleSheetDet.customerOrderDet
+			result["customerOrderDet.id"] = saleSheetDet.customerOrderDet.id
+	        result["customerOrderDet.name"] = saleSheetDet.customerOrderDet.name
+	        result["customerOrderDet.typeName"] = saleSheetDet.customerOrderDet.typeName
+	        result["customerOrderDet.sequence"] = saleSheetDet.customerOrderDet.sequence
+	        result.customerOrder = saleSheetDet.customerOrderDet.customerOrder
+	        result["customerOrder.id"] = saleSheetDet.customerOrderDet.customerOrder.id
+	    }
+
+	    if(saleSheetDet.batch){
+			result.batch = saleSheetDet.batch
+			result["batch.id"] = saleSheetDet.batch.id
+	        result["batch.name"] = saleSheetDet.batch.name
+	    }
+
+		if(saleSheetDet.item){
+			result.item = saleSheetDet.item
+			result["item.id"] = saleSheetDet.item.id
+	        result["item.name"] = saleSheetDet.item.name
+	        result["item.title"] = saleSheetDet.item.title
+	        result["item.spec"] = saleSheetDet.item.spec
+	        result["item.unit"] = saleSheetDet.item.unit
+	        result["item.description"] = saleSheetDet.item.description
+	    }
+
+		result
+    }
+
 }

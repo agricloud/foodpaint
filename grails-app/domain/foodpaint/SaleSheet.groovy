@@ -48,6 +48,8 @@ class SaleSheet {
     */
     Customer customer
 
+    Date saleDate=new Date()
+
     static mapping = {
         importFlag  defaultValue: -1
     }
