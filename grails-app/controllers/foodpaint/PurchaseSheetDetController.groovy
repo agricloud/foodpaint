@@ -74,10 +74,17 @@ class PurchaseSheetDetController {
 
     def save = {
         def purchaseSheetDet=new PurchaseSheetDet(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
-        purchaseSheetDet.batch = (Batch) batch
-        render (contentType: 'application/json') {
-            domainService.save(purchaseSheetDet)
+        def result = batchService.createBatchInstanceByJson(params, purchaseSheetDet)
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            purchaseSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(purchaseSheetDet)
+            }
         }
     }
 
@@ -88,7 +95,7 @@ class PurchaseSheetDetController {
         purchaseSheetDet.properties = params
         render (contentType: 'application/json') {
             domainService.save(purchaseSheetDet)
-        }         
+        }     
     }
 
 

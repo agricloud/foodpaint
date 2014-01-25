@@ -82,4 +82,8 @@ class StockInSheetDet{
         warehouse nullable:true
         stockLocation nullable:true      
     }
+
+    public String toString(){
+        "入庫單：${typeName}-${name}-${sequence}"
+    }
 }

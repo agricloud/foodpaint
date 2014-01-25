@@ -74,10 +74,17 @@ class OutSrcPurchaseSheetDetController {
 
     def save = {
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
-        outSrcPurchaseSheetDet.batch = (Batch) batch
-        render (contentType: 'application/json') {
-            domainService.save(outSrcPurchaseSheetDet)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            outSrcPurchaseSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(outSrcPurchaseSheetDet)
+            }
         }
     }
 

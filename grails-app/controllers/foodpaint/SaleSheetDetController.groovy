@@ -74,9 +74,17 @@ class SaleSheetDetController {
 
     def save = {
         def saleSheetDet=new SaleSheetDet(params)
-        render (contentType: 'application/json') {
-            domainService.save(saleSheetDet)
+        if(saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+            render (contentType: 'application/json') {
+                domainService.save(saleSheetDet)
+            }
         }
+        else{
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleSheetDet.customerOrderDet)]
+            }
+        }
+
     }
 
 
@@ -84,8 +92,15 @@ class SaleSheetDetController {
 
         def  saleSheetDet = SaleSheetDet.get(params.id)
         saleSheetDet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(saleSheetDet)
+        if(saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+            render (contentType: 'application/json') {
+                domainService.save(saleSheetDet)
+            }
+        }
+        else{
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleSheetDet.customerOrderDet)]
+            }
         }         
     }
 

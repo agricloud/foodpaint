@@ -79,4 +79,7 @@ class ManufactureOrder {
         materialSheetDets nullable:true
         batch nullable:true
     }
+    public String toString(){
+        "製令：${typeName}-${name}"
+    }
 }

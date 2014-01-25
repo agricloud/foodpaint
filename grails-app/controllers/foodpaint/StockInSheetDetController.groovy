@@ -74,10 +74,18 @@ class StockInSheetDetController {
 
     def save = {
         def stockInSheetDet=new StockInSheetDet(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
-        stockInSheetDet.batch = (Batch) batch
-        render (contentType: 'application/json') {
-            domainService.save(stockInSheetDet)
+
+        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            stockInSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(stockInSheetDet)
+            }
         }
     }
 

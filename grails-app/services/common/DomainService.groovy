@@ -59,7 +59,7 @@ class DomainService {
             }
 
             try{
-                msg = messageSource.getMessage("default.message.update.failed", args, Locale.getDefault())
+                msg = messageSource.getMessage("default.message.save.failed", args, Locale.getDefault())
             }catch (e){
                 msg = "更新失敗"
 
