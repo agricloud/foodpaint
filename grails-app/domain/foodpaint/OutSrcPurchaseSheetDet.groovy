@@ -51,7 +51,7 @@ class OutSrcPurchaseSheetDet{
     /*
     * 數量
     */
-	int qty
+	long qty
 
 
     /*

@@ -51,7 +51,7 @@ class OutSrcPurchaseSheet {
     /*
     * 託外進貨日期
     */
-    Date outSrcPurchaseDate
+    Date outSrcPurchaseDate = new Date()
 
     static mapping = {
         importFlag  defaultValue: -1

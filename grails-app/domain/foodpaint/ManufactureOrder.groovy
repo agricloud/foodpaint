@@ -59,7 +59,7 @@ class ManufactureOrder {
     /*
     * 生產量
     */
-    Integer qty
+    long qty
 
     /*
     * 預計批號
@@ -78,5 +78,8 @@ class ManufactureOrder {
         stockInSheetDets nullable:true
         materialSheetDets nullable:true
         batch nullable:true
+    }
+    public String toString(){
+        "製令：${typeName}-${name}"
     }
 }

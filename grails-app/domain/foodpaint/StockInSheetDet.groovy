@@ -67,6 +67,8 @@ class StockInSheetDet{
     */
     String stockLocation
 
+    long qty = 0
+
     static hasOne = [manufactureOrder: ManufactureOrder]
     static mapping = {
         importFlag  defaultValue: -1
@@ -77,6 +79,11 @@ class StockInSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        warehouse nullable:true
         stockLocation nullable:true      
+    }
+
+    public String toString(){
+        "入庫單：${typeName}-${name}-${sequence}"
     }
 }

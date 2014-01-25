@@ -3,27 +3,25 @@ package foodpaint
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 
-class CustomerOrderController {
+class StockInSheetController {
 
     def domainService
 
     def index = {
 
-        def list = CustomerOrder.createCriteria().list(params,params.criteria)
+        def list = StockInSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [customerOrderInstanceList: list, customerOrderInstanceTotal: list.totalCount]
+            [stockInSheetInstanceList: list, stockInSheetInstanceTotal: list.totalCount]
         }
-
-
         
     }
     def show = {
-        def customerOrder=CustomerOrder.get(params.id)
+        def stockInSheet=StockInSheet.get(params.id)
 
-        if(customerOrder){   
+        if(stockInSheet){   
 
             render (contentType: 'application/json') {
-                [success: true,data:customerOrder]
+                [success: true,data:stockInSheet]
             }
         }else {
             render (contentType: 'application/json') {
@@ -34,28 +32,28 @@ class CustomerOrderController {
 
     def create = {
 
-        def customerOrder=new CustomerOrder() 
+        def stockInSheet=new StockInSheet() 
 
         render (contentType: 'application/json') {
-            [success: true,data:customerOrder]
+            [success: true,data:stockInSheet]
         }
     }
 
     def save = {
-        def customerOrder=new CustomerOrder(params)
+        def stockInSheet=new StockInSheet(params)
 
         render (contentType: 'application/json') {
-            domainService.save(customerOrder)
+            domainService.save(stockInSheet)
         }
     }
 
 
     def update = {
 
-        def  customerOrder= CustomerOrder.get(params.id)
-        customerOrder.properties = params
+        def  stockInSheet= StockInSheet.get(params.id)
+        stockInSheet.properties = params
         render (contentType: 'application/json') {
-            domainService.save(customerOrder)
+            domainService.save(stockInSheet)
         }         
     }
 
@@ -63,15 +61,15 @@ class CustomerOrderController {
 
     def delete = {
         
-        def  customerOrder = CustomerOrder.get(params.id)
+        def  stockInSheet = StockInSheet.get(params.id)
 
         def result
         try {
-            result = domainService.delete(customerOrder)
+            result = domainService.delete(stockInSheet)
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [customerOrder, e])
+            def msg = message(code: 'default.message.delete.failed', args: [stockInSheet, e])
             result = [success:false, message: msg] 
         }
         

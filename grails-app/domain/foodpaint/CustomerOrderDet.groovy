@@ -72,4 +72,8 @@ class CustomerOrderDet{
         qty nullable:true
         
     }
+
+    public String toString(){
+        "訂單：${typeName}-${name}-${sequence}"
+    }
 }

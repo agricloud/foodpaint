@@ -51,7 +51,7 @@ class OutSrcReturnSheetDet{
     /*
     * 數量
     */
-	int qty
+	long qty
 
 
     /*

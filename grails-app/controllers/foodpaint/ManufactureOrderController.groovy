@@ -46,12 +46,19 @@ class ManufactureOrderController {
 
     def save = {
         def manufactureOrder=new ManufactureOrder(params)
-        def batch = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrder)
- 
-        manufactureOrder.batch = (Batch) batch
+        
+        def result = batchService.createBatchInstanceByJson(params, manufactureOrder)
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            manufactureOrder.batch = (Batch) result.batch
 
-        render (contentType: 'application/json') {
-            domainService.save(manufactureOrder)
+            render (contentType: 'application/json') {
+                domainService.save(manufactureOrder)
+            }
         }
     }
 

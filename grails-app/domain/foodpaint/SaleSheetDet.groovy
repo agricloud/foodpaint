@@ -67,7 +67,7 @@ class SaleSheetDet{
     /*
     * 數量
     */
-    int qty
+    long qty
     static mapping = {
         importFlag  defaultValue: -1
     }

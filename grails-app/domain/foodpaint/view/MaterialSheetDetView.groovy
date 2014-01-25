@@ -37,6 +37,8 @@ class MaterialSheetDetView implements Serializable{
     */
     String itemName
 
+    long qty
+
 
     static constraints = {
 
@@ -53,6 +55,7 @@ class MaterialSheetDetView implements Serializable{
         name column: 'TE002', sqlType: "nchar"
         sequence column: 'TE003', sqlType: "nchar"
         itemName  column: 'TE004', sqlType: "nchar"
+        qty  column: 'TE005', sqlType: "numeric"
         batchName column: 'TE010', sqlType: "nchar"
         manufactureOrderTypeName column: 'TE011', sqlType: "nchar"
         manufactureOrderName column: 'TE012', sqlType: "nchar"

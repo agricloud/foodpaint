@@ -50,7 +50,7 @@ class StockInSheet {
     /*
     * 入庫日期
     */
-    Date stockInDate
+    Date stockInDate = new Date()
 
 
     static mapping = {
