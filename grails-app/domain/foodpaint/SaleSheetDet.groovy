@@ -77,5 +77,6 @@ class SaleSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        customerOrderDet nullable:true
     }
 }

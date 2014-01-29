@@ -74,7 +74,7 @@ class SaleSheetDetController {
 
     def save = {
         def saleSheetDet=new SaleSheetDet(params)
-        if(saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+        if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
             render (contentType: 'application/json') {
                 domainService.save(saleSheetDet)
             }
@@ -92,7 +92,7 @@ class SaleSheetDetController {
 
         def  saleSheetDet = SaleSheetDet.get(params.id)
         saleSheetDet.properties = params
-        if(saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+        if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
             render (contentType: 'application/json') {
                 domainService.save(saleSheetDet)
             }
