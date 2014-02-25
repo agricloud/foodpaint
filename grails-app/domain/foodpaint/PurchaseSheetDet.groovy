@@ -73,4 +73,7 @@ class PurchaseSheetDet{
         creator nullable:true
         batch nullable:true
     }
+    public String toString(){
+        "進貨單身：${typeName}-${name}-${sequence}"
+    }
 }

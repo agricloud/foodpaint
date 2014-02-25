@@ -74,7 +74,7 @@ class PurchaseSheetDetController {
 
     def save = {
         def purchaseSheetDet=new PurchaseSheetDet(params)
-        def result = batchService.createBatchInstanceByJson(params, purchaseSheetDet)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
         if(!result.success){
             render (contentType: 'application/json') {
                 result
@@ -90,12 +90,26 @@ class PurchaseSheetDetController {
 
 
     def update = {
-
-        def  purchaseSheetDet = PurchaseSheetDet.get(params.id)
-        purchaseSheetDet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(purchaseSheetDet)
-        }     
+        def purchaseSheetDet=new PurchaseSheetDet(params)
+        // purchaseSheetDet = PurchaseSheetDet.get(params.id)
+        //purchaseSheetDet.properties = params
+        // purchaseSheetDet.item = Item.get(params.item.id)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
+        if(!result.success){
+            // purchaseSheetDet.discard()
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            //使用get & properties 會直接修改物件的值 不管是否save
+            purchaseSheetDet = PurchaseSheetDet.get(params.id)
+            purchaseSheetDet.properties = params
+            purchaseSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(purchaseSheetDet)
+            }
+        }    
     }
 
 
