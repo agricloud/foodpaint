@@ -2,7 +2,9 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
+@Transactional(readOnly = true)
 class PurchaseSheetDetController {
 
     def domainService
@@ -88,23 +90,19 @@ class PurchaseSheetDetController {
         }
     }
 
+    @Transactional
+    def update() {
+        def purchaseSheetDet = PurchaseSheetDet.get(params.id)
+        purchaseSheetDet.properties = params
 
-    def update = {
-        def purchaseSheetDet=new PurchaseSheetDet(params)
-        // purchaseSheetDet = PurchaseSheetDet.get(params.id)
-        //purchaseSheetDet.properties = params
-        // purchaseSheetDet.item = Item.get(params.item.id)
         def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
+        
         if(!result.success){
-            // purchaseSheetDet.discard()
             render (contentType: 'application/json') {
                 result
             }
         }
         else{
-            //使用get & properties 會直接修改物件的值 不管是否save
-            purchaseSheetDet = PurchaseSheetDet.get(params.id)
-            purchaseSheetDet.properties = params
             purchaseSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
                 domainService.save(purchaseSheetDet)
