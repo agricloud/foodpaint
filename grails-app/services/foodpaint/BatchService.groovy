@@ -107,9 +107,6 @@ class BatchService {
 			msg = messageSource.getMessage("batch.name.params.notfound", args, Locale.getDefault())  
 		}
 
-		if(!isSuccess) throw new Exception(msg)
-		
-
 		return [success:isSuccess, batch:batch, message: msg]
 	}
 
