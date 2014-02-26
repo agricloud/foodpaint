@@ -92,13 +92,9 @@ class PurchaseSheetDetController {
 
     @Transactional
     def update() {
-        def purchaseSheetDet = PurchaseSheetDet.get(params.id)
-        purchaseSheetDet.properties = params
-        purchaseSheetDet.discard()
+        def purchaseSheetDet = new PurchaseSheetDet(params)
         def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
-
-
-        
+   
         if(!result.success){
             render (contentType: 'application/json') {
                 result

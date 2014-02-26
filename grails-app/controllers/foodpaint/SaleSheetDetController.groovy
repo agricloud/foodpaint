@@ -89,10 +89,11 @@ class SaleSheetDetController {
 
 
     def update = {
-
-        def  saleSheetDet = SaleSheetDet.get(params.id)
-        saleSheetDet.properties = params
+        def  saleSheetDet = new SaleSheetDet(params)
+        
         if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+            saleSheetDet = SaleSheetDet.get(params.id)
+            saleSheetDet.properties = params
             render (contentType: 'application/json') {
                 domainService.save(saleSheetDet)
             }

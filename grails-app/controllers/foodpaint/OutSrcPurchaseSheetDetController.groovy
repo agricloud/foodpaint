@@ -91,11 +91,25 @@ class OutSrcPurchaseSheetDetController {
 
     def update = {
 
-        def  outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
-        outSrcPurchaseSheetDet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(outSrcPurchaseSheetDet)
-        }         
+        def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
+   
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
+            outSrcPurchaseSheetDet.properties = params
+            println outSrcPurchaseSheetDet.batch.id
+            println ((Batch) result?.batch)?.id
+            outSrcPurchaseSheetDet.batch = (Batch) result.batch
+            println outSrcPurchaseSheetDet.batch.id
+            render (contentType: 'application/json') {
+                domainService.save(outSrcPurchaseSheetDet)
+            }
+        }      
     }
 
 

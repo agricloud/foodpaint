@@ -38,7 +38,7 @@ class ManufactureOrderController {
     }
     def create = {
 
-        def manufactureOrder=new ManufactureOrder()        
+        def manufactureOrder=new ManufactureOrder(params)        
         render (contentType: 'application/json') {
             [success: true,data:manufactureOrder]
         }
@@ -65,12 +65,33 @@ class ManufactureOrderController {
 
     def update = {
 
-        log.info params.effectStartDate
         def  manufactureOrder = ManufactureOrder.get(params.id)
-        manufactureOrder.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(manufactureOrder)
-        }         
+
+        //批號不變直接允許儲存，批號變更則需先新增批號。
+        if(manufactureOrder.batch?.name == params.batch?.name){
+            manufactureOrder.properties = params
+            render (contentType: 'application/json') {
+                domainService.save(manufactureOrder)
+            }
+        }
+        else{
+            def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
+            
+            if(!result.success){
+                render (contentType: 'application/json') {
+                    result
+                }
+            }
+            else{
+                manufactureOrder.properties = params
+                manufactureOrder.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(manufactureOrder)
+                }
+            }
+        }
+
+        
     }
 
 
