@@ -35,6 +35,7 @@ class PurchaseSheetDetControllerTests {
         def purchaseSheet1 = new PurchaseSheet(typeName:"B21",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
         def purchaseSheetDet11 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:10000).save(failOnError: true, flush: true)
         
+        //給定錯誤的更新資料 批號品項與進貨品項不符
         params["purchaseSheet.id"] = 1
         params["id"] = 1
         params["typeName"] = "B21"
@@ -46,7 +47,7 @@ class PurchaseSheetDetControllerTests {
         params["qty"] = 500
 
         controller.update()
-
+        //執行結果應不允許更新 因此資料不變
         assert PurchaseSheetDet.list().get(0).batch.name == "paintbatch1"
         assert PurchaseSheetDet.list().get(0).item.id == 1
         assert PurchaseSheetDet.list().get(0).qty == 10000
