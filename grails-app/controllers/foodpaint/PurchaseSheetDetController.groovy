@@ -2,7 +2,9 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
+@Transactional(readOnly = true)
 class PurchaseSheetDetController {
 
     def domainService
@@ -74,7 +76,7 @@ class PurchaseSheetDetController {
 
     def save = {
         def purchaseSheetDet=new PurchaseSheetDet(params)
-        def result = batchService.createBatchInstanceByJson(params, purchaseSheetDet)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
         if(!result.success){
             render (contentType: 'application/json') {
                 result
@@ -88,14 +90,24 @@ class PurchaseSheetDetController {
         }
     }
 
-
-    def update = {
-
-        def  purchaseSheetDet = PurchaseSheetDet.get(params.id)
-        purchaseSheetDet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(purchaseSheetDet)
-        }     
+    @Transactional
+    def update() {
+        def purchaseSheetDet = new PurchaseSheetDet(params)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
+   
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            purchaseSheetDet = PurchaseSheetDet.get(params.id)
+            purchaseSheetDet.properties = params
+            purchaseSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(purchaseSheetDet)
+            }
+        }    
     }
 
 

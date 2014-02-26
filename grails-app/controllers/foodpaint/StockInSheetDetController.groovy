@@ -92,11 +92,22 @@ class StockInSheetDetController {
 
     def update = {
 
-        def  stockInSheetDet = StockInSheetDet.get(params.id)
-        stockInSheetDet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(stockInSheetDet)
-        }         
+        def stockInSheetDet = new StockInSheetDet(params)
+        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
+            stockInSheetDet = StockInSheetDet.get(params.id)
+            stockInSheetDet.properties = params
+            stockInSheetDet.batch = (Batch) result.batch
+            render (contentType: 'application/json') {
+                domainService.save(stockInSheetDet)
+            }
+        }        
     }
 
 

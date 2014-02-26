@@ -62,8 +62,15 @@ class BatchService {
 			else{
 
 				if(sheet.instanceOf(PurchaseSheetDet)){
-					batch.supplier = sheet.purchaseSheet.supplier
-					isSuccess = true
+					if(sheet.item != batch.item){
+						isSuccess = false
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+					}
+					else{
+						batch.supplier = sheet.purchaseSheet.supplier
+						isSuccess = true
+					}
 				}
 				if(sheet.instanceOf(StockInSheetDet)){
 					if(sheet.manufactureOrder.item != batch.item){
