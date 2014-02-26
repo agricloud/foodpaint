@@ -95,19 +95,35 @@ class PurchaseSheetDetController {
         def purchaseSheetDet = PurchaseSheetDet.get(params.id)
         purchaseSheetDet.properties = params
 
-        def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
+        // def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
         
-        if(!result.success){
-            render (contentType: 'application/json') {
-                result
-            }
-        }
-        else{
+        // if(!result.success){
+        //     render (contentType: 'application/json') {
+        //         result
+        //     }
+        // }
+        // else{
+        //     purchaseSheetDet.batch = (Batch) result.batch
+        //     render (contentType: 'application/json') {
+        //         domainService.save(purchaseSheetDet)
+        //     }
+        // }
+        def result
+        try{
+            result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
             purchaseSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
                 domainService.save(purchaseSheetDet)
             }
-        }    
+        }catch(Exception e){
+            purchaseSheetDet.discard()
+            println 'catch'
+            println e.getMessage()
+            result = [success:false, message: message(code: 'default.message.update.failed')]
+            render (contentType: 'application/json') {
+                result
+            }   
+        }
     }
 
 
