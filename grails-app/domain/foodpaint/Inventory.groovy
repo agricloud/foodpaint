@@ -8,8 +8,10 @@ class Inventory {
     Date dateCreated
     Date lastUpdated
 
-    static belongsTo=[warehouse:Warehouse]
-    static belongsTo=[item:Item]
+    static belongsTo=[
+        warehouse:Warehouse,
+        item:Item
+    ]
 
     long qty = 0
 
