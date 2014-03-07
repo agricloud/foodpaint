@@ -19,7 +19,7 @@ class TraceService{
             batchNames.remove(0)
             log.debug "剩餘${batchNames.size()}個批號"
 
-            batchSheet.sourceSheet.each{
+            batchSheet?.sourceSheet.each{
                 //以來源單據查領料單
                 if(it.instanceOf(StockInSheetDet) || it.instanceOf(OutSrcPurchaseSheetDet) || it.instanceOf(ManufactureOrder)){
                     def mo
@@ -83,6 +83,7 @@ class TraceService{
                         sourceSheet=ManufactureOrder.findAllByBatch(batch)
 
                         if(!sourceSheet){
+                            println "批號：${batch.name} 查無任何單據"
                             log.debug "批號：${batch.name} 查無任何單據"
 
                             return null  
