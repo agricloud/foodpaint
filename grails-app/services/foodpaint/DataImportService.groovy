@@ -522,9 +522,10 @@ class DataImportService {
 		}
 
 		def workstation =Workstation.findByName(record.workstationName.text())
-
+		def supplier =Supplier.findByName(record.supplierName.text())
 
 		object.workstation = workstation
+		object.supplier = supplier
 
     	object
 
