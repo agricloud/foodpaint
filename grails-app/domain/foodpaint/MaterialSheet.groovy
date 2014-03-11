@@ -42,9 +42,13 @@ class MaterialSheet {
     String name
 	static hasMany=[materialSheetDets:MaterialSheetDet]
     /*
-    * 生產線別，加工廠商
+    * 生產線別
     */
     Workstation workstation
+    /*
+    * 加工廠商
+    */
+    Supplier supplier
     
     static mapping = {
         importFlag  defaultValue: -1
@@ -55,6 +59,8 @@ class MaterialSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
+        workstation nullable:true
+        supplier nullable:true
         materialSheetDets nullable:true
         
     }

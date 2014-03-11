@@ -38,7 +38,7 @@ class Batch  {
 
 	String name
 	long expectQty = 0//ERP無此資料
-	Date dueDate //與過期日期的區別？
+	Date dueDate //失效日
 
 
     /*

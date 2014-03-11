@@ -14,7 +14,7 @@ class BootStrap {
 
 		environments {
 			development {
-				
+				/*
 				def item1 = new Item(name:"paint410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
 				def item2 = new Item(name:"paintitem2",title:"橘子").save(failOnError: true, flush: true)
 				def item3 = new Item(name:"paintitem3",title:"柚子").save(failOnError: true, flush: true)
@@ -88,8 +88,9 @@ class BootStrap {
 				// //銷貨單	
 				def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
 				def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
-				
-				
+				*/
+                def testService = new TestService()
+				testService.createOilCaseData()
 
 			}
 		}

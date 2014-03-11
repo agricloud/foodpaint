@@ -19,9 +19,14 @@ class MaterialSheetView implements Serializable{
     String name
 
     /*
-    * 生產線別，加工廠商
+    * 生產線別
     */
     String workstationName
+    
+    /*
+    * 加工廠商
+    */
+    String supplierName
 
 
     static constraints = {
@@ -38,6 +43,7 @@ class MaterialSheetView implements Serializable{
         typeName column: 'TC001', sqlType: "nchar"
         name column: 'TC002', sqlType: "nchar"
         workstationName column: 'TC005', sqlType: "nchar"
+        supplierName column: 'TC006', sqlType: "nchar"
         
     } 
 }
