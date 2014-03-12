@@ -359,9 +359,10 @@ class DataImportService {
 			record.typeName.text(), record.name.text())
 
 		def item = Item.findByName(record.itemName.text())
+		def warehouse = Warehouse.findByName(record.warehouseName.text())
 
-		
 		object.item = item
+		object.warehouse = warehouse
 		object.purchaseSheet = purchaseSheet
 		
 
@@ -384,7 +385,6 @@ class DataImportService {
 		}
 
 		def workstation =Workstation.findByName(record.workstationName.text())
-
 
 		object.workstation = workstation
 
@@ -414,12 +414,14 @@ class DataImportService {
 			record.typeName.text(), record.name.text())
 
 		def item = Item.findByName(record.itemName.text())
+		def warehouse = Warehouse.findByName(record.warehouseName.text())
 
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
 		
 		object.item = item
+		object.warehouse = warehouse
 		object.stockInSheet = stockInSheet
 		object.manufactureOrder = manufactureOrder
 
@@ -470,12 +472,13 @@ class DataImportService {
 			record.typeName.text(), record.name.text())
 
 		def item = Item.findByName(record.itemName.text())
-
+		def warehouse = Warehouse.findByName(record.warehouseName.text())
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
 		
 		object.item = item
+		object.warehouse = warehouse
 		object.outSrcPurchaseSheet = outSrcPurchaseSheet
 		object.manufactureOrder = manufactureOrder
 
@@ -549,6 +552,7 @@ class DataImportService {
 			record.typeName.text(), record.name.text())
 
 		def item = Item.findByName(record.itemName.text())
+		def warehouse = Warehouse.findByName(record.warehouseName.text())
 		def batch = Batch.findByName(record.batchName.text())
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
@@ -557,6 +561,7 @@ class DataImportService {
 		manufactureOrder.addToMaterialSheetDets(object).save()
 
 		object.item = item
+		object.warehouse = warehouse
 		object.batch = batch
 		object.materialSheet = materialSheet
 		object.manufactureOrder = manufactureOrder
