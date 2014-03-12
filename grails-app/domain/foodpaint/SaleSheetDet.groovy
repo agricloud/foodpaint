@@ -63,7 +63,16 @@ class SaleSheetDet{
     */
     Batch batch
 
+    /*
+    * 庫別
+    */
 
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
     /*
     * 數量
     */
@@ -78,5 +87,6 @@ class SaleSheetDet{
         creator nullable:true
         batch nullable:true
         customerOrderDet nullable:true
+        stockLocation nullable:true
     }
 }

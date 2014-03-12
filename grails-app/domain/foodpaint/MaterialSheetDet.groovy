@@ -64,6 +64,19 @@ class MaterialSheetDet{
     */
     Item item
 
+    /*
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
+    /*
+    * 領料數量
+    */
     long qty = 0
 
     static mapping = {
@@ -76,5 +89,6 @@ class MaterialSheetDet{
         creator nullable:true
         batch nullable:true
         qty min: 0L
+        stockLocation nullable:true
     }
 }

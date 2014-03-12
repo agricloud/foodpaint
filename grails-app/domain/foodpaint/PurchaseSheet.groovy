@@ -48,20 +48,6 @@ class PurchaseSheet {
 
     Supplier supplier
 
-
-    /*
-    * 進貨日期
-    */
-    Date incomingDate=new Date()
-    
-
-    /*
-    * 單據日期
-    */
-    Date orderDate=new Date()
-
-
-
     static mapping = {
         importFlag  defaultValue: -1
     }    

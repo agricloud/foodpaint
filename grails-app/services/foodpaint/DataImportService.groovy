@@ -330,14 +330,14 @@ class DataImportService {
 
 		object.supplier = supplier
 
+		//進貨日期、單據日期欄位 暫不匯入
 		//日期轉換
 		// println "dateXML==="+record.incomingDate.text()
-		def incomingDate= Date.parse('yyyyMMdd',record.incomingDate.text())
+		// def incomingDate= Date.parse('yyyyMMdd',record.incomingDate.text())
 		// println "date==="+incomingDate
-		def orderDate = Date.parse('yyyyMMdd',record.orderDate.text())
-
-		object.incomingDate = incomingDate
-		object.orderDate = orderDate
+		// def orderDate = Date.parse('yyyyMMdd',record.orderDate.text())
+		// object.incomingDate = incomingDate
+		// object.orderDate = orderDate
 
     	object
 
@@ -388,10 +388,11 @@ class DataImportService {
 
 		object.workstation = workstation
 
-		if(record.stockInDate.text().trim()){
-			def stockInDate = Date.parse('yyyyMMdd',record.stockInDate.text())
-			object.stockInDate = stockInDate
-		}
+		//入庫日期欄位 暫不匯入
+		// if(record.stockInDate.text().trim()){
+		// 	def stockInDate = Date.parse('yyyyMMdd',record.stockInDate.text())
+		// 	object.stockInDate = stockInDate
+		// }
 
     	object
 
@@ -443,10 +444,11 @@ class DataImportService {
 
 		object.supplier = supplier
 		
-		if(record.outSrcPurchaseDate.text().trim()){
-			def outSrcPurchaseDate = Date.parse('yyyyMMdd',record.outSrcPurchaseDate.text())
-			object.outSrcPurchaseDate = outSrcPurchaseDate
-		}
+		//託外進貨日期欄位 暫不匯入
+		// if(record.outSrcPurchaseDate.text().trim()){
+		// 	def outSrcPurchaseDate = Date.parse('yyyyMMdd',record.outSrcPurchaseDate.text())
+		// 	object.outSrcPurchaseDate = outSrcPurchaseDate
+		// }
 
     	object
 

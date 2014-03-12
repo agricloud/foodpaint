@@ -47,6 +47,12 @@ class ReturnSheetDet{
     */
     int sequence
     static belongsTo=[returnSheet:ReturnSheet]
+
+    /*
+    * 進貨單
+    */
+    PurchaseSheetDet purchaseSheetDet
+
     /*
     * 品項編號
     */
@@ -58,6 +64,16 @@ class ReturnSheetDet{
     */
     Batch batch
 
+    /*
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
 
     /*
     * 退貨數量
@@ -72,5 +88,6 @@ class ReturnSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        stockLocation nullable:true
     }
 }

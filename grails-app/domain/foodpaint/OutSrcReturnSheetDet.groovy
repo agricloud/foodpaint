@@ -43,11 +43,22 @@ class OutSrcReturnSheetDet{
     */
     int sequence
     static belongsTo=[outSrcReturnSheet:OutSrcReturnSheet]
+
     /*
     * 品項編號
     */
 	Item item
 
+    /*
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
     /*
     * 數量
     */
@@ -75,5 +86,6 @@ class OutSrcReturnSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        stockLocation nullable:true
     }
 }
