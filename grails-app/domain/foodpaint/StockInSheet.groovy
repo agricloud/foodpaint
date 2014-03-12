@@ -47,6 +47,11 @@ class StockInSheet {
 
     Workstation workstation
 
+    /*
+    * 入庫日期
+    */
+    Date stockInDate = new Date()
+    
     static mapping = {
         importFlag  defaultValue: -1
     }
