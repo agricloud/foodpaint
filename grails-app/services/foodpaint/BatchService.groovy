@@ -22,11 +22,9 @@ class BatchService {
 				batch.supplier = sheet.purchaseSheet.supplier
 			}
 			if(sheet.instanceOf(StockInSheetDet)){
-				batch.manufactureDate = sheet.stockInSheet.stockInDate
 			}
 			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
 				batch.supplier = sheet.outSrcPurchaseSheet.supplier
-				batch.manufactureDate = sheet.outSrcPurchaseSheet.outSrcPurchaseDate
 			}
 			if(sheet.instanceOf(ManufactureOrder)){
 				batch.expectQty = sheet.qty
@@ -79,7 +77,6 @@ class BatchService {
 						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
 					}
 					else{
-						batch.manufactureDate = sheet.stockInSheet.stockInDate
 						isSuccess = true
 					}
 				}
@@ -91,7 +88,6 @@ class BatchService {
 					}
 					else{
 						batch.supplier = sheet.outSrcPurchaseSheet.supplier
-						batch.manufactureDate = sheet.outSrcPurchaseSheet.outSrcPurchaseDate
 						isSuccess = true
 					}
 				}
@@ -125,11 +121,9 @@ class BatchService {
 				batch.supplier = sheet.purchaseSheet.supplier
 			}
 			if(sheet.instanceOf(StockInSheetDet)){
-				batch.manufactureDate = sheet.stockInSheet.stockInDate
 			}
 			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
 				batch.supplier = sheet.outSrcPurchaseSheet.supplier
-				batch.manufactureDate = sheet.outSrcPurchaseSheet.outSrcPurchaseDate
 			}
 			if(sheet.instanceOf(ManufactureOrder)){
 				batch.expectQty = sheet.qty

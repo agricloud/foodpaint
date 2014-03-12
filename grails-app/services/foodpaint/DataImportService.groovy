@@ -388,10 +388,11 @@ class DataImportService {
 
 		object.workstation = workstation
 
-		if(record.stockInDate.text().trim()){
-			def stockInDate = Date.parse('yyyyMMdd',record.stockInDate.text())
-			object.stockInDate = stockInDate
-		}
+		//入庫日期欄位 暫不匯入
+		// if(record.stockInDate.text().trim()){
+		// 	def stockInDate = Date.parse('yyyyMMdd',record.stockInDate.text())
+		// 	object.stockInDate = stockInDate
+		// }
 
     	object
 
@@ -443,10 +444,11 @@ class DataImportService {
 
 		object.supplier = supplier
 		
-		if(record.outSrcPurchaseDate.text().trim()){
-			def outSrcPurchaseDate = Date.parse('yyyyMMdd',record.outSrcPurchaseDate.text())
-			object.outSrcPurchaseDate = outSrcPurchaseDate
-		}
+		//託外進貨日期欄位 暫不匯入
+		// if(record.outSrcPurchaseDate.text().trim()){
+		// 	def outSrcPurchaseDate = Date.parse('yyyyMMdd',record.outSrcPurchaseDate.text())
+		// 	object.outSrcPurchaseDate = outSrcPurchaseDate
+		// }
 
     	object
 
