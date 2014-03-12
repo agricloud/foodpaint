@@ -547,7 +547,6 @@ class ConvertService {
         result.id = purchaseSheet.id
     	result.name = purchaseSheet.name
 		result.typeName = purchaseSheet.typeName
-		result.incomingDate = purchaseSheet.incomingDate
 
 		if(purchaseSheet.supplier){
 			result.supplier = purchaseSheet.supplier
@@ -740,7 +739,6 @@ class ConvertService {
         result.id = saleSheet.id
     	result.name = saleSheet.name
 		result.typeName = saleSheet.typeName
-		result.saleDate = saleSheet.saleDate
 
 		if(saleSheet.customer){
 			result.customer = saleSheet.customer
