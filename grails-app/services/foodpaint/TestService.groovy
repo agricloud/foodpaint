@@ -95,19 +95,19 @@ class TestService {
         
         //進貨單
         def purchaseSheet2 = new PurchaseSheet(typeName:"B21",name:"98100900002",supplier:supplier2).save(failOnError: true, flush: true)
-        def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:1,item:item3,batch:batch3,qty:1500).save(failOnError: true, flush: true)     
-        def purchaseSheetDet22 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:2,item:item4,batch:batch4,qty:1500).save(failOnError: true, flush: true)     
-        def purchaseSheetDet23 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:3,item:item5,batch:batch5,qty:500).save(failOnError: true, flush: true)     
+        def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:1,item:item3,batch:batch3,warehouse:warehouse1,qty:1500).save(failOnError: true, flush: true)     
+        def purchaseSheetDet22 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:2,item:item4,batch:batch4,warehouse:warehouse1,qty:1500).save(failOnError: true, flush: true)     
+        def purchaseSheetDet23 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:3,item:item5,batch:batch5,warehouse:warehouse1,qty:500).save(failOnError: true, flush: true)     
                 
         //領料單
         def materialSheet2 = new MaterialSheet(typeName:"D11",name:"98100900002",supplier:supplier1).save(failOnError: true, flush: true)
-        def materialSheetDet21 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:1,item:item1,batch:batch1,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+        def materialSheetDet21 = new MaterialSheetDet(materialSheet:materialSheet2,typeName:"D11",name:"98100900002",sequence:1,item:item1,batch:batch1,warehouse:warehouse1,qty:1000000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
         def materialSheet3 = new MaterialSheet(typeName:"D11",name:"98100900003",workstation:workstation1).save(failOnError: true, flush: true)
-        def materialSheetDet31 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:1,item:item2,batch:batch2,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
-        def materialSheetDet32 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:2,item:item3,batch:batch3,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
-        def materialSheetDet33 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:3,item:item4,batch:batch4,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
-        def materialSheetDet34 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:4,item:item5,batch:batch5,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        def materialSheetDet31 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:1,item:item2,batch:batch2,warehouse:warehouse1,qty:1000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        def materialSheetDet32 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:2,item:item3,batch:batch3,warehouse:warehouse1,qty:1500,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        def materialSheetDet33 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:3,item:item4,batch:batch4,warehouse:warehouse1,qty:1500,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        def materialSheetDet34 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:4,item:item5,batch:batch5,warehouse:warehouse1,qty:500,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
 
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
@@ -115,13 +115,13 @@ class TestService {
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
-        def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:1000000,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+        def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,warehouse:warehouse1,qty:1000000,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
         def outSrcPurchaseSheet2 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900002",supplier:supplier1).save(failOnError: true, flush: true)
-        def outSrcPurchaseSheetDet21 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet2,typeName:"BD32",name:"98100900002",sequence:1,item:item2,batch:batch2,qty:1000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+        def outSrcPurchaseSheetDet21 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet2,typeName:"BD32",name:"98100900002",sequence:1,item:item2,batch:batch2,warehouse:warehouse1,qty:1000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
         // //銷貨單    
         def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
-        def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item11,batch:batch11,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
+        def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item11,batch:batch11,warehouse:warehouse1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
         
     }
 
