@@ -35,7 +35,7 @@ class StockInSheetDetView implements Serializable{
     * 庫別
     */
 
-    String warehouse
+    String warehouseName
 
     /*
     * 儲位
@@ -67,7 +67,7 @@ class StockInSheetDetView implements Serializable{
         sequence column: 'TG003', sqlType: "nchar"
         itemName  column: 'TG004', sqlType: "nchar"
         batchName column: 'TG017', sqlType: "nchar"
-        warehouse  column: 'TG010', sqlType: "nchar"
+        warehouseName  column: 'TG010', sqlType: "nchar"
         stockLocationName column: 'TG034', sqlType: "nchar"
         manufactureOrderTypeName column: 'TG014', sqlType: "nchar"
         manufactureOrderName column: 'TG015', sqlType: "nchar"
