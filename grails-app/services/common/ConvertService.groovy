@@ -485,6 +485,12 @@ class ConvertService {
 	        result["workstation.name"] = materialSheet.workstation.name
 	        result["workstation.title"] = materialSheet.workstation.title
 	    }
+	    if(materialSheet.supplier){
+			result.supplier = materialSheet.supplier
+			result["supplier.id"] = materialSheet.supplier.id
+	        result["supplier.name"] = materialSheet.supplier.name
+	        result["supplier.title"] = materialSheet.supplier.title
+	    }
 
 		result
     }
