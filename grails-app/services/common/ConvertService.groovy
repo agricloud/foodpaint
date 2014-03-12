@@ -527,7 +527,6 @@ class ConvertService {
         result.id = stockInSheet.id
     	result.name = stockInSheet.name
 		result.typeName = stockInSheet.typeName
-		result.stockInDate = stockInSheet.stockInDate
 
 		if(stockInSheet.workstation){
 			result.workstation = stockInSheet.workstation
@@ -591,7 +590,6 @@ class ConvertService {
         result.id = outSrcPurchaseSheet.id
     	result.name = outSrcPurchaseSheet.name
 		result.typeName = outSrcPurchaseSheet.typeName
-		result.outSrcPurchaseDate = outSrcPurchaseSheet.outSrcPurchaseDate
 
 		if(outSrcPurchaseSheet.supplier){
 			result.supplier = outSrcPurchaseSheet.supplier
