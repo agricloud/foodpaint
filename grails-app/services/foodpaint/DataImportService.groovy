@@ -330,14 +330,14 @@ class DataImportService {
 
 		object.supplier = supplier
 
+		//進貨日期、單據日期欄位 暫不匯入
 		//日期轉換
 		// println "dateXML==="+record.incomingDate.text()
-		def incomingDate= Date.parse('yyyyMMdd',record.incomingDate.text())
+		// def incomingDate= Date.parse('yyyyMMdd',record.incomingDate.text())
 		// println "date==="+incomingDate
-		def orderDate = Date.parse('yyyyMMdd',record.orderDate.text())
-
-		object.incomingDate = incomingDate
-		object.orderDate = orderDate
+		// def orderDate = Date.parse('yyyyMMdd',record.orderDate.text())
+		// object.incomingDate = incomingDate
+		// object.orderDate = orderDate
 
     	object
 

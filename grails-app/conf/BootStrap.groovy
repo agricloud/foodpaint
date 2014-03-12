@@ -29,6 +29,9 @@ class BootStrap {
 				def workstation1 = new Workstation(name:"paintworkstation1",title:"民雄線A").save(failOnError: true, flush: true)
 				def workstation2 = new Workstation(name:"paintworkstation2",title:"慈心有機").save(failOnError: true, flush: true)
 				
+                def warehouse1 = new Warehouse(name:"paintwarehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+                // def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
+
 				def customer1 = new Customer(name:"paintC01",title:"新鮮超市").save(failOnError: true, flush: true)
 				def customer2 = new Customer(name:"paintC02",title:"頂好超市").save(failOnError: true, flush: true)
 
@@ -74,9 +77,9 @@ class BootStrap {
 				
 				//入庫單
 				def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
-				def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch1,item:item1,warehouse:"warehouse2",manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+				def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch1,item:item1,warehouse:warehouse1,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
 				def stockInSheet2 = new StockInSheet(typeName:"BD31",name:"98100900002",workstation:workstation1).save(failOnError: true, flush: true)
-				def stockInSheetDet21 = new StockInSheetDet(typeName:"BD31",name:"98100900002",sequence:1,stockInSheet:stockInSheet2,batch:batch1,item:item1,warehouse:"warehouse3",manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+				def stockInSheetDet21 = new StockInSheetDet(typeName:"BD31",name:"98100900002",sequence:1,stockInSheet:stockInSheet2,batch:batch1,item:item1,warehouse:warehouse1,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 				
 				//託外進貨單
 				def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier3).save(failOnError: true, flush: true)
@@ -100,6 +103,9 @@ class BootStrap {
         // JSON.registerObjectMarshaller(User) {
         //     convertService.userParseJson(it)
         // }
+        JSON.registerObjectMarshaller(Warehouse) {
+            convertService.warehouseParseJson(it)
+        }
         JSON.registerObjectMarshaller(Customer) {
             convertService.customerParseJson(it)
         }
@@ -117,6 +123,12 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(ItemRoute) {
             convertService.itemRouteParseJson(it)
+        }
+        JSON.registerObjectMarshaller(Inventory) {
+            convertService.inventoryParseJson(it)
+        }
+        JSON.registerObjectMarshaller(InventoryDetail) {
+            convertService.inventoryDetailParseJson(it)
         }
         JSON.registerObjectMarshaller(Workstation) {
             convertService.workstationParseJson(it)

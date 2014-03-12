@@ -60,14 +60,17 @@ class StockInSheetDet{
     * 庫別
     */
 
-    String warehouse
+    Warehouse warehouse
 
     /*
     * 儲位
     */
     String stockLocation
 
-    long qty = 0
+    /*
+    * 入庫數量
+    */
+    long qty = 0 
 
     static hasOne = [manufactureOrder: ManufactureOrder]
     static mapping = {
@@ -79,7 +82,6 @@ class StockInSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
-        warehouse nullable:true
         stockLocation nullable:true      
     }
 

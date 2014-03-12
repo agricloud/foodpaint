@@ -59,9 +59,21 @@ class PurchaseSheetDet{
 
 
     /*
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
+
+    /*
     * 進貨數量
     */
     long qty
+
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -72,6 +84,7 @@ class PurchaseSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        stockLocation nullable:true
     }
     public String toString(){
         "進貨單身：${typeName}-${name}-${sequence}"

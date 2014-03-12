@@ -49,7 +49,18 @@ class OutSrcPurchaseSheetDet{
 
 
     /*
-    * 數量
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    String stockLocation
+    
+    /*
+    * 進貨數量
     */
 	long qty
 
@@ -75,5 +86,6 @@ class OutSrcPurchaseSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        stockLocation nullable:true
     }
 }

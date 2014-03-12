@@ -53,6 +53,7 @@ class OutSrcPurchaseSheet {
     */
     Date outSrcPurchaseDate = new Date()
 
+
     static mapping = {
         importFlag  defaultValue: -1
     }
@@ -62,6 +63,5 @@ class OutSrcPurchaseSheet {
         editor nullable:true
         creator nullable:true
         outSrcPurchaseSheetDets nullable:true
-
     }
 }

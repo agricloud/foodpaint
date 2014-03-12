@@ -135,7 +135,20 @@ class ConvertService {
 	    
 	    result
     }
+    def warehouseParseJson(warehouse){
+	    def result = [:]
 
+	    result.dateCreated = warehouse.dateCreated
+	    result.lastUpdated = warehouse.lastUpdated
+	    result.site = warehouse.site
+
+	    result.id = warehouse.id
+	    result.name = warehouse.name
+	    result.title = warehouse.title
+	    result.remark = warehouse.remark
+
+	    result
+    }
     def itemParseJson(item){
 	    def result = [:]
 
@@ -188,6 +201,65 @@ class ConvertService {
 
         result
    	}
+
+   	def inventoryParseJson(inventory){
+	    def result = [:]
+
+	    result.dateCreated = inventory.dateCreated
+	    result.lastUpdated = inventory.lastUpdated
+	    result.site = inventory.site
+
+	    result.id = inventory.id
+
+	    if(inventory.warehouse){
+	    	result.warehouse = inventory.warehouse
+		    result["warehouse.id"] = inventory.warehouse.id
+		    result["warehouse.name"] = inventory.warehouse.name
+		    result["warehouse.title"] = inventory.warehouse.title
+		}
+		if(inventory.item){
+			result.item = inventory.item
+		    result["item.id"] = inventory.item.id
+		    result["item.name"] = inventory.item.name
+		    result["item.title"] = inventory.item.title
+		}
+	    result.qty = inventory.qty
+
+	    result
+    }
+
+    def inventoryDetailParseJson(inventoryDetail){
+	    def result = [:]
+
+	    result.dateCreated = inventoryDetail.dateCreated
+	    result.lastUpdated = inventoryDetail.lastUpdated
+	    result.site = inventoryDetail.site
+
+	    result.id = inventoryDetail.id
+
+	    if(inventoryDetail.warehouse){
+	    	result.warehouse = inventoryDetail.warehouse
+		    result["warehouse.id"] = inventoryDetail.warehouse.id
+		    result["warehouse.name"] = inventoryDetail.warehouse.name
+		    result["warehouse.title"] = inventoryDetail.warehouse.title
+		}
+		if(inventoryDetail.item){
+			result.item = inventoryDetail.item
+		    result["item.id"] = inventoryDetail.item.id
+		    result["item.name"] = inventoryDetail.item.name
+		    result["item.title"] = inventoryDetail.item.title
+		}
+		if(inventoryDetail.batch){
+			result.batch = inventoryDetail.batch
+		    result["batch.id"] = inventoryDetail.batch.id
+		    result["batch.name"] = inventoryDetail.batch.name
+		}
+
+	    result.qty = inventoryDetail.qty
+
+	    result
+    }
+
 
     def operationParseJson(operation){
 	    def result = [:]
@@ -413,6 +485,12 @@ class ConvertService {
 	        result["workstation.name"] = materialSheet.workstation.name
 	        result["workstation.title"] = materialSheet.workstation.title
 	    }
+	    if(materialSheet.supplier){
+			result.supplier = materialSheet.supplier
+			result["supplier.id"] = materialSheet.supplier.id
+	        result["supplier.name"] = materialSheet.supplier.name
+	        result["supplier.title"] = materialSheet.supplier.title
+	    }
 
 		result
     }
@@ -469,7 +547,6 @@ class ConvertService {
         result.id = purchaseSheet.id
     	result.name = purchaseSheet.name
 		result.typeName = purchaseSheet.typeName
-		result.incomingDate = purchaseSheet.incomingDate
 
 		if(purchaseSheet.supplier){
 			result.supplier = purchaseSheet.supplier
@@ -577,6 +654,13 @@ class ConvertService {
 	        result["item.description"] = stockInSheetDet.item.description
 	    }
 
+	    if(stockInSheetDet.warehouse){
+			result.warehouse = stockInSheetDet.warehouse
+			result["warehouse.id"] = stockInSheetDet.warehouse.id
+	        result["warehouse.name"] = stockInSheetDet.warehouse.name
+	        result["warehouse.title"] = stockInSheetDet.warehouse.title
+	    }
+
 		result
     }
 
@@ -653,7 +737,6 @@ class ConvertService {
         result.id = saleSheet.id
     	result.name = saleSheet.name
 		result.typeName = saleSheet.typeName
-		result.saleDate = saleSheet.saleDate
 
 		if(saleSheet.customer){
 			result.customer = saleSheet.customer

@@ -1,12 +1,15 @@
 package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.transaction.annotation.Transactional
 import grails.converters.JSON
+
 
 class StockInSheetDetController {
 
     def domainService
     def batchService
+    def inventoryDetailService
 
     def index = {
 
@@ -72,50 +75,70 @@ class StockInSheetDetController {
 
     }
 
-    def save = {
+    @Transactional
+    def save(){
         def stockInSheetDet=new StockInSheetDet(params)
-
-        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
-        if(!result.success){
-            render (contentType: 'application/json') {
-                result
+        if(stockInSheetDet.qty>0){
+            def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+            if(!result.success){
+                
+                render (contentType: 'application/json') {
+                    result
+                }
+            }
+            else{
+                inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                stockInSheetDet.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(stockInSheetDet)
+                }
             }
         }
         else{
-            stockInSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
-                domainService.save(stockInSheetDet)
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
             }
         }
     }
 
-
-    def update = {
+    @Transactional
+    def update(){
 
         def stockInSheetDet = new StockInSheetDet(params)
-        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+        if(stockInSheetDet.qty>0){
+            def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
 
-        if(!result.success){
-            render (contentType: 'application/json') {
-                result
+            if(!result.success){
+                render (contentType: 'application/json') {
+                    result
+                }
+            }
+            else{
+                stockInSheetDet = StockInSheetDet.get(params.id)
+                inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                stockInSheetDet.properties = params
+                inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                stockInSheetDet.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(stockInSheetDet)
+                }
             }
         }
         else{
-            stockInSheetDet = StockInSheetDet.get(params.id)
-            stockInSheetDet.properties = params
-            stockInSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
-                domainService.save(stockInSheetDet)
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
             }
-        }        
+        }      
     }
 
 
-
-    def delete = {
+    @Transactional
+    def delete(){
 
         def  stockInSheetDet = StockInSheetDet.get(params.id)
-
+        
+        inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+        
         def result
         try {
             
