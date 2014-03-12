@@ -111,13 +111,13 @@ class TestService {
 
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
-        def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,qty:3000,warehouse:warehouse1,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,qty:3000,stockInDate:new Date(2013,02,20),manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
-        def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,warehouse:warehouse1,qty:1000000,manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+        def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet1,typeName:"BD32",name:"98100900001",sequence:1,item:item1,batch:batch1,warehouse:warehouse1,qty:1000000,outSrcPurchaseDate:new Date(2013,02,20),manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
         def outSrcPurchaseSheet2 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900002",supplier:supplier1).save(failOnError: true, flush: true)
-        def outSrcPurchaseSheetDet21 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet2,typeName:"BD32",name:"98100900002",sequence:1,item:item2,batch:batch2,warehouse:warehouse1,qty:1000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+        def outSrcPurchaseSheetDet21 = new OutSrcPurchaseSheetDet(outSrcPurchaseSheet:outSrcPurchaseSheet2,typeName:"BD32",name:"98100900002",sequence:1,item:item2,batch:batch2,warehouse:warehouse1,qty:1000,outSrcPurchaseDate:new Date(2013,02,15),manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
 
         // //銷貨單    
         def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
