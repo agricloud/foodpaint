@@ -48,6 +48,7 @@ class ManufactureOrder {
 
     static hasMany = [
         stockInSheetDets: StockInSheetDet,
+        outSrcPurchaseSheetDets: OutSrcPurchaseSheetDet,
         materialSheetDets: MaterialSheetDet
     ]
 

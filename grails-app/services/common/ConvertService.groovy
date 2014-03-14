@@ -464,6 +464,16 @@ class ConvertService {
 	        result["batch.id"] = manufactureOrder.batch.id
 	        result["batch.name"] = manufactureOrder.batch.name
 	    }
+
+	    if(manufactureOrder.materialSheetDets){
+	    	result.materialSheetDets=manufactureOrder.materialSheetDets
+	    }
+	    if(manufactureOrder.stockInSheetDets){
+	    	result.stockInSheetDets=manufactureOrder.stockInSheetDets
+	    }
+	    if(manufactureOrder.outSrcPurchaseSheetDets){
+	    	result.outSrcPurchaseSheetDets=manufactureOrder.outSrcPurchaseSheetDets
+	    }
 		
 		result
     }
