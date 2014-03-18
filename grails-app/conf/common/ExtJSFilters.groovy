@@ -47,8 +47,11 @@ class ExtJSFilters {
                     params.order = sortJson[0].direction
                 }
 
-
                 params.criteria = {
+                    if(params["site.id"]!="null"){
+                        eq('site.id',params["site.id"].toLong())
+                    }
+
                     if(params.filter){
                         def filterJson = grails.converters.JSON.parse(params.filter)
                         filterJson.each{

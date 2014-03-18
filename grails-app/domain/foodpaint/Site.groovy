@@ -44,5 +44,7 @@ class Site {
     	name unique:true, blank: false
         editor nullable:true
         creator nullable:true
+        description nullable:true
+		address nullable:true
     }
 }
