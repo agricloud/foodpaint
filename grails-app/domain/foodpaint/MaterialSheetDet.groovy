@@ -91,4 +91,7 @@ class MaterialSheetDet{
         qty min: 0L
         stockLocation nullable:true
     }
+    public String toString(){
+        "領料單單身：${typeName}-${name}-${sequence}"
+    }
 }
