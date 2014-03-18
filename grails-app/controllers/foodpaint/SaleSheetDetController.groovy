@@ -7,6 +7,7 @@ class SaleSheetDetController {
 
     def domainService
     def batchService
+    def inventoryDetailService
 
     def index = {
 
@@ -75,8 +76,23 @@ class SaleSheetDetController {
     def save = {
         def saleSheetDet=new SaleSheetDet(params)
         if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
-            render (contentType: 'application/json') {
-                domainService.save(saleSheetDet)
+            if(saleSheetDet.qty>0){
+                def inventoryConsumeResult = inventoryDetailService.consume(saleSheetDet.warehouse.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
+                if(inventoryConsumeResult.success){
+                    render (contentType: 'application/json') {
+                        domainService.save(saleSheetDet)
+                    }
+                }
+                else{
+                    render (contentType: 'application/json') {
+                        inventoryConsumeResult
+                    }
+                }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleSheetDet])]
+                }
             }
         }
         else{
@@ -92,10 +108,29 @@ class SaleSheetDetController {
         def  saleSheetDet = new SaleSheetDet(params)
         
         if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
-            saleSheetDet = SaleSheetDet.get(params.id)
-            saleSheetDet.properties = params
-            render (contentType: 'application/json') {
-                domainService.save(saleSheetDet)
+            if(saleSheetDet.qty>0){
+                saleSheetDet = SaleSheetDet.get(params.id)
+                inventoryDetailService.replenish(saleSheetDet.warehouse.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
+
+                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, params.qty.toLong())
+                if(inventoryConsumeResult.success){
+                    saleSheetDet.properties = params
+                    render (contentType: 'application/json') {
+                        domainService.save(saleSheetDet)
+                    }
+                }
+                else{
+                    saleSheetDet = SaleSheetDet.get(params.id)
+                    inventoryDetailService.consume(saleSheetDet.warehouse.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
+                    render (contentType: 'application/json') {
+                        inventoryConsumeResult
+                    }
+                }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleSheetDet])]
+                }
             }
         }
         else{
@@ -113,7 +148,7 @@ class SaleSheetDetController {
 
         def result
         try {
-            
+            inventoryDetailService.replenish(saleSheetDet.warehouse.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
             result = domainService.delete(saleSheetDet)
         
         }catch(e){

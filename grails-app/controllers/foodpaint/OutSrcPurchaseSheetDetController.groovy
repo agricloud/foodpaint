@@ -7,6 +7,7 @@ class OutSrcPurchaseSheetDetController {
 
     def domainService
     def batchService
+    def inventoryDetailService
 
     def index = {
 
@@ -74,16 +75,24 @@ class OutSrcPurchaseSheetDetController {
 
     def save = {
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
-        def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
-        if(!result.success){
-            render (contentType: 'application/json') {
-                result
+        if(outSrcPurchaseSheetDet.qty>0){
+            def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
+            if(!result.success){
+                render (contentType: 'application/json') {
+                    result
+                }
+            }
+            else{
+                inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, outSrcPurchaseSheetDet.qty)
+                outSrcPurchaseSheetDet.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(outSrcPurchaseSheetDet)
+                }
             }
         }
         else{
-            outSrcPurchaseSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
-                domainService.save(outSrcPurchaseSheetDet)
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]
             }
         }
     }
@@ -92,24 +101,36 @@ class OutSrcPurchaseSheetDetController {
     def update = {
 
         def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params)
-        def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
-   
-        if(!result.success){
-            render (contentType: 'application/json') {
-                result
+        if(outSrcPurchaseSheetDet.qty>0){
+            def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
+       
+            if(!result.success){
+                render (contentType: 'application/json') {
+                    result
+                }
+            }
+            else{
+                outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
+                if(!inventoryDetailService.consume(outSrcPurchaseSheetDet.warehouse.id, outSrcPurchaseSheetDet.item.id, outSrcPurchaseSheetDet.batch.name, outSrcPurchaseSheetDet.qty).success){
+                    render (contentType: 'application/json') {
+                        [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [outSrcPurchaseSheetDet.warehouse, outSrcPurchaseSheetDet.item, outSrcPurchaseSheetDet.batch])]
+                    }
+                }
+                else{
+                    outSrcPurchaseSheetDet.properties = params
+                    inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, outSrcPurchaseSheetDet.qty)
+                    outSrcPurchaseSheetDet.batch = (Batch) result.batch
+                    render (contentType: 'application/json') {
+                        domainService.save(outSrcPurchaseSheetDet)
+                    }
+                }
             }
         }
         else{
-            outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
-            outSrcPurchaseSheetDet.properties = params
-            println outSrcPurchaseSheetDet.batch.id
-            println ((Batch) result?.batch)?.id
-            outSrcPurchaseSheetDet.batch = (Batch) result.batch
-            println outSrcPurchaseSheetDet.batch.id
             render (contentType: 'application/json') {
-                domainService.save(outSrcPurchaseSheetDet)
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]
             }
-        }      
+        }       
     }
 
 
@@ -118,19 +139,27 @@ class OutSrcPurchaseSheetDetController {
 
         def  outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
 
-        def result
-        try {
-            
-            result = domainService.delete(outSrcPurchaseSheetDet)
-        
-        }catch(e){
-            log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [outSrcPurchaseSheetDet, e.getMessage()])
-            result = [success:false, message: msg] 
+        if(!inventoryDetailService.consume(outSrcPurchaseSheetDet.warehouse.id, outSrcPurchaseSheetDet.item.id, outSrcPurchaseSheetDet.batch.name, outSrcPurchaseSheetDet.qty).success){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [outSrcPurchaseSheetDet.warehouse, outSrcPurchaseSheetDet.item, outSrcPurchaseSheetDet.batch])]
+            }
         }
-        
-        render (contentType: 'application/json') {
-            result
+        else{
+
+            def result
+            try {
+                
+                result = domainService.delete(outSrcPurchaseSheetDet)
+            
+            }catch(e){
+                log.error e
+                def msg = message(code: 'default.message.delete.failed', args: [outSrcPurchaseSheetDet, e.getMessage()])
+                result = [success:false, message: msg] 
+            }
+            
+            render (contentType: 'application/json') {
+                result
+            }
         }
     }
 }
