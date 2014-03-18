@@ -31,14 +31,22 @@ class InventoryService {
 
 	@Transactional
 	def consume(warehouseId,itemId,qty){
+		Object[] args=[]
+
 		if(qty>0){
 
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
 
 			def inventory = Inventory.findByWarehouseAndItem(warehouse,item)
-			inventory.qty -= qty
-			return  [success:true]
+			if(inventory && inventory.qty >= qty){
+				inventory.qty -= qty
+				return  [success:true]
+			}
+			else{
+				args = [warehouse, item]
+				return [success:false, message: messageSource.getMessage("inventory.quantity.not.enough", args, Locale.getDefault())]
+			}
 		}
 	}
 

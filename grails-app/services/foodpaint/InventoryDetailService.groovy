@@ -36,6 +36,7 @@ class InventoryDetailService {
 	}
 
 	def consume(warehouseId,itemId,batchName,qty){
+		Object[] args=[]
 		if(qty>0){
 
 			inventoryService.consume(warehouseId,itemId,qty)
@@ -45,8 +46,14 @@ class InventoryDetailService {
 			def batch = Batch.findByName(batchName)
 
 			def inventoryDetail = InventoryDetail.findByWarehouseAndItemAndBatch(warehouse,item,batch)
-			inventoryDetail.qty -= qty
-			return  [success:true]
+			if(inventoryDetail && inventoryDetail.qty >= qty){
+				inventoryDetail.qty -= qty
+				return  [success:true]
+			}
+			else{
+				args = [warehouse, item, batch]
+				return [success:false, message: messageSource.getMessage("inventoryDetail.quantity.not.enough", args, Locale.getDefault())]
+			}
 		}
 	}
 

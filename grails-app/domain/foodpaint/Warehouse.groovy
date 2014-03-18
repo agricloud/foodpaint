@@ -21,6 +21,6 @@ class Warehouse {
 	}
 
 	public String toString(){
-    	"倉庫編號：${name}, 倉庫名稱：${title}"
+    	"倉庫編號：${name}，倉庫名稱：${title}"
     }
 }
