@@ -115,12 +115,18 @@ class StockInSheetDetController {
             }
             else{
                 stockInSheetDet = StockInSheetDet.get(params.id)
-                inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
-                stockInSheetDet.properties = params
-                inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
-                stockInSheetDet.batch = (Batch) result.batch
-                render (contentType: 'application/json') {
-                    domainService.save(stockInSheetDet)
+                if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
+                    render (contentType: 'application/json') {
+                        [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [stockInSheetDet.warehouse, stockInSheetDet.item, stockInSheetDet.batch])]
+                    }
+                }
+                else{
+                    stockInSheetDet.properties = params
+                    inventoryDetailService.replenish(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                    stockInSheetDet.batch = (Batch) result.batch
+                    render (contentType: 'application/json') {
+                        domainService.save(stockInSheetDet)
+                    }
                 }
             }
         }
@@ -137,21 +143,26 @@ class StockInSheetDetController {
 
         def  stockInSheetDet = StockInSheetDet.get(params.id)
         
-        inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, stockInSheetDet.qty)
-        
-        def result
-        try {
-            
-            result = domainService.delete(stockInSheetDet)
-        
-        }catch(e){
-            log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [stockInSheetDet, e.getMessage()])
-            result = [success:false, message: msg] 
+        if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [stockInSheetDet.warehouse, stockInSheetDet.item, stockInSheetDet.batch])]
+            }
         }
-        
-        render (contentType: 'application/json') {
-            result
+        else{
+            def result
+            try {
+                
+                result = domainService.delete(stockInSheetDet)
+            
+            }catch(e){
+                log.error e
+                def msg = message(code: 'default.message.delete.failed', args: [stockInSheetDet, e.getMessage()])
+                result = [success:false, message: msg] 
+            }
+            
+            render (contentType: 'application/json') {
+                result
+            }
         }
     }
 }

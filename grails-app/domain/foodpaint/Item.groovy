@@ -99,7 +99,7 @@ class Item {
 		// effectEndDate nullable: true
 	}
 	public String toString(){
-    	"品項編號：${name},品項名稱：${title}"
+    	"品號：${name}，品名：${title}"
     }
    // JSON definition of the User object
     static {

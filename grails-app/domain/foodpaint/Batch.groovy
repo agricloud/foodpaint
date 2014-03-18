@@ -87,5 +87,8 @@ class Batch  {
 		expirationDate 		nullable: true
 		supplier 			nullable: true
 	}
+	public String toString(){
+    	"批號：${name}"
+    }
 	
 }
