@@ -544,6 +544,13 @@ class ConvertService {
 	        result["item.description"] = materialSheetDet.item.description
 	    }
 
+	    if(materialSheetDet.warehouse){
+			result.warehouse = materialSheetDet.warehouse
+			result["warehouse.id"] = materialSheetDet.warehouse.id
+	        result["warehouse.name"] = materialSheetDet.warehouse.name
+	        result["warehouse.title"] = materialSheetDet.warehouse.title
+	    }
+
 		result
     }
 
@@ -599,6 +606,13 @@ class ConvertService {
 	        result["item.spec"] = purchaseSheetDet.item.spec
 	        result["item.unit"] = purchaseSheetDet.item.unit
 	        result["item.description"] = purchaseSheetDet.item.description
+	    }
+
+	    if(purchaseSheetDet.warehouse){
+			result.warehouse = purchaseSheetDet.warehouse
+			result["warehouse.id"] = purchaseSheetDet.warehouse.id
+	        result["warehouse.name"] = purchaseSheetDet.warehouse.name
+	        result["warehouse.title"] = purchaseSheetDet.warehouse.title
 	    }
 
 		result
@@ -734,6 +748,13 @@ class ConvertService {
 	        result["item.description"] = outSrcPurchaseSheetDet.item.description
 	    }
 
+	    if(outSrcPurchaseSheetDet.warehouse){
+			result.warehouse = outSrcPurchaseSheetDet.warehouse
+			result["warehouse.id"] = outSrcPurchaseSheetDet.warehouse.id
+	        result["warehouse.name"] = outSrcPurchaseSheetDet.warehouse.name
+	        result["warehouse.title"] = outSrcPurchaseSheetDet.warehouse.title
+	    }
+
 		result
     }
 
@@ -798,6 +819,13 @@ class ConvertService {
 	        result["item.spec"] = saleSheetDet.item.spec
 	        result["item.unit"] = saleSheetDet.item.unit
 	        result["item.description"] = saleSheetDet.item.description
+	    }
+
+	    if(saleSheetDet.warehouse){
+			result.warehouse = saleSheetDet.warehouse
+			result["warehouse.id"] = saleSheetDet.warehouse.id
+	        result["warehouse.name"] = saleSheetDet.warehouse.name
+	        result["warehouse.title"] = saleSheetDet.warehouse.title
 	    }
 
 		result
