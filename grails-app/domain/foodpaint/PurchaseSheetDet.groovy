@@ -87,6 +87,6 @@ class PurchaseSheetDet{
         stockLocation nullable:true
     }
     public String toString(){
-        "進貨單身：${typeName}-${name}-${sequence}"
+        "進貨單單身：${typeName}-${name}-${sequence}"
     }
 }
