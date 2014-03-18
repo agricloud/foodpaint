@@ -43,8 +43,8 @@ class ExtJSFilters {
                 }
                 if(params.sort){
                     def sortJson = grails.converters.JSON.parse(params.sort)
-                    params.sort = sortJson[0].property
-                    params.order = sortJson[0].direction
+                    params.sort = sortJson[0]?.property
+                    params.order = sortJson[0]?.direction
                 }
 
                 params.criteria = {
