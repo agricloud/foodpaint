@@ -4,24 +4,6 @@ class TestService {
 
 
     def createStdTestData = {
-        //標準測試資料，作為驗證以及 unit test 用
-
-        def item = new Item(name:"item1",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
-
-        def batch = new Batch(name:"batch1",item:item,dueDate:new Date(), 
-                manufactureDate: new Date(), expirationDate: new Date(), remark: '備註').save(failOnError: true)
-
-        def workstation = new Workstation(name:"workstation1",title:"檢驗站01").save(failOnError: true)
-        def operation = new Operation(name:"operation1",title:"施肥").save(failOnError: true)
-
-        def itemRoute = new ItemRoute(item:item,sequence:1,operation:operation,workstation:workstation)
-        item.addToItemRoutes(itemRoute).save(failOnError: true)
-
-        def batchRoute = new BatchRoute(batch:batch,workstation:workstation,sequence:1,operation:operation)
-        batch.addToBatchRoutes(batchRoute).save(failOnError: true)
-    }
-
-    def createOilCaseData = {
         def item1 = new Item(name:"olive",title:"橄欖果",spec:"",unit:"kg",description:"油橄欖樹果實").save(failOnError: true)
         def item2 = new Item(name:"extravirgin",title:"特級初榨橄欖油",spec:"特級初榨Extra Virgin",unit:"g",description:"頂級橄欖油").save(failOnError: true)
         def item3 = new Item(name:"c6h14",title:"己烷",spec:"有機己烷",unit:"ml",description:"用於萃取橄欖油").save(failOnError: true)
@@ -36,6 +18,35 @@ class TestService {
         def customer1 = new Customer(name:"freshmarket",title:"新鮮超市").save(failOnError: true)
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫").save(failOnError: true)
 
+        def operation1 = new Operation(name:"operation1",title:"採收",description:"採收橄欖果實。").save(failOnError: true)
+        def operation2 = new Operation(name:"operation2",title:"清洗",description:"清洗橄欖果實，剔除樹枝、樹葉及損壞果實。").save(failOnError: true)
+        def operation3 = new Operation(name:"operation3",title:"研磨",description:"即冷壓法，溫控低於27度以下，將橄欖果實磨碎。").save(failOnError: true)
+        def operation4 = new Operation(name:"operation4",title:"攪拌",description:"攪拌碾碎後的果實，取出油脂。").save(failOnError: true)
+        def operation5 = new Operation(name:"operation5",title:"油水分離",description:"分離水、果渣等雜質，保留高純度橄欖油汁。").save(failOnError: true)
+        def operation6 = new Operation(name:"operation6",title:"二次溶劑萃取",description:"二次萃取橄欖油。").save(failOnError: true)
+        def operation7 = new Operation(name:"operation7",title:"脫色脫臭",description:"加熱混合活性白土，吸附處理消除色素；低壓脫臭，去除油脂中不好的氣味。").save(failOnError: true)
+        def operation8 = new Operation(name:"operation8",title:"增色",description:"添加染色劑。").save(failOnError: true)
+        def operation9 = new Operation(name:"operation9",title:"檢驗",description:"檢驗是否殘留化學毒素。").save(failOnError: true)
+        def operation10 = new Operation(name:"operation10",title:"濾淨",description:"於封裝前在恆溫恆濕環境控制下，除去更細小的雜質。").save(failOnError: true)
+        def operation11 = new Operation(name:"operation11",title:"封裝",description:"真空瓶裝封口。").save(failOnError: true)
+
+    }
+
+    def createOilCaseData = {
+        def item1 = Item.findByName("olive")
+        def item2 = Item.findByName("extravirgin")
+        def item3 = Item.findByName("c6h14")
+        def item4 = Item.findByName("c7h16")
+        def item5 = Item.findByName("chlorophyllin")       
+        def item11 = Item.findByName("pure")
+        //def item13 = new Item(name:"item13",title:"精煉橄欖油",spec:"精煉油",unit:"g",description:"精煉橄欖油").save(failOnError: true)
+        
+        def supplier1 = Supplier.findByName("coniaciapaty")
+        def supplier2 = Supplier.findByName("pinchia")
+        def workstation1 = Workstation.findByName("oilworkstation")
+        def customer1 = Customer.findByName("freshmarket")
+        def warehouse1 = Warehouse.findByName("warehouse1")
+
         def batch1 = new Batch(name:"olive_0211",item:item1, manufactureDate: new Date(2013,02,11), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
         def batch2 = new Batch(name:"extravirgin_0215",item:item2, manufactureDate: new Date(2013,02,15), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
         def batch3 = new Batch(name:"c6h14_0213",item:item3, supplier:supplier2,country:Country.TAIWAN, remark: '').save(failOnError: true)
@@ -49,17 +60,17 @@ class TestService {
         new BatchSource(batch:batch11,childBatch:batch4).save(failOnError: true)
         new BatchSource(batch:batch11,childBatch:batch5).save(failOnError: true)
     
-        def operation1 = new Operation(name:"operation1",title:"採收",description:"採收橄欖果實。").save(failOnError: true)
-        def operation2 = new Operation(name:"operation2",title:"清洗",description:"清洗橄欖果實，剔除樹枝、樹葉及損壞果實。").save(failOnError: true)
-        def operation3 = new Operation(name:"operation3",title:"研磨",description:"即冷壓法，溫控低於27度以下，將橄欖果實磨碎。").save(failOnError: true)
-        def operation4 = new Operation(name:"operation4",title:"攪拌",description:"攪拌碾碎後的果實，取出油脂。").save(failOnError: true)
-        def operation5 = new Operation(name:"operation5",title:"油水分離",description:"分離水、果渣等雜質，保留高純度橄欖油汁。").save(failOnError: true)
-        def operation6 = new Operation(name:"operation6",title:"二次溶劑萃取",description:"二次萃取橄欖油。").save(failOnError: true)
-        def operation7 = new Operation(name:"operation7",title:"脫色脫臭",description:"加熱混合活性白土，吸附處理消除色素；低壓脫臭，去除油脂中不好的氣味。").save(failOnError: true)
-        def operation8 = new Operation(name:"operation8",title:"增色",description:"添加染色劑。").save(failOnError: true)
-        def operation9 = new Operation(name:"operation9",title:"檢驗",description:"檢驗是否殘留化學毒素。").save(failOnError: true)
-        def operation10 = new Operation(name:"operation10",title:"濾淨",description:"於封裝前在恆溫恆濕環境控制下，除去更細小的雜質。").save(failOnError: true)
-        def operation11 = new Operation(name:"operation11",title:"封裝",description:"真空瓶裝封口。").save(failOnError: true)
+        def operation1 = Operation.findByName("operation1")
+        def operation2 = Operation.findByName("operation2")
+        def operation3 = Operation.findByName("operation3")
+        def operation4 = Operation.findByName("operation4")
+        def operation5 = Operation.findByName("operation5")
+        def operation6 = Operation.findByName("operation6")
+        def operation7 = Operation.findByName("operation7")
+        def operation8 = Operation.findByName("operation8")
+        def operation9 = Operation.findByName("operation9")
+        def operation10 = Operation.findByName("operation10")
+        def operation11 = Operation.findByName("operation11")
 
         def batchRoute1 = new BatchRoute(batch:batch1,supplier:supplier1,sequence:1,operation:operation1,startDate:new Date(2013,02,2),endDate:new Date(2013,02,11))
         def batchRoute2 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:1,operation:operation2,startDate:new Date(2013,02,12),endDate:new Date(2013,02,12))
