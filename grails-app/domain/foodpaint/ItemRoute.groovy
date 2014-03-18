@@ -32,6 +32,7 @@ class ItemRoute {
 	int sequence
 	Operation operation
 	Workstation workstation
+    Supplier supplier
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -41,6 +42,8 @@ class ItemRoute {
         editor nullable:true
         creator nullable:true
     	sequence unique:true
+        workstation unique:true
+        supplier unique:true
     }
 
     public String toString(){
