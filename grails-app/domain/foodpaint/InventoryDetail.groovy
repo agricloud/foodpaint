@@ -9,12 +9,11 @@ class InventoryDetail {
     Date lastUpdated
 
     static belongsTo=[
-        warehouse:Warehouse,
-        item:Item,
-        batch:Batch
+        warehouse: Warehouse,
+        item: Item,
+        storageLocation: StorageLocation,
+        batch: Batch
     ]
-
-    // Store store
 
     long qty = 0
 
