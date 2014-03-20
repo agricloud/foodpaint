@@ -360,9 +360,11 @@ class DataImportService {
 
 		def item = Item.findByName(record.itemName.text())
 		def warehouse = Warehouse.findByName(record.warehouseName.text())
+		def storageLocation = StorageLocation.findByName(record.storageLocationName.text())
 
 		object.item = item
 		object.warehouse = warehouse
+		object.storageLocation = storageLocation
 		object.purchaseSheet = purchaseSheet
 		
 
@@ -415,6 +417,7 @@ class DataImportService {
 
 		def item = Item.findByName(record.itemName.text())
 		def warehouse = Warehouse.findByName(record.warehouseName.text())
+		def storageLocation = StorageLocation.findByName(record.storageLocationName.text())
 
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
@@ -422,6 +425,7 @@ class DataImportService {
 		
 		object.item = item
 		object.warehouse = warehouse
+		object.storageLocation = storageLocation
 		object.stockInSheet = stockInSheet
 		object.manufactureOrder = manufactureOrder
 
@@ -473,12 +477,14 @@ class DataImportService {
 
 		def item = Item.findByName(record.itemName.text())
 		def warehouse = Warehouse.findByName(record.warehouseName.text())
+		def storageLocation = StorageLocation.findByName(record.storageLocationName.text())
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
 
 		
 		object.item = item
 		object.warehouse = warehouse
+		object.storageLocation = storageLocation
 		object.outSrcPurchaseSheet = outSrcPurchaseSheet
 		object.manufactureOrder = manufactureOrder
 
@@ -553,6 +559,7 @@ class DataImportService {
 
 		def item = Item.findByName(record.itemName.text())
 		def warehouse = Warehouse.findByName(record.warehouseName.text())
+		def storageLocation = StorageLocation.findByName(record.storageLocationName.text())
 		def batch = Batch.findByName(record.batchName.text())
 		def manufactureOrder = ManufactureOrder.findByNameAndTypeName(
 				record.manufactureOrderName.text(),record.manufactureOrderTypeName.text())
@@ -562,6 +569,7 @@ class DataImportService {
 
 		object.item = item
 		object.warehouse = warehouse
+		object.storageLocation = storageLocation
 		object.batch = batch
 		object.materialSheet = materialSheet
 		object.manufactureOrder = manufactureOrder

@@ -52,7 +52,7 @@ class MaterialReturnSheetDet{
         manufactureOrder: ManufactureOrder
     ]
 
-    MateriaSheetDet materiaSheetDet
+    MaterialSheetDet materialSheetDet
 
     /*
     * 批號

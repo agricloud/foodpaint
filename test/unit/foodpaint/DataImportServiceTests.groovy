@@ -15,7 +15,7 @@ import common.*
 @Mock([
     Item, ItemView, 
     Customer, CustomerView,
-    Warehouse,
+    Warehouse,StorageLocation,
     Workstation,WorkstationView,
     Operation,OperationView,
     Supplier,SupplierView,
@@ -446,6 +446,7 @@ class DataImportServiceTests {
 
     void testPurchaseSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
         def supplier1=new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
@@ -478,6 +479,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
     <qty>
       10000
     </qty>
@@ -504,6 +508,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
     <qty>
       10000
     </qty>
@@ -579,6 +586,7 @@ class DataImportServiceTests {
 
     void testStockInSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
         
         def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
@@ -630,6 +638,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
   </stockInSheetDetView>
   <stockInSheetDetView id="2">
     <batchName>
@@ -660,6 +671,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
   </stockInSheetDetView>
 </list>
         '''
@@ -725,6 +739,7 @@ class DataImportServiceTests {
 
     void testOutSrcPurchaseSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
         def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
@@ -763,6 +778,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
     <qty>
       5000
     </qty>
@@ -851,7 +869,7 @@ class DataImportServiceTests {
         new Operation(name:"operation1",title:"施肥",description:"施肥肥",importFlag:1).save(failOnError: true, flush: true)
         
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A",importFlag:1).save(failOnError: true, flush: true)
 
         def item1 = new Item(name:"410001",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。",importFlag:1).save(failOnError: true, flush: true)
@@ -1000,6 +1018,7 @@ class DataImportServiceTests {
     void testMaterialSheetDetImport() {
 
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def i1=new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種",importFlag:1).save(failOnError: true, flush: true)
         def item2=new Item(name:"21006",title:"芝麻有機肥",importFlag:1).save(failOnError: true, flush: true)
         def item3=new Item(name:"21007",title:"黃豆有機肥",importFlag:1).save(failOnError: true, flush: true)
@@ -1036,6 +1055,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>
@@ -1065,6 +1087,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
+    <storageLocation>
+      storageLocation1
+    </storageLocation>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>
