@@ -65,7 +65,7 @@ class StockInSheetDet{
     /*
     * 儲位
     */
-    String stockLocation
+    StorageLocation storageLocation
 
     /*
     * 入庫數量
@@ -82,7 +82,6 @@ class StockInSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
-        stockLocation nullable:true      
     }
 
     public String toString(){

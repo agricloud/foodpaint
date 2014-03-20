@@ -1,10 +1,7 @@
 package foodpaint
-
-
-
-    /*
-    * 銷貨單單頭
-    */
+/*
+ * 銷貨單單頭
+ */
 class SaleSheet {
     int importFlag = -1
 
@@ -56,6 +53,5 @@ class SaleSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        saleSheetDets nullable:true
     }
 }

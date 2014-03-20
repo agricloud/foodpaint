@@ -1,10 +1,7 @@
 package foodpaint
-
-
-
-    /*
-    * 領料單身
-    */
+/*
+ * 領料單身
+ */
 class MaterialSheetDet{
     int importFlag = -1
 
@@ -73,7 +70,7 @@ class MaterialSheetDet{
     /*
     * 儲位
     */
-    String stockLocation
+    StorageLocation storageLocation
     /*
     * 領料數量
     */
@@ -89,7 +86,6 @@ class MaterialSheetDet{
         creator nullable:true
         batch nullable:true
         qty min: 0L
-        stockLocation nullable:true
     }
     public String toString(){
         "領料單單身：${typeName}-${name}-${sequence}"

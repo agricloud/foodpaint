@@ -62,6 +62,5 @@ class OutSrcPurchaseSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        outSrcPurchaseSheetDets nullable:true
     }
 }

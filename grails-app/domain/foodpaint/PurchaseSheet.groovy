@@ -56,7 +56,6 @@ class PurchaseSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        purchaseSheetDets nullable:true
         supplier  nullable:true
     }
 }

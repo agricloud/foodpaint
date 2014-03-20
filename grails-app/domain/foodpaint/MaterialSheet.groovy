@@ -1,7 +1,7 @@
 package foodpaint
 
     /*
-    * 領退料單頭
+    * 領料單頭
     */
 class MaterialSheet {
     int importFlag = -1
@@ -60,8 +60,6 @@ class MaterialSheet {
         editor nullable:true
         creator nullable:true
         workstation nullable:true
-        supplier nullable:true
-        materialSheetDets nullable:true
-        
+        supplier nullable:true        
     }
 }

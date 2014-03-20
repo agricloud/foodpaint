@@ -57,7 +57,7 @@ class OutSrcPurchaseSheetDet{
     /*
     * 儲位
     */
-    String stockLocation
+    StorageLocation storageLocation
     
     /*
     * 進貨數量
@@ -86,6 +86,5 @@ class OutSrcPurchaseSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
-        stockLocation nullable:true
     }
 }

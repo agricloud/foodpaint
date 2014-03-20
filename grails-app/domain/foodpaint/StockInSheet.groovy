@@ -55,6 +55,5 @@ class StockInSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        stockInSheetDets nullable:true
     }
 }

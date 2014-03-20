@@ -67,7 +67,7 @@ class PurchaseSheetDet{
     /*
     * 儲位
     */
-    String stockLocation
+    StorageLocation storageLocation
 
     /*
     * 進貨數量
@@ -84,7 +84,6 @@ class PurchaseSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
-        stockLocation nullable:true
     }
     public String toString(){
         "進貨單單身：${typeName}-${name}-${sequence}"

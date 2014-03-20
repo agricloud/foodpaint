@@ -1,9 +1,7 @@
 package foodpaint
-
-
-    /*
-    * 銷貨單單身
-    */
+/*
+ * 銷貨單單身
+ */
 class SaleSheetDet{
     int importFlag = -1
 
@@ -72,7 +70,7 @@ class SaleSheetDet{
     /*
     * 儲位
     */
-    String stockLocation
+    StorageLocation storageLocation
     /*
     * 數量
     */
@@ -87,6 +85,5 @@ class SaleSheetDet{
         creator nullable:true
         batch nullable:true
         customerOrderDet nullable:true
-        stockLocation nullable:true
     }
 }
