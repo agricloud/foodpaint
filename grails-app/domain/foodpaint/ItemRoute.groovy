@@ -41,9 +41,9 @@ class ItemRoute {
         site nullable:true
         editor nullable:true
         creator nullable:true
-    	sequence unique:true
-        workstation unique:true
-        supplier unique:true
+        sequence unique:'item'
+        workstation nullable:true
+        supplier nullable:true
     }
 
     public String toString(){

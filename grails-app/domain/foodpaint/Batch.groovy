@@ -36,27 +36,25 @@ class Batch  {
 		
 	]
 
+	static hasMany = [
+		batchRoutes: BatchRoute,
+		batchSources: BatchSource,
+        inventoryDetails: InventoryDetail
+	]
+
 	String name
 	long expectQty = 0//ERP無此資料
 	Date dueDate //失效日
-
 
     /*
     * 製造完成日期
     */
 	Date manufactureDate
 
-
-    /*
-    * 過期日期
-    */
-	Date expirationDate
-
-
     /*
     * 類型，無 erp 時使用
     */
-    BatchType batchType = foodpaint.BatchType.PRODUCT
+    BatchType batchType
 
 
     /*
@@ -77,15 +75,13 @@ class Batch  {
 		site nullable:true
         editor nullable:true
         creator nullable:true
-		name 				unique: true, blank: false
-
-		dueDate 			nullable: true
-		expectQty 			min: 0L
+		name unique: true, blank: false
+		expectQty min: 0L
+		dueDate nullable: true
+		manufactureDate nullable: true
+		batchType nullable: true
+		supplier nullable: true
 		
-
-		manufactureDate 	nullable: true
-		expirationDate 		nullable: true
-		supplier 			nullable: true
 	}
 	public String toString(){
     	"批號：${name}"

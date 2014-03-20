@@ -75,9 +75,6 @@ class ManufactureOrder {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        customerOrderDet nullable:true
-        stockInSheetDets nullable:true
-        materialSheetDets nullable:true
         batch nullable:true
     }
     public String toString(){

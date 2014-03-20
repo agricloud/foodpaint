@@ -77,6 +77,12 @@ class Item {
 	 */
 	// Date effectEndDate
 
+    static hasMany=[
+        itemRoutes:ItemRoute,
+        inventorys: Inventory,
+        inventoryDetails: InventoryDetail
+    ]
+
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -101,22 +107,4 @@ class Item {
 	public String toString(){
     	"品號：${name}，品名：${title}"
     }
-   // JSON definition of the User object
-    static {
-
-        JSON.registerObjectMarshaller(Item) {
-            def result = [:]
-
-            result.id = it.id
-            result.name = it.name
-            result.title = it.title
-            result.spec = it.spec
-            result.unit = it.unit
-            result.description = it.description
-
-            result
-        }
-
-    }
-
 }

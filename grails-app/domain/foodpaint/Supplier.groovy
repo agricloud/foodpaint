@@ -31,24 +31,22 @@ class Supplier {
     /*
     * 編號
     */
-	String name
+    String name
 
 
     /*
     * 名稱
     */
-	String title
+    String title
+    
+    /*
+    * 供應商所屬國家
+    */
+    Country country
 
     String tel
     String email
     String address
-
-
-    /*
-    * 供應商所屬國家
-    */
-	Country country=foodpaint.Country.TAIWAN
-
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -57,9 +55,11 @@ class Supplier {
         site nullable:true
         editor nullable:true
         creator nullable:true
-    	name unique: true, blank: false
+    name unique: true, blank: false
+        country nullable:true
         tel nullable:true
         email nullable:true
         address nullable:true
+
     }
 }
