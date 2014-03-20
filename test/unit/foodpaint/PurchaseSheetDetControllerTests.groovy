@@ -7,7 +7,7 @@ import grails.test.mixin.*
 import common.*
 
 @TestFor(PurchaseSheetDetController)
-@Mock([PurchaseSheetDet, PurchaseSheet, Item, Batch, Warehouse, Supplier, BatchService, DomainService])
+@Mock([PurchaseSheetDet, PurchaseSheet, Item, Batch, Warehouse, StorageLocation, Supplier, BatchService, DomainService])
 class PurchaseSheetDetControllerTests {
 
     def populateValidParams(params) {
@@ -32,9 +32,10 @@ class PurchaseSheetDetControllerTests {
         def batch2 = new Batch(name:"paintbatch2", item:item2).save(failOnError: true, flush: true)
         def supplier1 = new Supplier(name:"paintFJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
+        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
 
         def purchaseSheet1 = new PurchaseSheet(typeName:"B21",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
-        def purchaseSheetDet11 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:1,item:item1,warehouse:warehouse1,batch:batch1,qty:10000).save(failOnError: true, flush: true)
+        def purchaseSheetDet11 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"B21",name:"98100900001",sequence:1,item:item1,warehouse:warehouse1,storageLocation:storageLocation1,batch:batch1,qty:10000).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
         params["purchaseSheet.id"] = 1

@@ -479,9 +479,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
     <qty>
       10000
     </qty>
@@ -508,9 +508,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
     <qty>
       10000
     </qty>
@@ -638,9 +638,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
   </stockInSheetDetView>
   <stockInSheetDetView id="2">
     <batchName>
@@ -671,9 +671,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
   </stockInSheetDetView>
 </list>
         '''
@@ -778,9 +778,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
     <qty>
       5000
     </qty>
@@ -881,7 +881,7 @@ class DataImportServiceTests {
         def sis1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1,importFlag:1, stockInDate: new Date()).save(failOnError: true, flush: true)
         
         new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:sis1,
-                batch:batch1,item:item1,warehouse:warehouse1, manufactureOrder:mo1,importFlag:1).save(failOnError: true, flush: true)
+                batch:batch1,item:item1,warehouse:warehouse1, storageLocation:storageLocation1, manufactureOrder:mo1,importFlag:1).save(failOnError: true, flush: true)
 
 
         new Operation(name:"operation2",title:"翻土",description:"翻土土",importFlag:1).save(failOnError: true, flush: true)
@@ -897,7 +897,7 @@ class DataImportServiceTests {
         def osps1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1,importFlag:1, outSrcPurchaseDate: new Date()).save(failOnError: true, flush: true)
 
         new OutSrcPurchaseSheetDet(typeName:"BD32",name:"98100900001",sequence:1,outSrcPurchaseSheet:osps1,
-                item:item2,warehouse:warehouse1,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
+                item:item2,warehouse:warehouse1, storageLocation:storageLocation1,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
 
         // new ManufactureOrderRouteView(typeName:"C11",name:"98100900001",sequence:1,operationName:"operation1",makerType:1,makerName:"workstation1",importFlag:1).save(failOnError: true, flush: true)
         // new ManufactureOrderRouteView(typeName:"C11",name:"98100900002",sequence:1,operationName:"operation2",makerType:2,makerName:"FJ01",importFlag:1).save(failOnError: true, flush: true)
@@ -1055,9 +1055,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>
@@ -1087,9 +1087,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocation>
+    <storageLocationName>
       storageLocation1
-    </storageLocation>
+    </storageLocationName>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>
