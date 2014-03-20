@@ -76,6 +76,7 @@ class ManufactureOrder {
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        customerOrderDet nullable:true
     }
     public String toString(){
         "製令：${typeName}-${name}"
