@@ -12,8 +12,8 @@ class TestService {
         def supplier = new Supplier(name:"supplier1",title:"廠商",country:Country.SPAIN).save(failOnError: true)
         def customer = new Customer(name:"customer1",title:"客戶").save(failOnError: true)
         def warehouse = new Warehouse(name:"warehouse1",title:"倉庫").save(failOnError: true)
-        def storageLocation = new Warehouse(name:"storageLocation1",warehouse:warehouse,title:"儲位").save(failOnError: true)
-        def workstation = new StorageLocation(name:"workstation1",title:"檢驗站01").save(failOnError: true)
+        def storageLocation = new StorageLocation(name:"storageLocation1",warehouse:warehouse,title:"儲位").save(failOnError: true)
+        def workstation = new Workstation(name:"workstation1",title:"檢驗站01").save(failOnError: true)
         def operation = new Operation(name:"operation1",title:"施肥").save(failOnError: true)
 
         def itemRoute = new ItemRoute(item:item,sequence:1,operation:operation,workstation:workstation)
@@ -143,8 +143,14 @@ class TestService {
         messageSource.addMessage("default.message.save.failed", Locale.getDefault(), "儲存失敗")
         messageSource.addMessage("default.message.delete.success", Locale.getDefault(), "刪除成功")
         messageSource.addMessage("default.message.update.failed", Locale.getDefault(), "更新失敗")
-
         messageSource.addMessage("default.message.notfound", Locale.getDefault(), "查無資料") 
+
+        messageSource.addMessage("batch.name.params.notfound", Locale.getDefault(), "批號未輸入")
+        messageSource.addMessage("sheet.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與批號品項不符")
+        messageSource.addMessage("inventory.quantity.not.enough", Locale.getDefault(),"{0}、{1} 庫存數量不足")
+        messageSource.addMessage("inventoryDetail.quantity.not.enough", Locale.getDefault(), "{0}、{1}、{2}、{3} 庫存數量不足")
+        messageSource.addMessage("inventoryDetail.had.been.used", Locale.getDefault(), "{0}、{1}、{2} 庫存已被使用")
+        
         messageSource.addMessage("country.TAIWAN.label", Locale.getDefault(), "台灣")
 		messageSource.addMessage("country.JAPAN.label", Locale.getDefault(), "日本")
 		messageSource.addMessage("country.CHINA.label", Locale.getDefault(), "中國")
