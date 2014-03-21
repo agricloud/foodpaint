@@ -181,6 +181,30 @@ class BootStrap {
         JSON.registerObjectMarshaller(SaleSheetDet) {
             convertService.saleSheetDetParseJson(it)
         }
+        JSON.registerObjectMarshaller(MaterialReturnSheet) {
+            convertService.materialReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(MaterialReturnSheetDet) {
+            convertService.materialReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseReturnSheet) {
+            convertService.purchaseReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseReturnSheetDet) {
+            convertService.purchaseReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(OutSrcPurchaseReturnSheet) {
+            convertService.outSrcPurchaseReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(OutSrcPurchaseReturnSheetDet) {
+            convertService.outSrcPurchaseReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleReturnSheet) {
+            convertService.saleReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleReturnSheetDet) {
+            convertService.saleReturnSheetDetParseJson(it)
+        }
 
 
     }

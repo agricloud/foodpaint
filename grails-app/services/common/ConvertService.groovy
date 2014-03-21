@@ -376,27 +376,6 @@ class ConvertService {
         result
    	}
 
-    // def userParseJson(user){
-    // 	def result = [:]
-    //     result.id= user.id
-    //     result.username = user.username
-    //     result.password = user.password
-    //     result.enabled= user.enabled
-    //     result.accountExpired = user.accountExpired
-    //     result.accountLocked = user.accountLocked
-    //     result.passwordExpired = user.passwordExpired
-    //     result.fullName = user.fullName
-    //     result.email = user.email
-    //     if(user.site){
-	   //      result.site = user.site
-	   //      result["site.id"] = user.site.id
-	   //      result["site.name"] = user.site.name
-	   //      result["site.title"] = user.site.title
-	   //  }
-
-    //     result
-    // }
-
     def customerParseJson(customer){
     	def result = [:]
 
@@ -892,5 +871,318 @@ class ConvertService {
 
 		result
     }
+
+
+    def materialReturnSheetParseJson(materialReturnSheet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = materialSheet.dateCreated
+	 //    result.lastUpdated = materialSheet.lastUpdated
+	 //    result.site = materialSheet.site
+
+  //       result.id = materialSheet.id
+  //   	result.name = materialSheet.name
+		// result.typeName = materialSheet.typeName
+
+		// if(materialSheet.workstation){
+		// 	result.workstation = materialSheet.workstation
+		// 	result["workstation.id"] = materialSheet.workstation.id
+	 //        result["workstation.name"] = materialSheet.workstation.name
+	 //        result["workstation.title"] = materialSheet.workstation.title
+	 //    }
+	 //    if(materialSheet.supplier){
+		// 	result.supplier = materialSheet.supplier
+		// 	result["supplier.id"] = materialSheet.supplier.id
+	 //        result["supplier.name"] = materialSheet.supplier.name
+	 //        result["supplier.title"] = materialSheet.supplier.title
+	 //    }
+
+		// result
+    }
+
+    def materialReturnSheetDetParseJson(materialReturnSheetDet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = materialSheetDet.dateCreated
+	 //    result.lastUpdated = materialSheetDet.lastUpdated
+	 //    result.site = materialSheetDet.site
+
+  //       result.id = materialSheetDet.id
+  //   	result.name = materialSheetDet.name
+		// result.typeName = materialSheetDet.typeName
+		// result.sequence = materialSheetDet.sequence
+		// result.qty = materialSheetDet.qty
+
+		// result.materialSheet = materialSheetDet.materialSheet
+		// result["materialSheet.id"] = materialSheetDet.materialSheet.id
+
+		// if(materialSheetDet.manufactureOrder){
+		// 	result.manufactureOrder = materialSheetDet.manufactureOrder
+		// 	result["manufactureOrder.id"] = materialSheetDet.manufactureOrder.id
+	 //        result["manufactureOrder.name"] = materialSheetDet.manufactureOrder.name
+	 //        result["manufactureOrder.typeName"] = materialSheetDet.manufactureOrder.typeName
+	 //    }
+
+	 //    if(materialSheetDet.batch){
+		// 	result.batch = materialSheetDet.batch
+		// 	result["batch.id"] = materialSheetDet.batch.id
+	 //        result["batch.name"] = materialSheetDet.batch.name
+	 //    }
+
+		// if(materialSheetDet.item){
+		// 	result.item = materialSheetDet.item
+		// 	result["item.id"] = materialSheetDet.item.id
+	 //        result["item.name"] = materialSheetDet.item.name
+	 //        result["item.title"] = materialSheetDet.item.title
+	 //        result["item.spec"] = materialSheetDet.item.spec
+	 //        result["item.unit"] = materialSheetDet.item.unit
+	 //        result["item.description"] = materialSheetDet.item.description
+	 //    }
+
+	 //    if(materialSheetDet.warehouse){
+		// 	result.warehouse = materialSheetDet.warehouse
+		// 	result["warehouse.id"] = materialSheetDet.warehouse.id
+	 //        result["warehouse.name"] = materialSheetDet.warehouse.name
+	 //        result["warehouse.title"] = materialSheetDet.warehouse.title
+	 //    }
+
+	 //    if(materialSheetDet.storageLocation){
+	 //    	result.storageLocation = materialSheetDet.storageLocation
+		//     result["storageLocation.id"] = materialSheetDet.storageLocation.id
+		//     result["storageLocation.name"] = materialSheetDet.storageLocation.name
+		//     result["storageLocation.title"] = materialSheetDet.storageLocation.title
+		// }
+
+		// result
+    }
+
+    def purchaseReturnSheetParseJson(purchaseReturnSheet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = purchaseSheet.dateCreated
+	 //    result.lastUpdated = purchaseSheet.lastUpdated
+	 //    result.site = purchaseSheet.site
+
+  //       result.id = purchaseSheet.id
+  //   	result.name = purchaseSheet.name
+		// result.typeName = purchaseSheet.typeName
+
+		// if(purchaseSheet.supplier){
+		// 	result.supplier = purchaseSheet.supplier
+		// 	result["supplier.id"] = purchaseSheet.supplier.id
+	 //        result["supplier.name"] = purchaseSheet.supplier.name
+	 //        result["supplier.title"] = purchaseSheet.supplier.title
+	 //    }
+
+		// result
+    }
+
+    def purchaseReturnSheetDetParseJson(purchaseReturnSheetDet){
+    	// def result = [:]
+
+  //   	result.dateCreated = purchaseSheetDet.dateCreated
+	 //    result.lastUpdated = purchaseSheetDet.lastUpdated
+	 //    result.site = purchaseSheetDet.site
+
+  //       result.id = purchaseSheetDet.id
+  //   	result.name = purchaseSheetDet.name
+		// result.typeName = purchaseSheetDet.typeName
+		// result.sequence = purchaseSheetDet.sequence
+
+		// result.purchaseSheet = purchaseSheetDet.purchaseSheet
+		// result["purchaseSheet.id"] = purchaseSheetDet.purchaseSheet.id
+		// result.qty = purchaseSheetDet.qty
+
+	 //    if(purchaseSheetDet.batch){
+		// 	result.batch = purchaseSheetDet.batch
+		// 	result["batch.id"] = purchaseSheetDet.batch.id
+	 //        result["batch.name"] = purchaseSheetDet.batch.name
+	 //    }
+
+
+		// if(purchaseSheetDet.item){
+		// 	result.item = purchaseSheetDet.item
+		// 	result["item.id"] = purchaseSheetDet.item.id
+	 //        result["item.name"] = purchaseSheetDet.item.name
+	 //        result["item.title"] = purchaseSheetDet.item.title
+	 //        result["item.spec"] = purchaseSheetDet.item.spec
+	 //        result["item.unit"] = purchaseSheetDet.item.unit
+	 //        result["item.description"] = purchaseSheetDet.item.description
+	 //    }
+
+	 //    if(purchaseSheetDet.warehouse){
+		// 	result.warehouse = purchaseSheetDet.warehouse
+		// 	result["warehouse.id"] = purchaseSheetDet.warehouse.id
+	 //        result["warehouse.name"] = purchaseSheetDet.warehouse.name
+	 //        result["warehouse.title"] = purchaseSheetDet.warehouse.title
+	 //    }
+
+	 //    if(purchaseSheetDet.storageLocation){
+	 //    	result.storageLocation = purchaseSheetDet.storageLocation
+		//     result["storageLocation.id"] = purchaseSheetDet.storageLocation.id
+		//     result["storageLocation.name"] = purchaseSheetDet.storageLocation.name
+		//     result["storageLocation.title"] = purchaseSheetDet.storageLocation.title
+		// }
+
+		// result
+    }
+
+    def outSrcReturnPurchaseSheetParseJson(outSrcReturnPurchaseSheet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = outSrcPurchaseSheet.dateCreated
+	 //    result.lastUpdated = outSrcPurchaseSheet.lastUpdated
+	 //    result.site = outSrcPurchaseSheet.site
+
+  //       result.id = outSrcPurchaseSheet.id
+  //   	result.name = outSrcPurchaseSheet.name
+		// result.typeName = outSrcPurchaseSheet.typeName
+
+		// if(outSrcPurchaseSheet.supplier){
+		// 	result.supplier = outSrcPurchaseSheet.supplier
+		// 	result["supplier.id"] = outSrcPurchaseSheet.supplier.id
+	 //        result["supplier.name"] = outSrcPurchaseSheet.supplier.name
+	 //        result["supplier.title"] = outSrcPurchaseSheet.supplier.title
+	 //    }
+
+		// result
+    }
+
+    def outSrcReturnPurchaseSheetDetParseJson(outSrcReturnPurchaseSheetDet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = outSrcPurchaseSheetDet.dateCreated
+	 //    result.lastUpdated = outSrcPurchaseSheetDet.lastUpdated
+	 //    result.site = outSrcPurchaseSheetDet.site
+
+  //       result.id = outSrcPurchaseSheetDet.id
+  //   	result.name = outSrcPurchaseSheetDet.name
+		// result.typeName = outSrcPurchaseSheetDet.typeName
+		// result.sequence = outSrcPurchaseSheetDet.sequence
+		// result.qty = outSrcPurchaseSheetDet.qty
+
+		// result.outSrcPurchaseSheet = outSrcPurchaseSheetDet.outSrcPurchaseSheet
+		// result["outSrcPurchaseSheet.id"] = outSrcPurchaseSheetDet.outSrcPurchaseSheet.id
+
+		// if(outSrcPurchaseSheetDet.manufactureOrder){
+		// 	result.manufactureOrder = outSrcPurchaseSheetDet.manufactureOrder
+		// 	result["manufactureOrder.id"] = outSrcPurchaseSheetDet.manufactureOrder.id
+	 //        result["manufactureOrder.name"] = outSrcPurchaseSheetDet.manufactureOrder.name
+	 //        result["manufactureOrder.typeName"] = outSrcPurchaseSheetDet.manufactureOrder.typeName
+	 //    }
+
+	 //    if(outSrcPurchaseSheetDet.batch){
+		// 	result.batch = outSrcPurchaseSheetDet.batch
+		// 	result["batch.id"] = outSrcPurchaseSheetDet.batch.id
+	 //        result["batch.name"] = outSrcPurchaseSheetDet.batch.name
+	 //    }
+
+		// if(outSrcPurchaseSheetDet.item){
+		// 	result.item = outSrcPurchaseSheetDet.item
+		// 	result["item.id"] = outSrcPurchaseSheetDet.item.id
+	 //        result["item.name"] = outSrcPurchaseSheetDet.item.name
+	 //        result["item.title"] = outSrcPurchaseSheetDet.item.title
+	 //        result["item.spec"] = outSrcPurchaseSheetDet.item.spec
+	 //        result["item.unit"] = outSrcPurchaseSheetDet.item.unit
+	 //        result["item.description"] = outSrcPurchaseSheetDet.item.description
+	 //    }
+
+	 //    if(outSrcPurchaseSheetDet.warehouse){
+		// 	result.warehouse = outSrcPurchaseSheetDet.warehouse
+		// 	result["warehouse.id"] = outSrcPurchaseSheetDet.warehouse.id
+	 //        result["warehouse.name"] = outSrcPurchaseSheetDet.warehouse.name
+	 //        result["warehouse.title"] = outSrcPurchaseSheetDet.warehouse.title
+	 //    }
+
+	 //    if(outSrcPurchaseSheetDet.storageLocation){
+	 //    	result.storageLocation = outSrcPurchaseSheetDet.storageLocation
+		//     result["storageLocation.id"] = outSrcPurchaseSheetDet.storageLocation.id
+		//     result["storageLocation.name"] = outSrcPurchaseSheetDet.storageLocation.name
+		//     result["storageLocation.title"] = outSrcPurchaseSheetDet.storageLocation.title
+		// }
+
+		// result
+    }
+
+    def saleReturnSheetParseJson(saleReturnSheet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = saleSheet.dateCreated
+	 //    result.lastUpdated = saleSheet.lastUpdated
+	 //    result.site = saleSheet.site
+
+  //       result.id = saleSheet.id
+  //   	result.name = saleSheet.name
+		// result.typeName = saleSheet.typeName
+
+		// if(saleSheet.customer){
+		// 	result.customer = saleSheet.customer
+		// 	result["customer.id"] = saleSheet.customer.id
+	 //        result["customer.name"] = saleSheet.customer.name
+	 //        result["customer.title"] = saleSheet.customer.title
+	 //    }
+
+		// result
+    }
+
+    def saleReturnSheetDetParseJson(saleReturnSheetDet){
+  //   	def result = [:]
+
+  //   	result.dateCreated = saleSheetDet.dateCreated
+	 //    result.lastUpdated = saleSheetDet.lastUpdated
+	 //    result.site = saleSheetDet.site
+
+  //       result.id = saleSheetDet.id
+  //   	result.name = saleSheetDet.name
+		// result.typeName = saleSheetDet.typeName
+		// result.sequence = saleSheetDet.sequence
+		// result.qty = saleSheetDet.qty
+
+		// result.saleSheet = saleSheetDet.saleSheet
+		// result["saleSheet.id"] = saleSheetDet.saleSheet.id
+
+		// if(saleSheetDet.customerOrderDet){
+		// 	result.customerOrderDet = saleSheetDet.customerOrderDet
+		// 	result["customerOrderDet.id"] = saleSheetDet.customerOrderDet.id
+	 //        result["customerOrderDet.name"] = saleSheetDet.customerOrderDet.name
+	 //        result["customerOrderDet.typeName"] = saleSheetDet.customerOrderDet.typeName
+	 //        result["customerOrderDet.sequence"] = saleSheetDet.customerOrderDet.sequence
+	 //        result.customerOrder = saleSheetDet.customerOrderDet.customerOrder
+	 //        result["customerOrder.id"] = saleSheetDet.customerOrderDet.customerOrder.id
+	 //    }
+
+	 //    if(saleSheetDet.batch){
+		// 	result.batch = saleSheetDet.batch
+		// 	result["batch.id"] = saleSheetDet.batch.id
+	 //        result["batch.name"] = saleSheetDet.batch.name
+	 //    }
+
+		// if(saleSheetDet.item){
+		// 	result.item = saleSheetDet.item
+		// 	result["item.id"] = saleSheetDet.item.id
+	 //        result["item.name"] = saleSheetDet.item.name
+	 //        result["item.title"] = saleSheetDet.item.title
+	 //        result["item.spec"] = saleSheetDet.item.spec
+	 //        result["item.unit"] = saleSheetDet.item.unit
+	 //        result["item.description"] = saleSheetDet.item.description
+	 //    }
+
+	 //    if(saleSheetDet.warehouse){
+		// 	result.warehouse = saleSheetDet.warehouse
+		// 	result["warehouse.id"] = saleSheetDet.warehouse.id
+	 //        result["warehouse.name"] = saleSheetDet.warehouse.name
+	 //        result["warehouse.title"] = saleSheetDet.warehouse.title
+	 //    }
+
+	 //    if(saleSheetDet.storageLocation){
+	 //    	result.storageLocation = saleSheetDet.storageLocation
+		//     result["storageLocation.id"] = saleSheetDet.storageLocation.id
+		//     result["storageLocation.name"] = saleSheetDet.storageLocation.name
+		//     result["storageLocation.title"] = saleSheetDet.storageLocation.title
+		// }
+
+		// result
+    }
+
 
 }
