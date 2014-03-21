@@ -41,7 +41,6 @@ class ConvertService {
 	    result.dueDate = batch.dueDate
 	    result.expectQty = batch.expectQty
 	    result.manufactureDate = batch.manufactureDate
-	    result.expirationDate = batch.expirationDate
 	    // result.remark = batch.remark
 	    if(batch.item){
 	        result["item.id"] = batch.item.id
@@ -82,7 +81,6 @@ class ConvertService {
 		    result["batch.dueDate"] = batchSource.batch.dueDate
 		    result["batch.expectQty"] = batchSource.batch.expectQty
 		    result["batch.manufactureDate"] = batchSource.batch.manufactureDate
-		    result["batch.expirationDate"] = batchSource.batch.expirationDate
 		    // result["batch.remark"] = batchSource.batch.remark
 
 		    if(batchSource.batch.item){
@@ -111,7 +109,6 @@ class ConvertService {
 		    result["childBatch.dueDate"] = batchSource.childBatch.dueDate
 		    result["childBatch.expectQty"] = batchSource.childBatch.expectQty
 		    result["childBatch.manufactureDate"] = batchSource.childBatch.manufactureDate
-		    result["childBatch.expirationDate"] = batchSource.childBatch.expirationDate
 		    // result["childBatch.remark"] = batchSource.childBatch.remark
 		    if(batchSource.childBatch.item){
 		        result["childBatch.item.id"] = batchSource.childBatch.item.id
@@ -135,20 +132,7 @@ class ConvertService {
 	    
 	    result
     }
-    def warehouseParseJson(warehouse){
-	    def result = [:]
-
-	    result.dateCreated = warehouse.dateCreated
-	    result.lastUpdated = warehouse.lastUpdated
-	    result.site = warehouse.site
-
-	    result.id = warehouse.id
-	    result.name = warehouse.name
-	    result.title = warehouse.title
-	    result.remark = warehouse.remark
-
-	    result
-    }
+    
     def itemParseJson(item){
 	    def result = [:]
 
@@ -202,6 +186,44 @@ class ConvertService {
         result
    	}
 
+   	def warehouseParseJson(warehouse){
+	    def result = [:]
+
+	    result.dateCreated = warehouse.dateCreated
+	    result.lastUpdated = warehouse.lastUpdated
+	    result.site = warehouse.site
+
+	    result.id = warehouse.id
+	    result.name = warehouse.name
+	    result.title = warehouse.title
+	    result.remark = warehouse.remark
+
+	    result
+    }
+
+    def storageLocationParseJson(storageLocation){
+	    def result = [:]
+
+	    result.dateCreated = storageLocation.dateCreated
+	    result.lastUpdated = storageLocation.lastUpdated
+	    result.site = storageLocation.site
+
+	    result.id = storageLocation.id
+	    result.name = storageLocation.name
+	    result.title = storageLocation.title
+	    result.description = storageLocation.description
+	    result.remark = storageLocation.remark
+
+	    if(storageLocation.warehouse){
+	    	result.warehouse = storageLocation.warehouse
+		    result["warehouse.id"] = storageLocation.warehouse.id
+		    result["warehouse.name"] = storageLocation.warehouse.name
+		    result["warehouse.title"] = storageLocation.warehouse.title
+		}
+
+	    result
+    }
+
    	def inventoryParseJson(inventory){
 	    def result = [:]
 
@@ -242,6 +264,12 @@ class ConvertService {
 		    result["warehouse.id"] = inventoryDetail.warehouse.id
 		    result["warehouse.name"] = inventoryDetail.warehouse.name
 		    result["warehouse.title"] = inventoryDetail.warehouse.title
+		}
+		if(inventoryDetail.storageLocation){
+	    	result.storageLocation = inventoryDetail.storageLocation
+		    result["storageLocation.id"] = inventoryDetail.storageLocation.id
+		    result["storageLocation.name"] = inventoryDetail.storageLocation.name
+		    result["storageLocation.title"] = inventoryDetail.storageLocation.title
 		}
 		if(inventoryDetail.item){
 			result.item = inventoryDetail.item
@@ -551,6 +579,13 @@ class ConvertService {
 	        result["warehouse.title"] = materialSheetDet.warehouse.title
 	    }
 
+	    if(materialSheetDet.storageLocation){
+	    	result.storageLocation = materialSheetDet.storageLocation
+		    result["storageLocation.id"] = materialSheetDet.storageLocation.id
+		    result["storageLocation.name"] = materialSheetDet.storageLocation.name
+		    result["storageLocation.title"] = materialSheetDet.storageLocation.title
+		}
+
 		result
     }
 
@@ -614,6 +649,13 @@ class ConvertService {
 	        result["warehouse.name"] = purchaseSheetDet.warehouse.name
 	        result["warehouse.title"] = purchaseSheetDet.warehouse.title
 	    }
+
+	    if(purchaseSheetDet.storageLocation){
+	    	result.storageLocation = purchaseSheetDet.storageLocation
+		    result["storageLocation.id"] = purchaseSheetDet.storageLocation.id
+		    result["storageLocation.name"] = purchaseSheetDet.storageLocation.name
+		    result["storageLocation.title"] = purchaseSheetDet.storageLocation.title
+		}
 
 		result
     }
@@ -684,6 +726,12 @@ class ConvertService {
 	        result["warehouse.name"] = stockInSheetDet.warehouse.name
 	        result["warehouse.title"] = stockInSheetDet.warehouse.title
 	    }
+	    if(stockInSheetDet.storageLocation){
+	    	result.storageLocation = stockInSheetDet.storageLocation
+		    result["storageLocation.id"] = stockInSheetDet.storageLocation.id
+		    result["storageLocation.name"] = stockInSheetDet.storageLocation.name
+		    result["storageLocation.title"] = stockInSheetDet.storageLocation.title
+		}
 
 		result
     }
@@ -754,6 +802,13 @@ class ConvertService {
 	        result["warehouse.name"] = outSrcPurchaseSheetDet.warehouse.name
 	        result["warehouse.title"] = outSrcPurchaseSheetDet.warehouse.title
 	    }
+
+	    if(outSrcPurchaseSheetDet.storageLocation){
+	    	result.storageLocation = outSrcPurchaseSheetDet.storageLocation
+		    result["storageLocation.id"] = outSrcPurchaseSheetDet.storageLocation.id
+		    result["storageLocation.name"] = outSrcPurchaseSheetDet.storageLocation.name
+		    result["storageLocation.title"] = outSrcPurchaseSheetDet.storageLocation.title
+		}
 
 		result
     }
@@ -827,6 +882,13 @@ class ConvertService {
 	        result["warehouse.name"] = saleSheetDet.warehouse.name
 	        result["warehouse.title"] = saleSheetDet.warehouse.title
 	    }
+
+	    if(saleSheetDet.storageLocation){
+	    	result.storageLocation = saleSheetDet.storageLocation
+		    result["storageLocation.id"] = saleSheetDet.storageLocation.id
+		    result["storageLocation.name"] = saleSheetDet.storageLocation.name
+		    result["storageLocation.title"] = saleSheetDet.storageLocation.title
+		}
 
 		result
     }

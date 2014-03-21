@@ -89,9 +89,9 @@ class BootStrap {
 				def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
 				def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
 				*/
-                // def testService = new TestService()
+                def testService = new TestService()
                 // testService.createStdTestData()
-				// testService.createOilCaseData()
+				testService.createOilCaseData()
 
 			}
 		}
@@ -131,6 +131,9 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(Workstation) {
             convertService.workstationParseJson(it)
+        }
+        JSON.registerObjectMarshaller(StorageLocation) {
+            convertService.storageLocationParseJson(it)
         }
         JSON.registerObjectMarshaller(Supplier) {
             convertService.supplierParseJson(it)

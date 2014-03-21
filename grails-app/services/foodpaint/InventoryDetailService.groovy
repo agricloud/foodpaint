@@ -9,20 +9,22 @@ class InventoryDetailService {
 	def inventoryService
 
 	@Transactional
-	def replenish(warehouseId,itemId,batchName,qty){
+	def replenish(warehouseId,storageLocationId,itemId,batchName,qty){
 		if(qty>0){
 
 			inventoryService.replenish(warehouseId,itemId,qty)
 
 			def warehouse = Warehouse.get(warehouseId)
+			def storageLocation = StorageLocation.get(storageLocationId)
 			def item = Item.get(itemId)
 			def batch = Batch.findByName(batchName)
 
-			def inventoryDetail = InventoryDetail.findByWarehouseAndItemAndBatch(warehouse,item,batch)
+			def inventoryDetail = InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse,storageLocation,item,batch)
 
 			if(!inventoryDetail){
 				inventoryDetail = new InventoryDetail()
 				inventoryDetail.warehouse = warehouse
+				inventoryDetail.storageLocation = storageLocation
 				inventoryDetail.item = item
 				inventoryDetail.batch = batch
 				inventoryDetail.qty = qty
@@ -35,17 +37,18 @@ class InventoryDetailService {
 		}
 	}
 
-	def consume(warehouseId,itemId,batchName,qty){
+	def consume(warehouseId,storageLocationId,itemId,batchName,qty){
 		Object[] args=[]
 		if(qty>0){
 
 			inventoryService.consume(warehouseId,itemId,qty)
 
 			def warehouse = Warehouse.get(warehouseId)
+			def storageLocation = StorageLocation.get(storageLocationId)
 			def item = Item.get(itemId)
 			def batch = Batch.findByName(batchName)
 
-			def inventoryDetail = InventoryDetail.findByWarehouseAndItemAndBatch(warehouse,item,batch)
+			def inventoryDetail = InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse,storageLocation,item,batch)
 			if(inventoryDetail && inventoryDetail.qty >= qty){
 				inventoryDetail.qty -= qty
 				return  [success:true]
