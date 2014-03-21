@@ -10,9 +10,11 @@ class InventoryDetailService {
 
 	@Transactional
 	def replenish(warehouseId,storageLocationId,itemId,batchName,qty){
+		Object[] args=[]
 		if(qty>0){
 
 			inventoryService.replenish(warehouseId,itemId,qty)
+
 
 			def warehouse = Warehouse.get(warehouseId)
 			def storageLocation = StorageLocation.get(storageLocationId)
@@ -22,13 +24,19 @@ class InventoryDetailService {
 			def inventoryDetail = InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse,storageLocation,item,batch)
 
 			if(!inventoryDetail){
-				inventoryDetail = new InventoryDetail()
-				inventoryDetail.warehouse = warehouse
-				inventoryDetail.storageLocation = storageLocation
-				inventoryDetail.item = item
-				inventoryDetail.batch = batch
-				inventoryDetail.qty = qty
-				domainService.save(inventoryDetail)
+				if(storageLocation.warehouse == warehouse){
+					inventoryDetail = new InventoryDetail()
+					inventoryDetail.warehouse = warehouse
+					inventoryDetail.storageLocation = storageLocation
+					inventoryDetail.item = item
+					inventoryDetail.batch = batch
+					inventoryDetail.qty = qty
+					domainService.save(inventoryDetail)
+				}
+				else{
+					args = [warehouse, storageLocation]
+					return [success:false, message: messageSource.getMessage("inventoryDetail.storageLocation.not.belong.to.warehouse", args, Locale.getDefault())]
+				}
 			}
 			else{
 				inventoryDetail.qty += qty
@@ -54,7 +62,7 @@ class InventoryDetailService {
 				return  [success:true]
 			}
 			else{
-				args = [warehouse, item, batch]
+				args = [warehouse, storageLocation, item, batch]
 				return [success:false, message: messageSource.getMessage("inventoryDetail.quantity.not.enough", args, Locale.getDefault())]
 			}
 		}
