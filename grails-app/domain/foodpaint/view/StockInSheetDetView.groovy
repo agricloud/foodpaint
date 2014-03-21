@@ -51,7 +51,7 @@ class StockInSheetDetView implements Serializable{
     // long qty
 
     static constraints = {
-        stockLocationName nullable:true      
+        storageLocationName nullable:true      
 
     }
 

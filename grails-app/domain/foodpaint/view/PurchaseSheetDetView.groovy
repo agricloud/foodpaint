@@ -37,8 +37,19 @@ class PurchaseSheetDetView implements Serializable{
     long qty
 
 
-    static constraints = {
+    /*
+    * 庫別
+    */
 
+    String warehouseName
+
+    /*
+    * 儲位
+    */
+    String storageLocationName
+
+    static constraints = {
+        storageLocationName nullable:true 
     }
 
     static mapping = {
@@ -53,6 +64,8 @@ class PurchaseSheetDetView implements Serializable{
         sequence column: 'TH003', sqlType: "nchar"
         itemName  column: 'TH004', sqlType: "nchar"
         batchName column: 'TH010', sqlType: "nchar"
+        warehouseName  column: 'TH009', sqlType: "nchar"
+        storageLocationName column: 'TH063', sqlType: "nchar"
         qty column: 'TH007', sqlType: "numeric"
 
     }   

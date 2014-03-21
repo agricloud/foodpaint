@@ -40,8 +40,19 @@ class MaterialSheetDetView implements Serializable{
     long qty
 
 
-    static constraints = {
+    /*
+    * 庫別
+    */
 
+    String warehouseName
+
+    /*
+    * 儲位
+    */
+    String storageLocationName
+
+    static constraints = {
+        storageLocationName nullable:true 
     }
 
     static mapping = {
@@ -59,5 +70,7 @@ class MaterialSheetDetView implements Serializable{
         batchName column: 'TE010', sqlType: "nchar"
         manufactureOrderTypeName column: 'TE011', sqlType: "nchar"
         manufactureOrderName column: 'TE012', sqlType: "nchar"
+        warehouseName column: 'TE008', sqlType: "nchar"
+        storageLocationName column: 'TI029', sqlType: "nchar"
     }
 }
