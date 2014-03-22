@@ -75,7 +75,9 @@ class SaleSheetDetController {
 
     def save = {
         def saleSheetDet=new SaleSheetDet(params)
-        if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+
+        //檢查銷貨單品項必須等於批號品項，若有選訂單單身，銷貨單品項必須等於訂單單身品項
+        if((!saleSheetDet.customerOrderDet || saleSheetDet.item == saleSheetDet.customerOrderDet.item) && saleSheetDet.item == saleSheetDet.batch.item ){
             if(saleSheetDet.qty>0){
                 def inventoryConsumeResult = inventoryDetailService.consume(saleSheetDet.warehouse.id,saleSheetDet.storageLocation.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
                 if(inventoryConsumeResult.success){
@@ -106,8 +108,8 @@ class SaleSheetDetController {
 
     def update = {
         def  saleSheetDet = new SaleSheetDet(params)
-        
-        if(!saleSheetDet.customerOrderDet || saleSheetDet.batch.item == saleSheetDet.customerOrderDet.item){
+        //檢查銷貨單品項必須等於批號品項，若有選訂單單身，銷貨單品項必須等於訂單單身品項
+        if((!saleSheetDet.customerOrderDet || saleSheetDet.item == saleSheetDet.customerOrderDet.item) && saleSheetDet.item == saleSheetDet.batch.item ){
             if(saleSheetDet.qty>0){
                 saleSheetDet = SaleSheetDet.get(params.id)
                 inventoryDetailService.replenish(saleSheetDet.warehouse.id,saleSheetDet.storageLocation.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty)
