@@ -58,7 +58,7 @@ class OutSrcPurchaseReturnSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
     /*
     * 數量
     */

@@ -83,7 +83,7 @@ class MaterialSheetDetController {
         else{
             if(materialSheetDet.qty>0){
 
-                def inventoryConsumeResult = inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.storageLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+                def inventoryConsumeResult = inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                 if(inventoryConsumeResult.success){
                     render (contentType: 'application/json') {
                         domainService.save(materialSheetDet)
@@ -117,9 +117,9 @@ class MaterialSheetDetController {
         else{
             if(materialSheetDet.qty>0){
                 materialSheetDet = MaterialSheetDet.get(params.id)
-                inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.storageLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+                inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                 
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.storageLocation.id, params.item.id, params.batch.name, params.qty.toLong())
+                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong())
                 if(inventoryConsumeResult.success){
                     materialSheetDet.properties = params             
                     render (contentType: 'application/json') {
@@ -128,7 +128,7 @@ class MaterialSheetDetController {
                 }
                 else{
                     materialSheetDet = MaterialSheetDet.get(params.id)
-                    inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.storageLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+                    inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                     render (contentType: 'application/json') {
                         inventoryConsumeResult
                     }
@@ -150,7 +150,7 @@ class MaterialSheetDetController {
 
         def result
         try {
-            inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.storageLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+            inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
             result = domainService.delete(materialSheetDet)
         
         }catch(e){

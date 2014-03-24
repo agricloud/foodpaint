@@ -74,7 +74,7 @@ class SaleReturnSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
     /*
     * 數量
     */

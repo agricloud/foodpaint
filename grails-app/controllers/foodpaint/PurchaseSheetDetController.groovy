@@ -86,7 +86,7 @@ class PurchaseSheetDetController {
                 }
             }
             else{
-                inventoryDetailService.replenish(params.warehouse.id,params.storageLocation.id, params.item.id, params.batch.name, purchaseSheetDet.qty)
+                inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseSheetDet.qty)
                 purchaseSheetDet.batch = (Batch) result.batch
                 render (contentType: 'application/json') {
                     domainService.save(purchaseSheetDet)
@@ -112,14 +112,14 @@ class PurchaseSheetDetController {
             }
             else{
                 purchaseSheetDet = PurchaseSheetDet.get(params.id)
-                if(!inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.storageLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty).success){
+                if(!inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty).success){
                     render (contentType: 'application/json') {
                         [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseSheetDet.warehouse, purchaseSheetDet.item, purchaseSheetDet.batch])]
                     }
                 }
                 else{
                     purchaseSheetDet.properties = params
-                    inventoryDetailService.replenish(params.warehouse.id,params.storageLocation.id, params.item.id, params.batch.name, purchaseSheetDet.qty)
+                    inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseSheetDet.qty)
                     purchaseSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {
                         domainService.save(purchaseSheetDet)
@@ -140,7 +140,7 @@ class PurchaseSheetDetController {
     def delete(){
         def  purchaseSheetDet = PurchaseSheetDet.get(params.id)
 
-        if(!inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.storageLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty).success){
+        if(!inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty).success){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseSheetDet.warehouse, purchaseSheetDet.item, purchaseSheetDet.batch])]
             }

@@ -71,7 +71,7 @@ class PurchaseReturnSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
 
     /*
     * 退貨數量

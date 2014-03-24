@@ -87,7 +87,7 @@ class StockInSheetDetController {
                 }
             }
             else{
-                inventoryDetailService.replenish(params.warehouse.id,params.storageLocation.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, stockInSheetDet.qty)
                 stockInSheetDet.batch = (Batch) result.batch
                 render (contentType: 'application/json') {
                     domainService.save(stockInSheetDet)
@@ -115,14 +115,14 @@ class StockInSheetDetController {
             }
             else{
                 stockInSheetDet = StockInSheetDet.get(params.id)
-                if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.storageLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
+                if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
                     render (contentType: 'application/json') {
                         [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [stockInSheetDet.warehouse, stockInSheetDet.item, stockInSheetDet.batch])]
                     }
                 }
                 else{
                     stockInSheetDet.properties = params
-                    inventoryDetailService.replenish(params.warehouse.id,params.storageLocation.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                    inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, stockInSheetDet.qty)
                     stockInSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {
                         domainService.save(stockInSheetDet)
@@ -143,7 +143,7 @@ class StockInSheetDetController {
 
         def  stockInSheetDet = StockInSheetDet.get(params.id)
         
-        if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.storageLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
+        if(!inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty).success){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [stockInSheetDet.warehouse, stockInSheetDet.item, stockInSheetDet.batch])]
             }

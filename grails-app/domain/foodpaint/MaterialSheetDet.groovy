@@ -70,7 +70,7 @@ class MaterialSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
     /*
     * 領料數量
     */

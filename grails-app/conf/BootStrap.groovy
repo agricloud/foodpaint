@@ -132,8 +132,8 @@ class BootStrap {
         JSON.registerObjectMarshaller(Workstation) {
             convertService.workstationParseJson(it)
         }
-        JSON.registerObjectMarshaller(StorageLocation) {
-            convertService.storageLocationParseJson(it)
+        JSON.registerObjectMarshaller(WarehouseLocation) {
+            convertService.warehouseLocationParseJson(it)
         }
         JSON.registerObjectMarshaller(Supplier) {
             convertService.supplierParseJson(it)

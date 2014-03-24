@@ -1,7 +1,7 @@
 
 package foodpaint
 
-class StorageLocationController {
+class WarehouseLocationController {
 
     def domainService
 
@@ -11,10 +11,10 @@ class StorageLocationController {
         
         if(warehouse){
             
-            def storageLocation = StorageLocation.findAllByWarehouse(warehouse)
+            def warehouseLocation = WarehouseLocation.findAllByWarehouse(warehouse)
 
             render (contentType: 'application/json') {
-               [success: true, data:storageLocation, total: storageLocation.size()]
+               [success: true, data:warehouseLocation, total: warehouseLocation.size()]
             }           
         }
         else{
@@ -27,10 +27,10 @@ class StorageLocationController {
     }
 
     def show = {
-        def storageLocation=StorageLocation.get(params.id);
-        if(storageLocation){
+        def warehouseLocation=WarehouseLocation.get(params.id);
+        if(warehouseLocation){
             render (contentType: 'application/json') {
-                [success: true,data:storageLocation]
+                [success: true,data:warehouseLocation]
             }
         }else {
             render (contentType: 'application/json') {
@@ -45,45 +45,45 @@ class StorageLocationController {
 
         if(params.warehouse.id){
 
-            def storageLocation= new StorageLocation(params)
+            def warehouseLocation= new WarehouseLocation(params)
 
             render (contentType: 'application/json') {
-                [success: true,data:storageLocation]
+                [success: true,data:warehouseLocation]
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'storageLocation.message.create.failed')]
+                [success: false,message:message(code: 'warehouseLocation.message.create.failed')]
             }            
         }   
     }
 
     def save = {
-        def storageLocation = new StorageLocation(params)
+        def warehouseLocation = new WarehouseLocation(params)
         render (contentType: 'application/json') {
-            domainService.save(storageLocation)
+            domainService.save(warehouseLocation)
         }
     }
 
 
     def update = {
-        def  storageLocation = StorageLocation.get(params.id)
-        storageLocation.properties=params   
+        def warehouseLocation = WarehouseLocation.get(params.id)
+        warehouseLocation.properties=params   
         render (contentType: 'application/json') {
-            domainService.save(storageLocation)
+            domainService.save(warehouseLocation)
         }
 
     }
 
     def delete = {
-        def  storageLocation = StorageLocation.get(params.id)
+        def warehouseLocation = WarehouseLocation.get(params.id)
         def result
         try {
             
-            result = domainService.delete(storageLocation)
+            result = domainService.delete(warehouseLocation)
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [storageLocation, e.getMessage()])
+            def msg = message(code: 'default.message.delete.failed', args: [warehouseLocation, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

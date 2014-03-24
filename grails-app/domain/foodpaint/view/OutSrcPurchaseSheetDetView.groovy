@@ -51,10 +51,10 @@ class OutSrcPurchaseSheetDetView implements Serializable{
     /*
     * 儲位
     */
-    String storageLocationName
+    String warehouseLocationName
 
     static constraints = {
-        storageLocationName nullable:true 
+        warehouseLocationName nullable:true 
     }
 
     static mapping = {
@@ -73,6 +73,6 @@ class OutSrcPurchaseSheetDetView implements Serializable{
         manufactureOrderTypeName column: 'TI013', sqlType: "nchar"
         manufactureOrderName column: 'TI014', sqlType: "nchar"
         warehouseName column: 'TI009', sqlType: "nchar"
-        storageLocationName column: 'TI057', sqlType: "nchar"
+        warehouseLocationName column: 'TI057', sqlType: "nchar"
     } 
 }

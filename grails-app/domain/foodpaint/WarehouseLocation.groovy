@@ -1,6 +1,6 @@
 package foodpaint
 
-class StorageLocation {
+class WarehouseLocation {
 
     Site site
     String editor

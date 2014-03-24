@@ -8,7 +8,7 @@ import common.*
 //把所有測試中會使用到的domain & service
 @Mock([MaterialSheetDet, MaterialSheet, ManufactureOrder,
        Item, Batch, Workstation, 
-       Warehouse, StorageLocation, Inventory, InventoryDetail, 
+       Warehouse, WarehouseLocation, Inventory, InventoryDetail, 
        BatchService, InventoryService, InventoryDetailService, DomainService])
 
 class MaterialSheetDetControllerTests {
@@ -23,7 +23,7 @@ class MaterialSheetDetControllerTests {
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"生產線01").save(failOnError: true)
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
 
         def manufactureOrder1 = new ManufactureOrder(typeName:"MO",name:"00001",item:item2,qty:1000,batch:batch2).save(failOnError: true, flush: true)
         def materialSheet1 = new MaterialSheet(typeName:"MS",name:"00001",workstation:workstation1).save(failOnError: true, flush: true)
@@ -41,7 +41,7 @@ class MaterialSheetDetControllerTests {
         params["manufactureOrder.id"] = 1
         params["item.id"] = 1
         params["warehouse.id"]=1
-        params["storageLocation.id"]=1
+        params["warehouseLocation.id"]=1
         params["batch.name"] = "batch1"
         params["qty"] = 1000
     }
@@ -54,7 +54,7 @@ class MaterialSheetDetControllerTests {
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
-        def storageLocation1 = StorageLocation.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
         def manufactureOrder1 = ManufactureOrder.get(1)
         def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
@@ -79,7 +79,7 @@ class MaterialSheetDetControllerTests {
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
-        def storageLocation1 = StorageLocation.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
         def manufactureOrder1 = ManufactureOrder.get(1)
         def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
@@ -101,10 +101,10 @@ class MaterialSheetDetControllerTests {
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
-        def storageLocation1 = StorageLocation.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:2000).save(failOnError: true, flush: true)
-        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,storageLocation:storageLocation1,item:item1,batch:batch1,qty:2000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:2000).save(failOnError: true, flush: true)
 
         //設定傳入的params值
         populateValidParams(params)
@@ -118,7 +118,7 @@ class MaterialSheetDetControllerTests {
         assert MaterialSheetDet.get(1).batch.name == "batch1"
         //驗證庫存處理是否正確
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
-        assert InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse1,storageLocation1,item1,batch1).qty==1000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
     void testUpdate() {
@@ -128,18 +128,18 @@ class MaterialSheetDetControllerTests {
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
-        def storageLocation1 = StorageLocation.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
         def manufactureOrder1 = ManufactureOrder.get(1)
         def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
-        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,storageLocation:storageLocation1,item:item1,batch:batch1,qty:4000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:4000).save(failOnError: true, flush: true)
 
         def item3 = new Item(name:"item3",title:"品項3").save(failOnError: true, flush: true)
         def batch3 = new Batch(name:"batch3", item:item3).save(failOnError: true, flush: true)
         def inventory2 = new Inventory(warehouse:warehouse1,item:item3,qty:500).save(failOnError: true, flush: true)
-        def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,storageLocation:storageLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)
         
                 
         populateValidParams(params)
@@ -153,9 +153,9 @@ class MaterialSheetDetControllerTests {
         assert MaterialSheetDet.list().get(0).item.id == 3
         assert MaterialSheetDet.list().get(0).qty == 500
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==5000
-        assert InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse1,storageLocation1,item1,batch1).qty==5000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==5000
         assert Inventory.findByWarehouseAndItem(warehouse1,item3).qty==0
-        assert InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse1,storageLocation1,item3,batch3).qty==0
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item3,batch3).qty==0
     }
 
 
@@ -166,20 +166,20 @@ class MaterialSheetDetControllerTests {
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
-        def storageLocation1 = StorageLocation.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
         def manufactureOrder1 = ManufactureOrder.get(1)
         def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)
-        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,storageLocation:storageLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
 
         controller.delete()
 
         assert response.json.success == true
         assert MaterialSheetDet.list().size() == 0
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
-        assert InventoryDetail.findByWarehouseAndStorageLocationAndItemAndBatch(warehouse1,storageLocation1,item1,batch1).qty==1000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
 
 
     }

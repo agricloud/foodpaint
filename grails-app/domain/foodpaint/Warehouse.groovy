@@ -11,7 +11,7 @@ class Warehouse {
     String name
     String title
     static hasMany=[
-        storageLocations: StorageLocation,
+        warehouseLocations: WarehouseLocation,
         inventorys: Inventory,
         inventoryDetails: InventoryDetail
     ]

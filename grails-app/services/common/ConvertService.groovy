@@ -201,24 +201,24 @@ class ConvertService {
 	    result
     }
 
-    def storageLocationParseJson(storageLocation){
+    def warehouseLocationParseJson(warehouseLocation){
 	    def result = [:]
 
-	    result.dateCreated = storageLocation.dateCreated
-	    result.lastUpdated = storageLocation.lastUpdated
-	    result.site = storageLocation.site
+	    result.dateCreated = warehouseLocation.dateCreated
+	    result.lastUpdated = warehouseLocation.lastUpdated
+	    result.site = warehouseLocation.site
 
-	    result.id = storageLocation.id
-	    result.name = storageLocation.name
-	    result.title = storageLocation.title
-	    result.description = storageLocation.description
-	    result.remark = storageLocation.remark
+	    result.id = warehouseLocation.id
+	    result.name = warehouseLocation.name
+	    result.title = warehouseLocation.title
+	    result.description = warehouseLocation.description
+	    result.remark = warehouseLocation.remark
 
-	    if(storageLocation.warehouse){
-	    	result.warehouse = storageLocation.warehouse
-		    result["warehouse.id"] = storageLocation.warehouse.id
-		    result["warehouse.name"] = storageLocation.warehouse.name
-		    result["warehouse.title"] = storageLocation.warehouse.title
+	    if(warehouseLocation.warehouse){
+	    	result.warehouse = warehouseLocation.warehouse
+		    result["warehouse.id"] = warehouseLocation.warehouse.id
+		    result["warehouse.name"] = warehouseLocation.warehouse.name
+		    result["warehouse.title"] = warehouseLocation.warehouse.title
 		}
 
 	    result
@@ -265,11 +265,11 @@ class ConvertService {
 		    result["warehouse.name"] = inventoryDetail.warehouse.name
 		    result["warehouse.title"] = inventoryDetail.warehouse.title
 		}
-		if(inventoryDetail.storageLocation){
-	    	result.storageLocation = inventoryDetail.storageLocation
-		    result["storageLocation.id"] = inventoryDetail.storageLocation.id
-		    result["storageLocation.name"] = inventoryDetail.storageLocation.name
-		    result["storageLocation.title"] = inventoryDetail.storageLocation.title
+		if(inventoryDetail.warehouseLocation){
+	    	result.warehouseLocation = inventoryDetail.warehouseLocation
+		    result["warehouseLocation.id"] = inventoryDetail.warehouseLocation.id
+		    result["warehouseLocation.name"] = inventoryDetail.warehouseLocation.name
+		    result["warehouseLocation.title"] = inventoryDetail.warehouseLocation.title
 		}
 		if(inventoryDetail.item){
 			result.item = inventoryDetail.item
@@ -558,11 +558,11 @@ class ConvertService {
 	        result["warehouse.title"] = materialSheetDet.warehouse.title
 	    }
 
-	    if(materialSheetDet.storageLocation){
-	    	result.storageLocation = materialSheetDet.storageLocation
-		    result["storageLocation.id"] = materialSheetDet.storageLocation.id
-		    result["storageLocation.name"] = materialSheetDet.storageLocation.name
-		    result["storageLocation.title"] = materialSheetDet.storageLocation.title
+	    if(materialSheetDet.warehouseLocation){
+	    	result.warehouseLocation = materialSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = materialSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = materialSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = materialSheetDet.warehouseLocation.title
 		}
 
 		result
@@ -629,11 +629,11 @@ class ConvertService {
 	        result["warehouse.title"] = purchaseSheetDet.warehouse.title
 	    }
 
-	    if(purchaseSheetDet.storageLocation){
-	    	result.storageLocation = purchaseSheetDet.storageLocation
-		    result["storageLocation.id"] = purchaseSheetDet.storageLocation.id
-		    result["storageLocation.name"] = purchaseSheetDet.storageLocation.name
-		    result["storageLocation.title"] = purchaseSheetDet.storageLocation.title
+	    if(purchaseSheetDet.warehouseLocation){
+	    	result.warehouseLocation = purchaseSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = purchaseSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = purchaseSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = purchaseSheetDet.warehouseLocation.title
 		}
 
 		result
@@ -705,11 +705,11 @@ class ConvertService {
 	        result["warehouse.name"] = stockInSheetDet.warehouse.name
 	        result["warehouse.title"] = stockInSheetDet.warehouse.title
 	    }
-	    if(stockInSheetDet.storageLocation){
-	    	result.storageLocation = stockInSheetDet.storageLocation
-		    result["storageLocation.id"] = stockInSheetDet.storageLocation.id
-		    result["storageLocation.name"] = stockInSheetDet.storageLocation.name
-		    result["storageLocation.title"] = stockInSheetDet.storageLocation.title
+	    if(stockInSheetDet.warehouseLocation){
+	    	result.warehouseLocation = stockInSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = stockInSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = stockInSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = stockInSheetDet.warehouseLocation.title
 		}
 
 		result
@@ -782,11 +782,11 @@ class ConvertService {
 	        result["warehouse.title"] = outSrcPurchaseSheetDet.warehouse.title
 	    }
 
-	    if(outSrcPurchaseSheetDet.storageLocation){
-	    	result.storageLocation = outSrcPurchaseSheetDet.storageLocation
-		    result["storageLocation.id"] = outSrcPurchaseSheetDet.storageLocation.id
-		    result["storageLocation.name"] = outSrcPurchaseSheetDet.storageLocation.name
-		    result["storageLocation.title"] = outSrcPurchaseSheetDet.storageLocation.title
+	    if(outSrcPurchaseSheetDet.warehouseLocation){
+	    	result.warehouseLocation = outSrcPurchaseSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = outSrcPurchaseSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = outSrcPurchaseSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = outSrcPurchaseSheetDet.warehouseLocation.title
 		}
 
 		result
@@ -862,11 +862,11 @@ class ConvertService {
 	        result["warehouse.title"] = saleSheetDet.warehouse.title
 	    }
 
-	    if(saleSheetDet.storageLocation){
-	    	result.storageLocation = saleSheetDet.storageLocation
-		    result["storageLocation.id"] = saleSheetDet.storageLocation.id
-		    result["storageLocation.name"] = saleSheetDet.storageLocation.name
-		    result["storageLocation.title"] = saleSheetDet.storageLocation.title
+	    if(saleSheetDet.warehouseLocation){
+	    	result.warehouseLocation = saleSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = saleSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = saleSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = saleSheetDet.warehouseLocation.title
 		}
 
 		result

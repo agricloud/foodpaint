@@ -72,7 +72,7 @@ class MaterialReturnSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
     /*
     * 退料數量
     */

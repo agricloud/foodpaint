@@ -65,7 +65,7 @@ class StockInSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
 
     /*
     * 入庫數量

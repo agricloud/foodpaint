@@ -11,20 +11,20 @@ class InventoryDetail {
     static belongsTo=[
         warehouse: Warehouse,
         item: Item,
-        storageLocation: StorageLocation,
+        warehouseLocation: WarehouseLocation,
         batch: Batch
     ]
 
     long qty = 0
 
 	static constraints = {
-        batch(unique:['warehouse','storageLocation','item'])
+        batch(unique:['warehouse','warehouseLocation','item'])
         site nullable:true
         editor nullable:true
 		creator nullable:true
 	}
 
 	public String toString(){
-    	"倉庫：${warehouse.name}, 儲位：${storageLocation.name}, 品項：${item.name}, 批號：${batch.name}"
+    	"倉庫：${warehouse.name}, 儲位：${warehouseLocation.name}, 品項：${item.name}, 批號：${batch.name}"
     }
 }

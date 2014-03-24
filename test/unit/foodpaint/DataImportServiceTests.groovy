@@ -15,7 +15,7 @@ import common.*
 @Mock([
     Item, ItemView, 
     Customer, CustomerView,
-    Warehouse,StorageLocation,
+    Warehouse,WarehouseLocation,
     Workstation,WorkstationView,
     Operation,OperationView,
     Supplier,SupplierView,
@@ -446,7 +446,7 @@ class DataImportServiceTests {
 
     void testPurchaseSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
         def supplier1=new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
@@ -479,9 +479,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
     <qty>
       10000
     </qty>
@@ -508,9 +508,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
     <qty>
       10000
     </qty>
@@ -586,7 +586,7 @@ class DataImportServiceTests {
 
     void testStockInSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A").save(failOnError: true, flush: true)
         
         def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
@@ -638,9 +638,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
   </stockInSheetDetView>
   <stockInSheetDetView id="2">
     <batchName>
@@ -671,9 +671,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
   </stockInSheetDetView>
 </list>
         '''
@@ -739,7 +739,7 @@ class DataImportServiceTests {
 
     void testOutSrcPurchaseSheetDetImport() {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def supplier1 = new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
         def item1 = new Item(name:"410002",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
@@ -778,9 +778,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
     <qty>
       5000
     </qty>
@@ -869,7 +869,7 @@ class DataImportServiceTests {
         new Operation(name:"operation1",title:"施肥",description:"施肥肥",importFlag:1).save(failOnError: true, flush: true)
         
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"民雄線A",importFlag:1).save(failOnError: true, flush: true)
 
         def item1 = new Item(name:"410001",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。",importFlag:1).save(failOnError: true, flush: true)
@@ -881,7 +881,7 @@ class DataImportServiceTests {
         def sis1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1,importFlag:1, stockInDate: new Date()).save(failOnError: true, flush: true)
         
         new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:sis1,
-                batch:batch1,item:item1,warehouse:warehouse1, storageLocation:storageLocation1, manufactureOrder:mo1,importFlag:1).save(failOnError: true, flush: true)
+                batch:batch1,item:item1,warehouse:warehouse1, warehouseLocation:warehouseLocation1, manufactureOrder:mo1,importFlag:1).save(failOnError: true, flush: true)
 
 
         new Operation(name:"operation2",title:"翻土",description:"翻土土",importFlag:1).save(failOnError: true, flush: true)
@@ -897,7 +897,7 @@ class DataImportServiceTests {
         def osps1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1,importFlag:1, outSrcPurchaseDate: new Date()).save(failOnError: true, flush: true)
 
         new OutSrcPurchaseSheetDet(typeName:"BD32",name:"98100900001",sequence:1,outSrcPurchaseSheet:osps1,
-                item:item2,warehouse:warehouse1, storageLocation:storageLocation1,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
+                item:item2,warehouse:warehouse1, warehouseLocation:warehouseLocation1,batch:batch2,qty:5000,manufactureOrder:mo2,importFlag:1).save(failOnError: true, flush: true)
 
         // new ManufactureOrderRouteView(typeName:"C11",name:"98100900001",sequence:1,operationName:"operation1",makerType:1,makerName:"workstation1",importFlag:1).save(failOnError: true, flush: true)
         // new ManufactureOrderRouteView(typeName:"C11",name:"98100900002",sequence:1,operationName:"operation2",makerType:2,makerName:"FJ01",importFlag:1).save(failOnError: true, flush: true)
@@ -1018,7 +1018,7 @@ class DataImportServiceTests {
     void testMaterialSheetDetImport() {
 
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
-        def storageLocation1 = new StorageLocation(name:"storageLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
+        def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def i1=new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種",importFlag:1).save(failOnError: true, flush: true)
         def item2=new Item(name:"21006",title:"芝麻有機肥",importFlag:1).save(failOnError: true, flush: true)
         def item3=new Item(name:"21007",title:"黃豆有機肥",importFlag:1).save(failOnError: true, flush: true)
@@ -1055,9 +1055,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>
@@ -1087,9 +1087,9 @@ class DataImportServiceTests {
     <warehouseName>
       warehouse1
     </warehouseName>
-    <storageLocationName>
-      storageLocation1
-    </storageLocationName>
+    <warehouseLocationName>
+      warehouseLocation1
+    </warehouseLocationName>
     <manufactureOrderName>
       98100900001
     </manufactureOrderName>

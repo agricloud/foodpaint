@@ -67,7 +67,7 @@ class PurchaseSheetDet{
     /*
     * 儲位
     */
-    StorageLocation storageLocation
+    WarehouseLocation warehouseLocation
 
     /*
     * 進貨數量
