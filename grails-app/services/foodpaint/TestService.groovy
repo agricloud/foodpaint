@@ -4,17 +4,17 @@ class TestService {
 
 
     def createStdTestData = {
-        def item = new Item(name:"item1",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
+        def item = new Item(name:"item1",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
 
         def batch = new Batch(name:"batch1",item:item,dueDate:new Date(), 
                 manufactureDate: new Date(), expirationDate: new Date(), remark: '備註').save(failOnError: true)
         
-        def supplier = new Supplier(name:"supplier1",title:"廠商",country:Country.SPAIN).save(failOnError: true)
-        def customer = new Customer(name:"customer1",title:"客戶").save(failOnError: true)
-        def warehouse = new Warehouse(name:"warehouse1",title:"倉庫").save(failOnError: true)
-        def warehouseLocation = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse,title:"儲位").save(failOnError: true)
+        def supplier = new Supplier(name:"supplier1",title:"廠商1",country:Country.SPAIN).save(failOnError: true)
+        def customer = new Customer(name:"customer1",title:"客戶1").save(failOnError: true)
+        def warehouse = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true)
+        def warehouseLocation = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse,title:"儲位1").save(failOnError: true)
         def workstation = new Workstation(name:"workstation1",title:"檢驗站01").save(failOnError: true)
-        def operation = new Operation(name:"operation1",title:"施肥").save(failOnError: true)
+        def operation = new Operation(name:"operation1",title:"施肥1").save(failOnError: true)
 
         def itemRoute = new ItemRoute(item:item,sequence:1,operation:operation,workstation:workstation)
         item.addToItemRoutes(itemRoute).save(failOnError: true)
@@ -23,12 +23,32 @@ class TestService {
         batch.addToBatchRoutes(batchRoute).save(failOnError: true)
  
     }
+    
 
     def createBatchSource = {
         def mainBatch = Batch.get(1)
         def item = new Item(name:"item2",title:"橘子").save(failOnError: true)
         def batch = new Batch(name:"batch2",item:item).save(failOnError: true)
         new BatchSource(batch:mainBatch,childBatch:batch).save(failOnError: true)
+
+    }
+
+    def createInventoryData = {
+        def item = Item.get(1)
+        def batch = Batch.get(1)
+        def warehouse = Warehouse.get(1)
+        def warehouseLocation = WarehouseLocation.get(1)
+
+        new Inventory(warehouse:warehouse,item:item).save(failOnError: true)
+        new InventoryDetail(warehouse:warehouse,warehouseLocation:warehouseLocation,item:item,batch:batch).save(failOnError: true)
+
+        def item2 = new Item(name:"item2",title:"華珍玉米2",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
+        def batch2 = new Batch(name:"batch2",item:item2,dueDate:new Date(), manufactureDate: new Date(), expirationDate: new Date(), remark: '備註').save(failOnError: true)
+        def warehouse2 = new Warehouse(name:"warehouse2",title:"倉庫2").save(failOnError: true)
+        def warehouseLocation2 = new WarehouseLocation(name:"warehouseLocation2",warehouse:warehouse2,title:"儲位2").save(failOnError: true)
+
+        new Inventory(warehouse:warehouse2,item:item2).save(failOnError: true)
+        new InventoryDetail(warehouse:warehouse2,warehouseLocation:warehouseLocation2,item:item2,batch:batch2).save(failOnError: true)
 
     }
 

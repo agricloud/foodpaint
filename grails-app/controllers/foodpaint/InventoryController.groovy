@@ -14,5 +14,22 @@ class InventoryController {
         }
         
     }
+
+    def indexByWarehouseAndItem(){
+        def warehouse = Warehouse.get(params.warehouse.id)
+        def item = Item.get(params.item.id)
+
+        def list = Inventory.where{
+        	if(warehouse)
+        		warehouse==warehouse
+        	if(item)
+        		item==item
+        }.list()
+
+        render (contentType: 'application/json') {
+            [inventoryInstanceList: list, inventoryInstanceTotal: list.size()]
+        }
+
+    }
     
 }
