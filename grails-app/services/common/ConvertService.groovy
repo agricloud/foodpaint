@@ -1105,83 +1105,88 @@ class ConvertService {
     }
 
     def saleReturnSheetParseJson(saleReturnSheet){
-  //   	def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = saleSheet.dateCreated
-	 //    result.lastUpdated = saleSheet.lastUpdated
-	 //    result.site = saleSheet.site
+    	    result.dateCreated = saleReturnSheet.dateCreated
+	    result.lastUpdated = saleReturnSheet.lastUpdated
+	    result.site = saleReturnSheet.site
+               result.id = saleReturnSheet.id
+    	    result.name = saleReturnSheet.name
+	    result.typeName =saleReturnSheet.typeName
 
-  //       result.id = saleSheet.id
-  //   	result.name = saleSheet.name
-		// result.typeName = saleSheet.typeName
+		if(saleReturnSheet.customer){
+			result.customer = saleReturnSheet.customer
+			result["customer.id"] = saleReturnSheet.customer.id
+	       		result["customer.name"] = saleReturnSheet.customer.name
+	       		result["customer.title"] = saleReturnSheet.customer.title
+	    }
 
-		// if(saleSheet.customer){
-		// 	result.customer = saleSheet.customer
-		// 	result["customer.id"] = saleSheet.customer.id
-	 //        result["customer.name"] = saleSheet.customer.name
-	 //        result["customer.title"] = saleSheet.customer.title
-	 //    }
-
-		// result
+		result
     }
 
     def saleReturnSheetDetParseJson(saleReturnSheetDet){
-  //   	def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = saleSheetDet.dateCreated
-	 //    result.lastUpdated = saleSheetDet.lastUpdated
-	 //    result.site = saleSheetDet.site
+    		result.dateCreated = saleReturnSheetDet.dateCreated
+	    	result.lastUpdated = saleReturnSheetDet.lastUpdated
+	    	result.site = saleReturnSheetDet.site
+		result.saleSheetDet = saleReturnSheet.saleSheetDet 
+      		result.id = saleReturnSheetDet.id
+    		result.name = saleReturnSheetDet.name
+		result.typeName =saleReturnSheetDet.typeName
+		result.sequence = saleReturnSheetDet.sequence
+		result.qty = saleReturnSheetDet.qty
 
-  //       result.id = saleSheetDet.id
-  //   	result.name = saleSheetDet.name
-		// result.typeName = saleSheetDet.typeName
-		// result.sequence = saleSheetDet.sequence
-		// result.qty = saleSheetDet.qty
+		result.saleReturnSheetDet= saleReturnSheetDet.saleReturnSheet
+		result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
 
-		// result.saleSheet = saleSheetDet.saleSheet
-		// result["saleSheet.id"] = saleSheetDet.saleSheet.id
+		if(saleReturnSheetDet.customerOrderDet){
+			result.customerOrderDet = saleReturnSheetDet.customerOrderDet
+			result["customerOrderDet.id"] = saleReturnSheetDet.customerOrderDet.id
+	        result["customerOrderDet.name"] = saleReturnSheetDet.customerOrderDet.name
+	        result["customerOrderDet.typeName"] = saleReturnSheetDett.customerOrderDet.typeName
+	        result["customerOrderDet.sequence"] = saleReturnSheetDet.customerOrderDet.sequence
+	        result.customerOrder = saleReturnSheetDet.customerOrderDet.customerOrder
+	        result["customerOrder.id"] = saleReturnSheetDet.customerOrderDet.customerOrder.id
+	    }
 
-		// if(saleSheetDet.customerOrderDet){
-		// 	result.customerOrderDet = saleSheetDet.customerOrderDet
-		// 	result["customerOrderDet.id"] = saleSheetDet.customerOrderDet.id
-	 //        result["customerOrderDet.name"] = saleSheetDet.customerOrderDet.name
-	 //        result["customerOrderDet.typeName"] = saleSheetDet.customerOrderDet.typeName
-	 //        result["customerOrderDet.sequence"] = saleSheetDet.customerOrderDet.sequence
-	 //        result.customerOrder = saleSheetDet.customerOrderDet.customerOrder
-	 //        result["customerOrder.id"] = saleSheetDet.customerOrderDet.customerOrder.id
-	 //    }
+	    if(saleReturnSheetDet.batch){
+			result.batch = saleReturnSheetDet.batch
+			result["batch.id"] = saleReturnSheetDet.batch.id
+	        result["batch.name"] = saleReturnSheetDet.batch.name
+	    }
 
-	 //    if(saleSheetDet.batch){
-		// 	result.batch = saleSheetDet.batch
-		// 	result["batch.id"] = saleSheetDet.batch.id
-	 //        result["batch.name"] = saleSheetDet.batch.name
-	 //    }
+		if(saleReturnSheetDet.item){
+			result.item = saleReturnSheetDet.item
+			result["item.id"] = saleReturnSheetDet.item.id
+	        result["item.name"] = saleReturnSheetDet.item.name
+	        result["item.title"] = saleReturnSheetDet.item.title
+	        result["item.spec"] = saleReturnSheetDet.item.spec
+	        result["item.unit"] = saleReturnSheetDet.item.unit
+	        result["item.description"] = saleReturnSheetDet.item.description
+	    }
 
-		// if(saleSheetDet.item){
-		// 	result.item = saleSheetDet.item
-		// 	result["item.id"] = saleSheetDet.item.id
-	 //        result["item.name"] = saleSheetDet.item.name
-	 //        result["item.title"] = saleSheetDet.item.title
-	 //        result["item.spec"] = saleSheetDet.item.spec
-	 //        result["item.unit"] = saleSheetDet.item.unit
-	 //        result["item.description"] = saleSheetDet.item.description
-	 //    }
+	    if(saleReturnSheetDet.warehouse){
+			result.warehouse =saleReturnSheetDet.warehouse
+			result["warehouse.id"] =saleReturnSheetDet.warehouse.id
+	        result["warehouse.name"] =saleReturnSheetDet.warehouse.name
+	        result["warehouse.title"] =saleReturnSheetDet.warehouse.title
+	    }
 
-	 //    if(saleSheetDet.warehouse){
-		// 	result.warehouse = saleSheetDet.warehouse
-		// 	result["warehouse.id"] = saleSheetDet.warehouse.id
-	 //        result["warehouse.name"] = saleSheetDet.warehouse.name
-	 //        result["warehouse.title"] = saleSheetDet.warehouse.title
-	 //    }
+	    if(saleReturnSheetDet.storageLocation){
+	    	result.storageLocation = saleReturnSheetDet.storageLocation
+		    result["storageLocation.id"] = saleReturnSheetDet.storageLocation.id
+		    result["storageLocation.name"] = saleReturnSheetDet.storageLocation.name
+		    result["storageLocation.title"] = saleReturnSheetDet.storageLocation.title
+		}
+	if(saleReturnSheetDet.saleSheetDet){
+	    	result.saleSheetDet = saleReturnSheetDet.saleSheetDet
+		    result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
+		    result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+		    result["saleSheetDet.title"] = saleReturnSheetDet.saleSheetDet.title
+		}
 
-	 //    if(saleSheetDet.storageLocation){
-	 //    	result.storageLocation = saleSheetDet.storageLocation
-		//     result["storageLocation.id"] = saleSheetDet.storageLocation.id
-		//     result["storageLocation.name"] = saleSheetDet.storageLocation.name
-		//     result["storageLocation.title"] = saleSheetDet.storageLocation.title
-		// }
-
-		// result
+		result
     }
 
 
