@@ -75,6 +75,7 @@ class MaterialSheetDetController {
     def save = {
 
         def materialSheetDet = new MaterialSheetDet(params)
+        //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
@@ -108,7 +109,7 @@ class MaterialSheetDetController {
 
         def  materialSheetDet = new MaterialSheetDet(params)
         
-
+        //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
