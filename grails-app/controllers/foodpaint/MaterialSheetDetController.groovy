@@ -85,7 +85,6 @@ class MaterialSheetDetController {
         }
         else{
             if(materialSheetDet.qty>0){
-
                 def inventoryConsumeResult = inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                 if(inventoryConsumeResult.success){
                     render (contentType: 'application/json') {
@@ -125,7 +124,8 @@ class MaterialSheetDetController {
                 def inventoryReplenishResult = inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                 if(inventoryReplenishResult.success){
                     //把欲更新的領料數量扣掉庫存
-                    def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong())
+                    def updateBatch = Batch.get(params.batch.id)
+                    def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
                     if(inventoryConsumeResult.success){
                         materialSheetDet.properties = params             
                         render (contentType: 'application/json') {

@@ -42,7 +42,7 @@ class MaterialSheetDetControllerTests {
         params["item.id"] = 1
         params["warehouse.id"]=1
         params["warehouseLocation.id"]=1
-        params["batch.name"] = "batch1"
+        params["batch.id"] = 1
         params["qty"] = 1000
     }
 
@@ -94,6 +94,7 @@ class MaterialSheetDetControllerTests {
         assert response.json.data.class == "foodpaint.MaterialSheetDet" 
         assert response.json.data.typeName == "MS"
         assert response.json.data.name == "00001"
+        assert response.json.data.batch.id == 1
 
     }
 
@@ -110,7 +111,7 @@ class MaterialSheetDetControllerTests {
         populateValidParams(params)
 
         controller.save()
-
+        println MaterialSheetDet.get(1).batch
         assert response.json.success
         assert MaterialSheetDet.list().size() == 1
         assert MaterialSheetDet.get(1).typeName == "MS"
@@ -144,7 +145,7 @@ class MaterialSheetDetControllerTests {
                 
         populateValidParams(params)
         params["item.id"] = 3
-        params["batch.name"] = "batch3"
+        params["batch.id"] = 3
         params["qty"] = 500
         controller.update()
         //執行結果應允許更新
