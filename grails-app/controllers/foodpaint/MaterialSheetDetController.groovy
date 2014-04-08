@@ -121,20 +121,33 @@ class MaterialSheetDetController {
         else{
             if(materialSheetDet.qty>0){
                 materialSheetDet = MaterialSheetDet.get(params.id)
-                inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
-                
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong())
-                if(inventoryConsumeResult.success){
-                    materialSheetDet.properties = params             
-                    render (contentType: 'application/json') {
-                        domainService.save(materialSheetDet)
+                //把更新前已領的數量加回庫存
+                def inventoryReplenishResult = inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+                if(inventoryReplenishResult.success){
+                    //把欲更新的領料數量扣掉庫存
+                    def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong())
+                    if(inventoryConsumeResult.success){
+                        materialSheetDet.properties = params             
+                        render (contentType: 'application/json') {
+                            domainService.save(materialSheetDet)
+                        }
+                    }
+                    else{
+                        //把更新前已領的數量再扣掉庫存 還原更新前狀態
+                        def inventoryRecoveryResult= inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+                        if(inventoryRecoveryResult.success){
+                            render (contentType: 'application/json') {
+                                inventoryConsumeResult
+                            }
+                        }
+                        else{
+                            throw new Exception("還原庫存失敗:"+inventoryRecoveryResult.message)
+                        }
                     }
                 }
                 else{
-                    materialSheetDet = MaterialSheetDet.get(params.id)
-                    inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
                     render (contentType: 'application/json') {
-                        inventoryConsumeResult
+                        inventoryReplenishResult
                     }
                 }
             }
@@ -155,8 +168,12 @@ class MaterialSheetDetController {
 
         def result
         try {
-            inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
-            result = domainService.delete(materialSheetDet)
+            def inventoryReplenishResult = inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+            
+            if(inventoryReplenishResult.success)
+                result = domainService.delete(materialSheetDet)
+            else
+                return inventoryReplenishResult
         
         }catch(e){
             log.error e
