@@ -79,19 +79,11 @@ class PurchaseReturnSheetDetController {
     def save(){
         def purchaseReturnSheetDet=new PurchaseReturnSheetDet(params)
         if(purchaseReturnSheetDet.qty>0){
-            def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseReturnSheetDet)
-            if(!result.success){
-                render (contentType: 'application/json') {
-                    result
-                }
-            }
-            else{
-                inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
-                purchaseReturnSheetDet.batch = (Batch) result.batch
-                render (contentType: 'application/json') {
+                purchaseReturnSheetDet.properties = params
+                inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
+                render (contentType: 'application/json') { 
                     domainService.save(purchaseReturnSheetDet)
                 }
-            }
         } 
         else{
             render (contentType: 'application/json') {
@@ -103,35 +95,35 @@ class PurchaseReturnSheetDetController {
     @Transactional
     def update() {
         def purchaseReturnSheetDet = new PurchaseReturnSheetDet(params)
-        if(purchaseReturnSheetDet.qty>0){
-            def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseReturnSheetDet)
-            if(!result.success){
-                render (contentType: 'application/json') {
-                    result
-                }
-            }
-            else{
-                purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
-                if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
-                    render (contentType: 'application/json') {
-                        [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
+         if((purchaseReturnSheetDet.purchaseSheetDet || purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item) && purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.batch.item ){
+                if(purchaseReturnSheetDet.qty>0){
+                        purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
+                        if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
+                            render (contentType: 'application/json') {
+                                [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
+                            }
+                        }
+                        else{
+                            purchaseReturnSheetDet.properties = params
+                            inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
+                            render (contentType: 'application/json') {
+                                domainService.save(purchaseReturnSheetDet)
+                            }
+                        }
                     }
-                }
                 else{
-                    purchaseReturnSheetDet.properties = params
-                    inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
-                    purchaseReturnSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {
-                        domainService.save(purchaseReturnSheetDet)
+                        [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
                     }
                 }
-            }
-        } 
+             }  
         else{
-            render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
+                render (contentType: 'application/json') {
+                    [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args: [purchaseReturnSheetDet])]
+                }
             }
-        }  
+           
+
     }
 
 

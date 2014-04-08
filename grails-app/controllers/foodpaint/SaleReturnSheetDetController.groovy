@@ -77,19 +77,13 @@ class SaleReturnSheetDetController {
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
 
         //
-        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.batch.item ){
+        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.saleSheetDet.batch.item &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
                 def inventoryReplenishResult  = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-                if(inventoryReplenishResult.success){
-                    render (contentType: 'application/json') {
+                // if(inventoryReplenishResult.success){
+                     render (contentType: 'application/json') {
                         domainService.save(saleReturnSheetDet)
-                    }
-                }
-                else{
-                    render (contentType: 'application/json') {
-                        inventoryReplenishResult 
-                    }
-                }
+                   }
             }
             else{
                 render (contentType: 'application/json') {
@@ -109,23 +103,21 @@ class SaleReturnSheetDetController {
     def update = {
         def  saleReturnSheetDet = new SaleReturnSheetDet(params)
         //
-        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.batch.item ){
+       if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.saleSheetDet.batch.item &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
                 saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-                inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-                def updateBatch = Batch.get(params.batch.id)
-                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
-                if(inventoryReplenishResult .success){
+               def   inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
+               if(inventoryConsumeResult.success){          
+                    def updateBatch = Batch.get(params.batch.id)
+                    inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())         
                     saleReturnSheetDet.properties = params
                     render (contentType: 'application/json') {
                         domainService.save(saleReturnSheetDet)
                     }
                 }
                 else{
-                    saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-                    inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
                     render (contentType: 'application/json') {
-                        inventoryReplenishResult 
+                        inventoryConsumeResult   
                     }
                 }
             }
@@ -150,7 +142,7 @@ class SaleReturnSheetDetController {
 
         def result
         try {
-            inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
+            inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
             result = domainService.delete(saleReturnSheetDet)
         
         }catch(e){
