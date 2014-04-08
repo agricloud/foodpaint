@@ -92,7 +92,7 @@ class BootStrap {
                 def testService = new TestService()
                 testService.createStdTestData()
                 testService.createInventoryData()
-				// testService.createOilCaseData()
+				testService.createOilCaseData()
 
 			}
 		}
