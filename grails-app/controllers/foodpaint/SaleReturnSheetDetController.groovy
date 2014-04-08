@@ -72,12 +72,12 @@ class SaleReturnSheetDetController {
         }
 
     }
-
+    //PS save、update、delete需加transaction處理
     def save = {
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
 
         //
-        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.saleSheetDet.batch.item &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
+        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
                 def inventoryReplenishResult  = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
                 // if(inventoryReplenishResult.success){
@@ -102,12 +102,11 @@ class SaleReturnSheetDetController {
 
     def update = {
         def  saleReturnSheetDet = new SaleReturnSheetDet(params)
-        //
-       if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.item == saleReturnSheetDet.saleSheetDet.batch.item &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
+        if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
                 saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-               def   inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-               if(inventoryConsumeResult.success){          
+                def inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
+                if(inventoryConsumeResult.success){          
                     def updateBatch = Batch.get(params.batch.id)
                     inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())         
                     saleReturnSheetDet.properties = params

@@ -78,8 +78,10 @@ class PurchaseReturnSheetDetController {
     @Transactional
     def save(){
         def purchaseReturnSheetDet=new PurchaseReturnSheetDet(params)
+        //PS應增加檢查判斷若退貨單身品項與進貨單身品項相符才可退貨
         if(purchaseReturnSheetDet.qty>0){
                 purchaseReturnSheetDet.properties = params
+                //PS需加判斷失敗處理
                 inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
                 render (contentType: 'application/json') { 
                     domainService.save(purchaseReturnSheetDet)
@@ -95,28 +97,32 @@ class PurchaseReturnSheetDetController {
     @Transactional
     def update() {
         def purchaseReturnSheetDet = new PurchaseReturnSheetDet(params)
-         if((purchaseReturnSheetDet.purchaseSheetDet || purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item) && purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.batch.item ){
-                if(purchaseReturnSheetDet.qty>0){
-                        purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
-                        if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
-                            render (contentType: 'application/json') {
-                                [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
-                            }
-                        }
-                        else{
-                            purchaseReturnSheetDet.properties = params
-                            inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
-                            render (contentType: 'application/json') {
-                                domainService.save(purchaseReturnSheetDet)
-                            }
+
+        //PS程式排版問題
+        //每一個括弧後內容退四格 需調整
+        //此行if判斷有問題 退貨單必定會有進貨單 應檢查兩者品項、批號相符
+        if((purchaseReturnSheetDet.purchaseSheetDet || purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item) && purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.batch.item ){
+            if(purchaseReturnSheetDet.qty>0){
+                    purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
+                    if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
+                        render (contentType: 'application/json') {
+                            [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
                         }
                     }
-                else{
-                    render (contentType: 'application/json') {
-                        [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
+                    else{
+                        purchaseReturnSheetDet.properties = params
+                        inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
+                        render (contentType: 'application/json') {
+                            domainService.save(purchaseReturnSheetDet)
+                        }
                     }
                 }
-             }  
+            else{
+                render (contentType: 'application/json') {
+                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
+                }
+            }
+        }  
         else{
                 render (contentType: 'application/json') {
                     [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args: [purchaseReturnSheetDet])]
