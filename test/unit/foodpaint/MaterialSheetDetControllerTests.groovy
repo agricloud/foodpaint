@@ -142,9 +142,6 @@ class MaterialSheetDetControllerTests {
         def inventory2 = new Inventory(warehouse:warehouse1,item:item3,qty:500).save(failOnError: true, flush: true)
         def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)
         
-                
-        populateValidParams(params)
-        params["item.id"] = 3
         params["batch.id"] = 3
         params["qty"] = 500
         controller.update()

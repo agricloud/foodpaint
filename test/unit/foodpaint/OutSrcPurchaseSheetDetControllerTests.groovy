@@ -146,7 +146,6 @@ class OutSrcPurchaseSheetDetControllerTests {
 
         def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
         
-        populateValidParams(params)
         params["batch.name"] = "batch2"
         params["qty"] = 500
 
@@ -183,7 +182,6 @@ class OutSrcPurchaseSheetDetControllerTests {
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
-        populateValidParams(params)
         params["batch.name"] = "batch2"
         params["qty"] = 500
 
@@ -216,7 +214,6 @@ class OutSrcPurchaseSheetDetControllerTests {
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:outSrcPurchaseSheetDet11.qty).save(failOnError: true, flush: true)
 
-        populateValidParams(params)
         controller.delete()
 
         assert response.json.success == true

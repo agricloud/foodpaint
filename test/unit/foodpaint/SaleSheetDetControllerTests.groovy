@@ -156,7 +156,6 @@ class SaleSheetDetControllerTests {
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
 
-        populateValidParams(params)
         controller.delete()
 
         assert response.json.success == true
