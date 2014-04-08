@@ -2,6 +2,7 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 class OutSrcPurchaseSheetDetController {
 
@@ -73,7 +74,8 @@ class OutSrcPurchaseSheetDetController {
 
     }
 
-    def save = {
+    @Transactional
+    def save(){
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
         if(outSrcPurchaseSheetDet.qty>0){
             def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseSheetDet)
@@ -98,7 +100,8 @@ class OutSrcPurchaseSheetDetController {
     }
 
 
-    def update = {
+    @Transactional
+    def update() {
 
         def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params)
         if(outSrcPurchaseSheetDet.qty>0){
@@ -135,7 +138,8 @@ class OutSrcPurchaseSheetDetController {
 
 
 
-    def delete = {
+    @Transactional
+    def delete(){
 
         def  outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
 

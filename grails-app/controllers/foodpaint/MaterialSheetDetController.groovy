@@ -2,6 +2,7 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 class MaterialSheetDetController {
 
@@ -72,7 +73,8 @@ class MaterialSheetDetController {
 
     }
 
-    def save = {
+    @Transactional
+    def save(){
 
         def materialSheetDet = new MaterialSheetDet(params)
         //如果領料品項與製令品項相同 不允許更新領料單身
@@ -105,7 +107,8 @@ class MaterialSheetDetController {
     }
 
 
-    def update = {
+    @Transactional
+    def update() {
 
         def  materialSheetDet = new MaterialSheetDet(params)
         
@@ -145,7 +148,8 @@ class MaterialSheetDetController {
 
 
 
-    def delete = {
+    @Transactional
+    def delete(){
 
         def  materialSheetDet = MaterialSheetDet.get(params.id)
 
