@@ -9,7 +9,7 @@ class InventoryService {
 
 	@Transactional
 	def replenish(warehouseId,itemId,qty){
-		if(qty>0){
+		if(qty>=0){
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
 
@@ -27,13 +27,15 @@ class InventoryService {
 			}
 			return  [success:true]
 		}
+		else
+			return [success:false ,message: messageSource.getMessage("inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
 	@Transactional
 	def consume(warehouseId,itemId,qty){
 		Object[] args=[]
 
-		if(qty>0){
+		if(qty>=0){
 
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
@@ -48,6 +50,9 @@ class InventoryService {
 				return [success:false, message: messageSource.getMessage("inventory.quantity.not.enough", args, Locale.getDefault())]
 			}
 		}
+		else
+			return [success:false ,message: messageSource.getMessage("inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
+	
 
 }

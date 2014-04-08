@@ -11,10 +11,9 @@ class InventoryDetailService {
 	@Transactional
 	def replenish(warehouseId,warehouseLocationId,itemId,batchName,qty){
 		Object[] args=[]
-		if(qty>0){
+		if(qty>=0){
 
 			inventoryService.replenish(warehouseId,itemId,qty)
-
 
 			def warehouse = Warehouse.get(warehouseId)
 			def warehouseLocation = WarehouseLocation.get(warehouseLocationId)
@@ -41,13 +40,16 @@ class InventoryDetailService {
 			else{
 				inventoryDetail.qty += qty
 			}
-			return [success:true]
+			return [success:true, inventoryDetail:inventoryDetail]
 		}
+		else
+			return [success:false ,message: messageSource.getMessage("inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
+	@Transactional
 	def consume(warehouseId,warehouseLocationId,itemId,batchName,qty){
 		Object[] args=[]
-		if(qty>0){
+		if(qty>=0){
 
 			inventoryService.consume(warehouseId,itemId,qty)
 
@@ -66,6 +68,9 @@ class InventoryDetailService {
 				return [success:false, message: messageSource.getMessage("inventoryDetail.quantity.not.enough", args, Locale.getDefault())]
 			}
 		}
+		else
+			return [success:false ,message: messageSource.getMessage("inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
+	
 
 }
