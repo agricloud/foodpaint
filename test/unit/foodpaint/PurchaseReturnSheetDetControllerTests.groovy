@@ -6,7 +6,10 @@ import common.*
 //主要測試的對象
 @TestFor(PurchaseReturnSheetDetController)
 //把所有測試中會使用到的domain & service
-@Mock([PurchaseSheetDet, PurchaseSheet,PurchaseReturnSheet,PurchaseReturnSheetDet ,Item, Batch, Warehouse, WarehouseLocation, Inventory, InventoryDetail, Supplier, BatchService, InventoryService, InventoryDetailService, DomainService])
+@Mock([PurchaseSheetDet, PurchaseSheet,PurchaseReturnSheet,PurchaseReturnSheetDet ,
+    Item, Batch, Warehouse, WarehouseLocation, 
+    Inventory, InventoryDetail, Supplier, 
+    InventoryService, InventoryDetailService, DomainService])
 class PurchaseReturnSheetDetControllerTests {
     //開始測試前預備資料
     void setUp(){
