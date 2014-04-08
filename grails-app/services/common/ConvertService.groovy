@@ -1179,11 +1179,17 @@ class ConvertService {
 		    result["storageLocation.name"] = saleReturnSheetDet.storageLocation.name
 		    result["storageLocation.title"] = saleReturnSheetDet.storageLocation.title
 		}
-	if(saleReturnSheetDet.saleSheetDet){
-	    	result.saleSheetDet = saleReturnSheetDet.saleSheetDet
-		    result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
-		    result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
-		    result["saleSheetDet.title"] = saleReturnSheetDet.saleSheetDet.title
+		if(saleReturnSheetDet.saleSheet){
+		    result.saleSheet = saleReturnSheetDet.saleSheet
+		    result["saleSheet.id"] = saleReturnSheetDet.saleSheet.id
+		    result["saleSheet.name"] = saleReturnSheetDet.saleSheet.name
+		    result["saleSheet.title"] = saleReturnSheetDet.saleSheet.title
+		}
+	if(saleReturnSheetDet.saleSheet.saleSheetDet){
+		    result.saleSheet.saleSheetDet = saleReturnSheetDet.saleSheetDet
+		    result["saleSheet.saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
+		    result["saleSheet.saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+		    result["saleSheet.saleSheetDet.title"] = saleReturnSheetDet.saleSheetDet.title
 		}
 
 		result
