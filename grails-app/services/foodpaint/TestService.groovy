@@ -167,9 +167,9 @@ class TestService {
 
         messageSource.addMessage("batch.name.params.notfound", Locale.getDefault(), "批號未輸入")
         messageSource.addMessage("sheet.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與批號品項不符")
+        messageSource.addMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與製令品項、批號品項不符")
         messageSource.addMessage("inventory.quantity.not.enough", Locale.getDefault(),"{0}、{1} 庫存數量不足")
         messageSource.addMessage("inventoryDetail.quantity.not.enough", Locale.getDefault(), "{0}、{1}、{2}、{3} 庫存數量不足")
-        messageSource.addMessage("inventoryDetail.had.been.used", Locale.getDefault(), "{0}、{1}、{2} 庫存已被使用")
         
         messageSource.addMessage("country.TAIWAN.label", Locale.getDefault(), "台灣")
 		messageSource.addMessage("country.JAPAN.label", Locale.getDefault(), "日本")

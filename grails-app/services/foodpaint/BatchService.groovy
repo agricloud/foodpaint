@@ -71,20 +71,20 @@ class BatchService {
 					}
 				}
 				if(sheet.instanceOf(StockInSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item){
+					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
 						isSuccess = false
-						args=[sheet.manufactureOrder]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
 					}
 					else{
 						isSuccess = true
 					}
 				}
 				if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item){
+					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
 						isSuccess = false
-						args=[sheet.manufactureOrder]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
 					}
 					else{
 						batch.supplier = sheet.outSrcPurchaseSheet.supplier
@@ -107,6 +107,7 @@ class BatchService {
 	}
 
 	def createBatchInstanceByJson(params, sheet){
+		def isSuccess
 		def msg
 		Object[] args=[]
 		//新增批號 若批號已存在則不允許新增
@@ -118,23 +119,52 @@ class BatchService {
 			batch.item = sheet.item
 
 			if(sheet.instanceOf(PurchaseSheetDet)){
-				batch.supplier = sheet.purchaseSheet.supplier
+				if(sheet.item != batch.item){
+					isSuccess = false
+					args=[sheet]
+					msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+				}
+				else{
+					batch.supplier = sheet.purchaseSheet.supplier
+					isSuccess = true
+				}
 			}
 			if(sheet.instanceOf(StockInSheetDet)){
+				if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+						isSuccess = false
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+				}
+				else{
+					isSuccess =true
+				}
 			}
 			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-				batch.supplier = sheet.outSrcPurchaseSheet.supplier
+				if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+						isSuccess = false
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+				}
+				else{
+					batch.supplier = sheet.outSrcPurchaseSheet.supplier
+					isSuccess = true
+				}
 			}
 			if(sheet.instanceOf(ManufactureOrder)){
 				batch.expectQty = sheet.qty
+				isSuccess = true
 			}
+			if(isSuccess){
 
-			def result=domainService.save(batch)
+				def result=domainService.save(batch)
 
-			if(result.success){
-				result.batch=batch
+				if(result.success){
+					result.batch=batch
+				}
+				return result
 			}
-			return result
+			else
+				return [success:isSuccess, batch:batch, message: msg]
 		}
 		else{//未指定欲新增之批號
 			msg = messageSource.getMessage("batch.name.params.notfound", args, Locale.getDefault())

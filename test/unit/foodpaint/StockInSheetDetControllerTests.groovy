@@ -141,24 +141,21 @@ class StockInSheetDetControllerTests {
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
-
-        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)        
                 
         populateValidParams(params)
-        params["item.id"] = 2
         params["batch.name"] = "batch2"
         params["qty"] = 500
         controller.update()
         //執行結果應允許更新
         assert response.json.success == true
         assert StockInSheetDet.list().get(0).batch.name == "batch2"
-        assert StockInSheetDet.list().get(0).item.id == 2
+        assert StockInSheetDet.list().get(0).item.id == 1
         assert StockInSheetDet.list().get(0).qty == 500
-        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==0
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==500
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
         def batch2 = Batch.findByName("batch2")
-        assert Inventory.findByWarehouseAndItem(warehouse1,item2).qty==500
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==500
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==500
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch2).qty==500
     }
 
     void testUpdateWithIncorrectBatchData() {
