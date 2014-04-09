@@ -143,7 +143,7 @@ class StockInSheetDetController {
                 }
                 else{
                     render (contentType: 'application/json') {
-                        [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [stockInSheetDet.warehouse, stockInSheetDet.item, stockInSheetDet.batch])]
+                        inventoryConsumeResult
                     }
                 }
             }

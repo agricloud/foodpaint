@@ -140,7 +140,7 @@ class PurchaseSheetDetController {
                 }
                 else{
                     render (contentType: 'application/json') {
-                        [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseSheetDet.warehouse, purchaseSheetDet.item, purchaseSheetDet.batch])]
+                        inventoryConsumeResult
                     }
                 }
             }
