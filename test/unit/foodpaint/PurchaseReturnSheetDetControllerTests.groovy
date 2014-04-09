@@ -20,7 +20,7 @@ class PurchaseReturnSheetDetControllerTests {
         def supplier1 = new Supplier(name:"supplier1",title:"供應商1",country:Country.TAIWAN).save(failOnError: true, flush: true)
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
         def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
-        def purchaseReturnSheet1 = new PurchaseReturnSheet(typeName:"PS",name:"00001",supplier:supplier1).save(failOnError: true, flush: true)
+        def purchaseReturnSheet1 = new PurchaseReturnSheet(typeName:"PRS",name:"00001",supplier:supplier1).save(failOnError: true, flush: true)
         def purchaseSheet1 = new PurchaseSheet(typeName:"PS",name:"00001",supplier:supplier1).save(failOnError: true, flush: true)
         def purchaseSheetDet1 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"PS",name:"00001",supplier:supplier1,item:item1,batch:batch1,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000).save(failOnError: true, flush: true)
        
@@ -31,14 +31,13 @@ class PurchaseReturnSheetDetControllerTests {
         assert params != null
         params["purchaseReturnSheet.id"]=1
         params["id"] = 1
-        params["typeName"] = 'PS'
+        params["typeName"] = 'PRS'
         params["name"] = '00001'
         params["sequence"] = 1
         params["supplier.id"]=1
         params["purchaseSheetDet.id"]=1
         params["item.id"] = 1
         params["batch.id"] = 1
-        params["batch.name"] = "batch1"
         params["warehouse.id"]=1
         params["warehouseLocation.id"]=1
         params["qty"] = 1000
@@ -46,12 +45,6 @@ class PurchaseReturnSheetDetControllerTests {
 
     void testIndex(){
         populateValidParams(params)
-        //產生預設資料
-        // def item1 = Item.get(1)
-        // def batch1 = Batch.get(1)
-        // def supplier1 = Supplier.get(1)
-        // def warehouse1 = Warehouse.get(1)
-        // def warehouseLocation1 = WarehouseLocation.get(1)
 
         def purchaseSheet1 = PurchaseSheet.get(1)
         def purchaseReturnSheetDet11 = new PurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
@@ -59,12 +52,12 @@ class PurchaseReturnSheetDetControllerTests {
         //設定傳入的params值
         params["purchaseReturnSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫PurchaseReturnSheetDetController執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
         assert response.json.total == 1   
-        assert response.json.data[0].typeName == "PS"
+        assert response.json.data[0].typeName == "PRS"
         assert response.json.data[0].name == "00001"
     }
 
@@ -75,23 +68,17 @@ class PurchaseReturnSheetDetControllerTests {
         
         //設定傳入的params值
         params["id"]=1
-        params["batch.id"] = 1
-        params["batch.name"] = "batch1"
         controller.show()
         //驗證結果
         assert response.json.success
         assert response.json.data.class == "foodpaint.PurchaseReturnSheetDet" 
-        assert response.json.data.typeName == "PS"
+        assert response.json.data.typeName == "PRS"
         assert response.json.data.name == "00001"
 
     }
 
     void testSave(){
 
-        // def item1 = Item.get(1)
-        // def batch1 = Batch.get(1)
-        // def warehouse1 = Warehouse.get(1)
-        // def warehouseLocation1 = WarehouseLocation.get(1)
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
@@ -101,13 +88,12 @@ class PurchaseReturnSheetDetControllerTests {
 
         //設定傳入的params值
  
-        params["id"]=1
         populateValidParams(params)
         controller.save()
 
         assert response.json.success
         assert PurchaseReturnSheetDet.list().size() == 1
-        assert PurchaseReturnSheetDet.get(1).typeName == "PS"
+        assert PurchaseReturnSheetDet.get(1).typeName == "PRS"
         assert PurchaseReturnSheetDet.get(1).name == "00001"
         assert PurchaseReturnSheetDet.get(1).batch.name == "batch1"
         //驗證庫存處理是否正確
@@ -115,10 +101,35 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
     }
 
+    void testSaveWithIncorrectBatch(){
+
+        def item1 = Item.get(1)
+        def batch1 = Batch.get(1)
+        def warehouse1 = Warehouse.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:1000).save(failOnError: true, flush: true)
+
+        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+        def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
+
+        //設定傳入的params值
+ 
+        populateValidParams(params)
+        params['item.id']=2
+        params['batch.id']=2
+        controller.save()
+
+        assert response.json.success == false
+        assert PurchaseReturnSheetDet.list().size() == 0
+        //驗證庫存處理是否正確
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+    }
+
   
     void testUpdate() {
 
-     
         populateValidParams(params)
 
         def item1 = Item.get(1)
@@ -127,39 +138,21 @@ class PurchaseReturnSheetDetControllerTests {
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
         
-     
-       
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:1000).save(failOnError: true, flush: true)
        
-        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
-        def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
-
-        def purchaseSheet1 = PurchaseSheet.get(1)
-        def purchaseSheetDet1 = new PurchaseSheetDet(purchaseSheet:purchaseSheet1,typeName:"PS",name:"00001",supplier:supplier1,item:item2,batch:batch2,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000).save(failOnError: true, flush: true)
-        
-        def purchaseReturnSheet1 = PurchaseReturnSheet.get(1)
         def purchaseReturnSheetDet11 = new PurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
  
-        def inventory2 = new Inventory(warehouse:warehouse1,item:item2,qty:1000).save(failOnError: true, flush: true)
-        def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item2,batch:batch2,qty:1000).save(failOnError: true, flush: true)
-        
-        params["item.id"] = 2
-        params["batch.id"] = 2
-        params["batch.name"] = "batch2"
-        params["qty"] = 1000
-       params["purchaseSheetDet.id"]=2
+        params["qty"] = 500
 
         controller.update()
         //執行結果應允許更新
         assert response.json.success == true
-        assert PurchaseReturnSheetDet.list().get(0).batch.name == "batch2"
-        assert PurchaseReturnSheetDet.list().get(0).item.id == 2
-        assert PurchaseReturnSheetDet.list().get(0).qty == 1000
-        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==2000
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==2000
-        assert Inventory.findByWarehouseAndItem(warehouse1,item2).qty==0
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==0
+        assert PurchaseReturnSheetDet.list().get(0).batch.name == "batch1"
+        assert PurchaseReturnSheetDet.list().get(0).item.id == 1
+        assert PurchaseReturnSheetDet.list().get(0).qty == 500
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1500
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1500
     }
 
     void testUpdateWithIncorrectBatchData() {
@@ -180,9 +173,8 @@ class PurchaseReturnSheetDetControllerTests {
 
         def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
-         params["item.id"] = 2
+        params["item.id"] = 2
         params["batch.id"] = 2
-        params["batch.name"] = "batch2"
         params["qty"] = 500
 
         controller.update()
@@ -204,11 +196,10 @@ class PurchaseReturnSheetDetControllerTests {
 
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
 
-       def purchaseReturnSheetDet11 = new PurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
+        def purchaseReturnSheetDet11 = new PurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:1000).save(failOnError: true, flush: true)

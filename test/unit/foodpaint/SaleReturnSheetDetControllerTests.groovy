@@ -98,21 +98,40 @@ class SaleReturnSheetDetControllerTests {
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==3000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==3000
     }
- void testUpdate() {
+    void testSaveWithIncorrectBatchData() {
+
+        def item1 = Item.get(1)
+        def batch1 = Batch.get(1)
+        def warehouse1 = Warehouse.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:2000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:2000).save(failOnError: true, flush: true)
+
+        populateValidParams(params)
+        //給定錯誤的更新資料 批號品項與進貨品項不符
+        params["item.id"] = 2
+        params["batch.id"] = 2
+        params["qty"] = 500
+
+        controller.update()
+
+        //執行結果應不允許更新 因此資料不變
+        assert response.json.success == false
+        assert SaleReturnSheetDet.list().size()==0
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==2000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==2000
+    }
+    void testUpdate() {
         populateValidParams(params)
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
-        def saleSheetDet1=SaleSheetDet.get(1)
         def saleReturnSheetDet11 = new SaleReturnSheetDet(params).save(failOnError: true, flush: true)
        
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:4000).save(failOnError: true, flush: true)
 
-        params["item.id"] = 1
-        params["batch.id"] =1
         params["qty"] = 500
 
         controller.update()
@@ -125,6 +144,37 @@ class SaleReturnSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==3500
     }
 
+    void testUpdateWithIncorrectBatchData() {
+
+        populateValidParams(params)
+
+        def item1 = Item.get(1)
+        def batch1 = Batch.get(1)
+        def warehouse1 = Warehouse.get(1)
+        def warehouseLocation1 = WarehouseLocation.get(1)
+        def saleReturnSheetDet11 = new SaleReturnSheetDet(params).save(failOnError: true, flush: true)
+       
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:1000).save(failOnError: true, flush: true)
+
+        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+        def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
+        
+        //給定錯誤的更新資料 批號品項與進貨品項不符
+        params["item.id"] = 2
+        params["batch.id"] = 2
+        params["qty"] = 500
+
+        controller.update()
+
+        //執行結果應不允許更新 因此資料不變
+        assert response.json.success == false
+        assert SaleReturnSheetDet.list().get(0).batch.name == "batch1"
+        assert SaleReturnSheetDet.list().get(0).item.id == 1
+        assert SaleReturnSheetDet.list().get(0).qty == 1000
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+    }
 
     void testDelete(){
         populateValidParams(params)
@@ -132,8 +182,6 @@ class SaleReturnSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
-        def saleSheetDet11 =SaleSheetDet.get(1)
         def saleReturnSheetDet1 = new SaleReturnSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)

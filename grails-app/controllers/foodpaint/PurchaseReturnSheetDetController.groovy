@@ -81,7 +81,8 @@ class PurchaseReturnSheetDetController {
         //PS應增加檢查判斷若退貨單身品項與進貨單身品項相符才可退貨
         if(purchaseReturnSheetDet.qty>0){
                 purchaseReturnSheetDet.properties = params
-                //PS需加判斷失敗處理
+                //PS需加if判斷失敗處理
+                //傳入的參數只有batch.id 沒有batch.name
                 inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
                 render (contentType: 'application/json') { 
                     domainService.save(purchaseReturnSheetDet)
@@ -104,6 +105,7 @@ class PurchaseReturnSheetDetController {
         if((purchaseReturnSheetDet.purchaseSheetDet || purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item) && purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.batch.item ){
             if(purchaseReturnSheetDet.qty>0){
                     purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
+                    //加庫存失敗回傳庫存已被使用？？？？
                     if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
                         render (contentType: 'application/json') {
                             [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
@@ -111,6 +113,8 @@ class PurchaseReturnSheetDetController {
                     }
                     else{
                         purchaseReturnSheetDet.properties = params
+                        //需加if判斷處理
+                        //傳入的只有batch.id 沒有batch.name 需另外處理
                         inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
                         render (contentType: 'application/json') {
                             domainService.save(purchaseReturnSheetDet)
