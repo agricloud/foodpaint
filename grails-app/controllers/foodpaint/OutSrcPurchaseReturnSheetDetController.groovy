@@ -79,8 +79,16 @@ class OutSrcPurchaseReturnSheetDetController {
         def outSrcPurchaseReturnSheetDet=new OutSrcPurchaseReturnSheetDet(params)
         if(outSrcPurchaseReturnSheetDet.qty>0){
             // def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseReturnSheetDet)
-            // if(result.success){
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, outSrcPurchaseReturnSheetDet.qty)
+            if(outSrcPurchaseReturnSheetDet.item == outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item){
+                def sheet = outSrcPurchaseReturnSheetDet
+
+                // println sheet.warehouse.id
+                // println sheet.warehouseLocation.id
+                // println sheet.item.id
+                // println sheet.batch.name
+                // println sheet.qty
+                def inventoryConsumeResult = inventoryDetailService.consume(sheet.warehouse.id,sheet.warehouseLocation.id, sheet.item.id, sheet.batch.name, sheet.qty)
+                
                 if(inventoryConsumeResult.success){
                     // outSrcPurchaseReturnSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {
@@ -92,12 +100,12 @@ class OutSrcPurchaseReturnSheetDetController {
                         inventoryConsumeResult
                     }
                 }
-            // }
-            // else{
-                // render (contentType: 'application/json') {
-                    // result
-                // } 
-            // }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.batch.item.not.equal')]
+                } 
+            }
         }
         else{
             render (contentType: 'application/json') {
@@ -113,7 +121,7 @@ class OutSrcPurchaseReturnSheetDetController {
         if(outSrcPurchaseReturnSheetDet.qty>0){
             // def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseReturnSheetDet)
        
-            // if(result.success){
+            if(outSrcPurchaseReturnSheetDet.item == outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item){
                 outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
                 def inventoryReplenishResult= inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
                 if(inventoryReplenishResult){
@@ -142,12 +150,12 @@ class OutSrcPurchaseReturnSheetDetController {
                         inventoryReplenishResult
                     }
                 }
-            // }
-            // else{
-            //     render (contentType: 'application/json') {
-            //         result
-            //     }
-            // }
+            }
+            else{
+                render (contentType: 'application/json') {
+                     [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.batch.item.not.equal')]
+                }
+            }
         }
         else{
             render (contentType: 'application/json') {

@@ -77,24 +77,27 @@ class MaterialReturnSheetDetController {
     def save(){
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
+        // println materialReturnSheetDet.item
+        // println materialReturnSheetDet.materialSheetDet.item
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialReturnSheetDet.item.manufactureOrder.item.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
+                [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }
         }
         else{
+            // println materialReturnSheetDet.qty
             if(materialReturnSheetDet.qty>0){
-                /*def inventoryReplenishResult = */inventoryDetailService.replenish(materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty)
-                // if(inventoryReplenishResult.success){
-                //     render (contentType: 'application/json') {
+                def inventoryReplenishResult = inventoryDetailService.replenish(materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty)
+                if(inventoryReplenishResult.success){
+                    render (contentType: 'application/json') {
                         domainService.save(materialReturnSheetDet)
-                //     }
-                // }
-                // else{
-                //     render (contentType: 'application/json') {
-                //         inventoryReplenishResult
-                //     }
-                // }
+                    }
+                }
+                else{
+                    render (contentType: 'application/json') {
+                        inventoryReplenishResult
+                    }
+                }
             }
             else{
                 render (contentType: 'application/json') {
@@ -112,7 +115,7 @@ class MaterialReturnSheetDetController {
         
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialReturnSheetDet.item.manufactureOrder.item.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
+                [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }
         }
         else{
