@@ -73,14 +73,12 @@ class SaleReturnSheetDetController {
 
     }
     //PS save、update、delete需加transaction處理
+    @Transactional
     def save = {
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
-
-        //
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
                 def inventoryReplenishResult  = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-                // if(inventoryReplenishResult.success){
                      render (contentType: 'application/json') {
                         domainService.save(saleReturnSheetDet)
                    }
@@ -99,7 +97,7 @@ class SaleReturnSheetDetController {
 
     }
 
-
+    @Transactional
     def update = {
         def  saleReturnSheetDet = new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
@@ -134,7 +132,7 @@ class SaleReturnSheetDetController {
     }
 
 
-
+    @Transactional
     def delete = {
 
         def  saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
