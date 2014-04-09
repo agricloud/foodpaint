@@ -79,15 +79,32 @@ class OutSrcPurchaseReturnSheetDetController {
         def outSrcPurchaseReturnSheetDet=new OutSrcPurchaseReturnSheetDet(params)
         if(outSrcPurchaseReturnSheetDet.qty>0){
             // def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseReturnSheetDet)
+            
+            println outSrcPurchaseReturnSheetDet.qty
+            println outSrcPurchaseReturnSheetDet.manufactureOrder.qty
+            println outSrcPurchaseReturnSheetDet.item
+            println outSrcPurchaseReturnSheetDet.manufactureOrder.item
+            println outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item
+
             if(outSrcPurchaseReturnSheetDet.item == outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item){
                 def sheet = outSrcPurchaseReturnSheetDet
 
-                // println sheet.warehouse.id
-                // println sheet.warehouseLocation.id
-                // println sheet.item.id
-                // println sheet.batch.name
-                // println sheet.qty
-                def inventoryConsumeResult = inventoryDetailService.consume(sheet.warehouse.id,sheet.warehouseLocation.id, sheet.item.id, sheet.batch.name, sheet.qty)
+                println sheet.warehouse.id
+                println sheet.warehouseLocation.id
+                println sheet.item.id
+                println sheet.batch.name
+                println sheet.qty
+                println ""
+                println params.warehouse.id
+                println params.warehouseLocation.id
+                println params.item.id
+                println params.batch.name
+                println params.qty
+                println ""
+                println InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(sheet.warehouse,sheet.warehouseLocation,sheet.item,sheet.batch)
+                println ""
+              
+                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty)
                 
                 if(inventoryConsumeResult.success){
                     // outSrcPurchaseReturnSheetDet.batch = (Batch) result.batch
