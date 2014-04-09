@@ -8,7 +8,6 @@ import grails.transaction.Transactional
 class PurchaseReturnSheetDetController {
 
     def domainService
-    def batchService  
     def inventoryDetailService   //庫存處理
 
     def index = {
@@ -78,14 +77,12 @@ class PurchaseReturnSheetDetController {
     @Transactional
     def save(){
         def purchaseReturnSheetDet=new PurchaseReturnSheetDet(params)
-        if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch.name == purchaseReturnSheetDet.purchaseSheetDet.batch.name){
+        if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch == purchaseReturnSheetDet.purchaseSheetDet.batch){
             if(purchaseReturnSheetDet.qty>0){
-                purchaseReturnSheetDet.properties = params
-                def saveBatch = Batch.get(params.batch.id)
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id,saveBatch.name , purchaseReturnSheetDet.qty)
+                def inventoryConsumeResult = inventoryDetailService.consume(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id,purchaseReturnSheetDet.batch.name , purchaseReturnSheetDet.qty)
                 if(inventoryConsumeResult.success){
                     render (contentType: 'application/json') {
-                    domainService.save(purchaseReturnSheetDet)
+                        domainService.save(purchaseReturnSheetDet)
                     }
                 }
                 else{
@@ -101,21 +98,21 @@ class PurchaseReturnSheetDetController {
             }  
         }
         else{
-                render (contentType: 'application/json') {
-                    [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args: [purchaseReturnSheetDet])]
-                }
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal', args: [purchaseReturnSheetDet])]
             }
+        }
     }
 
     @Transactional
     def update() {
         def purchaseReturnSheetDet = new PurchaseReturnSheetDet(params)
-         if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch.name == purchaseReturnSheetDet.purchaseSheetDet.batch.name){
+         if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch == purchaseReturnSheetDet.purchaseSheetDet.batch){
             if(purchaseReturnSheetDet.qty>0){
-                def updateBatch = Batch.get(params.batch.id)
                 purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
-                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, purchaseReturnSheetDet.qty)
+                def inventoryReplenishResult = inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty)
                 if(inventoryReplenishResult.success){
+                    def updateBatch = Batch.get(params.batch.id)
                     def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
                     if(inventoryConsumeResult.success){
                         purchaseReturnSheetDet.properties = params
@@ -137,7 +134,7 @@ class PurchaseReturnSheetDetController {
                 }
                 else{
                     render (contentType: 'application/json') {
-                        [success: false,message:message(code: 'purchaseReturnSheetDet.message.create.failed')]
+                        inventoryReplenishResult
                     }        
                 }
             }
@@ -149,7 +146,7 @@ class PurchaseReturnSheetDetController {
         }  
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args: [purchaseReturnSheetDet])]
+                [success: false,message:message(code: 'purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal', args: [purchaseReturnSheetDet])]
             }
         }
     }
@@ -160,27 +157,26 @@ class PurchaseReturnSheetDetController {
     def delete(){
         def  purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
 
-        if(!inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty).success){
-            render (contentType: 'application/json') {
-                [success:false, message:message(code: 'inventoryDetail.had.been.used', args: [purchaseReturnSheetDet.warehouse, purchaseReturnSheetDet.item, purchaseReturnSheetDet.batch])]
-            }
-        }
-        else{
-
-            def result
-            try {
-                
+        def result
+        try {
+            def inventoryReplenishResult=inventoryDetailService.replenish(purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty)
+            
+            if(inventoryReplenishResult.success)
                 result = domainService.delete(purchaseReturnSheetDet)
-            
-            }catch(e){
-                log.error e
-                def msg = message(code: 'default.message.delete.failed', args: [purchaseReturnSheetDet, e.getMessage()])
-                result = [success:false, message: msg] 
+            else{
+                render (contentType: 'application/json') {
+                    inventoryReplenishResult
+                }
             }
-            
-            render (contentType: 'application/json') {
-                result
-            }
+        
+        }catch(e){
+            log.error e
+            def msg = message(code: 'default.message.delete.failed', args: [purchaseReturnSheetDet, e.getMessage()])
+            result = [success:false, message: msg] 
+        }
+        
+        render (contentType: 'application/json') {
+            result
         }
     }
 }

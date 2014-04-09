@@ -2,6 +2,7 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 class SaleReturnSheetDetController {
 
@@ -71,16 +72,23 @@ class SaleReturnSheetDetController {
         }
 
     }
-    //PS save、update、delete需加transaction處理
+
     @Transactional
-    def save = {
+    def save(){
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
-                def inventoryReplenishResult  = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-                     render (contentType: 'application/json') {
+                def inventoryReplenishResult = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
+                if(inventoryReplenishResult.success){
+                    render (contentType: 'application/json') {
                         domainService.save(saleReturnSheetDet)
-                   }
+                    }
+                }
+                else{
+                    render (contentType: 'application/json') {
+                        inventoryReplenishResult
+                    } 
+                }
             }
             else{
                 render (contentType: 'application/json') {
@@ -90,14 +98,14 @@ class SaleReturnSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleReturnSheetDet.customerOrderDet)]
+                [success: false,message:message(code: 'saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal', args:saleReturnSheetDet)]
             }
         }
 
     }
 
     @Transactional
-    def update = {
+    def update(){
         def  saleReturnSheetDet = new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
@@ -105,10 +113,17 @@ class SaleReturnSheetDetController {
                 def inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
                 if(inventoryConsumeResult.success){          
                     def updateBatch = Batch.get(params.batch.id)
-                    inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())         
-                    saleReturnSheetDet.properties = params
-                    render (contentType: 'application/json') {
-                        domainService.save(saleReturnSheetDet)
+                    def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())         
+                    if(inventoryReplenishResult.success){
+                        saleReturnSheetDet.properties = params
+                        render (contentType: 'application/json') {
+                            domainService.save(saleReturnSheetDet)
+                        }
+                    }
+                    else{
+                        render (contentType: 'application/json') {
+                            inventoryReplenishResult
+                        }
                     }
                 }
                 else{
@@ -125,22 +140,26 @@ class SaleReturnSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleReturnSheetDet.customerOrderDet)]
+                [success: false,message:message(code: 'saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal', args:saleReturnSheetDet)]
             }
         }         
     }
 
 
     @Transactional
-    def delete = {
+    def delete(){
 
-        def  saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-
+        def saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
         def result
         try {
-            inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
-            result = domainService.delete(saleReturnSheetDet)
-        
+            def inventoryConsumeResult = inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
+           
+            if(inventoryConsumeResult.success)
+                result = domainService.delete(saleReturnSheetDet)
+            else{
+                inventoryConsumeResult
+            }
+
         }catch(e){
             log.error e
             def msg = message(code: 'default.message.delete.failed', args: [saleReturnSheetDet, e.getMessage()])

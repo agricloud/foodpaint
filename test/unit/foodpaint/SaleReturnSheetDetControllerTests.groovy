@@ -184,15 +184,15 @@ class SaleReturnSheetDetControllerTests {
         def warehouseLocation1 = WarehouseLocation.get(1)
         def saleReturnSheetDet1 = new SaleReturnSheetDet(params).save(failOnError: true, flush: true)
 
-        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)
-        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:1000).save(failOnError: true, flush: true)
 
         controller.delete()
 
         assert response.json.success == true
         assert SaleReturnSheetDet.list().size() == 0
-        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==0
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
 
 
     }
