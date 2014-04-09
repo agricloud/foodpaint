@@ -103,7 +103,7 @@ class OutSrcPurchaseReturnSheetDetController {
                 println ""
                 println InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(sheet.warehouse,sheet.warehouseLocation,sheet.item,sheet.batch)
                 println ""
-              
+              //傳入的params沒有batch.name 只有batch.id
                 def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty)
                 
                 if(inventoryConsumeResult.success){

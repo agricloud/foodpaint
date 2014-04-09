@@ -46,13 +46,6 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
 
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseReturnSheet1 = OutSrcPurchaseReturnSheet.get(1)
         def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
         
         //設定傳入的params值
@@ -70,13 +63,6 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
     void testShow(){
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseReturnSheet1 = OutSrcPurchaseReturnSheet.get(1)        
         def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -96,6 +82,9 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
+
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:2000).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:2000).save(failOnError: true, flush: true)
 
         //設定傳入的params值
         populateValidParams(params)
@@ -132,11 +121,8 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
 
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseReturnSheet1 = OutSrcPurchaseReturnSheet.get(1)        
         def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
                 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseReturnSheetDet11.qty).save(failOnError: true, flush: true)
