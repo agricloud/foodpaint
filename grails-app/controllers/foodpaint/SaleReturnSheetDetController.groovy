@@ -10,7 +10,6 @@ class SaleReturnSheetDetController {
     def inventoryDetailService
 
     def index = {
-
         def saleReturnSheet = SaleReturnSheet.get(params.saleReturnSheet.id)
 
         if(saleReturnSheet){
