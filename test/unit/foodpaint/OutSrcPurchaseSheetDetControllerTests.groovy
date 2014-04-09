@@ -47,13 +47,6 @@ class OutSrcPurchaseSheetDetControllerTests {
 
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseSheet1 = OutSrcPurchaseSheet.get(1)
         def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
         
         //設定傳入的params值
@@ -71,13 +64,6 @@ class OutSrcPurchaseSheetDetControllerTests {
     void testShow(){
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseSheet1 = OutSrcPurchaseSheet.get(1)        
         def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -94,6 +80,7 @@ class OutSrcPurchaseSheetDetControllerTests {
     }
 
     void testSave(){
+        
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
@@ -134,11 +121,8 @@ class OutSrcPurchaseSheetDetControllerTests {
 
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseSheet1 = OutSrcPurchaseSheet.get(1)        
         def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
                 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseSheetDet11.qty).save(failOnError: true, flush: true)
@@ -168,11 +152,8 @@ class OutSrcPurchaseSheetDetControllerTests {
 
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseSheet1 = OutSrcPurchaseSheet.get(1)        
         def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
                 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseSheetDet11.qty).save(failOnError: true, flush: true)
@@ -204,11 +185,8 @@ class OutSrcPurchaseSheetDetControllerTests {
 
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)
-        def supplier1 = Supplier.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def outSrcPurchaseSheet1 = OutSrcPurchaseSheet.get(1)        
         def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
   
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseSheetDet11.qty).save(failOnError: true, flush: true)

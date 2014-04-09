@@ -81,7 +81,7 @@ class PurchaseSheetDetController {
         if(purchaseSheetDet.qty>0){
             def result = batchService.findOrCreateBatchInstanceByJson(params, purchaseSheetDet)
             if(result.success){
-                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseSheetDet.qty)
+                def inventoryReplenishResult = inventoryDetailService.replenish(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty)
                 if(inventoryReplenishResult.success){
                     purchaseSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {

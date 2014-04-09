@@ -51,12 +51,6 @@ class MaterialSheetDetControllerTests {
         populateValidParams(params)
 
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
         
         //設定傳入的params值
@@ -76,12 +70,6 @@ class MaterialSheetDetControllerTests {
         populateValidParams(params)
 
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -130,8 +118,6 @@ class MaterialSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
@@ -142,6 +128,7 @@ class MaterialSheetDetControllerTests {
         def inventory2 = new Inventory(warehouse:warehouse1,item:item3,qty:500).save(failOnError: true, flush: true)
         def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)
         
+        params["item.id"] = 3
         params["batch.id"] = 3
         params["qty"] = 500
         controller.update()
@@ -165,8 +152,6 @@ class MaterialSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialSheet1 = MaterialSheet.get(1)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)

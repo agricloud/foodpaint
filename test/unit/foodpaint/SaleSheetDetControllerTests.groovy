@@ -45,11 +45,6 @@ class SaleSheetDetControllerTests {
         populateValidParams(params)
 
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
         def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
         
         //設定傳入的params值
@@ -67,11 +62,6 @@ class SaleSheetDetControllerTests {
     void testShow(){
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
         def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -117,7 +107,6 @@ class SaleSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
         def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
@@ -150,7 +139,6 @@ class SaleSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def saleSheet1 = SaleSheet.get(1)
         def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)

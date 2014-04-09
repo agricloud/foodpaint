@@ -81,7 +81,7 @@ class StockInSheetDetController {
         if(stockInSheetDet.qty>0){
             def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
             if(result.success){
-                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, stockInSheetDet.qty)
+                def inventoryReplenishResult = inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty)
                 if(inventoryReplenishResult.success){
                     stockInSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {

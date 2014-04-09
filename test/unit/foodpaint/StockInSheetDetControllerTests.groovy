@@ -48,12 +48,6 @@ class StockInSheetDetControllerTests {
     void testIndex(){
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def stockInSheet1 = StockInSheet.get(1)
         def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
         
         //設定傳入的params值
@@ -71,12 +65,6 @@ class StockInSheetDetControllerTests {
     void testShow(){
         populateValidParams(params)
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def stockInSheet1 = StockInSheet.get(1)
         def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -135,14 +123,11 @@ class StockInSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def stockInSheet1 = StockInSheet.get(1)
         def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
                 
-        populateValidParams(params)
         params["batch.name"] = "batch2"
         params["qty"] = 500
         controller.update()
@@ -166,8 +151,6 @@ class StockInSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def stockInSheet1 = StockInSheet.get(1)
         def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
@@ -177,7 +160,6 @@ class StockInSheetDetControllerTests {
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
-        populateValidParams(params)
         params["batch.name"] = "batch2"
         params["qty"] = 500
 
@@ -202,14 +184,11 @@ class StockInSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def stockInSheet1 = StockInSheet.get(1)
         def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
 
-        populateValidParams(params)
         controller.delete()
 
         assert response.json.success == true
