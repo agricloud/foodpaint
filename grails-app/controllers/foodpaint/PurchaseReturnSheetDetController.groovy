@@ -81,10 +81,11 @@ class PurchaseReturnSheetDetController {
         if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch.name == purchaseReturnSheetDet.purchaseSheetDet.batch.name){
             if(purchaseReturnSheetDet.qty>0){
                 purchaseReturnSheetDet.properties = params
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
+                def saveBatch = Batch.get(params.batch.id)
+                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id,saveBatch.name , purchaseReturnSheetDet.qty)
                 if(inventoryConsumeResult.success){
                     render (contentType: 'application/json') {
-                        domainService.save(purchaseReturnSheetDet)
+                    domainService.save(purchaseReturnSheetDet)
                     }
                 }
                 else{
@@ -111,10 +112,11 @@ class PurchaseReturnSheetDetController {
         def purchaseReturnSheetDet = new PurchaseReturnSheetDet(params)
          if(purchaseReturnSheetDet.item == purchaseReturnSheetDet.purchaseSheetDet.item && purchaseReturnSheetDet.batch.name == purchaseReturnSheetDet.purchaseSheetDet.batch.name){
             if(purchaseReturnSheetDet.qty>0){
+                def updateBatch = Batch.get(params.batch.id)
                 purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
-                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, purchaseReturnSheetDet.qty)
+                def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, purchaseReturnSheetDet.qty)
                 if(inventoryReplenishResult.success){
-                    def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong())
+                    def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
                     if(inventoryConsumeResult.success){
                         purchaseReturnSheetDet.properties = params
                         render (contentType: 'application/json') {
