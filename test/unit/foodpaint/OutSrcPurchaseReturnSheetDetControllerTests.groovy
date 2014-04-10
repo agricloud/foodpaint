@@ -125,27 +125,20 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
         def warehouseLocation1 = WarehouseLocation.get(1)
         def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(params).save(failOnError: true, flush: true)
                 
-        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:outSrcPurchaseReturnSheetDet11.qty).save(failOnError: true, flush: true)
-        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:outSrcPurchaseReturnSheetDet11.qty).save(failOnError: true, flush: true)
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
 
-        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
-        
-        populateValidParams(params)
-        params["batch.id"] = 2
         params["qty"] = 500
 
         controller.update()
         //執行結果應允許更新
         assert response.json.success == true
-        assert OutSrcPurchaseReturnSheetDet.list().get(0).batch.name == "batch2"
+        assert OutSrcPurchaseReturnSheetDet.list().get(0).batch.name == "batch1"
         assert OutSrcPurchaseReturnSheetDet.list().get(0).item.id == 1
         assert OutSrcPurchaseReturnSheetDet.list().get(0).qty == 500
         //驗證更新前庫存
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==500
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
-        //驗證更新後庫存
-        assert Inventory.findByWarehouseAndItem(warehouse1,item2).qty==500
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==500
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==500
     }
 
     void testUpdateWithIncorrectBatchData() {
@@ -168,8 +161,8 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
-        populateValidParams(params)
-        params["batch.name"] = "batch2"
+
+        params["batch.id"] = 2
         params["qty"] = 500
 
         controller.update()
@@ -206,7 +199,7 @@ class OutSrcPurchaseReturnSheetDetControllerTests {
 
         assert response.json.success == true
         assert OutSrcPurchaseReturnSheetDet.list().size() == 0
-        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==0
-        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
+        assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==2000
+        assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==2000
     }
 }
