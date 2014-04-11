@@ -77,10 +77,9 @@ class MaterialReturnSheetDetController {
     def save(){
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
-        //**沒有判斷批號？
-        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
+        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item&& materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
+                [success:false, message:message(code: 'materialReturnSheetDet.itemOrBatch.materialSheetDet.itemOrBatch.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }
         }
         else{
@@ -110,10 +109,9 @@ class MaterialReturnSheetDetController {
     def update() {
 
         def  materialReturnSheetDet = new MaterialReturnSheetDet(params)
-        //**沒有判斷批號？
-        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
+        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
+                [success:false, message:message(code: 'materialReturnSheetDet.itemOrBatch.materialSheetDet.itemOrBatch.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }
         }
         else{
