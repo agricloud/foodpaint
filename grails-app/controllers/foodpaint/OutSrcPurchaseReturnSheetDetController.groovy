@@ -7,7 +7,6 @@ import grails.transaction.Transactional
 class OutSrcPurchaseReturnSheetDetController {
 
     def domainService
-    // def batchService
     def inventoryDetailService
 
     def index = {
@@ -78,41 +77,10 @@ class OutSrcPurchaseReturnSheetDetController {
     def save(){
         def outSrcPurchaseReturnSheetDet=new OutSrcPurchaseReturnSheetDet(params)
         if(outSrcPurchaseReturnSheetDet.qty>0){
-            // def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseReturnSheetDet)
-            
-            println outSrcPurchaseReturnSheetDet.qty
-            println outSrcPurchaseReturnSheetDet.manufactureOrder.qty
-            println outSrcPurchaseReturnSheetDet.item
-            println outSrcPurchaseReturnSheetDet.manufactureOrder.item
-            println outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item
-
-            if(outSrcPurchaseReturnSheetDet.batch.item == outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item){
-                def sheet = outSrcPurchaseReturnSheetDet
-
-                println sheet.warehouse.id
-                println sheet.warehouseLocation.id
-                println sheet.item.id
-                println sheet.batch.name
-                println sheet.qty
-                println ""
-                println params.warehouse.id
-                println params.warehouseLocation.id
-                println params.item.id
-                println params.batch.name
-                println params.qty
-                println ""
-                
-                def updateBatch = Batch.get(params.batch.id)
-                
-                println InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(sheet.warehouse,sheet.warehouseLocation,sheet.item,updateBatch)
-                println ""
-              //傳入的params沒有batch.name 只有batch.id
-                
-                
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
+            if(outSrcPurchaseReturnSheetDet.item ==outSrcPurchaseReturnSheetDet.batch.item&&outSrcPurchaseReturnSheetDet.item == outSrcPurchaseReturnSheetDet.manufactureOrder.item){
+                def inventoryConsumeResult = inventoryDetailService.consume(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
 
                 if(inventoryConsumeResult.success){
-                    // outSrcPurchaseReturnSheetDet.batch = (Batch) result.batch
                     render (contentType: 'application/json') {
                         domainService.save(outSrcPurchaseReturnSheetDet)
                     }
@@ -125,7 +93,7 @@ class OutSrcPurchaseReturnSheetDetController {
             }
             else{
                 render (contentType: 'application/json') {
-                    [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.batch.item.not.equal')]
+                    [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.item.not.equal', args: [outSrcPurchaseReturnSheetDet])]
                 } 
             }
         }
@@ -139,42 +107,26 @@ class OutSrcPurchaseReturnSheetDetController {
 
     @Transactional
     def update() {
-        // 現在的單身資料
-        def outSrcPurchaseReturnSheetDet_params = new OutSrcPurchaseReturnSheetDet(params)
-        if(outSrcPurchaseReturnSheetDet_params.qty>0){
-            // def result = batchService.findOrCreateBatchInstanceByJson(params, outSrcPurchaseReturnSheetDet)
-            // 使用id查出Batch
-            def updateBatch = Batch.get(params.batch.id)
-            println updateBatch
-            // 查出先前儲存之進貨退出單身檔
-            println "outSrcPurchaseReturnSheetDet.id: "+params.id
-            def outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
-            println outSrcPurchaseReturnSheetDet.batch
-            if(outSrcPurchaseReturnSheetDet_params.batch.item==outSrcPurchaseReturnSheetDet.batch.item && outSrcPurchaseReturnSheetDet_params.batch==outSrcPurchaseReturnSheetDet.batch){
-                
-                println outSrcPurchaseReturnSheetDet.warehouse.id
-                println outSrcPurchaseReturnSheetDet.warehouseLocation.id
-                println outSrcPurchaseReturnSheetDet.manufactureOrder
-                println outSrcPurchaseReturnSheetDet.manufactureOrder.batch.item
-                println outSrcPurchaseReturnSheetDet.batch.name
-                println outSrcPurchaseReturnSheetDet.item.id
-                println outSrcPurchaseReturnSheetDet.qty
-                // (補充存貨)還原回到還沒退貨
-                def inventoryReplenishResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id, outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, updateBatch.name, outSrcPurchaseReturnSheetDet.qty)
+        def outSrcPurchaseReturnSheetDet = new OutSrcPurchaseReturnSheetDet(params)
+        if(outSrcPurchaseReturnSheetDet.qty>0){
+            if(outSrcPurchaseReturnSheetDet.item ==outSrcPurchaseReturnSheetDet.batch.item&&outSrcPurchaseReturnSheetDet.item==outSrcPurchaseReturnSheetDet.manufactureOrder.item){
+                outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
 
+                // (補充存貨)還原回到還沒退貨
+                def inventoryReplenishResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id, outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
                 if(inventoryReplenishResult){
+                    def updateBatch = Batch.get(params.batch.id)
                     // (消耗存貨)做本次託外生產進貨退出
                     def inventoryConsumeResult=inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
                     if(inventoryConsumeResult.success){
                         outSrcPurchaseReturnSheetDet.properties = params
-                        // outSrcPurchaseReturnSheetDet.batch = (Batch) result.batch
                         render (contentType: 'application/json') {
                             domainService.save(outSrcPurchaseReturnSheetDet)
                         }
                     }
                     else{
                         // (還原存貨)還原到補充之前
-                        def inventoryRecoveryResult= inventoryDetailService.consume(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty.toLong())
+                        def inventoryRecoveryResult= inventoryDetailService.consume(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
                         if(inventoryRecoveryResult.success){
                             render (contentType: 'application/json') {
                                 inventoryConsumeResult
@@ -193,7 +145,7 @@ class OutSrcPurchaseReturnSheetDetController {
             }
             else{
                 render (contentType: 'application/json') {
-                     [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.batch.item.not.equal')]
+                     [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.item.manufactureOrder.item.not.equal', args: [outSrcPurchaseReturnSheetDet])]
                 }
             }
         }
@@ -213,13 +165,13 @@ class OutSrcPurchaseReturnSheetDetController {
         
         def result
         try {
-            def inventoryConsumeResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
-            if(inventoryConsumeResult.success){
+            def inventoryReplenishResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty)
+            if(inventoryReplenishResult.success){
                 result = domainService.delete(outSrcPurchaseReturnSheetDet)
             }
             else{
                 render (contentType: 'application/json') {
-                    inventoryConsumeResult
+                    inventoryReplenishResult
                 }
             }   
         }catch(e){

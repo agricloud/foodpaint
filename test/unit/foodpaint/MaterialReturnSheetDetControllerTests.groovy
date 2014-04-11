@@ -53,19 +53,8 @@ class MaterialReturnSheetDetControllerTests {
         //注入params值
         populateValidParams(params)
 
-        //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialReturnSheet1 = MaterialReturnSheet.get(1)
-        def materialSheetDet1 = MaterialSheetDet.get(1)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
         
-        //設定傳入的params值
-        params["materialReturnSheet.id"]=1
-
         //呼叫PurchaseSheetDetController執行index()
         controller.index()
         //驗證結果
@@ -80,12 +69,6 @@ class MaterialReturnSheetDetControllerTests {
         populateValidParams(params)
 
         //產生預設資料
-        def item1 = Item.get(1)
-        def batch1 = Batch.get(1)
-        def warehouse1 = Warehouse.get(1)
-        def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialReturnSheet1 = MaterialReturnSheet.get(1)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
        
         //設定傳入的params值
@@ -133,8 +116,6 @@ class MaterialReturnSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialReturnSheet1 = MaterialReturnSheet.get(1)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
@@ -159,8 +140,6 @@ class MaterialReturnSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialReturnSheet1 = MaterialReturnSheet.get(1)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
@@ -193,8 +172,6 @@ class MaterialReturnSheetDetControllerTests {
         def batch1 = Batch.get(1)
         def warehouse1 = Warehouse.get(1)
         def warehouseLocation1 = WarehouseLocation.get(1)
-        def manufactureOrder1 = ManufactureOrder.get(1)
-        def materialReturnSheet1 = MaterialReturnSheet.get(1)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)

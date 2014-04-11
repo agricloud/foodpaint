@@ -77,15 +77,13 @@ class MaterialReturnSheetDetController {
     def save(){
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
-        // println materialReturnSheetDet.item
-        // println materialReturnSheetDet.materialSheetDet.item
+        //**沒有判斷批號？
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }
         }
         else{
-            // println materialReturnSheetDet.qty
             if(materialReturnSheetDet.qty>0){
                 def inventoryReplenishResult = inventoryDetailService.replenish(materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty)
                 if(inventoryReplenishResult.success){
@@ -112,7 +110,7 @@ class MaterialReturnSheetDetController {
     def update() {
 
         def  materialReturnSheetDet = new MaterialReturnSheetDet(params)
-        
+        //**沒有判斷批號？
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialReturnSheetDet.item.materialSheetDet.item.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
