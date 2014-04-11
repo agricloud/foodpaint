@@ -7,6 +7,7 @@ class ApiController {
 
     def traceService
     def messageSource
+    def inventoryDetailService
 
     /**
      * PING
@@ -255,6 +256,15 @@ class ApiController {
 
     }
 
+    //查詢指定批號位於哪些倉庫中
+    def queryInventoryByBatchAndGroupByWarehouse(String batchName){
+        def inventoryDetailsGroupByWarehouse = inventoryDetailService.indexByBatchAndGroupByWarehouse(batchName)
+
+        render (contentType: 'text/json') {
+            [data:inventoryDetailsGroupByWarehouse]
+        }
+    }
+
     //查詢指定客戶、批號之銷貨單單身
     def querySaleSheetDetByCustomerAndBatch(String customerName, String batchName){
         def customer=Customer.findByName(customerName)
@@ -264,7 +274,6 @@ class ApiController {
             saleSheet.customer == customer && batch==batch
         }.list()
 
-        println saleSheetDets.class
         render (contentType: 'text/json') {
             [data:saleSheetDets]
         }

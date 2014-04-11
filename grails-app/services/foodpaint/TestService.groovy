@@ -65,7 +65,7 @@ class TestService {
         def supplier2 = new Supplier(name:"pinchia",title:"品佳化工",description:"",country:Country.TAIWAN).save(failOnError: true)
         def workstation1 = new Workstation(name:"oilworkstation",title:"橄欖油加工線",description:"橄欖油加工線").save(failOnError: true)
         def customer1 = new Customer(name:"freshmarket",title:"新鮮超市").save(failOnError: true)
-        def warehouse1 = new Warehouse(name:"oilwarehouse1",title:"full倉庫").save(failOnError: true)
+        def warehouse1 = new Warehouse(name:"oilwarehouse1",title:"oil倉庫").save(failOnError: true)
         def warehouseLocation1 = new WarehouseLocation(name:"oilwarehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true)
         def warehouseLocation2 = new WarehouseLocation(name:"oilwarehouseLocation2",warehouse:warehouse1,title:"儲位2").save(failOnError: true)
 
@@ -116,6 +116,28 @@ class TestService {
         // batch11.addToBatchRoutes(batchRoute9).save(failOnError: true)
         // batch11.addToBatchRoutes(batchRoute10).save(failOnError: true)
         // batch11.addToBatchRoutes(batchRoute11).save(failOnError: true)
+
+        //假設庫存 與案例單據無關
+        def inventory11 = new Inventory(warehouse:warehouse1,item:item1,qty:1000).save(failOnError: true, flush: true)
+        def inventoryDetail1111 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1211 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item1,batch:batch1,qty:500).save(failOnError: true, flush: true)
+        def warehouse2=Warehouse.get(1)
+        def inventoryDetail2211 = new InventoryDetail(warehouse:warehouse2,warehouseLocation:warehouseLocation2,item:item1,batch:batch1,qty:500).save(failOnError: true, flush: true)
+        def inventory12 = new Inventory(warehouse:warehouse1,item:item2,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1122 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item2,batch:batch2,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1222 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item2,batch:batch2,qty:100).save(failOnError: true, flush: true)
+        def inventory13 = new Inventory(warehouse:warehouse1,item:item3,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1133 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1233 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item3,batch:batch3,qty:200).save(failOnError: true, flush: true)
+        def inventory14 = new Inventory(warehouse:warehouse1,item:item4,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1144 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item4,batch:batch4,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1244 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item4,batch:batch4,qty:300).save(failOnError: true, flush: true)
+        def inventory15 = new Inventory(warehouse:warehouse1,item:item5,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1155 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item5,batch:batch5,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail1255 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item5,batch:batch5,qty:400).save(failOnError: true, flush: true)
+        def inventory111 = new Inventory(warehouse:warehouse1,item:item11,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail111111 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item11,batch:batch11,qty:500).save(failOnError: true, flush: true)
+        def inventoryDetail121111 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation2,item:item11,batch:batch11,qty:1000).save(failOnError: true, flush: true)
 
         //訂單
         def customerOrder1 = new CustomerOrder(typeName:"A11",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
