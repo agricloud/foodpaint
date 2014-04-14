@@ -246,6 +246,8 @@ class ConvertService {
 		    result["item.title"] = inventory.item.title
 		}
 	    result.qty = inventory.qty
+	    result.lastInDate = inventory.lastInDate
+	    result.lastOutDate = inventory.lastOutDate
 
 	    result
     }
@@ -284,6 +286,8 @@ class ConvertService {
 		}
 
 	    result.qty = inventoryDetail.qty
+	    result.lastInDate = inventoryDetail.lastInDate
+	    result.lastOutDate = inventoryDetail.lastOutDate
 
 	    result
     }

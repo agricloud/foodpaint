@@ -13,6 +13,16 @@ class WarehouseLocation {
     String name
 	String title
     String description
+    
+    /*
+    *  容量
+    */
+    Long capacity
+    /*
+    *  容量單位
+    */
+    String capacityUnit
+
     String remark
 
 	static constraints = {
@@ -21,6 +31,8 @@ class WarehouseLocation {
 		creator nullable:true
 		name unique: true, blank: false
         description nullable: true
+        capacity nullable: true
+        capacityUnit nullable: true
 		remark nullable: true
 	}
 

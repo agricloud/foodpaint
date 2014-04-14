@@ -8,7 +8,7 @@ class InventoryService {
 	def domainService
 
 	@Transactional
-	def replenish(warehouseId,itemId,qty){
+	def replenish(warehouseId,itemId,qty,date){
 		if(qty>=0){
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
@@ -19,12 +19,14 @@ class InventoryService {
 				inventory = new Inventory()
 				inventory.warehouse = warehouse
 				inventory.item = item
-				inventory.qty = qty
-				domainService.save(inventory)
+				inventory.qty = qty	
 			}
 			else{
 				inventory.qty += qty
 			}
+			if(date && date > inventory.lastInDate)
+				inventory.lastInDate = date
+			domainService.save(inventory)
 			return  [success:true]
 		}
 		else
@@ -32,7 +34,7 @@ class InventoryService {
 	}
 
 	@Transactional
-	def consume(warehouseId,itemId,qty){
+	def consume(warehouseId,itemId,qty,date){
 		Object[] args=[]
 
 		if(qty>=0){
@@ -43,6 +45,9 @@ class InventoryService {
 			def inventory = Inventory.findByWarehouseAndItem(warehouse,item)
 			if(inventory && inventory.qty >= qty){
 				inventory.qty -= qty
+				if(date && date > inventory.lastOutDate)
+					inventory.lastOutDate = date
+				domainService.save(inventory)
 				return  [success:true]
 			}
 			else{

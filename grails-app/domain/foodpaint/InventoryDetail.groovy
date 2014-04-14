@@ -17,6 +17,16 @@ class InventoryDetail {
 
     long qty = 0
 
+    /*
+    *  最近入庫日期
+    */
+    Date lastInDate = new Date()
+
+    /*
+    *  最近出庫日期
+    */
+    Date lastOutDate = new Date()
+
 	static constraints = {
         batch(unique:['warehouse','warehouseLocation','item'])
         site nullable:true

@@ -64,7 +64,7 @@ class InventoryDetailController {
 
     def save = {
         def batch=Batch.get(params.batch.id)
-        def replenishResult=inventoryDetailService.replenish(params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toLong())
+        def replenishResult=inventoryDetailService.replenish(params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toLong(),new Date())
         if(replenishResult.success){
             render (contentType: 'application/json') {
                 [success:true, message: message(code: 'default.message.save.success', args: [replenishResult.inventoryDetail])]
@@ -77,16 +77,16 @@ class InventoryDetailController {
 
         def inventoryDetail = InventoryDetail.get(params.id)
 
-        if(inventoryDetailService.consume(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty).success){
+        if(inventoryDetailService.consume(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty, null).success){
             def updateBatch = Batch.get(params.batch.id)
-            def replenishResult = inventoryDetailService.replenish(params.warehouse.id, params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong())
+            def replenishResult = inventoryDetailService.replenish(params.warehouse.id, params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(), null)
             if(replenishResult.success){
                 render (contentType: 'application/json') {
                     [success:true, message: message(code: 'default.message.update.success', args: [inventoryDetail])]
                 }
             }
             else{
-                inventoryDetailService.replenish(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty)
+                inventoryDetailService.replenish(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty, null)
                 render (contentType: 'application/json') {
                     replenishResult
                 }
@@ -99,7 +99,7 @@ class InventoryDetailController {
         
         def inventoryDetail = InventoryDetail.get(params.id)
 
-        if(inventoryDetailService.consume(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty).success){
+        if(inventoryDetailService.consume(inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty, null).success){
             def result
             try {         
                 result = domainService.delete(inventoryDetail)

@@ -9,11 +9,11 @@ class InventoryDetailService {
 	def inventoryService
 
 	@Transactional
-	def replenish(warehouseId,warehouseLocationId,itemId,batchName,qty){
+	def replenish(warehouseId,warehouseLocationId,itemId,batchName,qty,date){
 		Object[] args=[]
 		if(qty>=0){
 
-			inventoryService.replenish(warehouseId,itemId,qty)
+			inventoryService.replenish(warehouseId,itemId,qty,date)
 
 			def warehouse = Warehouse.get(warehouseId)
 			def warehouseLocation = WarehouseLocation.get(warehouseLocationId)
@@ -29,8 +29,8 @@ class InventoryDetailService {
 					inventoryDetail.warehouseLocation = warehouseLocation
 					inventoryDetail.item = item
 					inventoryDetail.batch = batch
-					inventoryDetail.qty = qty
-					domainService.save(inventoryDetail)
+					inventoryDetail.qty = qty	
+					
 				}
 				else{
 					args = [warehouse, warehouseLocation]
@@ -39,7 +39,11 @@ class InventoryDetailService {
 			}
 			else{
 				inventoryDetail.qty += qty
-			}
+	}
+			if(date && date > inventoryDetail.lastInDate)
+				inventoryDetail.lastInDate = date
+			domainService.save(inventoryDetail)
+
 			return [success:true, inventoryDetail:inventoryDetail]
 		}
 		else
@@ -47,11 +51,11 @@ class InventoryDetailService {
 	}
 
 	@Transactional
-	def consume(warehouseId,warehouseLocationId,itemId,batchName,qty){
+	def consume(warehouseId,warehouseLocationId,itemId,batchName,qty,date){
 		Object[] args=[]
 		if(qty>=0){
 
-			inventoryService.consume(warehouseId,itemId,qty)
+			inventoryService.consume(warehouseId,itemId,qty,date)
 
 			def warehouse = Warehouse.get(warehouseId)
 			def warehouseLocation = WarehouseLocation.get(warehouseLocationId)
@@ -61,6 +65,9 @@ class InventoryDetailService {
 			def inventoryDetail = InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse,warehouseLocation,item,batch)
 			if(inventoryDetail && inventoryDetail.qty >= qty){
 				inventoryDetail.qty -= qty
+				if(date && date > inventoryDetail.lastOutDate)
+					inventoryDetail.lastOutDate = date
+				domainService.save(inventoryDetail)
 				return  [success:true]
 			}
 			else{
