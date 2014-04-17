@@ -1127,27 +1127,27 @@ class ConvertService {
     def saleReturnSheetDetParseJson(saleReturnSheetDet){
     	def result = [:]
 
-    		result.dateCreated = saleReturnSheetDet.dateCreated
-	    	result.lastUpdated = saleReturnSheetDet.lastUpdated
-	    	result.site = saleReturnSheetDet.site
-		result.saleSheetDet = saleReturnSheet.saleSheetDet 
-      		result.id = saleReturnSheetDet.id
-    		result.name = saleReturnSheetDet.name
-		result.typeName =saleReturnSheetDet.typeName
-		result.sequence = saleReturnSheetDet.sequence
-		result.qty = saleReturnSheetDet.qty
+    	result.dateCreated =  saleReturnSheetDet.dateCreated
+	    result.lastUpdated =  saleReturnSheetDet.lastUpdated
+	    result.site =  saleReturnSheetDet.site
 
-		result.saleReturnSheetDet= saleReturnSheetDet.saleReturnSheet
+        result.id = saleReturnSheetDet.id
+    	result.name =  saleReturnSheetDet.name
+		result.typeName = saleReturnSheetDet.typeName
+		result.sequence = saleReturnSheetDet.sequence
+		result.qty =  saleReturnSheetDet.qty
+
+		result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
 		result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
 
-		if(saleReturnSheetDet.customerOrderDet){
-			result.customerOrderDet = saleReturnSheetDet.customerOrderDet
-			result["customerOrderDet.id"] = saleReturnSheetDet.customerOrderDet.id
-	        result["customerOrderDet.name"] = saleReturnSheetDet.customerOrderDet.name
-	        result["customerOrderDet.typeName"] = saleReturnSheetDett.customerOrderDet.typeName
-	        result["customerOrderDet.sequence"] = saleReturnSheetDet.customerOrderDet.sequence
-	        result.customerOrder = saleReturnSheetDet.customerOrderDet.customerOrder
-	        result["customerOrder.id"] = saleReturnSheetDet.customerOrderDet.customerOrder.id
+		if(saleReturnSheetDet.saleSheetDet){
+			result.saleSheetDet = saleReturnSheetDet.saleSheetDet
+			result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
+	        result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+	        result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
+	        result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
+	        result.saleSheetDet = saleReturnSheetDet.saleSheetDet.saleSheet
+	        result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.saleSheet.id
 	    }
 
 	    if(saleReturnSheetDet.batch){
@@ -1167,29 +1167,17 @@ class ConvertService {
 	    }
 
 	    if(saleReturnSheetDet.warehouse){
-			result.warehouse =saleReturnSheetDet.warehouse
-			result["warehouse.id"] =saleReturnSheetDet.warehouse.id
-	        result["warehouse.name"] =saleReturnSheetDet.warehouse.name
-	        result["warehouse.title"] =saleReturnSheetDet.warehouse.title
+			result.warehouse = saleSheetDet.warehouse
+			result["warehouse.id"] = saleSheetDet.warehouse.id
+	        result["warehouse.name"] = saleSheetDet.warehouse.name
+	        result["warehouse.title"] = saleSheetDet.warehouse.title
 	    }
 
-	    if(saleReturnSheetDet.storageLocation){
-	    	result.storageLocation = saleReturnSheetDet.storageLocation
-		    result["storageLocation.id"] = saleReturnSheetDet.storageLocation.id
-		    result["storageLocation.name"] = saleReturnSheetDet.storageLocation.name
-		    result["storageLocation.title"] = saleReturnSheetDet.storageLocation.title
-		}
-		if(saleReturnSheetDet.saleSheet){
-		    result.saleSheet = saleReturnSheetDet.saleSheet
-		    result["saleSheet.id"] = saleReturnSheetDet.saleSheet.id
-		    result["saleSheet.name"] = saleReturnSheetDet.saleSheet.name
-		    result["saleSheet.title"] = saleReturnSheetDet.saleSheet.title
-		}
-	if(saleReturnSheetDet.saleSheet.saleSheetDet){
-		    result.saleSheet.saleSheetDet = saleReturnSheetDet.saleSheetDet
-		    result["saleSheet.saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
-		    result["saleSheet.saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
-		    result["saleSheet.saleSheetDet.title"] = saleReturnSheetDet.saleSheetDet.title
+	    if(saleReturnSheetDet.warehouseLocation){
+	    	result.warehouseLocation = saleReturnSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = saleReturnSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = saleReturnSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = saleReturnSheetDet.warehouseLocation.title
 		}
 
 		result
