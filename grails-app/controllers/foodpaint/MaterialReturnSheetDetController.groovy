@@ -77,7 +77,7 @@ class MaterialReturnSheetDetController {
     def save(){
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
-        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item&& materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
+        if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialReturnSheetDet.itemOrBatch.materialSheetDet.itemOrBatch.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
             }

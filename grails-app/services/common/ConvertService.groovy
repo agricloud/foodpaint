@@ -946,22 +946,24 @@ class ConvertService {
 	        result["warehouse.title"] = materialReturnSheetDet.warehouse.title
 	    }
 
-	    if(materialReturnSheetDet.storageLocation){
-	    	result.storageLocation = materialReturnSheetDet.storageLocation
-		    result["storageLocation.id"] = materialReturnSheetDet.storageLocation.id
-		    result["storageLocation.name"] = materialReturnSheetDet.storageLocation.name
-		    result["storageLocation.title"] = materialReturnSheetDet.storageLocation.title
+	    if(materialReturnSheetDet.warehouseLocation){
+	    	result.warehouseLocation = materialReturnSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = materialReturnSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = materialReturnSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = materialReturnSheetDet.warehouseLocation.title
 		}
-
+		
 		if(materialReturnSheetDet.materialSheetDet){
 	    	result.materialSheetDet = materialReturnSheetDet.materialSheetDet
 		    result["materialSheetDet.id"] = materialReturnSheetDet.materialSheetDet.id
+		    result["materialSheetDet.typeName"] = materialReturnSheetDet.materialSheetDet.typeName
 		    result["materialSheetDet.name"] = materialReturnSheetDet.materialSheetDet.name
-		    result["materialSheetDet.title"] = materialReturnSheetDet.materialSheetDet.title
 		}
 
 		result
     }
+
+		
 
     def purchaseReturnSheetParseJson(purchaseReturnSheet){
   //   	def result = [:]
