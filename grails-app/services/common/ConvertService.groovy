@@ -957,74 +957,74 @@ class ConvertService {
     }
 
     def purchaseReturnSheetParseJson(purchaseReturnSheet){
-  //   	def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = purchaseSheet.dateCreated
-	 //    result.lastUpdated = purchaseSheet.lastUpdated
-	 //    result.site = purchaseSheet.site
+    		result.dateCreated = purchaseSheet.dateCreated
+	    	result.lastUpdated = purchaseSheet.lastUpdated
+	    	result.site = purchaseSheet.site
 
-  //       result.id = purchaseSheet.id
-  //   	result.name = purchaseSheet.name
-		// result.typeName = purchaseSheet.typeName
+        		result.id = purchaseSheet.id
+    		result.name = purchaseSheet.name
+		result.typeName = purchaseSheet.typeName
 
-		// if(purchaseSheet.supplier){
-		// 	result.supplier = purchaseSheet.supplier
-		// 	result["supplier.id"] = purchaseSheet.supplier.id
-	 //        result["supplier.name"] = purchaseSheet.supplier.name
-	 //        result["supplier.title"] = purchaseSheet.supplier.title
-	 //    }
+		if(purchaseSheet.supplier){
+			result.supplier = purchaseSheet.supplier
+			result["supplier.id"] = purchaseSheet.supplier.id
+	        		result["supplier.name"] = purchaseSheet.supplier.name
+	        		result["supplier.title"] = purchaseSheet.supplier.title
+	    }
 
-		// result
+		result
     }
 
     def purchaseReturnSheetDetParseJson(purchaseReturnSheetDet){
-    	// def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = purchaseSheetDet.dateCreated
-	 //    result.lastUpdated = purchaseSheetDet.lastUpdated
-	 //    result.site = purchaseSheetDet.site
+    		result.dateCreated = purchaseReturnSheetDet.dateCreated
+	   	result.lastUpdated = purchaseReturnSheetDet.lastUpdated
+	    	result.site = purchaseReturnSheetDet.site
 
-  //       result.id = purchaseSheetDet.id
-  //   	result.name = purchaseSheetDet.name
-		// result.typeName = purchaseSheetDet.typeName
-		// result.sequence = purchaseSheetDet.sequence
+        		result.id = purchaseReturnSheetDet.id
+    		result.name = purchaseReturnSheetDet.name
+		result.typeName = purchaseReturnSheetDet.typeName
+		result.sequence = purchaseReturnSheetDet.sequence
 
-		// result.purchaseSheet = purchaseSheetDet.purchaseSheet
-		// result["purchaseSheet.id"] = purchaseSheetDet.purchaseSheet.id
-		// result.qty = purchaseSheetDet.qty
+		result.purchaseReturnSheet = purchaseReturnSheetDet.purchaseReturnSheet
+		result["purchaseReturnSheet.id"] = purchaseReturnSheetDet.purchaseReturnSheet.id
+		result.qty = purchaseReturnSheetDet.qty
 
-	 //    if(purchaseSheetDet.batch){
-		// 	result.batch = purchaseSheetDet.batch
-		// 	result["batch.id"] = purchaseSheetDet.batch.id
-	 //        result["batch.name"] = purchaseSheetDet.batch.name
-	 //    }
+	    if(purchaseReturnSheetDet.batch){
+			result.batch = purchaseReturnSheetDet.batch
+			result["batch.id"] = purchaseReturnSheetDet.batch.id
+	        result["batch.name"] = purchaseReturnSheetDet.batch.name
+	    }
 
 
-		// if(purchaseSheetDet.item){
-		// 	result.item = purchaseSheetDet.item
-		// 	result["item.id"] = purchaseSheetDet.item.id
-	 //        result["item.name"] = purchaseSheetDet.item.name
-	 //        result["item.title"] = purchaseSheetDet.item.title
-	 //        result["item.spec"] = purchaseSheetDet.item.spec
-	 //        result["item.unit"] = purchaseSheetDet.item.unit
-	 //        result["item.description"] = purchaseSheetDet.item.description
-	 //    }
+		if(purchaseReturnSheetDet.item){
+			result.item = purchaseReturnSheetDet.item
+			result["item.id"] = purchaseReturnSheetDet.item.id
+	        		result["item.name"] = purchaseReturnSheetDet.item.name
+	        		result["item.title"] = purchaseReturnSheetDet.item.title
+	        		result["item.spec"] = purchaseReturnSheetDet.item.spec
+	        		result["item.unit"] = purchaseReturnSheetDet.item.unit
+	        		result["item.description"] = purchaseReturnSheetDet.item.description
+	    }
 
-	 //    if(purchaseSheetDet.warehouse){
-		// 	result.warehouse = purchaseSheetDet.warehouse
-		// 	result["warehouse.id"] = purchaseSheetDet.warehouse.id
-	 //        result["warehouse.name"] = purchaseSheetDet.warehouse.name
-	 //        result["warehouse.title"] = purchaseSheetDet.warehouse.title
-	 //    }
+	    if(purchaseReturnSheetDet.warehouse){
+			result.warehouse = purchaseReturnSheetDet.warehouse
+			result["warehouse.id"] = purchaseReturnSheetDet.warehouse.id
+	        		result["warehouse.name"] = purchaseReturnSheetDet.warehouse.name
+	        		result["warehouse.title"] = purchaseReturnSheetDet.warehouse.title
+	    }
 
-	 //    if(purchaseSheetDet.storageLocation){
-	 //    	result.storageLocation = purchaseSheetDet.storageLocation
-		//     result["storageLocation.id"] = purchaseSheetDet.storageLocation.id
-		//     result["storageLocation.name"] = purchaseSheetDet.storageLocation.name
-		//     result["storageLocation.title"] = purchaseSheetDet.storageLocation.title
-		// }
+	    if(purchaseReturnSheetDet.storageLocation){
+	    	result.storageLocation = purchaseReturnSheetDet.storageLocation
+		    result["storageLocation.id"] = purchaseReturnSheetDet.storageLocation.id
+		    result["storageLocation.name"] = purchaseReturnSheetDet.storageLocation.name
+		    result["storageLocation.title"] = purchaseReturnSheetDet.storageLocation.title
+		}
 
-		// result
+		result
     }
 
     def outSrcReturnPurchaseSheetParseJson(outSrcReturnPurchaseSheet){
