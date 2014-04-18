@@ -1127,12 +1127,11 @@ class ConvertService {
     def saleReturnSheetDetParseJson(saleReturnSheetDet){
     	def result = [:]
 
-    	result.dateCreated =  saleReturnSheetDet.dateCreated
-	    result.lastUpdated =  saleReturnSheetDet.lastUpdated
-	    result.site =  saleReturnSheetDet.site
-
-        result.id = saleReturnSheetDet.id
-    	result.name =  saleReturnSheetDet.name
+    		result.dateCreated =  saleReturnSheetDet.dateCreated
+	   	result.lastUpdated =  saleReturnSheetDet.lastUpdated
+	    	result.site =  saleReturnSheetDet.site
+        		result.id = saleReturnSheetDet.id
+    		result.name =  saleReturnSheetDet.name
 		result.typeName = saleReturnSheetDet.typeName
 		result.sequence = saleReturnSheetDet.sequence
 		result.qty =  saleReturnSheetDet.qty
@@ -1143,11 +1142,11 @@ class ConvertService {
 		if(saleReturnSheetDet.saleSheetDet){
 			result.saleSheetDet = saleReturnSheetDet.saleSheetDet
 			result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
-	        result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
-	        result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
-	        result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
-	        result.saleSheetDet = saleReturnSheetDet.saleSheetDet.saleSheet
-	        result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.saleSheet.id
+	        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+	       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
+	        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
+	        		result.saleSheetDet = saleReturnSheetDet.saleSheetDet.saleSheet
+	        		result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.saleSheet.id
 	    }
 
 	    if(saleReturnSheetDet.batch){
@@ -1167,10 +1166,10 @@ class ConvertService {
 	    }
 
 	    if(saleReturnSheetDet.warehouse){
-			result.warehouse = saleSheetDet.warehouse
-			result["warehouse.id"] = saleSheetDet.warehouse.id
-	        result["warehouse.name"] = saleSheetDet.warehouse.name
-	        result["warehouse.title"] = saleSheetDet.warehouse.title
+		result.warehouse = saleReturnSheetDet.warehouse
+		result["warehouse.id"] =saleReturnSheetDet.warehouse.id
+	       	result["warehouse.name"] = saleReturnSheetDet.warehouse.name
+	       	result["warehouse.title"] = saleReturnSheetDet.warehouse.title
 	    }
 
 	    if(saleReturnSheetDet.warehouseLocation){
