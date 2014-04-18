@@ -75,6 +75,11 @@ class MaterialReturnSheetDetController {
 
     @Transactional
     def save(){
+        println "if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch)"
+        println "materialReturnSheetDet.item="+materialReturnSheetDet.item
+        println "materialReturnSheetDet.materialSheetDet.item="+materialReturnSheetDet.materialSheetDet.item
+        println "materialReturnSheetDet.batch="+materialReturnSheetDet.batch
+        println "materialReturnSheetDet.materialSheetDet.batch="+materialReturnSheetDet.materialSheetDet.batch
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
