@@ -75,13 +75,13 @@ class MaterialReturnSheetDetController {
 
     @Transactional
     def save(){
-        println "if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch)"
-        println "materialReturnSheetDet.item="+materialReturnSheetDet.item
-        println "materialReturnSheetDet.materialSheetDet.item="+materialReturnSheetDet.materialSheetDet.item
-        println "materialReturnSheetDet.batch="+materialReturnSheetDet.batch
-        println "materialReturnSheetDet.materialSheetDet.batch="+materialReturnSheetDet.materialSheetDet.batch
-
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
+        println "materialReturnSheetDet.id = "+materialReturnSheetDet.id
+        // println "if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch)"
+        // println "materialReturnSheetDet.item="+materialReturnSheetDet.item
+        // println "materialReturnSheetDet.materialSheetDet.item="+materialReturnSheetDet.materialSheetDet.item
+        // println "materialReturnSheetDet.batch="+materialReturnSheetDet.batch
+        // println "materialReturnSheetDet.materialSheetDet.batch="+materialReturnSheetDet.materialSheetDet.batch
         if(materialReturnSheetDet.item != materialReturnSheetDet.materialSheetDet.item && materialReturnSheetDet.batch != materialReturnSheetDet.materialSheetDet.batch){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialReturnSheetDet.itemOrBatch.materialSheetDet.itemOrBatch.not.equal', args: [materialReturnSheetDet, materialReturnSheetDet.manufactureOrder])]
@@ -89,7 +89,7 @@ class MaterialReturnSheetDetController {
         }
         else{
             if(materialReturnSheetDet.qty>0){
-                def inventoryReplenishResult = inventoryDetailService.replenish(materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty)
+                def inventoryReplenishResult = inventoryDetailService.replenish(materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty.toLong())
                 if(inventoryReplenishResult.success){
                     render (contentType: 'application/json') {
                         domainService.save(materialReturnSheetDet)
