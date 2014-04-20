@@ -959,19 +959,19 @@ class ConvertService {
     def purchaseReturnSheetParseJson(purchaseReturnSheet){
     	def result = [:]
 
-    		result.dateCreated = purchaseSheet.dateCreated
-	    	result.lastUpdated = purchaseSheet.lastUpdated
-	    	result.site = purchaseSheet.site
+    		result.dateCreated = purchaseReturnSheet.dateCreated
+	    	result.lastUpdated = purchaseReturnSheet.lastUpdated
+	    	result.site = purchaseReturnSheet.site
 
-        		result.id = purchaseSheet.id
-    		result.name = purchaseSheet.name
-		result.typeName = purchaseSheet.typeName
+        		result.id = purchaseReturnSheet.id
+    		result.name = purchaseReturnSheet.name
+		result.typeName = purchaseReturnSheet.typeName
 
-		if(purchaseSheet.supplier){
-			result.supplier = purchaseSheet.supplier
-			result["supplier.id"] = purchaseSheet.supplier.id
-	        		result["supplier.name"] = purchaseSheet.supplier.name
-	        		result["supplier.title"] = purchaseSheet.supplier.title
+		if(purchaseReturnSheet.supplier){
+			result.supplier = purchaseReturnSheet.supplier
+			result["supplier.id"] = purchaseReturnSheet.supplier.id
+	        		result["supplier.name"] = purchaseReturnSheet.supplier.name
+	        		result["supplier.title"] = purchaseReturnSheet.supplier.title
 	    }
 
 		result
@@ -1017,11 +1017,11 @@ class ConvertService {
 	        		result["warehouse.title"] = purchaseReturnSheetDet.warehouse.title
 	    }
 
-	    if(purchaseReturnSheetDet.storageLocation){
-	    	result.storageLocation = purchaseReturnSheetDet.storageLocation
-		    result["storageLocation.id"] = purchaseReturnSheetDet.storageLocation.id
-		    result["storageLocation.name"] = purchaseReturnSheetDet.storageLocation.name
-		    result["storageLocation.title"] = purchaseReturnSheetDet.storageLocation.title
+	    if(purchaseReturnSheetDet.warehouseLocation){
+	    	result.warehouseLocation = purchaseReturnSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = purchaseReturnSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = purchaseReturnSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = purchaseReturnSheetDet.warehouseLocation.title
 		}
 
 		result
