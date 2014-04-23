@@ -153,6 +153,11 @@ class TestService {
         def purchaseSheetDet21 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:1,item:item3,batch:batch3,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1500).save(failOnError: true, flush: true)     
         def purchaseSheetDet22 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:2,item:item4,batch:batch4,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1500).save(failOnError: true, flush: true)     
         def purchaseSheetDet23 = new PurchaseSheetDet(purchaseSheet:purchaseSheet2,typeName:"B21",name:"98100900002",sequence:3,item:item5,batch:batch5,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:500).save(failOnError: true, flush: true)     
+
+        //退貨單
+        def purchaseReturnSheet2 = new PurchaseReturnSheet(typeName:"B22",name:"98100900002",supplier:supplier2).save(failOnError: true, flush: true)
+        def purchaseReturnSheetDet21 = new PurchaseReturnSheetDet(purchaseReturnSheet:purchaseReturnSheet2,typeName:"B22",name:"98100900002",sequence:1,purchaseSheetDet:purchaseSheetDet21,item:item3,batch:batch3,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1500).save(failOnError: true, flush: true)     
+        def purchaseReturnSheetDet22 = new PurchaseReturnSheetDet(purchaseReturnSheet:purchaseReturnSheet2,typeName:"B22",name:"98100900002",sequence:2,purchaseSheetDet:purchaseSheetDet22,item:item4,batch:batch4,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1500).save(failOnError: true, flush: true)     
                 
         //領料單
         def materialSheet2 = new MaterialSheet(typeName:"D11",name:"98100900002",supplier:supplier1).save(failOnError: true, flush: true)
