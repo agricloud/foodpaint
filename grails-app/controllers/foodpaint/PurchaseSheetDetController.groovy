@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
 class PurchaseSheetDetController {
 
     def domainService
