@@ -47,7 +47,7 @@ class PurchaseReturnSheetDet{
     static belongsTo=[purchaseReturnSheet: PurchaseReturnSheet]
 
     /*
-    * 進貨單
+    * 進貨單單身
     */
     PurchaseSheetDet purchaseSheetDet
 

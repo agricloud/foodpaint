@@ -69,8 +69,10 @@ class OutSrcPurchaseReturnSheetDet{
     * 批號
     */
 	Batch batch
-
-
+    /*
+    * 託外進貨單單身
+    */
+    OutSrcPurchaseSheetDet outSrcPurchaseSheetDet
     /*
     * 製令
     */
