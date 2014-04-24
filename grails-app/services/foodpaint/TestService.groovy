@@ -169,6 +169,10 @@ class TestService {
         def materialSheetDet33 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:3,item:item4,batch:batch4,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1500,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         def materialSheetDet34 = new MaterialSheetDet(materialSheet:materialSheet3,typeName:"D11",name:"98100900003",sequence:4,item:item5,batch:batch5,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:500,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
 
+        //領退單
+        def materialReturnSheet2 = new MaterialReturnSheet(typeName:"D12",name:"98100900002",supplier:supplier1).save(failOnError: true, flush: true)
+        def materialReturnSheetDet21 = new MaterialReturnSheetDet(materialReturnSheet:materialReturnSheet2,typeName:"D12",name:"98100900002",sequence:1,materialSheetDet:materialSheetDet21,item:item1,batch:batch1,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000000,manufactureOrder:manufactureOrder2).save(failOnError: true, flush: true)
+
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
         def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)

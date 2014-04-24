@@ -6,15 +6,12 @@ class ConvertService {
 	def enumService
 
     def getDomainFields(domainClassName) {
-    		def fields = []
-    		def d = new DefaultGrailsDomainClass(domainClassName)
-		    d.persistentProperties.collect {
-		        fields << it.name
-		    }
-
-
-		    fields
-
+		def fields = []
+		def d = new DefaultGrailsDomainClass(domainClassName)
+	    d.persistentProperties.collect {
+	        fields << it.name
+	    }
+	    fields
     }
 
     def domainParseMap(domainObject){
@@ -476,16 +473,6 @@ class ConvertService {
 	        result["batch.name"] = manufactureOrder.batch.name
 	    }
 
-	    if(manufactureOrder.materialSheetDets){
-	    	result.materialSheetDets=manufactureOrder.materialSheetDets
-	    }
-	    if(manufactureOrder.stockInSheetDets){
-	    	result.stockInSheetDets=manufactureOrder.stockInSheetDets
-	    }
-	    if(manufactureOrder.outSrcPurchaseSheetDets){
-	    	result.outSrcPurchaseSheetDets=manufactureOrder.outSrcPurchaseSheetDets
-	    }
-		
 		result
     }
 
@@ -876,86 +863,94 @@ class ConvertService {
 
 
     def materialReturnSheetParseJson(materialReturnSheet){
-  //   	def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = materialSheet.dateCreated
-	 //    result.lastUpdated = materialSheet.lastUpdated
-	 //    result.site = materialSheet.site
+    	result.dateCreated = materialReturnSheet.dateCreated
+	    result.lastUpdated = materialReturnSheet.lastUpdated
+	    result.site = materialReturnSheet.site
 
-  //       result.id = materialSheet.id
-  //   	result.name = materialSheet.name
-		// result.typeName = materialSheet.typeName
+        result.id = materialReturnSheet.id
+    	result.name = materialReturnSheet.name
+		result.typeName = materialReturnSheet.typeName
 
-		// if(materialSheet.workstation){
-		// 	result.workstation = materialSheet.workstation
-		// 	result["workstation.id"] = materialSheet.workstation.id
-	 //        result["workstation.name"] = materialSheet.workstation.name
-	 //        result["workstation.title"] = materialSheet.workstation.title
-	 //    }
-	 //    if(materialSheet.supplier){
-		// 	result.supplier = materialSheet.supplier
-		// 	result["supplier.id"] = materialSheet.supplier.id
-	 //        result["supplier.name"] = materialSheet.supplier.name
-	 //        result["supplier.title"] = materialSheet.supplier.title
-	 //    }
+		if(materialReturnSheet.workstation){
+			result.workstation = materialReturnSheet.workstation
+			result["workstation.id"] = materialReturnSheet.workstation.id
+	        result["workstation.name"] = materialReturnSheet.workstation.name
+	        result["workstation.title"] = materialReturnSheet.workstation.title
+	    }
+	    if(materialReturnSheet.supplier){
+			result.supplier = materialReturnSheet.supplier
+			result["supplier.id"] = materialReturnSheet.supplier.id
+	        result["supplier.name"] = materialReturnSheet.supplier.name
+	        result["supplier.title"] = materialReturnSheet.supplier.title
+	    }
 
-		// result
+		result
     }
 
     def materialReturnSheetDetParseJson(materialReturnSheetDet){
-  //   	def result = [:]
+    	def result = [:]
 
-  //   	result.dateCreated = materialSheetDet.dateCreated
-	 //    result.lastUpdated = materialSheetDet.lastUpdated
-	 //    result.site = materialSheetDet.site
+    	result.dateCreated = materialReturnSheetDet.dateCreated
+	    result.lastUpdated = materialReturnSheetDet.lastUpdated
+	    result.site = materialReturnSheetDet.site
 
-  //       result.id = materialSheetDet.id
-  //   	result.name = materialSheetDet.name
-		// result.typeName = materialSheetDet.typeName
-		// result.sequence = materialSheetDet.sequence
-		// result.qty = materialSheetDet.qty
+        result.id = materialReturnSheetDet.id
+    	result.name = materialReturnSheetDet.name
+		result.typeName = materialReturnSheetDet.typeName
+		result.sequence = materialReturnSheetDet.sequence
+		result.qty = materialReturnSheetDet.qty
 
-		// result.materialSheet = materialSheetDet.materialSheet
-		// result["materialSheet.id"] = materialSheetDet.materialSheet.id
+		result.materialReturnSheet = materialReturnSheetDet.materialReturnSheet
+		result["materialReturnSheet.id"] = materialReturnSheetDet.materialReturnSheet.id
 
-		// if(materialSheetDet.manufactureOrder){
-		// 	result.manufactureOrder = materialSheetDet.manufactureOrder
-		// 	result["manufactureOrder.id"] = materialSheetDet.manufactureOrder.id
-	 //        result["manufactureOrder.name"] = materialSheetDet.manufactureOrder.name
-	 //        result["manufactureOrder.typeName"] = materialSheetDet.manufactureOrder.typeName
-	 //    }
+		if(materialReturnSheetDet.materialSheetDet){
+			result.materialSheetDet = materialReturnSheetDet.materialSheetDet
+			result["materialSheetDet.id"] = materialReturnSheetDet.materialSheetDet.id
+	        result["materialSheetDet.name"] = materialReturnSheetDet.materialSheetDet.name
+	        result["materialSheetDet.typeName"] = materialReturnSheetDet.materialSheetDet.typeName
+	        result["materialSheetDet.sequence"] = materialReturnSheetDet.materialSheetDet.sequence
+	    }
 
-	 //    if(materialSheetDet.batch){
-		// 	result.batch = materialSheetDet.batch
-		// 	result["batch.id"] = materialSheetDet.batch.id
-	 //        result["batch.name"] = materialSheetDet.batch.name
-	 //    }
+		if(materialReturnSheetDet.manufactureOrder){
+			result.manufactureOrder = materialReturnSheetDet.manufactureOrder
+			result["manufactureOrder.id"] = materialReturnSheetDet.manufactureOrder.id
+	        result["manufactureOrder.name"] = materialReturnSheetDet.manufactureOrder.name
+	        result["manufactureOrder.typeName"] = materialReturnSheetDet.manufactureOrder.typeName
+	    }
 
-		// if(materialSheetDet.item){
-		// 	result.item = materialSheetDet.item
-		// 	result["item.id"] = materialSheetDet.item.id
-	 //        result["item.name"] = materialSheetDet.item.name
-	 //        result["item.title"] = materialSheetDet.item.title
-	 //        result["item.spec"] = materialSheetDet.item.spec
-	 //        result["item.unit"] = materialSheetDet.item.unit
-	 //        result["item.description"] = materialSheetDet.item.description
-	 //    }
+	    if(materialReturnSheetDet.batch){
+			result.batch = materialReturnSheetDet.batch
+			result["batch.id"] = materialReturnSheetDet.batch.id
+	        result["batch.name"] = materialReturnSheetDet.batch.name
+	    }
 
-	 //    if(materialSheetDet.warehouse){
-		// 	result.warehouse = materialSheetDet.warehouse
-		// 	result["warehouse.id"] = materialSheetDet.warehouse.id
-	 //        result["warehouse.name"] = materialSheetDet.warehouse.name
-	 //        result["warehouse.title"] = materialSheetDet.warehouse.title
-	 //    }
+		if(materialReturnSheetDet.item){
+			result.item = materialReturnSheetDet.item
+			result["item.id"] = materialReturnSheetDet.item.id
+	        result["item.name"] = materialReturnSheetDet.item.name
+	        result["item.title"] = materialReturnSheetDet.item.title
+	        result["item.spec"] = materialReturnSheetDet.item.spec
+	        result["item.unit"] = materialReturnSheetDet.item.unit
+	        result["item.description"] = materialReturnSheetDet.item.description
+	    }
 
-	 //    if(materialSheetDet.storageLocation){
-	 //    	result.storageLocation = materialSheetDet.storageLocation
-		//     result["storageLocation.id"] = materialSheetDet.storageLocation.id
-		//     result["storageLocation.name"] = materialSheetDet.storageLocation.name
-		//     result["storageLocation.title"] = materialSheetDet.storageLocation.title
-		// }
+	    if(materialReturnSheetDet.warehouse){
+			result.warehouse = materialReturnSheetDet.warehouse
+			result["warehouse.id"] = materialReturnSheetDet.warehouse.id
+	        result["warehouse.name"] = materialReturnSheetDet.warehouse.name
+	        result["warehouse.title"] = materialReturnSheetDet.warehouse.title
+	    }
 
-		// result
+	    if(materialReturnSheetDet.warehouseLocation){
+	    	result.warehouseLocation = materialReturnSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = materialReturnSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = materialReturnSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = materialReturnSheetDet.warehouseLocation.title
+		}
+
+		result
     }
 
     def purchaseReturnSheetParseJson(purchaseReturnSheet){
@@ -1077,22 +1072,14 @@ class ConvertService {
 		result["outSrcPurchaseReturnSheet.id"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.id
 
 		if(outSrcPurchaseReturnSheetDet.manufactureOrder){
-			//有問題
-			// result.manufactureOrder = outSrcPurchaseReturnSheetDet.manufactureOrder
-			//暫時替代做法
-			result.manufactureOrder = [:]
-			result.manufactureOrder.id = outSrcPurchaseReturnSheetDet.manufactureOrder.id
-			result.manufactureOrder.name = outSrcPurchaseReturnSheetDet.manufactureOrder.name
-	        result.manufactureOrder.typeName = outSrcPurchaseReturnSheetDet.manufactureOrder.typeName
-	
+			result.manufactureOrder = outSrcPurchaseReturnSheetDet.manufactureOrder	
 			result["manufactureOrder.id"] = outSrcPurchaseReturnSheetDet.manufactureOrder.id
 	        result["manufactureOrder.name"] = outSrcPurchaseReturnSheetDet.manufactureOrder.name
 	        result["manufactureOrder.typeName"] = outSrcPurchaseReturnSheetDet.manufactureOrder.typeName
 	    }
 
 	    if(outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet){
-	    	//有問題
-			// result.outSrcPurchaseSheetDet = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet
+			result.outSrcPurchaseSheetDet = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet
 			result["outSrcPurchaseSheetDet.id"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.id
 	        result["outSrcPurchaseSheetDet.name"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.name
 	        result["outSrcPurchaseSheetDet.typeName"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.typeName
