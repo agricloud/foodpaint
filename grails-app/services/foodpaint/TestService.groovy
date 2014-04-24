@@ -183,10 +183,14 @@ class TestService {
         def outSrcPurchaseReturnSheet1 = new OutSrcPurchaseReturnSheet(typeName:"BDR32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
         def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(outSrcPurchaseReturnSheet:outSrcPurchaseReturnSheet1,typeName:"BDR32",name:"98100900001",sequence:1,outSrcPurchaseSheetDet:outSrcPurchaseSheetDet11,item:item1,batch:batch1,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000000,outSrcPurchaseDate:new Date(2013,02,20),manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
 
-        // //銷貨單    
+        //銷貨單    
         def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
         def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item11,batch:batch11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
         
+        //銷退單
+        def saleReturnSheet1 = new SaleReturnSheet(typeName:"A22",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
+        def saleReturnSheetDet11 = new SaleReturnSheetDet(saleReturnSheet:saleReturnSheet1,typeName:"A22",name:"98100900001",sequence:1,saleSheetDet:saleSheetDet11,item:item11,batch:batch11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
+
     }
 
     def createTestMessage = { messageSource ->
