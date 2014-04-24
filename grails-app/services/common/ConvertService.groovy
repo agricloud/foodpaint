@@ -1040,81 +1040,98 @@ class ConvertService {
 		result
     }
 
-    def outSrcReturnPurchaseSheetParseJson(outSrcReturnPurchaseSheet){
-  //   	def result = [:]
+    def outSrcPurchaseReturnSheetParseJson(outSrcPurchaseReturnSheet){
+		def result = [:]
 
-  //   	result.dateCreated = outSrcPurchaseSheet.dateCreated
-	 //    result.lastUpdated = outSrcPurchaseSheet.lastUpdated
-	 //    result.site = outSrcPurchaseSheet.site
+    	result.dateCreated = outSrcPurchaseReturnSheet.dateCreated
+	    result.lastUpdated = outSrcPurchaseReturnSheet.lastUpdated
+	    result.site = outSrcPurchaseReturnSheet.site
 
-  //       result.id = outSrcPurchaseSheet.id
-  //   	result.name = outSrcPurchaseSheet.name
-		// result.typeName = outSrcPurchaseSheet.typeName
+        result.id = outSrcPurchaseReturnSheet.id
+    	result.name = outSrcPurchaseReturnSheet.name
+		result.typeName = outSrcPurchaseReturnSheet.typeName
 
-		// if(outSrcPurchaseSheet.supplier){
-		// 	result.supplier = outSrcPurchaseSheet.supplier
-		// 	result["supplier.id"] = outSrcPurchaseSheet.supplier.id
-	 //        result["supplier.name"] = outSrcPurchaseSheet.supplier.name
-	 //        result["supplier.title"] = outSrcPurchaseSheet.supplier.title
-	 //    }
+		if(outSrcPurchaseReturnSheet.supplier){
+			result.supplier = outSrcPurchaseReturnSheet.supplier
+			result["supplier.id"] = outSrcPurchaseReturnSheet.supplier.id
+	        result["supplier.name"] = outSrcPurchaseReturnSheet.supplier.name
+	        result["supplier.title"] = outSrcPurchaseReturnSheet.supplier.title
+	    }
 
-		// result
+		result
     }
 
-    def outSrcReturnPurchaseSheetDetParseJson(outSrcReturnPurchaseSheetDet){
-  //   	def result = [:]
+    def outSrcPurchaseReturnSheetDetParseJson(outSrcPurchaseReturnSheetDet){
 
-  //   	result.dateCreated = outSrcPurchaseSheetDet.dateCreated
-	 //    result.lastUpdated = outSrcPurchaseSheetDet.lastUpdated
-	 //    result.site = outSrcPurchaseSheetDet.site
+    	def result = [:]
 
-  //       result.id = outSrcPurchaseSheetDet.id
-  //   	result.name = outSrcPurchaseSheetDet.name
-		// result.typeName = outSrcPurchaseSheetDet.typeName
-		// result.sequence = outSrcPurchaseSheetDet.sequence
-		// result.qty = outSrcPurchaseSheetDet.qty
+    	result.dateCreated = outSrcPurchaseReturnSheetDet.dateCreated
+	    result.lastUpdated = outSrcPurchaseReturnSheetDet.lastUpdated
+	    result.site = outSrcPurchaseReturnSheetDet.site
 
-		// result.outSrcPurchaseSheet = outSrcPurchaseSheetDet.outSrcPurchaseSheet
-		// result["outSrcPurchaseSheet.id"] = outSrcPurchaseSheetDet.outSrcPurchaseSheet.id
+        result.id = outSrcPurchaseReturnSheetDet.id
+    	result.name = outSrcPurchaseReturnSheetDet.name
+		result.typeName = outSrcPurchaseReturnSheetDet.typeName
+		result.sequence = outSrcPurchaseReturnSheetDet.sequence
+		result.qty = outSrcPurchaseReturnSheetDet.qty
 
-		// if(outSrcPurchaseSheetDet.manufactureOrder){
-		// 	result.manufactureOrder = outSrcPurchaseSheetDet.manufactureOrder
-		// 	result["manufactureOrder.id"] = outSrcPurchaseSheetDet.manufactureOrder.id
-	 //        result["manufactureOrder.name"] = outSrcPurchaseSheetDet.manufactureOrder.name
-	 //        result["manufactureOrder.typeName"] = outSrcPurchaseSheetDet.manufactureOrder.typeName
-	 //    }
+		result.outSrcPurchaseReturnSheet = outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet
+		result["outSrcPurchaseReturnSheet.id"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.id
 
-	 //    if(outSrcPurchaseSheetDet.batch){
-		// 	result.batch = outSrcPurchaseSheetDet.batch
-		// 	result["batch.id"] = outSrcPurchaseSheetDet.batch.id
-	 //        result["batch.name"] = outSrcPurchaseSheetDet.batch.name
-	 //    }
+		if(outSrcPurchaseReturnSheetDet.manufactureOrder){
+			//有問題
+			// result.manufactureOrder = outSrcPurchaseReturnSheetDet.manufactureOrder
+			//暫時替代做法
+			result.manufactureOrder = [:]
+			result.manufactureOrder.id = outSrcPurchaseReturnSheetDet.manufactureOrder.id
+			result.manufactureOrder.name = outSrcPurchaseReturnSheetDet.manufactureOrder.name
+	        result.manufactureOrder.typeName = outSrcPurchaseReturnSheetDet.manufactureOrder.typeName
+	
+			result["manufactureOrder.id"] = outSrcPurchaseReturnSheetDet.manufactureOrder.id
+	        result["manufactureOrder.name"] = outSrcPurchaseReturnSheetDet.manufactureOrder.name
+	        result["manufactureOrder.typeName"] = outSrcPurchaseReturnSheetDet.manufactureOrder.typeName
+	    }
 
-		// if(outSrcPurchaseSheetDet.item){
-		// 	result.item = outSrcPurchaseSheetDet.item
-		// 	result["item.id"] = outSrcPurchaseSheetDet.item.id
-	 //        result["item.name"] = outSrcPurchaseSheetDet.item.name
-	 //        result["item.title"] = outSrcPurchaseSheetDet.item.title
-	 //        result["item.spec"] = outSrcPurchaseSheetDet.item.spec
-	 //        result["item.unit"] = outSrcPurchaseSheetDet.item.unit
-	 //        result["item.description"] = outSrcPurchaseSheetDet.item.description
-	 //    }
+	    if(outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet){
+	    	//有問題
+			// result.outSrcPurchaseSheetDet = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet
+			result["outSrcPurchaseSheetDet.id"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.id
+	        result["outSrcPurchaseSheetDet.name"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.name
+	        result["outSrcPurchaseSheetDet.typeName"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.typeName
+	        result["outSrcPurchaseSheetDet.sequence"] = outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.sequence
+	    }
 
-	 //    if(outSrcPurchaseSheetDet.warehouse){
-		// 	result.warehouse = outSrcPurchaseSheetDet.warehouse
-		// 	result["warehouse.id"] = outSrcPurchaseSheetDet.warehouse.id
-	 //        result["warehouse.name"] = outSrcPurchaseSheetDet.warehouse.name
-	 //        result["warehouse.title"] = outSrcPurchaseSheetDet.warehouse.title
-	 //    }
+	    if(outSrcPurchaseReturnSheetDet.batch){
+			result.batch = outSrcPurchaseReturnSheetDet.batch
+			result["batch.id"] = outSrcPurchaseReturnSheetDet.batch.id
+	        result["batch.name"] = outSrcPurchaseReturnSheetDet.batch.name
+	    }
 
-	 //    if(outSrcPurchaseSheetDet.storageLocation){
-	 //    	result.storageLocation = outSrcPurchaseSheetDet.storageLocation
-		//     result["storageLocation.id"] = outSrcPurchaseSheetDet.storageLocation.id
-		//     result["storageLocation.name"] = outSrcPurchaseSheetDet.storageLocation.name
-		//     result["storageLocation.title"] = outSrcPurchaseSheetDet.storageLocation.title
-		// }
+		if(outSrcPurchaseReturnSheetDet.item){
+			result.item = outSrcPurchaseReturnSheetDet.item
+			result["item.id"] = outSrcPurchaseReturnSheetDet.item.id
+	        result["item.name"] = outSrcPurchaseReturnSheetDet.item.name
+	        result["item.title"] = outSrcPurchaseReturnSheetDet.item.title
+	        result["item.spec"] = outSrcPurchaseReturnSheetDet.item.spec
+	        result["item.unit"] = outSrcPurchaseReturnSheetDet.item.unit
+	        result["item.description"] = outSrcPurchaseReturnSheetDet.item.description
+	    }
 
-		// result
+	    if(outSrcPurchaseReturnSheetDet.warehouse){
+			result.warehouse = outSrcPurchaseReturnSheetDet.warehouse
+			result["warehouse.id"] = outSrcPurchaseReturnSheetDet.warehouse.id
+	        result["warehouse.name"] = outSrcPurchaseReturnSheetDet.warehouse.name
+	        result["warehouse.title"] = outSrcPurchaseReturnSheetDet.warehouse.title
+	    }
+
+	    if(outSrcPurchaseReturnSheetDet.warehouseLocation){
+	    	result.warehouseLocation = outSrcPurchaseReturnSheetDet.warehouseLocation
+		    result["warehouseLocation.id"] = outSrcPurchaseReturnSheetDet.warehouseLocation.id
+		    result["warehouseLocation.name"] = outSrcPurchaseReturnSheetDet.warehouseLocation.name
+		    result["warehouseLocation.title"] = outSrcPurchaseReturnSheetDet.warehouseLocation.title
+		}
+
+		result
     }
 
     def saleReturnSheetParseJson(saleReturnSheet){
