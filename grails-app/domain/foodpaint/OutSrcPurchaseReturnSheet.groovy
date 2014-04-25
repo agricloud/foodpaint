@@ -55,4 +55,7 @@ class OutSrcPurchaseReturnSheet {
         editor nullable:true
         creator nullable:true
     }
+    public String toString(){
+        "託外退貨單：${typeName}-${name}"
+    }
 }

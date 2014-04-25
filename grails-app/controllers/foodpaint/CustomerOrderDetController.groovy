@@ -74,7 +74,12 @@ class CustomerOrderDetController {
     def save = {
 
         def customerOrderDet=new CustomerOrderDet(params)
-
+        if(customerOrderDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]
+            }
+            return
+        }
         render (contentType: 'application/json') {
             domainService.save(customerOrderDet)
         }
@@ -83,8 +88,14 @@ class CustomerOrderDetController {
 
     def update = {
 
-        def  customerOrderDet = CustomerOrderDet.get(params.id)
+        def customerOrderDet = CustomerOrderDet.get(params.id)
         customerOrderDet.properties = params
+        if(customerOrderDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]
+            }
+            return
+        }
         render (contentType: 'application/json') {
             domainService.save(customerOrderDet)
         }         
@@ -94,7 +105,7 @@ class CustomerOrderDetController {
 
     def delete = {
 
-        def  customerOrderDet = CustomerOrderDet.get(params.id)
+        def customerOrderDet = CustomerOrderDet.get(params.id)
 
         def result
         try {

@@ -65,7 +65,7 @@ class InventoryController {
 
     @Transactional
     def update(){
-        def  inventory = Inventory.get(params.id)
+        def inventory = Inventory.get(params.id)
         
         if(!InventoryDetail.findByWarehouseAndItem(inventory.warehouse,inventory.item)){
             if(inventoryService.consume(inventory.warehouse.id, inventory.item.id, inventory.qty, null).success){

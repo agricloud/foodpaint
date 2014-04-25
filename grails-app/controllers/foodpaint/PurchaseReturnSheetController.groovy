@@ -50,7 +50,13 @@ class PurchaseReturnSheetController{
 
     def update = {
 
-        def  purchaseReturnSheet= PurchaseReturnSheet.get(params.id)
+        def purchaseReturnSheet= PurchaseReturnSheet.get(params.id)
+        if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id != purchaseReturnSheet.supplier.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [purchaseReturnSheet])]
+            }
+            return
+        }
         purchaseReturnSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(purchaseReturnSheet)
@@ -61,7 +67,7 @@ class PurchaseReturnSheetController{
 
     def delete = {
         
-        def  purchaseReturnSheet = PurchaseReturnSheet.get(params.id)
+        def purchaseReturnSheet = PurchaseReturnSheet.get(params.id)
 
         def result
         try {

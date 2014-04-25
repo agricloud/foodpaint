@@ -56,4 +56,7 @@ class StockInSheet {
         editor nullable:true
         creator nullable:true
     }
+    public String toString(){
+        "入庫單：${typeName}-${name}"
+    }
 }

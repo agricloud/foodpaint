@@ -58,4 +58,8 @@ class PurchaseSheet {
         creator nullable:true
         supplier  nullable:true
     }
+
+    public String toString(){
+        "進貨單：${typeName}-${name}"
+    }
 }

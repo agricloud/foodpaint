@@ -1,6 +1,6 @@
 package foodpaint
     /*
-    * 記錄生產的 batch 是由哪些元物料的 batch 所組成
+    * 記錄生產的 batch 是由哪些原物料的 batch 所組成
     */
 class BatchSource {
 	int importFlag = -1
@@ -40,5 +40,9 @@ class BatchSource {
         editor nullable:true
         creator nullable:true
     	childBatch unique: 'batch' 
+    }
+
+    public String toString(){
+        "批號：${batch}，來源批號：${childBatch}"
     }
 }

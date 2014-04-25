@@ -85,6 +85,6 @@ class StockInSheetDet{
     }
 
     public String toString(){
-        "入庫單：${typeName}-${name}-${sequence}"
+        "入庫單單身：${typeName}-${name}-${sequence}"
     }
 }

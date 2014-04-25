@@ -63,4 +63,8 @@ class MaterialReturnSheet {
         supplier nullable:true
         
     }
+    public String toString(){
+        "退料單：${typeName}-${name}"
+    }
+
 }

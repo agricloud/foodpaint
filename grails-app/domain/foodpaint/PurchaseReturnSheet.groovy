@@ -54,4 +54,7 @@ class PurchaseReturnSheet {
         editor nullable:true
         creator nullable:true
     }
+    public String toString(){
+        "託外進貨單：${typeName}-${name}"
+    }
 }

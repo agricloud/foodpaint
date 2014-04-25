@@ -86,4 +86,7 @@ class SaleSheetDet{
         batch nullable:true
         customerOrderDet nullable:true
     }
+    public String toString(){
+        "銷貨單單身：${typeName}-${name}-${sequence}"
+    }
 }

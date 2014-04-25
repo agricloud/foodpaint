@@ -49,8 +49,13 @@ class PurchaseSheetController {
 
 
     def update = {
-
-        def  purchaseSheet= PurchaseSheet.get(params.id)
+        def purchaseSheet= PurchaseSheet.get(params.id)
+        if(purchaseSheet.purchaseSheetDets && params.supplier.id != purchaseSheet.supplier.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'purchaseSheet.purchaseSheetDets.exists.supplier.not.allowed.change', args: [purchaseSheet])]
+            }
+            return
+        }
         purchaseSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(purchaseSheet)
@@ -61,7 +66,7 @@ class PurchaseSheetController {
 
     def delete = {
         
-        def  purchaseSheet = PurchaseSheet.get(params.id)
+        def purchaseSheet = PurchaseSheet.get(params.id)
 
         def result
         try {

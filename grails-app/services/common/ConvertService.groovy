@@ -1165,7 +1165,7 @@ class ConvertService {
 	    }
 
 	    if(saleReturnSheetDet.saleSheetDet){
-			result.saleSheetDet = saleReturnSheetDet.customerOrderDet
+			result.saleSheetDet = saleReturnSheetDet.saleSheetDet
 			result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
 	        result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
 	        result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName

@@ -120,10 +120,10 @@ class SaleReturnSheetDetController {
 
     @Transactional
     def update(){
-        def  saleReturnSheetDet = new SaleReturnSheetDet(params)
+        def saleReturnSheetDet = new SaleReturnSheetDet(params)
         if(saleReturnSheetDet.saleReturnSheet.customer!=saleReturnSheetDet.saleSheetDet.saleSheet.customer){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'osaleReturnSheetDet.saleReturnSheet.supplier.saleSheetDet.saleSheet.customer.not.equal', args: [saleReturnSheetDet])]
+                [success: false,message:message(code: 'saleReturnSheetDet.saleReturnSheetcustomer.saleSheetDet.saleSheet.customer.not.equal', args: [saleReturnSheetDet])]
             }
             return
         }

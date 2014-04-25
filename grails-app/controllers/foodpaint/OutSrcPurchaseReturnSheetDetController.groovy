@@ -186,7 +186,7 @@ class OutSrcPurchaseReturnSheetDetController{
     @Transactional
     def delete(){
 
-        def  outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
+        def outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
         
         def result
         try {

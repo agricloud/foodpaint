@@ -55,11 +55,14 @@ class Supplier {
         site nullable:true
         editor nullable:true
         creator nullable:true
-    name unique: true, blank: false
+        name unique: true, blank: false
         country nullable:true
         tel nullable:true
         email nullable:true
         address nullable:true
 
+    }
+    public String toString(){
+        "供應商：${name}，名稱：${title}"
     }
 }

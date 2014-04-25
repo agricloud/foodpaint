@@ -90,6 +90,6 @@ class MaterialReturnSheetDet{
         qty min: 0L
     }
     public String toString(){
-        "領退單單身：${typeName}-${name}-${sequence}"
+        "退料單單身：${typeName}-${name}-${sequence}"
     }
 }

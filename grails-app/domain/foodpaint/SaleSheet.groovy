@@ -54,4 +54,7 @@ class SaleSheet {
         editor nullable:true
         creator nullable:true
     }
+    public String toString(){
+        "銷貨單：${typeName}-${name}"
+    }
 }

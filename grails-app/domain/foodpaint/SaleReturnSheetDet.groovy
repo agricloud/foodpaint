@@ -90,4 +90,7 @@ class SaleReturnSheetDet{
         batch nullable:true
         customerOrderDet nullable:true
     }
+    public String toString(){
+        "銷退單單身：${typeName}-${name}-${sequence}"
+    }
 }

@@ -72,6 +72,6 @@ class CustomerOrderDet{
     }
 
     public String toString(){
-        "訂單：${typeName}-${name}-${sequence}"
+        "訂單單身：${typeName}-${name}-${sequence}"
     }
 }

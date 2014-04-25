@@ -50,7 +50,7 @@ class SaleReturnSheetController {
 
     def update = {
 
-        def  saleReturnSheet= SaleReturnSheet.get(params.id)
+        def saleReturnSheet= SaleReturnSheet.get(params.id)
         saleReturnSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(saleReturnSheet)
@@ -59,7 +59,7 @@ class SaleReturnSheetController {
 
     def delete = {
         
-        def  saleReturnSheet = SaleReturnSheet.get(params.id)
+        def saleReturnSheet = SaleReturnSheet.get(params.id)
 
         def result
         try {

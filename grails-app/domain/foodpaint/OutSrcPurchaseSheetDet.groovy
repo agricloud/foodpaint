@@ -87,4 +87,7 @@ class OutSrcPurchaseSheetDet{
         creator nullable:true
         batch nullable:true
     }
+    public String toString(){
+        "託外進貨單單身：${typeName}-${name}-${sequence}"
+    }
 }

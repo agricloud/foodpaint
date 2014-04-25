@@ -46,7 +46,13 @@ class ManufactureOrderController {
 
     def save = {
         def manufactureOrder=new ManufactureOrder(params)
-        
+        if(manufactureOrder.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
+            }
+            return
+        }
+
         def result = batchService.createBatchInstanceByJson(params, manufactureOrder)
         if(!result.success){
             render (contentType: 'application/json') {
@@ -65,31 +71,33 @@ class ManufactureOrderController {
 
     def update = {
 
-        def  manufactureOrder = ManufactureOrder.get(params.id)
+        def manufactureOrder = ManufactureOrder.get(params.id)
 
-        //批號不變直接允許儲存，批號變更則需先新增批號。
-        if(manufactureOrder.batch?.name == params.batch?.name){
+        def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
+        
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            }
+        }
+        else{
             manufactureOrder.properties = params
+            if(manufactureOrder.qty<=0){
+                render (contentType: 'application/json') {
+                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
+                }
+                return
+            }
+            manufactureOrder.batch = (Batch) result.batch
             render (contentType: 'application/json') {
                 domainService.save(manufactureOrder)
             }
         }
-        else{
-            def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
-            
-            if(!result.success){
-                render (contentType: 'application/json') {
-                    result
-                }
-            }
-            else{
-                manufactureOrder.properties = params
-                manufactureOrder.batch = (Batch) result.batch
-                render (contentType: 'application/json') {
-                    domainService.save(manufactureOrder)
-                }
-            }
-        }
+
+
+        
+        
+
 
         
     }
@@ -97,7 +105,7 @@ class ManufactureOrderController {
 
     def delete = {
         
-        def  manufactureOrder = ManufactureOrder.get(params.id)
+        def manufactureOrder = ManufactureOrder.get(params.id)
 
         def result
         try {

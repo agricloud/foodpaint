@@ -78,93 +78,94 @@ class StockInSheetDetController {
     @Transactional
     def save(){
         def stockInSheetDet=new StockInSheetDet(params)
-        if(stockInSheetDet.qty>0){
-            def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
-            if(result.success){
-                def inventoryReplenishResult = inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,stockInSheetDet.dateCreated)
-                if(inventoryReplenishResult.success){
-                    stockInSheetDet.batch = (Batch) result.batch
-                    render (contentType: 'application/json') {
-                        domainService.save(stockInSheetDet)
-                    }
-                }
-                else{
-                    render (contentType: 'application/json') {
-                        inventoryReplenishResult
-                    }
+        if(stockInSheetDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+            }
+            return
+        }
+
+        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+        if(result.success){
+            def inventoryReplenishResult = inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,stockInSheetDet.dateCreated)
+            if(inventoryReplenishResult.success){
+                stockInSheetDet.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(stockInSheetDet)
                 }
             }
             else{
                 render (contentType: 'application/json') {
-                    result
+                    inventoryReplenishResult
                 }
             }
         }
         else{
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+                result
             }
         }
+
     }
 
     @Transactional
     def update(){
 
         def stockInSheetDet = new StockInSheetDet(params)
-        if(stockInSheetDet.qty>0){
-            def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+        if(stockInSheetDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+            }
+            return
+        }
 
-            if(result.success){
-                stockInSheetDet = StockInSheetDet.get(params.id)
-                //將更新前已入的數量扣除庫存
-                def inventoryConsumeResult= inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
-                if(inventoryConsumeResult.success){
-                    //將欲更新的數量加入庫存
-                    def inventoryReplenishResult=inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(),null)
-                    if(inventoryReplenishResult.success){
-                        stockInSheetDet.properties = params
-                        stockInSheetDet.batch = (Batch) result.batch
-                        render (contentType: 'application/json') {
-                            domainService.save(stockInSheetDet)
-                        }
-                    }
-                    else{
-                        //把更新前已入的數量再加回庫存 還原更新前狀態
-                        def inventoryRecoveryResult= inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
-                        if(inventoryRecoveryResult.success){
-                            render (contentType: 'application/json') {
-                                inventoryReplenishResult
-                            }
-                        }
-                        else{
-                            throw new Exception("還原庫存失敗:"+inventoryRecoveryResult.message)
-                        }
-                    }
-                }
-                else{
-                    render (contentType: 'application/json') {
-                        inventoryConsumeResult
-                    }
+        def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
+
+        if(!result.success){
+            render (contentType: 'application/json') {
+                result
+            } 
+            return
+        }
+
+        stockInSheetDet = StockInSheetDet.get(params.id)
+        //將更新前已入的數量扣除庫存
+        def inventoryConsumeResult= inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
+        if(inventoryConsumeResult.success){
+            //將欲更新的數量加入庫存
+            def inventoryReplenishResult=inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(),null)
+            if(inventoryReplenishResult.success){
+                stockInSheetDet.properties = params
+                stockInSheetDet.batch = (Batch) result.batch
+                render (contentType: 'application/json') {
+                    domainService.save(stockInSheetDet)
                 }
             }
             else{
-                render (contentType: 'application/json') {
-                    result
-                } 
+                //把更新前已入的數量再加回庫存 還原更新前狀態
+                def inventoryRecoveryResult= inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
+                if(inventoryRecoveryResult.success){
+                    render (contentType: 'application/json') {
+                        inventoryReplenishResult
+                    }
+                }
+                else{
+                    throw new Exception("還原庫存失敗:"+inventoryRecoveryResult.message)
+                }
             }
         }
         else{
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+                inventoryConsumeResult
             }
-        }      
+        }
     }
 
 
     @Transactional
     def delete(){
 
-        def  stockInSheetDet = StockInSheetDet.get(params.id)
+        def stockInSheetDet = StockInSheetDet.get(params.id)
         
         def result
         try {

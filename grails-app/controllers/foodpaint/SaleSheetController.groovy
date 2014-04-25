@@ -50,7 +50,13 @@ class SaleSheetController {
 
     def update = {
 
-        def  saleSheet= SaleSheet.get(params.id)
+        def saleSheet= SaleSheet.get(params.id)
+        if(saleSheet.saleSheetDets && params.customer.id != saleSheet.customer.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'saleSheet.saleSheetDets.exists.customer.not.allowed.change', args: [saleSheet])]
+            }
+            return
+        }
         saleSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(saleSheet)
@@ -61,7 +67,7 @@ class SaleSheetController {
 
     def delete = {
         
-        def  saleSheet = SaleSheet.get(params.id)
+        def saleSheet = SaleSheet.get(params.id)
 
         def result
         try {

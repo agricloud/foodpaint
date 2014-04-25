@@ -50,7 +50,13 @@ class StockInSheetController {
 
     def update = {
 
-        def  stockInSheet= StockInSheet.get(params.id)
+        def stockInSheet= StockInSheet.get(params.id)
+        if(stockInSheet.stockInSheetDets && params.workstation.id != stockInSheet.workstation.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change', args: [stockInSheet])]
+            }
+            return
+        }
         stockInSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(stockInSheet)
@@ -61,7 +67,7 @@ class StockInSheetController {
 
     def delete = {
         
-        def  stockInSheet = StockInSheet.get(params.id)
+        def stockInSheet = StockInSheet.get(params.id)
 
         def result
         try {

@@ -54,4 +54,7 @@ class SaleReturnSheet {
         editor nullable:true
         creator nullable:true
     }
+    public String toString(){
+        "銷退單：${typeName}-${name}"
+    }
 }

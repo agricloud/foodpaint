@@ -42,4 +42,7 @@ class Workstation {
     	name unique:true, blank: false
     	description nullable:true
     }
+    public String toString(){
+    	"工作站：${name}，名稱：${title}"
+    }
 }

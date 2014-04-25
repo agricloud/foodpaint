@@ -43,7 +43,9 @@ class Customer {
     	email nullable:true
     	address nullable:true
     }
-
-
+    
+    public String toString(){
+        "客戶：${name}，名稱：${title}"
+    }
 
 }

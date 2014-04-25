@@ -59,4 +59,7 @@ class BatchRoute {
         workstation nullable:true
         supplier nullable:true
     }
+    public String toString(){
+        "批號：${batch.name}，途程項次:${sequence}"
+    }
 }

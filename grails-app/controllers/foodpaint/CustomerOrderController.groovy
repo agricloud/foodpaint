@@ -52,7 +52,13 @@ class CustomerOrderController {
 
     def update = {
 
-        def  customerOrder= CustomerOrder.get(params.id)
+        def customerOrder= CustomerOrder.get(params.id)
+        if(customerOrder.customerOrderDets && params.customer.id != customerOrder.customer.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'customerOrder.customerOrderDets.exists.customer.not.allowed.change', args: [customerOrder])]
+            }
+            return
+        }
         customerOrder.properties = params
         render (contentType: 'application/json') {
             domainService.save(customerOrder)
@@ -63,7 +69,7 @@ class CustomerOrderController {
 
     def delete = {
         
-        def  customerOrder = CustomerOrder.get(params.id)
+        def customerOrder = CustomerOrder.get(params.id)
 
         def result
         try {

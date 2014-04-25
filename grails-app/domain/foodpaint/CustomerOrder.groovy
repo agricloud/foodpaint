@@ -66,4 +66,7 @@ class CustomerOrder {
     	dueDate nullable:true
     	customer nullable:true
     }
+    public String toString(){
+        "訂單：${typeName}-${name}"
+    }
 }

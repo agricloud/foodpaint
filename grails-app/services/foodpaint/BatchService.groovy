@@ -92,8 +92,15 @@ class BatchService {
 					}
 				}
 				if(sheet.instanceOf(ManufactureOrder)){
-					batch.expectQty = sheet.qty
-					isSuccess = true
+					if(sheet.item != batch.item){
+						isSuccess = false
+						args=[sheet]
+						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+					}
+					else{
+						batch.expectQty = sheet.qty
+						isSuccess = true
+					}
 				}
 			}
 
@@ -119,15 +126,8 @@ class BatchService {
 			batch.item = sheet.item
 
 			if(sheet.instanceOf(PurchaseSheetDet)){
-				if(sheet.item != batch.item){
-					isSuccess = false
-					args=[sheet]
-					msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
-				}
-				else{
-					batch.supplier = sheet.purchaseSheet.supplier
-					isSuccess = true
-				}
+				batch.supplier = sheet.purchaseSheet.supplier
+				isSuccess = true
 			}
 			if(sheet.instanceOf(StockInSheetDet)){
 				if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){

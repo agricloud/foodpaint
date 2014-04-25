@@ -41,4 +41,7 @@ class Operation {
         creator nullable:true
         description nullable:true
     }
+    public String toString(){
+        "製程：${name}，名稱：${title}"
+    }
 }
