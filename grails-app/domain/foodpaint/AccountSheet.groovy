@@ -82,8 +82,7 @@ class AccountSheet{
     * 項次
     */
     int sequence
-    static belongsTo=[accountSheet: AccountSheet]
-
+   
    /*
     * 單別
     */
