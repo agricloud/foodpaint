@@ -61,8 +61,9 @@ class AccountancyDet {
      */ 
     String accountType
 
-    *
-     * 建立日期（自動欄位）
+    /**
+     *  建立日期（自動欄位）
+     */ 
      
     Date dateCreated
 

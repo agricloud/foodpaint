@@ -47,29 +47,29 @@ class AccountSheetDetController {
     }
 
 
-    // def create = {
+    def create = {
 
-    //     if(params.accountSheet.id){
+        if(params.accountSheet.id){
 
-    //         def accountSheetDet= new AccountSheetDet(params)
+            def accountSheetDet= new AccountSheetDet(params)
 
-    //         accountSheetDet.typeName = accountSheetDet.accountSheet.typeName
-    //         accountSheetDet.name = accountSheetDet.accountSheet.name
+            accountSheetDet.typeName = accountSheetDet.accountSheet.typeName
+            accountSheetDet.name = accountSheetDet.accountSheet.name
 
-    //         if(accountSheetDet.accountSheet.accountSheetDets)
-    //             accountSheetDet.sequence = accountSheetDet.accountSheet.accountSheetDets*.sequence.max()+1
-    //         else accountSheetDet.sequence = 1
+            if(accountSheetDet.accountSheet.accountSheetDets)
+                accountSheetDet.sequence = accountSheetDet.accountSheet.accountSheetDets*.sequence.max()+1
+            else accountSheetDet.sequence = 1
 
-    //         render (contentType: 'application/json') {
-    //             [success: true,data:accountSheetDet]
-    //         }
-    //     }else {
-    //         render (contentType: 'application/json') {
-    //             [success: false,message:message(code: 'accountSheetDet.message.create.failed')]
-    //         }            
-    //     }
+            render (contentType: 'application/json') {
+                [success: true,data:accountSheetDet]
+            }
+        }else {
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'accountSheetDet.message.create.failed')]
+            }            
+        }
 
-    // }
+    }
 
     // @Transactional
     // def save(){

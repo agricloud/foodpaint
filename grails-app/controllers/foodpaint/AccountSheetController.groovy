@@ -21,7 +21,7 @@ class AccountSheetController {
         if(accountSheet){   
 
             render (contentType: 'application/json') {
-                [success: true,data:accountSheet)]
+                [success: true,data:accountSheet]
             }
         }else {
             render (contentType: 'application/json') {

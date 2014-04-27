@@ -74,17 +74,6 @@ class AccountSheet{
     String  closedCode
 
     /*
-    * 單別
-    */
-    String typeName
-
- 
-    /*
-    * 單號
-    */
-    String name
-  
-    /*
     * 業務員之後會新增class clerk
     */
     String clerk
