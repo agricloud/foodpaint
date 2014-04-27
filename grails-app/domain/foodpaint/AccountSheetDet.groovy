@@ -69,7 +69,12 @@ class AccountSheetDet{
 
     SaleReturnSheetDet saleReturnSheetDet
 
-     /*
+    /*
+    * 關聯發票
+    */
+    Inovice inovice
+    
+    /*
     * 原幣金額
     */
     Double originalAmounts
