@@ -2,10 +2,14 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
+import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
+import org.apache.commons.io.FileUtils
 
 class StockInSheetController {
 
     def domainService
+    def jasperService
 
     def index = {
 
@@ -82,5 +86,17 @@ class StockInSheetController {
         render (contentType: 'application/json') {
             result
         }
+    }
+
+    def print(){
+        def  stockInSheet = [StockInSheet.get(1).properties]
+
+        println stockInSheet.class
+        println stockInSheet
+
+        def reportDef = new JasperReportDef(name:'StockInSheet.jasper',,reportData:stockInSheet,fileFormat:JasperExportFormat.PDF_FORMAT)
+
+        FileUtils.writeByteArrayToFile(new File("web-app/reports/StockInSheet.pdf"), jasperService.generateReport(reportDef).toByteArray())
+
     }
 }

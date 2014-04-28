@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockInSheet" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98d4bff0-cec8-431a-9581-738b101c67ed">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="29"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="version" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creator" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_created" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="editor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="import_flag" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="last_updated" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="site_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="site_name" class="java.lang.String"/>
+	<field name="workstation_name" class="java.lang.String"/>
+	<field name="s_name" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="workstation_id" class="java.lang.Long"/>
+	<field name="type_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="488" y="10" width="154" height="20" uuid="bd7d10d5-f4be-494e-94ce-4f0f10a9ab41"/>
+				<textElement>
+					<font size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{site_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="40" width="129" height="20" uuid="f21a6551-b9fb-4a0c-9f4b-4fe81cbb1c28"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{workstation_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="10" width="133" height="20" uuid="a6aa4cce-b564-481f-bb11-f7d688198230"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="10" width="146" height="20" uuid="fde8b28d-10b9-43df-afb6-068fcfb66e57"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="40" width="110" height="20" uuid="46f69a36-5ddd-4a47-867e-9c8224085064"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{workstation_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="100" height="20" uuid="01c9a42a-ec7c-4e98-82de-6bf32cfcc830"/>
+				<textElement>
+					<font size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[中文測試]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="529" y="40" width="100" height="20" uuid="1bec3652-c705-4d2f-886c-378b3297d134"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{creator}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="655" y="40" width="100" height="20" uuid="74955edb-6793-4c7a-8d93-a274f3036316"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{s_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="0" width="100" height="20" uuid="d58af3ff-c849-4bef-9768-8b0df4984ea6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="20" uuid="4ce7fca8-804e-468d-9984-db35847076da"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d7d2e264-ff2b-4ca1-a76b-d3d1dfaa0306"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[type-name]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
