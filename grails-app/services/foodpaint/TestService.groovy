@@ -53,6 +53,8 @@ class TestService {
     }
 
     def createOilCaseData = {
+        def site1 = new Site(name:"innovate",title:"創新有限公司").save(failOnError: true)
+
         def item1 = new Item(name:"olive",title:"橄欖果",spec:"",unit:"kg",description:"油橄欖樹果實").save(failOnError: true)
         def item2 = new Item(name:"extravirgin",title:"特級初榨橄欖油",spec:"特級初榨Extra Virgin",unit:"g",description:"頂級橄欖油").save(failOnError: true)
         def item3 = new Item(name:"c6h14",title:"己烷",spec:"有機己烷",unit:"ml",description:"用於萃取橄欖油").save(failOnError: true)
@@ -176,6 +178,8 @@ class TestService {
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
         def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        for(int i=2;i<102;i++)
+            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
