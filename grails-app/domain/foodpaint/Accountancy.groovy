@@ -52,12 +52,12 @@ class Accountancy {
     }
  
     static constraints = {
-        accountTitlelevel nullable:false
-        belongAccountTitleNumber nullable:false
-        belongaccountTitleName nullable:false
-        accountTitleNumber unique: true, blank: false
-        accountTitleName nullable:false
-        remark unique: true, blank: false
+        // accountTitlelevel nullable:false
+        // belongAccountTitleNumber nullable:false
+        // belongaccountTitleName nullable:false
+        // accountTitleNumber unique: true, blank: false
+        // accountTitleName nullable:false
+        // remark unique: true, blank: false
 	}
 	
 }

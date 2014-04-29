@@ -1023,7 +1023,13 @@ class ConvertService {
 		    result["warehouseLocation.name"] = purchaseReturnSheetDet.warehouseLocation.name
 		    result["warehouseLocation.title"] = purchaseReturnSheetDet.warehouseLocation.title
 		}
-
+	   if(purchaseReturnSheetDet.purchaseSheetDet){
+	    	    result.purchaseSheetDet = purchaseReturnSheetDet.purchaseSheetDet
+		    result["purchaseSheetDet.id"] = purchaseReturnSheetDet.purchaseSheetDet.id
+		    result["purchaseSheetDet.name"] = purchaseReturnSheetDet.purchaseSheetDet.name
+		    result["purchaseSheetDet.typeName"] = purchaseReturnSheetDet.purchaseSheetDet.typeName
+		    result["purchaseSheetDet.sequence"] = purchaseReturnSheetDet.purchaseSheetDet.sequence
+		}
 		result
     }
 
@@ -1224,14 +1230,13 @@ class ConvertService {
 	        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
 	       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
 	        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
-	        		result.saleSheetDet = saleReturnSheetDet.saleSheetDet.saleSheet
-	        		result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.saleSheet.id
+	        		
 	    }
 
 	    if(saleReturnSheetDet.batch){
 			result.batch = saleReturnSheetDet.batch
 			result["batch.id"] = saleReturnSheetDet.batch.id
-	        result["batch.name"] = saleReturnSheetDet.batch.name
+	       		result["batch.name"] = saleReturnSheetDet.batch.name
 	    }
 
 		if(saleReturnSheetDet.item){

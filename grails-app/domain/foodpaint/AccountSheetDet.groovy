@@ -125,10 +125,10 @@ class AccountSheetDet{
         importFlag  defaultValue: -1
     }
     static constraints = {
-        sequence(unique:['name','typeName'])
-        site nullable:true
-        editor nullable:true
-        creator nullable:true
-        batch nullable:true    
+        // sequence(unique:['name','typeName'])
+        // site nullable:true
+        // editor nullable:true
+        // creator nullable:true
+       
     }
 }

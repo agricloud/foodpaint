@@ -86,17 +86,17 @@ class AccountancyDet {
     }
  
     static constraints = {
-        accountTitlelevel nullable:false
-        belongAccountTitleNumber nullable:false
-        belongaccountTitleName nullable:false
-        accountTitleNumber unique: true, blank: false
-        accountTitleName nullable:false
-        accountTitleAlias nullable:true
-        accountNature nullable:true
-        balanceorIncomeType nullable:true
-        remainofdebitcreditType nullable:true
-        debitcreditofTatementsType nullable:true
-        remark unique: true, blank: false
+        // accountTitlelevel nullable:false
+        // belongAccountTitleNumber nullable:false
+        // belongaccountTitleName nullable:false
+        // accountTitleNumber unique: true, blank: false
+        // accountTitleName nullable:false
+        // accountTitleAlias nullable:true
+        // accountNature nullable:true
+        // balanceorIncomeType nullable:true
+        // remainofdebitcreditType nullable:true
+        // debitcreditofTatementsType nullable:true
+        // remark unique: true, blank: false
 
 	}
 	
