@@ -129,9 +129,6 @@ class AccountSheetDet{
         site nullable:true
         editor nullable:true
         creator nullable:true
-        batch nullable:true
-        saleSheetDet nullable:true
-        saleRetunSheetDet nullable:true
-        
+        batch nullable:true    
     }
 }
