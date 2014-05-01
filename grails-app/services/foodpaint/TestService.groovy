@@ -7,7 +7,7 @@ class TestService {
         def item = new Item(name:"item1",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
 
         def batch = new Batch(name:"batch1",item:item,dueDate:new Date(), 
-                manufactureDate: new Date(), expirationDate: new Date(), remark: '備註').save(failOnError: true)
+                manufactureDate: new Date(), expirationDate: new Date(),expectQty:100).save(failOnError: true)
         
         def supplier = new Supplier(name:"supplier1",title:"廠商1",country:Country.SPAIN).save(failOnError: true)
         def customer = new Customer(name:"customer1",title:"客戶1").save(failOnError: true)
