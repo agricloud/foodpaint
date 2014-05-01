@@ -58,16 +58,16 @@ class AccountSheetController {
 
         def  accountSheet= AccountSheet.get(params.id)
         accountSheet.properties = params
-       if(!accountSheet.name||!accountSheet.typeName||accountSheet.currency==null||!accountSheet.customer){  
+      // if(!accountSheet.name||!accountSheet.typeName||accountSheet.currency!=null||!accountSheet.customer){  
                 render (contentType: 'application/json') {
                     domainService.save(accountSheet)
                 }
-            }
-            else{
-                render (contentType: 'application/json') {
-                    [success: false,message:message(code: 'accountSheet.dataisnotfill', args:accountSheet)]
-                }
-            }   
+          //  }
+          //  else{
+           //     render (contentType: 'application/json') {
+          //          [success: false,message:message(code: 'accountSheet.dataisnotfill', args:accountSheet)]
+           //     }
+          //  }   
     }
 
 
