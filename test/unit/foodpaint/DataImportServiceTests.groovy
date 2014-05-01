@@ -382,8 +382,6 @@ class DataImportServiceTests {
     }
 
     void testPurchaseSheetImport() {
-        // 預設時區，避免 json 轉換自動扣除 8 小時(台灣 +8:00)
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
         
         new Supplier(name:"FJ01",title:"福智麻園",country:Country.TAIWAN).save(failOnError: true, flush: true)
 
