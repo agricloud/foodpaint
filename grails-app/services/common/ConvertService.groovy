@@ -1198,13 +1198,35 @@ class ConvertService {
                result.id = accountSheet.id
     	    result.name = accountSheet.name
 	    result.typeName =accountSheet.typeName
-
 		if(accountSheet.customer){
 			result.customer = accountSheet.customer
 			result["customer.id"] = accountSheet.customer.id
 	       		result["customer.name"] = accountSheet.customer.name
 	       		result["customer.title"] = accountSheet.customer.title
-	    }
+	    	}
+
+	     //result.accountDate =accountSheet.accountDate
+	     // result.anticipationDate =accountSheet.anticipationDate
+	     // result.receivables =accountSheet.receivables
+	     // result.rate =accountSheet.rate
+	     // result.currency =accountSheet.currency
+	    // result.documentDateCreated =accountSheet.documentDateCreated
+	    // result.status =accountSheet.status
+	    // result.closedCode =accountSheet.closedCode
+	    
+	    // result.sequence =accountSheet.sequence
+	    // result.discount =accountSheet.discount
+	    // result.originalAmounts =accountSheet.originalAmounts
+	    // result.originaltax =accountSheet.originaltax
+	    // result.originalTotalAmount =accountSheet.originalTotalAmount
+	    // result.subamounts =accountSheet.subamounts
+	    // result.tax =accountSheet.tax
+	    // result.totalAmount =accountSheet.totalAmount
+	    // result.originalReceived =accountSheet.originalReceived
+	    // result.received =accountSheet.received
+	    // result.remark =accountSheet.remark
+	    // result.signoff =accountSheet.signoff
+		
 
 		result
     }
@@ -1212,59 +1234,59 @@ class ConvertService {
     def accountSheetDetParseJson(accountSheetSheetDet){
     	def result = [:]
 
-    		result.dateCreated =  saleReturnSheetDet.dateCreated
-	   	result.lastUpdated =  saleReturnSheetDet.lastUpdated
-	    	result.site =  saleReturnSheetDet.site
-        		result.id = saleReturnSheetDet.id
-    		result.name =  saleReturnSheetDet.name
-		result.typeName = saleReturnSheetDet.typeName
-		result.sequence = saleReturnSheetDet.sequence
-		result.qty =  saleReturnSheetDet.qty
+  //   		result.dateCreated =  saleReturnSheetDet.dateCreated
+	 //   	result.lastUpdated =  saleReturnSheetDet.lastUpdated
+	 //    	result.site =  saleReturnSheetDet.site
+  //       		result.id = saleReturnSheetDet.id
+  //   		result.name =  saleReturnSheetDet.name
+		// result.typeName = saleReturnSheetDet.typeName
+		// result.sequence = saleReturnSheetDet.sequence
+		// result.qty =  saleReturnSheetDet.qty
 
-		result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
-		result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
+		// result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
+		// result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
 
-		if(saleReturnSheetDet.saleSheetDet){
-			result.saleSheetDet = saleReturnSheetDet.saleSheetDet
-			result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
-	        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
-	       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
-	        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
+		// if(saleReturnSheetDet.saleSheetDet){
+		// 	result.saleSheetDet = saleReturnSheetDet.saleSheetDet
+		// 	result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
+	 //        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+	 //       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
+	 //        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
 	        		
-	    }
+	 //    }
 
-	    if(saleReturnSheetDet.batch){
-			result.batch = saleReturnSheetDet.batch
-			result["batch.id"] = saleReturnSheetDet.batch.id
-	       		result["batch.name"] = saleReturnSheetDet.batch.name
-	    }
+	 //    if(saleReturnSheetDet.batch){
+		// 	result.batch = saleReturnSheetDet.batch
+		// 	result["batch.id"] = saleReturnSheetDet.batch.id
+	 //       		result["batch.name"] = saleReturnSheetDet.batch.name
+	 //    }
 
-		if(saleReturnSheetDet.item){
-			result.item = saleReturnSheetDet.item
-			result["item.id"] = saleReturnSheetDet.item.id
-	        result["item.name"] = saleReturnSheetDet.item.name
-	        result["item.title"] = saleReturnSheetDet.item.title
-	        result["item.spec"] = saleReturnSheetDet.item.spec
-	        result["item.unit"] = saleReturnSheetDet.item.unit
-	        result["item.description"] = saleReturnSheetDet.item.description
-	    }
+		// if(saleReturnSheetDet.item){
+		// 	result.item = saleReturnSheetDet.item
+		// 	result["item.id"] = saleReturnSheetDet.item.id
+	 //        result["item.name"] = saleReturnSheetDet.item.name
+	 //        result["item.title"] = saleReturnSheetDet.item.title
+	 //        result["item.spec"] = saleReturnSheetDet.item.spec
+	 //        result["item.unit"] = saleReturnSheetDet.item.unit
+	 //        result["item.description"] = saleReturnSheetDet.item.description
+	 //    }
 
-	    if(saleReturnSheetDet.warehouse){
-		result.warehouse = saleReturnSheetDet.warehouse
-		result["warehouse.id"] =saleReturnSheetDet.warehouse.id
-	       	result["warehouse.name"] = saleReturnSheetDet.warehouse.name
-	       	result["warehouse.title"] = saleReturnSheetDet.warehouse.title
-	    }
+	 //    if(saleReturnSheetDet.warehouse){
+		// result.warehouse = saleReturnSheetDet.warehouse
+		// result["warehouse.id"] =saleReturnSheetDet.warehouse.id
+	 //       	result["warehouse.name"] = saleReturnSheetDet.warehouse.name
+	 //       	result["warehouse.title"] = saleReturnSheetDet.warehouse.title
+	 //    }
 
-	    if(saleReturnSheetDet.warehouseLocation){
-	    	result.warehouseLocation = saleReturnSheetDet.warehouseLocation
-		    result["warehouseLocation.id"] = saleReturnSheetDet.warehouseLocation.id
-		    result["warehouseLocation.name"] = saleReturnSheetDet.warehouseLocation.name
-		    result["warehouseLocation.title"] = saleReturnSheetDet.warehouseLocation.title
-		}
+	 //    if(saleReturnSheetDet.warehouseLocation){
+	 //    	result.warehouseLocation = saleReturnSheetDet.warehouseLocation
+		//     result["warehouseLocation.id"] = saleReturnSheetDet.warehouseLocation.id
+		//     result["warehouseLocation.name"] = saleReturnSheetDet.warehouseLocation.name
+		//     result["warehouseLocation.title"] = saleReturnSheetDet.warehouseLocation.title
+		// }
 
-		result
-    }
+		// result
+  //   }
 
 
 }

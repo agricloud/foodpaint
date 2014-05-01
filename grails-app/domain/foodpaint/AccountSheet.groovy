@@ -34,54 +34,54 @@ class AccountSheet{
     /**
      * 結帳日期
      */
-    Date accountDate
+    //Date accountDate
 
-   /**
-     * 預計收款日期
-     */
-    Date anticipationDate
-
-
-     /**
-     * 收款方式
-     */
-    Date receivables
-
-     /**
-     * 匯率
-     */
-    Double rate
+   // /**
+   //   * 預計收款日期
+   //   */
+   //  Date anticipationDate
 
 
-     /**
-     * 幣別
-     */
-    String currency
+   //   /**
+   //   * 收款方式
+   //   */
+   //  String receivables
+
+   //   /**
+   //   * 匯率
+   //   */
+   //  Double rate
+
+
+   //   /**
+   //   * 幣別
+   //   */
+   //  String currency
 
      /**
      * 憑證日期（自動欄位）
      */
-    Date documentDateCreated
+  //  Date documentDateCreated
 
-     /**
-     * 狀態
-     */
-    String status
+    //  *
+    //  * 狀態
+     
+    // String status
 
-     /**
-     * 結案碼 Y/N 當累積收款金額等於應收總金額時或已處理完結案碼為Y 否等於則為N
-     */
-    String  closedCode
+   //   /**
+   //   * 結案碼 Y/N 當累積收款金額等於應收總金額時或已處理完結案碼為Y 否等於則為N
+   //   */
+   //  String  closedCode
 
-    /*
-    * 業務員之後會新增class clerk
-    */
-    String clerk
+   //  /*
+   //  * 業務員之後會新增class clerk
+   //  */
+   //  String clerk
  
     /*
     * 項次
     */
-    int sequence
+    // int sequence
    
    /*
     * 單別
@@ -102,63 +102,62 @@ class AccountSheet{
     /*
     * 折扣率
     */
-    Double discount
+    //Double discount
     
-     /*
-    * 原幣應收金額
-    */
-    Double originalAmounts
+    //  /*
+    // * 原幣應收金額
+    // */
+    // Double originalAmounts
 
-     /*
-    * 原幣總稅額
-    */
-    Double originaltax
+    //  /*
+    // * 原幣總稅額
+    // */
+    // Double originaltax
 
-    /*
-    * 原幣應收總計
-    */
-    Double originalTotalAmount
+    // /*
+    // * 原幣應收總計
+    // */
+    // Double originalTotalAmount
 
 
-     /*
-    * 本幣應收合計
-    */
-    Double subamounts
+    //  /*
+    // * 本幣應收合計
+    // */
+    // Double subamounts
 
-     /*
-    * 本幣總稅額
-    */
-    Double tax
+    //  /*
+    // * 本幣總稅額
+    // */
+    // Double tax
 
-    /*
-    * 本幣應收合計金額
-    */
-    Double totalAmount
+    // /*
+    // * 本幣應收合計金額
+    // */
+    // Double totalAmount
 
-    /*
-    * 原幣已收金額
-    */
-    Double originalReceived
+    // /*
+    // * 原幣已收金額
+    // */
+    // Double originalReceived
 
-    /*
-    * 本幣已收金額
-    */
-    Double received
+    // /*
+    // * 本幣已收金額
+    // */
+    // Double received
 
-    /**
-     *備註
-     */
-    String remark
+    // /**
+    //  *備註
+    //  */
+    // String remark
 
-    
+    //  String  signoff
     static mapping = {
         importFlag  defaultValue: -1
     }
     static constraints = {
-        // sequence(unique:['name','typeName'])
-        // site nullable:true
-        // editor nullable:true
-        // creator nullable:true
-
+        name unique:'typeName'
+        site nullable:true
+        editor nullable:true
+        creator nullable:true
     }
 }
