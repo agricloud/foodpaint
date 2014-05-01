@@ -39,27 +39,40 @@ class AccountSheetController {
         }
     }
 
-    def save = {
+    def save = { //如果已確認則無法動作
         def accountSheet=new AccountSheet(params)
-
-        render (contentType: 'application/json') {
-            domainService.save(accountSheet)
-        }
+           if(!accountSheet.name||!accountSheet.typeName||accountSheet.accountDate==null||accountSheet.anticipationDate==null||accountSheet.currency==null||!accountSheet.customer){  
+                render (contentType: 'application/json') {
+                    domainService.save(accountSheetDet)
+                }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    [success: false,message:message(code: 'accountSheet.dataisnotfill', args:accountSheet)]
+                }
+            }
     }
 
 
-    def update = {
+    def update = { //如果已確認則無法動作
 
         def  accountSheet= AccountSheet.get(params.id)
         accountSheet.properties = params
-        render (contentType: 'application/json') {
-            domainService.save(accountSheet)
-        }         
+       if(!accountSheet.name||!accountSheet.typeName||accountSheet.accountDate==null||accountSheet.anticipationDate==null||accountSheet.currency==null||!accountSheet.customer){  
+                render (contentType: 'application/json') {
+                    domainService.save(accountSheet)
+                }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    [success: false,message:message(code: 'accountSheet.dataisnotfill', args:accountSheet)]
+                }
+            }   
     }
 
 
 
-    def delete = {
+    def delete = {  //如果已確認則無法動作
         
         def  accountSheet = AccountSheet.get(params.id)
 

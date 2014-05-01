@@ -71,24 +71,25 @@ class AccountSheetDetController {
 
     }
 
-    // @Transactional
-    // def save(){
-    //     def accountSheetDet=new AccountSheetDet(params)
-    //     if((!accountSheetDet.saleReturnSheetDet || !accountSheetDet.saleSheetDet)&&(accountSheetDet.saleSheetDet.name==saleSheetDet.name||accountSheetDet.saleReturnSheetDet.name==saleReturnSheetDet.name)){  //判斷結帳單的銷貨單銷退單是否存在
+    @Transactional
+    def save(){
+        def accountSheetDet=new AccountSheetDet(params)
+        if((!accountSheetDet.saleReturnSheetDet || !accountSheetDet.saleSheetDet)&&(accountSheetDet.saleSheetDet.name==saleSheetDet.name||accountSheetDet.saleReturnSheetDet.name==saleReturnSheetDet.name)){  //判斷結帳單的銷貨單銷退單是否存在
            
+            render (contentType: 'application/json') {
+                domainService.save(accountSheetDet)
+            }
 
 
-
-
-    //         // if(saleSheet.totalAmount-saleReturnSheet.totalAmount == accountSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
-    //         // }
-    //     }
-    //     else{
-    //                 render (contentType: 'application/json') {
-    //                     [success: false,message:message(code: 'accountSheetDet.saleSheetDetORsaleReturnSheetDet.itemOrBatch.not.equal', args:accountSheetDet)]
-    //                 }
-    //             }
-    // }
+            // if(saleSheet.totalAmount-saleReturnSheet.totalAmount == accountSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
+            // }
+        }
+        else{
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'accountSheetDet.saleSheetDetORsaleReturnSheetDet.itemOrBatch.not.equal', args:accountSheetDet)]
+            }
+        }
+    }
     // @Transactional
     // def update(){
     //     def  saleReturnSheetDet = new SaleReturnSheetDet(params)
