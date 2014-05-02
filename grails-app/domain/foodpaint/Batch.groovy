@@ -54,7 +54,7 @@ class Batch  {
     /*
     * 類型，無 erp 時使用
     */
-    BatchType batchType
+    BatchType batchType = foodpaint.BatchType.PRODUCT
 
 
     /*
@@ -79,7 +79,6 @@ class Batch  {
 		expectQty min: 0L
 		dueDate nullable: true
 		manufactureDate nullable: true
-		batchType nullable: true
 		supplier nullable: true
 		
 	}

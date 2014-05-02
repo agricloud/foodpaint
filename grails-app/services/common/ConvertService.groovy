@@ -4,6 +4,7 @@ import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 class ConvertService {
 
 	def enumService
+	def dateService
 
     def getDomainFields(domainClassName) {
 		def fields = []
@@ -28,16 +29,16 @@ class ConvertService {
     def batchParseJson(batch){
 	    def result = [:]
 
-	    result.dateCreated = batch.dateCreated
-	    result.lastUpdated = batch.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(batch.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(batch.lastUpdated)
 	    result.site = batch.site
 
 	    result.id= batch.id
 	    result.name=batch.name
 	    result.item = batch.item
-	    result.dueDate = batch.dueDate
+	    result.dueDate = dateService.formatWithISO8601(batch.dueDate)
 	    result.expectQty = batch.expectQty
-	    result.manufactureDate = batch.manufactureDate
+	    result.manufactureDate = dateService.formatWithISO8601(batch.manufactureDate)
 	    // result.remark = batch.remark
 	    if(batch.item){
 	        result["item.id"] = batch.item.id
@@ -53,6 +54,11 @@ class ConvertService {
             result["supplier.name"] = batch.supplier.name
             result["supplier.title"] = batch.supplier.title
         }
+        if(batch.batchType){
+        	def batchType=enumService.name(batch.batchType)
+        	result["batchType"] = batchType.name
+        	result["batchTypeTitle"] = batchType.title
+        }
         if(batch.country){
         	def country=enumService.name(batch.country)
         	result["country"] = country.name
@@ -65,8 +71,8 @@ class ConvertService {
     def batchSourceParseJson(batchSource){
 	    def result = [:]
 
-	    result.dateCreated = batchSource.dateCreated
-	    result.lastUpdated = batchSource.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(batchSource.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(batchSource.lastUpdated)
 	    result.site = batchSource.site
 
 	    result.id = batchSource.id
@@ -75,9 +81,9 @@ class ConvertService {
 		    result.batch = batchSource.batch
 		    result["batch.id"]= batchSource.batch.id
 		    result["batch.name"] =batchSource.batch.name
-		    result["batch.dueDate"] = batchSource.batch.dueDate
+		    result["batch.dueDate"] = dateService.formatWithISO8601(batchSource.batch.dueDate)
 		    result["batch.expectQty"] = batchSource.batch.expectQty
-		    result["batch.manufactureDate"] = batchSource.batch.manufactureDate
+		    result["batch.manufactureDate"] = dateService.formatWithISO8601(batchSource.batch.manufactureDate)
 		    // result["batch.remark"] = batchSource.batch.remark
 
 		    if(batchSource.batch.item){
@@ -103,9 +109,9 @@ class ConvertService {
 	     	result.childBatch = batchSource.childBatch
 	        result["childBatch.id"]= batchSource.childBatch.id
 		    result["childBatch.name"] =batchSource.childBatch.name
-		    result["childBatch.dueDate"] = batchSource.childBatch.dueDate
+		    result["childBatch.dueDate"] = dateService.formatWithISO8601(batchSource.childBatch.dueDate)
 		    result["childBatch.expectQty"] = batchSource.childBatch.expectQty
-		    result["childBatch.manufactureDate"] = batchSource.childBatch.manufactureDate
+		    result["childBatch.manufactureDate"] = dateService.formatWithISO8601(batchSource.childBatch.manufactureDate)
 		    // result["childBatch.remark"] = batchSource.childBatch.remark
 		    if(batchSource.childBatch.item){
 		        result["childBatch.item.id"] = batchSource.childBatch.item.id
@@ -133,8 +139,8 @@ class ConvertService {
     def itemParseJson(item){
 	    def result = [:]
 
-	    result.dateCreated = item.dateCreated
-	    result.lastUpdated = item.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(item.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(item.lastUpdated)
 	    result.site = item.site
 
 	    result.id = item.id
@@ -150,8 +156,8 @@ class ConvertService {
     def itemRouteParseJson(itemRoute){
    		def result = [:]
 
-   		result.dateCreated = itemRoute.dateCreated
-	    result.lastUpdated = itemRoute.lastUpdated
+   		result.dateCreated = dateService.formatWithISO8601(itemRoute.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(itemRoute.lastUpdated)
 	    result.site = itemRoute.site
 
    		result.id=itemRoute.id
@@ -186,8 +192,8 @@ class ConvertService {
    	def warehouseParseJson(warehouse){
 	    def result = [:]
 
-	    result.dateCreated = warehouse.dateCreated
-	    result.lastUpdated = warehouse.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(warehouse.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(warehouse.lastUpdated)
 	    result.site = warehouse.site
 
 	    result.id = warehouse.id
@@ -201,8 +207,8 @@ class ConvertService {
     def warehouseLocationParseJson(warehouseLocation){
 	    def result = [:]
 
-	    result.dateCreated = warehouseLocation.dateCreated
-	    result.lastUpdated = warehouseLocation.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(warehouseLocation.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(warehouseLocation.lastUpdated)
 	    result.site = warehouseLocation.site
 
 	    result.id = warehouseLocation.id
@@ -224,8 +230,8 @@ class ConvertService {
    	def inventoryParseJson(inventory){
 	    def result = [:]
 
-	    result.dateCreated = inventory.dateCreated
-	    result.lastUpdated = inventory.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(inventory.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(inventory.lastUpdated)
 	    result.site = inventory.site
 
 	    result.id = inventory.id
@@ -243,8 +249,8 @@ class ConvertService {
 		    result["item.title"] = inventory.item.title
 		}
 	    result.qty = inventory.qty
-	    result.lastInDate = inventory.lastInDate
-	    result.lastOutDate = inventory.lastOutDate
+	    result.lastInDate = dateService.formatWithISO8601(inventory.lastInDate)
+	    result.lastOutDate = dateService.formatWithISO8601(inventory.lastOutDate)
 
 	    result
     }
@@ -252,8 +258,8 @@ class ConvertService {
     def inventoryDetailParseJson(inventoryDetail){
 	    def result = [:]
 
-	    result.dateCreated = inventoryDetail.dateCreated
-	    result.lastUpdated = inventoryDetail.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(inventoryDetail.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(inventoryDetail.lastUpdated)
 	    result.site = inventoryDetail.site
 
 	    result.id = inventoryDetail.id
@@ -283,8 +289,8 @@ class ConvertService {
 		}
 
 	    result.qty = inventoryDetail.qty
-	    result.lastInDate = inventoryDetail.lastInDate
-	    result.lastOutDate = inventoryDetail.lastOutDate
+	    result.lastInDate = dateService.formatWithISO8601(inventoryDetail.lastInDate)
+	    result.lastOutDate = dateService.formatWithISO8601(inventoryDetail.lastOutDate)
 
 	    result
     }
@@ -293,8 +299,8 @@ class ConvertService {
     def operationParseJson(operation){
 	    def result = [:]
 
-		result.dateCreated = operation.dateCreated
-	    result.lastUpdated = operation.lastUpdated
+		result.dateCreated = dateService.formatWithISO8601(operation.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(operation.lastUpdated)
 	    result.site = operation.site
 
 	    result.id= operation.id
@@ -308,8 +314,8 @@ class ConvertService {
     def workstationParseJson(workstation){
 	    def result = [:]
 
-	    result.dateCreated = workstation.dateCreated
-	    result.lastUpdated = workstation.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(workstation.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(workstation.lastUpdated)
 	    result.site = workstation.site
 
 	    result.id= workstation.id
@@ -323,8 +329,8 @@ class ConvertService {
     def supplierParseJson(supplier){
 	    def result = [:]
 
-	    result.dateCreated = supplier.dateCreated
-	    result.lastUpdated = supplier.lastUpdated
+	    result.dateCreated = dateService.formatWithISO8601(supplier.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(supplier.lastUpdated)
 	    result.site = supplier.site
 
 	    result.id= supplier.id
@@ -343,14 +349,14 @@ class ConvertService {
    	def batchRouteParseJson(batchRoute){
    		def result = [:]
 
-   		result.dateCreated = batchRoute.dateCreated
-	    result.lastUpdated = batchRoute.lastUpdated
+   		result.dateCreated = dateService.formatWithISO8601(batchRoute.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(batchRoute.lastUpdated)
 	    result.site = batchRoute.site
 
    		result.id=batchRoute.id
    		result.sequence=batchRoute.sequence
-   		result.startDate=batchRoute.startDate
-   		result.endDate=batchRoute.endDate
+   		result.startDate=dateService.formatWithISO8601(batchRoute.startDate)
+   		result.endDate=dateService.formatWithISO8601(batchRoute.endDate)
    		result.batch=batchRoute.batch
    		result["batch.id"] = batchRoute.batch.id
    		result["batch.name"] = batchRoute.batch.name
@@ -380,13 +386,14 @@ class ConvertService {
     def customerParseJson(customer){
     	def result = [:]
 
-    	result.dateCreated = customer.dateCreated
-	    result.lastUpdated = customer.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(customer.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(customer.lastUpdated)
 	    result.site = customer.site
 
         result.id = customer.id
     	result.name = customer.name
 		result.title = customer.title
+		result.tel = customer.tel
 		result.email = customer.email
 		result.address = customer.address
 
@@ -396,14 +403,14 @@ class ConvertService {
     def customerOrderParseJson(customerOrder){
     	def result = [:]
 
-    	result.dateCreated = customerOrder.dateCreated
-	    result.lastUpdated = customerOrder.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(customerOrder.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(customerOrder.lastUpdated)
 	    result.site = customerOrder.site
 
         result.id = customerOrder.id
     	result.name = customerOrder.name
 		result.typeName = customerOrder.typeName
-		result.dueDate = customerOrder.dueDate
+		result.dueDate = dateService.formatWithISO8601(customerOrder.dueDate)
 
 		if(customerOrder.customer){
 			result.customer = customerOrder.customer
@@ -418,8 +425,8 @@ class ConvertService {
     def customerOrderDetParseJson(customerOrderDet){
     	def result = [:]
 
-    	result.dateCreated = customerOrderDet.dateCreated
-	    result.lastUpdated = customerOrderDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(customerOrderDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(customerOrderDet.lastUpdated)
 	    result.site = customerOrderDet.site
 
         result.id = customerOrderDet.id
@@ -449,8 +456,8 @@ class ConvertService {
     def manufactureOrderParseJson(manufactureOrder){
     	def result = [:]
 
-    	result.dateCreated = manufactureOrder.dateCreated
-	    result.lastUpdated = manufactureOrder.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(manufactureOrder.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(manufactureOrder.lastUpdated)
 	    result.site = manufactureOrder.site
 
         result.id = manufactureOrder.id
@@ -479,8 +486,8 @@ class ConvertService {
     def materialSheetParseJson(materialSheet){
     	def result = [:]
 
-    	result.dateCreated = materialSheet.dateCreated
-	    result.lastUpdated = materialSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(materialSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(materialSheet.lastUpdated)
 	    result.site = materialSheet.site
 
         result.id = materialSheet.id
@@ -506,8 +513,8 @@ class ConvertService {
     def materialSheetDetParseJson(materialSheetDet){
     	def result = [:]
 
-    	result.dateCreated = materialSheetDet.dateCreated
-	    result.lastUpdated = materialSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(materialSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(materialSheetDet.lastUpdated)
 	    result.site = materialSheetDet.site
 
         result.id = materialSheetDet.id
@@ -562,8 +569,8 @@ class ConvertService {
     def purchaseSheetParseJson(purchaseSheet){
     	def result = [:]
 
-    	result.dateCreated = purchaseSheet.dateCreated
-	    result.lastUpdated = purchaseSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(purchaseSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(purchaseSheet.lastUpdated)
 	    result.site = purchaseSheet.site
 
         result.id = purchaseSheet.id
@@ -583,8 +590,8 @@ class ConvertService {
     def purchaseSheetDetParseJson(purchaseSheetDet){
     	def result = [:]
 
-    	result.dateCreated = purchaseSheetDet.dateCreated
-	    result.lastUpdated = purchaseSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(purchaseSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(purchaseSheetDet.lastUpdated)
 	    result.site = purchaseSheetDet.site
 
         result.id = purchaseSheetDet.id
@@ -633,8 +640,8 @@ class ConvertService {
     def stockInSheetParseJson(stockInSheet){
     	def result = [:]
 
-    	result.dateCreated = stockInSheet.dateCreated
-	    result.lastUpdated = stockInSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(stockInSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(stockInSheet.lastUpdated)
 	    result.site = stockInSheet.site
 
         result.id = stockInSheet.id
@@ -654,8 +661,8 @@ class ConvertService {
     def stockInSheetDetParseJson(stockInSheetDet){
     	def result = [:]
 
-    	result.dateCreated = stockInSheetDet.dateCreated
-	    result.lastUpdated = stockInSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(stockInSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(stockInSheetDet.lastUpdated)
 	    result.site = stockInSheetDet.site
 
         result.id = stockInSheetDet.id
@@ -709,8 +716,8 @@ class ConvertService {
     def outSrcPurchaseSheetParseJson(outSrcPurchaseSheet){
     	def result = [:]
 
-    	result.dateCreated = outSrcPurchaseSheet.dateCreated
-	    result.lastUpdated = outSrcPurchaseSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(outSrcPurchaseSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(outSrcPurchaseSheet.lastUpdated)
 	    result.site = outSrcPurchaseSheet.site
 
         result.id = outSrcPurchaseSheet.id
@@ -730,8 +737,8 @@ class ConvertService {
     def outSrcPurchaseSheetDetParseJson(outSrcPurchaseSheetDet){
     	def result = [:]
 
-    	result.dateCreated = outSrcPurchaseSheetDet.dateCreated
-	    result.lastUpdated = outSrcPurchaseSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(outSrcPurchaseSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(outSrcPurchaseSheetDet.lastUpdated)
 	    result.site = outSrcPurchaseSheetDet.site
 
         result.id = outSrcPurchaseSheetDet.id
@@ -786,8 +793,8 @@ class ConvertService {
     def saleSheetParseJson(saleSheet){
     	def result = [:]
 
-    	result.dateCreated = saleSheet.dateCreated
-	    result.lastUpdated = saleSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(saleSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(saleSheet.lastUpdated)
 	    result.site = saleSheet.site
 
         result.id = saleSheet.id
@@ -807,8 +814,8 @@ class ConvertService {
     def saleSheetDetParseJson(saleSheetDet){
     	def result = [:]
 
-    	result.dateCreated = saleSheetDet.dateCreated
-	    result.lastUpdated = saleSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(saleSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(saleSheetDet.lastUpdated)
 	    result.site = saleSheetDet.site
 
         result.id = saleSheetDet.id
@@ -865,8 +872,8 @@ class ConvertService {
     def materialReturnSheetParseJson(materialReturnSheet){
     	def result = [:]
 
-    	result.dateCreated = materialReturnSheet.dateCreated
-	    result.lastUpdated = materialReturnSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(materialReturnSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(materialReturnSheet.lastUpdated)
 	    result.site = materialReturnSheet.site
 
         result.id = materialReturnSheet.id
@@ -892,8 +899,8 @@ class ConvertService {
     def materialReturnSheetDetParseJson(materialReturnSheetDet){
     	def result = [:]
 
-    	result.dateCreated = materialReturnSheetDet.dateCreated
-	    result.lastUpdated = materialReturnSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(materialReturnSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(materialReturnSheetDet.lastUpdated)
 	    result.site = materialReturnSheetDet.site
 
         result.id = materialReturnSheetDet.id
@@ -956,8 +963,8 @@ class ConvertService {
     def purchaseReturnSheetParseJson(purchaseReturnSheet){
   		def result = [:]
 
-		result.dateCreated = purchaseReturnSheet.dateCreated
-    	result.lastUpdated = purchaseReturnSheet.lastUpdated
+		result.dateCreated = dateService.formatWithISO8601(purchaseReturnSheet.dateCreated)
+    	result.lastUpdated = dateService.formatWithISO8601(purchaseReturnSheet.lastUpdated)
     	result.site = purchaseReturnSheet.site
 
 		result.id = purchaseReturnSheet.id
@@ -977,8 +984,8 @@ class ConvertService {
     def purchaseReturnSheetDetParseJson(purchaseReturnSheetDet){
     	def result = [:]
 
-		result.dateCreated = purchaseReturnSheetDet.dateCreated
-	   	result.lastUpdated = purchaseReturnSheetDet.lastUpdated
+		result.dateCreated = dateService.formatWithISO8601(purchaseReturnSheetDet.dateCreated)
+	   	result.lastUpdated = dateService.formatWithISO8601(purchaseReturnSheetDet.lastUpdated)
     	result.site = purchaseReturnSheetDet.site
 
 		result.id = purchaseReturnSheetDet.id
@@ -1036,8 +1043,8 @@ class ConvertService {
     def outSrcPurchaseReturnSheetParseJson(outSrcPurchaseReturnSheet){
 		def result = [:]
 
-    	result.dateCreated = outSrcPurchaseReturnSheet.dateCreated
-	    result.lastUpdated = outSrcPurchaseReturnSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(outSrcPurchaseReturnSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(outSrcPurchaseReturnSheet.lastUpdated)
 	    result.site = outSrcPurchaseReturnSheet.site
 
         result.id = outSrcPurchaseReturnSheet.id
@@ -1058,8 +1065,8 @@ class ConvertService {
 
     	def result = [:]
 
-    	result.dateCreated = outSrcPurchaseReturnSheetDet.dateCreated
-	    result.lastUpdated = outSrcPurchaseReturnSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(outSrcPurchaseReturnSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(outSrcPurchaseReturnSheetDet.lastUpdated)
 	    result.site = outSrcPurchaseReturnSheetDet.site
 
         result.id = outSrcPurchaseReturnSheetDet.id
@@ -1122,8 +1129,8 @@ class ConvertService {
     def saleReturnSheetParseJson(saleReturnSheet){
     	def result = [:]
 
-    	result.dateCreated = saleReturnSheet.dateCreated
-	    result.lastUpdated = saleReturnSheet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(saleReturnSheet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(saleReturnSheet.lastUpdated)
 	    result.site = saleReturnSheet.site
 
         result.id = saleReturnSheet.id
@@ -1143,8 +1150,8 @@ class ConvertService {
     def saleReturnSheetDetParseJson(saleReturnSheetDet){
     	def result = [:]
 
-    	result.dateCreated = saleReturnSheetDet.dateCreated
-	    result.lastUpdated = saleReturnSheetDet.lastUpdated
+    	result.dateCreated = dateService.formatWithISO8601(saleReturnSheetDet.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(saleReturnSheetDet.lastUpdated)
 	    result.site = saleReturnSheetDet.site
 
         result.id = saleReturnSheetDet.id

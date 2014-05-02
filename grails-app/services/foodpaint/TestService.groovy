@@ -7,7 +7,7 @@ class TestService {
         def item = new Item(name:"item1",title:"華珍玉米1",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true)
 
         def batch = new Batch(name:"batch1",item:item,dueDate:new Date(), 
-                manufactureDate: new Date(), expirationDate: new Date(), remark: '備註').save(failOnError: true)
+                manufactureDate: new Date(), expirationDate: new Date(),expectQty:100).save(failOnError: true)
         
         def supplier = new Supplier(name:"supplier1",title:"廠商1",country:Country.SPAIN).save(failOnError: true)
         def customer = new Customer(name:"customer1",title:"客戶1").save(failOnError: true)
@@ -53,6 +53,8 @@ class TestService {
     }
 
     def createOilCaseData = {
+        def site1 = new Site(name:"innovate",title:"創新有限公司").save(failOnError: true)
+
         def item1 = new Item(name:"olive",title:"橄欖果",spec:"",unit:"kg",description:"油橄欖樹果實").save(failOnError: true)
         def item2 = new Item(name:"extravirgin",title:"特級初榨橄欖油",spec:"特級初榨Extra Virgin",unit:"g",description:"頂級橄欖油").save(failOnError: true)
         def item3 = new Item(name:"c6h14",title:"己烷",spec:"有機己烷",unit:"ml",description:"用於萃取橄欖油").save(failOnError: true)
@@ -69,12 +71,12 @@ class TestService {
         def warehouseLocation1 = new WarehouseLocation(name:"oilwarehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true)
         def warehouseLocation2 = new WarehouseLocation(name:"oilwarehouseLocation2",warehouse:warehouse1,title:"儲位2").save(failOnError: true)
 
-        def batch1 = new Batch(name:"olive_0211",item:item1, manufactureDate: new Date(2013,02,11), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
-        def batch2 = new Batch(name:"extravirgin_0215",item:item2, manufactureDate: new Date(2013,02,15), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
+        def batch1 = new Batch(name:"olive_0211",item:item1, manufactureDate: new Date(114,02,11), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
+        def batch2 = new Batch(name:"extravirgin_0215",item:item2, manufactureDate: new Date(114,02,15), supplier:supplier1,country:Country.SPAIN, remark: '').save(failOnError: true)
         def batch3 = new Batch(name:"c6h14_0213",item:item3, supplier:supplier2,country:Country.TAIWAN, remark: '').save(failOnError: true)
         def batch4 = new Batch(name:"c7h16_0213",item:item4, supplier:supplier2,country:Country.TAIWAN, remark: '').save(failOnError: true)
         def batch5 = new Batch(name:"chlorophyllin_0213",item:item5, supplier:supplier2,country:Country.TAIWAN, remark: '').save(failOnError: true)
-        def batch11 = new Batch(name:"pure_0220",item:item11, manufactureDate: new Date(2013,02,20), country:Country.TAIWAN, remark: '').save(failOnError: true)
+        def batch11 = new Batch(name:"pure_0220",item:item11, manufactureDate: new Date(114,02,20), country:Country.TAIWAN, remark: '').save(failOnError: true)
 
         new BatchSource(batch:batch2,childBatch:batch1).save(failOnError: true)
         new BatchSource(batch:batch11,childBatch:batch2).save(failOnError: true)
@@ -94,17 +96,17 @@ class TestService {
         def operation10 = new Operation(name:"oiloperation10",title:"濾淨",description:"於封裝前在恆溫恆濕環境控制下，除去更細小的雜質。").save(failOnError: true)
         def operation11 = new Operation(name:"oiloperation11",title:"封裝",description:"真空瓶裝封口。").save(failOnError: true)
 
-        def batchRoute1 = new BatchRoute(batch:batch1,supplier:supplier1,sequence:1,operation:operation1,startDate:new Date(2013,02,2),endDate:new Date(2013,02,11))
-        def batchRoute2 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:1,operation:operation2,startDate:new Date(2013,02,12),endDate:new Date(2013,02,12))
-        def batchRoute3 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:2,operation:operation3,startDate:new Date(2013,02,12),endDate:new Date(2013,02,13))
-        def batchRoute4 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:3,operation:operation4,startDate:new Date(2013,02,13),endDate:new Date(2013,02,14))
-        def batchRoute5 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:4,operation:operation5,startDate:new Date(2013,02,14),endDate:new Date(2013,02,15))
-        def batchRoute6 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:1,operation:operation6,startDate:new Date(2013,02,15),endDate:new Date(2013,02,15))
-        def batchRoute7 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:2,operation:operation7,startDate:new Date(2013,02,16),endDate:new Date(2013,02,16))
-        def batchRoute8 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:3,operation:operation8,startDate:new Date(2013,02,17),endDate:new Date(2013,02,17))
-        def batchRoute9 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:4,operation:operation9,startDate:new Date(2013,02,18),endDate:new Date(2013,02,18))
-        def batchRoute10 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:5,operation:operation10,startDate:new Date(2013,02,19),endDate:new Date(2013,02,19))
-        def batchRoute11 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:6,operation:operation11,startDate:new Date(2013,02,20),endDate:new Date(2013,02,20))
+        def batchRoute1 = new BatchRoute(batch:batch1,supplier:supplier1,sequence:1,operation:operation1,startDate:new Date(114,02,2),endDate:new Date(114,02,11))
+        def batchRoute2 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:1,operation:operation2,startDate:new Date(114,02,12),endDate:new Date(114,02,12))
+        def batchRoute3 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:2,operation:operation3,startDate:new Date(114,02,12),endDate:new Date(114,02,13))
+        def batchRoute4 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:3,operation:operation4,startDate:new Date(114,02,13),endDate:new Date(114,02,14))
+        def batchRoute5 = new BatchRoute(batch:batch2,supplier:supplier1,sequence:4,operation:operation5,startDate:new Date(114,02,14),endDate:new Date(114,02,15))
+        def batchRoute6 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:1,operation:operation6,startDate:new Date(114,02,15),endDate:new Date(114,02,15))
+        def batchRoute7 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:2,operation:operation7,startDate:new Date(114,02,16),endDate:new Date(114,02,16))
+        def batchRoute8 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:3,operation:operation8,startDate:new Date(114,02,17),endDate:new Date(114,02,17))
+        def batchRoute9 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:4,operation:operation9,startDate:new Date(114,02,18),endDate:new Date(114,02,18))
+        def batchRoute10 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:5,operation:operation10,startDate:new Date(114,02,19),endDate:new Date(114,02,19))
+        def batchRoute11 = new BatchRoute(batch:batch11,workstation:workstation1,sequence:6,operation:operation11,startDate:new Date(114,02,20),endDate:new Date(114,02,20))
         // batch1.addToBatchRoutes(batchRoute1).save(failOnError: true)
         // batch2.addToBatchRoutes(batchRoute2).save(failOnError: true)
         // batch2.addToBatchRoutes(batchRoute3).save(failOnError: true)
@@ -176,6 +178,8 @@ class TestService {
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
         def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        for(int i=2;i<102;i++)
+            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
@@ -185,7 +189,7 @@ class TestService {
 
         //託外退貨單
         def outSrcPurchaseReturnSheet1 = new OutSrcPurchaseReturnSheet(typeName:"BDR32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
-        def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(outSrcPurchaseReturnSheet:outSrcPurchaseReturnSheet1,typeName:"BDR32",name:"98100900001",sequence:1,outSrcPurchaseSheetDet:outSrcPurchaseSheetDet11,item:item1,batch:batch1,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000000,outSrcPurchaseDate:new Date(2013,02,20),manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
+        def outSrcPurchaseReturnSheetDet11 = new OutSrcPurchaseReturnSheetDet(outSrcPurchaseReturnSheet:outSrcPurchaseReturnSheet1,typeName:"BDR32",name:"98100900001",sequence:1,outSrcPurchaseSheetDet:outSrcPurchaseSheetDet11,item:item1,batch:batch1,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:1000000,outSrcPurchaseDate:new Date(114,02,20),manufactureOrder:manufactureOrder1).save(failOnError: true, flush: true)
 
         //銷貨單    
         def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
