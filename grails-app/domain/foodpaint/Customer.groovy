@@ -29,6 +29,7 @@ class Customer {
 	Date lastUpdated
 	String name
 	String title
+    String tel
 	String email
 	String address
 
@@ -40,6 +41,7 @@ class Customer {
         editor nullable:true
         creator nullable:true
     	name unique:true, blank: false
+        tel nullable:true
     	email nullable:true
     	address nullable:true
     }
