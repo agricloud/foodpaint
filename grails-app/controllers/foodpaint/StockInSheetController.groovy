@@ -17,6 +17,7 @@ class StockInSheetController {
     def domainService
     def jasperService
     def springSecurityService
+    def dateService
 
     def index = {
 
@@ -113,6 +114,7 @@ class StockInSheetController {
         def parameters=[:]
         parameters["site.title"]=site?.title
         parameters["report.title"]=reportTitle
+        parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
         parameters["SORT_FIELDS"]=sortList
         //設定準備傳入的資料
         def reportData=[]
@@ -136,7 +138,7 @@ class StockInSheetController {
 
         def reportDef = new JasperReportDef(name:'StockInSheet.jasper',parameters:parameters,reportData:reportData,fileFormat:JasperExportFormat.PDF_FORMAT)
 
-        def fileName=new Date().format('yyyy-MM-dd kkmmss',TimeZone.getTimeZone("GMT+8"))+" "+reportTitle+".pdf"
+        def fileName=dateService.getStrDate('yyyy-MM-dd HHmmss')+" "+reportTitle+".pdf"
         
         FileUtils.writeByteArrayToFile(new File("web-app/reportFiles/"+fileName), jasperService.generateReport(reportDef).toByteArray())
 
