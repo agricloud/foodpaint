@@ -78,12 +78,13 @@ class SaleReturnSheetDetController {
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
-                 if(saleReturnSheetDet.price>=0||saleReturnSheetDet.tax>=0){ 
+                 if(saleReturnSheetDet.price>0&&saleReturnSheetDet.tax>=0){ 
                     def  price  =   saleReturnSheetDet.price* saleReturnSheetDet.qty 
                     params.subamounts = price
                     params.totalAmount =price+saleReturnSheetDet.tax
                     def inventoryReplenishResult = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
                         if(inventoryReplenishResult.success){
+                            saleReturnSheetDet.properties = params
                             render (contentType: 'application/json') {
                                 domainService.save(saleReturnSheetDet)
                             }
@@ -119,11 +120,11 @@ class SaleReturnSheetDetController {
         def  saleReturnSheetDet = new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
-                if(saleReturnSheetDet.price>=0||saleReturnSheetDet.tax>=0){ 
-                        saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-                        def  price  =   saleSheetDet.price* saleReturnSheetDet.qty 
+                if(saleReturnSheetDet.price>0&&saleReturnSheetDet.tax>=0){                     
+                        def  price  =   saleReturnSheetDet.price* saleReturnSheetDet.qty 
                         params.subamounts = price
                         params.totalAmount =price+saleReturnSheetDet.tax
+                        saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
                         def inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty)
                         if(inventoryConsumeResult.success){          
                             def updateBatch = Batch.get(params.batch.id)

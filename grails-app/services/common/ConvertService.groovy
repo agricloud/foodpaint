@@ -1160,8 +1160,6 @@ class ConvertService {
 	        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
 	       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
 	        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
-	        		result.saleSheetDet = saleReturnSheetDet.saleSheetDet.saleSheet
-	        		result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.saleSheet.id
 	    }
 
 	    if(saleReturnSheetDet.batch){
