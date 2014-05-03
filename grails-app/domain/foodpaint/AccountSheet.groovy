@@ -132,7 +132,7 @@ class AccountSheet{
     // Double tax
 
     // /*
-    // * 本幣應收合計金額
+    // * 本幣應收合計金額    long 
     // */
     // Double totalAmount
 

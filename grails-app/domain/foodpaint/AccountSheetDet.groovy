@@ -116,33 +116,33 @@ class AccountSheetDet{
     /*
     * 原幣金額
     */
-    Double originalAmounts
+    long  originalAmounts
 
      /*
     * 原幣總稅額
     */
-    Double originaltax
+    long  originaltax
 
     /*
     * 原幣合計金額
     */
-    Double originalTotalAmount
+    long  originalTotalAmount
 
 
      /*
     * 本幣總金額
     */
-    Double subamounts
+    long subamounts
 
      /*
     * 本幣總稅額
     */
-    Double tax
+    long  tax
 
     /*
     * 本幣合計金額
     */
-    Double totalAmount
+    long totalAmount
 
      /**
      * 狀態

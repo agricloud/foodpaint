@@ -84,22 +84,22 @@ class SaleReturnSheetDet{
      /*
     * 單價
     */
-    Double price
+    long  price
 
      /*
     * 金額
     */
-    Double subamounts
+    long  subamounts
 
      /*
     * 稅額
     */
-    Double tax
+    long  tax
 
     /*
     * 合計金額
     */
-    Double totalAmount
+    long totalAmount
 
     static mapping = {
         importFlag  defaultValue: -1
