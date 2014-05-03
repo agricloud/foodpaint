@@ -75,6 +75,27 @@ class SaleSheetDet{
     * 數量
     */
     long qty
+
+     /*
+    * 單價
+    */
+    long price
+
+     /*
+    * 金額
+    */
+    long subamounts
+
+     /*
+    * 稅額
+    */
+    long tax
+
+    /*
+    * 合計金額
+    */
+    long totalAmount
+
     static mapping = {
         importFlag  defaultValue: -1
     }

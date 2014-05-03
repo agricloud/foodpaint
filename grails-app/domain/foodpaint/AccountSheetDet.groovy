@@ -31,23 +31,27 @@ class AccountSheetDet{
      */
     Date lastUpdated
 
-
+   
      /**
      * 憑證日期（自動欄位）
      */
     Date documentDateCreated
 
+    /*
+    * 憑證來源
+    */
+    String documentSource
 
     /*
     * 憑證單別
     */
-    String typeName
+    String documentTypeName
 
  
     /*
     * 憑證單號
     */
-    String name
+    String documentName
   
 
    /*
@@ -55,7 +59,17 @@ class AccountSheetDet{
     */
     int   documentSequence
   
+  /*
+    * 單別
+    */
+    String typeName
 
+ 
+    /*
+    * 單號
+    */
+    String name
+  
     /*
     * 項次
     */

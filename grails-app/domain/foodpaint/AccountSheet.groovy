@@ -47,17 +47,22 @@ class AccountSheet{
      */
     String receivables
 
+
+    // Currency currency
      /**
      * 匯率
      */
     Double rate
-    //Currency currency
-
+    
      /**
      * 幣別
      */
     String currency
-
+    // /*
+    // * 關聯發票
+    // */
+    // Inovice inovice
+    
      /**
      * 憑證日期（自動欄位）
      */

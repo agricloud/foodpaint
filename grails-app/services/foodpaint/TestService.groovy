@@ -22,7 +22,7 @@ class TestService {
         def batchRoute = new BatchRoute(batch:batch,workstation:workstation,sequence:1,operation:operation)
         batch.addToBatchRoutes(batchRoute).save(failOnError: true)
     
-         def currency = new Currency(name:"currency",title:"台幣").save(failOnError: true)
+         def currency = new Currency(id:1,currencyName:"台幣",rate:1).save(failOnError: true)
     }
     
 
@@ -155,7 +155,7 @@ class TestService {
 
         // //銷貨單    
         def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
-        def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item11,batch:batch11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
+        def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item11,batch:batch11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000, price:10,subamounts:30000,tax:0,totalAmount:30000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
         
     }
 

@@ -820,11 +820,16 @@ class ConvertService {
 	    result.lastUpdated = saleSheetDet.lastUpdated
 	    result.site = saleSheetDet.site
 
-        result.id = saleSheetDet.id
-    	result.name = saleSheetDet.name
+        		result.id = saleSheetDet.id
+		result.name = saleSheetDet.name
 		result.typeName = saleSheetDet.typeName
 		result.sequence = saleSheetDet.sequence
 		result.qty = saleSheetDet.qty
+		result.price =  saleSheetDet.price
+		result.subamounts =  saleSheetDet.subamounts
+		result.tax =  saleSheetDet.tax
+		result.totalAmount =  saleSheetDet.totalAmount
+
 
 		result.saleSheet = saleSheetDet.saleSheet
 		result["saleSheet.id"] = saleSheetDet.saleSheet.id
@@ -1141,6 +1146,10 @@ class ConvertService {
 		result.typeName = saleReturnSheetDet.typeName
 		result.sequence = saleReturnSheetDet.sequence
 		result.qty =  saleReturnSheetDet.qty
+		result.price =  saleReturnSheetDet.price
+		result.subamounts =  saleReturnSheetDet.subamounts
+		result.tax =  saleReturnSheetDet.tax
+		result.totalAmount =  saleReturnSheetDet.totalAmount
 
 		result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
 		result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
@@ -1219,7 +1228,7 @@ class ConvertService {
 	    // result.originalReceived =accountSheet.originalReceived
 	    // result.received =accountSheet.received
 	    // result.remark =accountSheet.remark
-	    // result.signoff =accountSheet.signoff
+	  //   // result.signoff =accountSheet.signoff
 	  //   	   	 if(accountSheet.currency){
 			// result.currency = accountSheet.currency
 			// result["currency.id"] = accountSheet.currency.id
@@ -1248,6 +1257,18 @@ class ConvertService {
 		result.typeName = accountSheetDet.typeName
 		result.sequence = accountSheetDet.sequence
 		result.qty =  accountSheetDet.qty
+		result.documentName =  accountSheetDet.documentName
+		result.documentTypeName = accountSheetDet.documentTypeName
+		result.documentSequence = accountSheetDet.documentSequence
+
+		if(accountSheetDet.saleSheetDet){
+			result.saleSheetDet = accountSheetDet.saleSheetDet
+			result["saleSheetDet.id"] = accountSheetDet.saleSheetDet.id
+	       	 	result["saleSheetDet.name"] = accountSheetDet.saleSheetDet.name
+	        		result["saleSheetDet.typeName"] = accountSheetDet.saleSheetDet.typeName
+	        		result["saleSheetDet.sequence"] = accountSheetDet.saleSheetDet.sequence	        		
+	        	
+	    	}
 
 		// result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
 		// result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id

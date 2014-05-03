@@ -75,10 +75,32 @@ class SaleReturnSheetDet{
     * 儲位
     */
     WarehouseLocation warehouseLocation
+    
     /*
     * 數量
     */
     long qty
+
+     /*
+    * 單價
+    */
+    Double price
+
+     /*
+    * 金額
+    */
+    Double subamounts
+
+     /*
+    * 稅額
+    */
+    Double tax
+
+    /*
+    * 合計金額
+    */
+    Double totalAmount
+
     static mapping = {
         importFlag  defaultValue: -1
     }
