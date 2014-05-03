@@ -34,34 +34,34 @@ class AccountSheet{
     /**
      * 結帳日期
      */
-    //Date accountDate
+    Date accountDate
 
-   // /**
-   //   * 預計收款日期
-   //   */
-   //  Date anticipationDate
-
-
-   //   /**
-   //   * 收款方式
-   //   */
-   //  String receivables
-
-   //   /**
-   //   * 匯率
-   //   */
-   //  Double rate
+   /**
+     * 預計收款日期
+     */
+    Date anticipationDate
 
 
-   //   /**
-   //   * 幣別
-   //   */
-   //  String currency
+     /**
+     * 收款方式
+     */
+    String receivables
+
+     /**
+     * 匯率
+     */
+    Double rate
+    //Currency currency
+
+     /**
+     * 幣別
+     */
+    String currency
 
      /**
      * 憑證日期（自動欄位）
      */
-  //  Date documentDateCreated
+   // Date documentDateCreated
 
     //  *
     //  * 狀態
@@ -78,10 +78,6 @@ class AccountSheet{
    //  */
    //  String clerk
  
-    /*
-    * 項次
-    */
-    // int sequence
    
    /*
     * 單別
@@ -150,7 +146,7 @@ class AccountSheet{
     //  */
     // String remark
 
-    //  String  signoff
+    // String  signoff
     static mapping = {
         importFlag  defaultValue: -1
     }

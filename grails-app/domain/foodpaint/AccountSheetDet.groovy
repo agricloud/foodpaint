@@ -68,7 +68,32 @@ class AccountSheetDet{
     SaleSheetDet saleSheetDet
 
     SaleReturnSheetDet saleReturnSheetDet
+ 
+    /*
+    * 品項
+    */
+    Item item
 
+
+    /*
+    * 批號
+    */
+    Batch batch
+
+    /*
+    * 庫別
+    */
+
+    Warehouse warehouse
+
+    /*
+    * 儲位
+    */
+    WarehouseLocation warehouseLocation
+    /*
+    * 數量
+    */
+    long qty
     /*
     * 關聯發票
     */
@@ -125,10 +150,10 @@ class AccountSheetDet{
         importFlag  defaultValue: -1
     }
     static constraints = {
-        // sequence(unique:['name','typeName'])
-        // site nullable:true
-        // editor nullable:true
-        // creator nullable:true
+        sequence(unique:['name','typeName'])
+        site nullable:true
+        editor nullable:true
+        creator nullable:true
        
     }
 }

@@ -206,7 +206,12 @@ class BootStrap {
         JSON.registerObjectMarshaller(SaleReturnSheetDet) {
             convertService.saleReturnSheetDetParseJson(it)
         }
-
+        JSON.registerObjectMarshaller(AccountSheet) {
+            convertService.accountSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(AccountSheetDet) {
+            convertService.accountSheetDetParseJson(it)
+        }
 
     }
 }

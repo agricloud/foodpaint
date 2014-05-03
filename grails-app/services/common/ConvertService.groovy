@@ -1198,18 +1198,12 @@ class ConvertService {
                result.id = accountSheet.id
     	    result.name = accountSheet.name
 	    result.typeName =accountSheet.typeName
-		if(accountSheet.customer){
-			result.customer = accountSheet.customer
-			result["customer.id"] = accountSheet.customer.id
-	       		result["customer.name"] = accountSheet.customer.name
-	       		result["customer.title"] = accountSheet.customer.title
-	    	}
-
-	     //result.accountDate =accountSheet.accountDate
-	     // result.anticipationDate =accountSheet.anticipationDate
-	     // result.receivables =accountSheet.receivables
-	     // result.rate =accountSheet.rate
-	     // result.currency =accountSheet.currency
+		
+	     result.accountDate =accountSheet.accountDate
+	     result.anticipationDate =accountSheet.anticipationDate
+	     result.receivables =accountSheet.receivables
+	     result.rate =accountSheet.rate
+	     result.currency =accountSheet.currency
 	    // result.documentDateCreated =accountSheet.documentDateCreated
 	    // result.status =accountSheet.status
 	    // result.closedCode =accountSheet.closedCode
@@ -1226,22 +1220,34 @@ class ConvertService {
 	    // result.received =accountSheet.received
 	    // result.remark =accountSheet.remark
 	    // result.signoff =accountSheet.signoff
-		
+	  //   	   	 if(accountSheet.currency){
+			// result.currency = accountSheet.currency
+			// result["currency.id"] = accountSheet.currency.id
+	  //      		result["currency.currencyName"] = accountSheet.currency.currencyName
+	  //      		result["currency.rate"] = accountSheet.currency.rate	       		
+	  //   	}
+		if(accountSheet.customer){
+			result.customer = accountSheet.customer
+			result["customer.id"] = accountSheet.customer.id
+	       		result["customer.name"] = accountSheet.customer.name
+	       		result["customer.title"] = accountSheet.customer.title
+	    	}
+
 
 		result
     }
 
-    def accountSheetDetParseJson(accountSheetSheetDet){
+    def accountSheetDetParseJson(accountSheetDet){
     	def result = [:]
 
-  //   		result.dateCreated =  saleReturnSheetDet.dateCreated
-	 //   	result.lastUpdated =  saleReturnSheetDet.lastUpdated
-	 //    	result.site =  saleReturnSheetDet.site
-  //       		result.id = saleReturnSheetDet.id
-  //   		result.name =  saleReturnSheetDet.name
-		// result.typeName = saleReturnSheetDet.typeName
-		// result.sequence = saleReturnSheetDet.sequence
-		// result.qty =  saleReturnSheetDet.qty
+    		result.dateCreated =  accountSheetDet.dateCreated
+	   	result.lastUpdated =  accountSheetDet.lastUpdated
+	    	result.site =  accountSheetDet.site
+        		result.id = accountSheetDet.id
+    		result.name =  accountSheetDet.name
+		result.typeName = accountSheetDet.typeName
+		result.sequence = accountSheetDet.sequence
+		result.qty =  accountSheetDet.qty
 
 		// result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
 		// result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
@@ -1285,7 +1291,7 @@ class ConvertService {
 		//     result["warehouseLocation.title"] = saleReturnSheetDet.warehouseLocation.title
 		// }
 
-		// result
+		result
   }
 
 
