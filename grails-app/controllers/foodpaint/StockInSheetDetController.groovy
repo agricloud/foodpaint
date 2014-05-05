@@ -78,6 +78,13 @@ class StockInSheetDetController {
     @Transactional
     def save(){
         def stockInSheetDet=new StockInSheetDet(params)
+        //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
+        if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal', args: [stockInSheetDet])]
+            }
+            return
+        }
         if(stockInSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
@@ -112,6 +119,13 @@ class StockInSheetDetController {
     def update(){
 
         def stockInSheetDet = new StockInSheetDet(params)
+
+        if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal', args: [stockInSheetDet])]
+            }
+            return
+        }
         if(stockInSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]

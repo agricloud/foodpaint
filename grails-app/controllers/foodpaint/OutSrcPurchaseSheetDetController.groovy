@@ -77,6 +77,14 @@ class OutSrcPurchaseSheetDetController {
     @Transactional
     def save(){
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
+
+        if(outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier != outSrcPurchaseSheetDet.manufactureOrder.supplier ){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal', args: [outSrcPurchaseSheetDet])]
+            }
+            return
+        }
+
         if(outSrcPurchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]
@@ -112,6 +120,14 @@ class OutSrcPurchaseSheetDetController {
     @Transactional
     def update() {
         def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params)
+
+        if(outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier != outSrcPurchaseSheetDet.manufactureOrder.supplier ){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal', args: [outSrcPurchaseSheetDet])]
+            }
+            return
+        }
+        
         if(outSrcPurchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]

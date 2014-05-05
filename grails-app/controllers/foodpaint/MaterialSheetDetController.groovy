@@ -84,10 +84,17 @@ class MaterialSheetDetController {
             }
             return
         }
+        //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
+        if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'materialSheetDet.materialSheet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+            }
+            return
+        }
         //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+                [success:false, message:message(code: 'materialSheetDet.materialSheet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
@@ -115,6 +122,13 @@ class MaterialSheetDetController {
         if(materialSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+            }
+            return
+        }
+        //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
+        if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'materialSheetDet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
