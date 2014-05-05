@@ -57,6 +57,13 @@ class ManufactureOrderController {
 
     def save = {
         def manufactureOrder=new ManufactureOrder(params)
+
+        if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'manufactureOrder.workstation.supplier.should.exist.one', args: [manufactureOrder])]
+            }
+            return
+        }
         if(manufactureOrder.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
@@ -83,6 +90,19 @@ class ManufactureOrderController {
     def update = {
 
         def manufactureOrder = ManufactureOrder.get(params.id)
+
+        if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'manufactureOrder.workstation.supplier.should.exist.one', args: [manufactureOrder])]
+            }
+            return
+        }
+        if(manufactureOrder.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
+            }
+            return
+        }
 
         def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
         

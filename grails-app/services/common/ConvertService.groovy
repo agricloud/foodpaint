@@ -465,6 +465,19 @@ class ConvertService {
 		result.typeName = manufactureOrder.typeName
 		result.qty = manufactureOrder.qty
 
+		if(manufactureOrder.workstation){
+			result.workstation = manufactureOrder.workstation
+			result["workstation.id"] = manufactureOrder.workstation.id
+	        result["workstation.name"] = manufactureOrder.workstation.name
+	        result["workstation.title"] = manufactureOrder.workstation.title
+	    }
+	    if(manufactureOrder.supplier){
+			result.supplier = manufactureOrder.supplier
+			result["supplier.id"] = manufactureOrder.supplier.id
+	        result["supplier.name"] = manufactureOrder.supplier.name
+	        result["supplier.title"] = manufactureOrder.supplier.title
+	    }
+
 		if(manufactureOrder.item){
 			result.item = manufactureOrder.item
 			result["item.id"] = manufactureOrder.item.id
