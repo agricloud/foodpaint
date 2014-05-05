@@ -1220,9 +1220,9 @@ class ConvertService {
 	    // result.originalAmounts =accountSheet.originalAmounts
 	    // result.originaltax =accountSheet.originaltax
 	    // result.originalTotalAmount =accountSheet.originalTotalAmount
-	    // result.subamounts =accountSheet.subamounts
-	    // result.tax =accountSheet.tax
-	    // result.totalAmount =accountSheet.totalAmount
+	    result.subamounts =accountSheet.subamounts
+	    result.tax =accountSheet.tax
+	    result.totalAmount =accountSheet.totalAmount
 	    // result.originalReceived =accountSheet.originalReceived
 	    // result.received =accountSheet.received
 	    // result.remark =accountSheet.remark
@@ -1233,6 +1233,7 @@ class ConvertService {
 	  //      		result["currency.currencyName"] = accountSheet.currency.currencyName
 	  //      		result["currency.rate"] = accountSheet.currency.rate	       		
 	  //   	}
+
 		if(accountSheet.customer){
 			result.customer = accountSheet.customer
 			result["customer.id"] = accountSheet.customer.id
@@ -1255,9 +1256,20 @@ class ConvertService {
 		result.typeName = accountSheetDet.typeName
 		result.sequence = accountSheetDet.sequence
 		result.qty =  accountSheetDet.qty
+		result.documentSource =  accountSheetDet.documentSource		
+		result.sourceDocumentName =  accountSheetDet.sourceDocumentName 
 		result.documentName =  accountSheetDet.documentName
 		result.documentTypeName = accountSheetDet.documentTypeName
 		result.documentSequence = accountSheetDet.documentSequence
+		result.subamounts =  accountSheetDet.subamounts
+		result.tax = accountSheetDet.tax
+		result.totalAmount =  accountSheetDet.totalAmount
+
+
+
+
+		result.accountSheet = accountSheetDet.accountSheet
+		result["accountSheet.id"] = accountSheetDet.accountSheet.id
 
 		if(accountSheetDet.saleSheetDet){
 			result.saleSheetDet = accountSheetDet.saleSheetDet
@@ -1267,7 +1279,14 @@ class ConvertService {
 	        		result["saleSheetDet.sequence"] = accountSheetDet.saleSheetDet.sequence	        		
 	        	
 	    	}
-
+		if(accountSheetDet.saleReturnSheetDet){
+			result.saleSheetDet = accountSheetDet.saleReturnSheetDet
+			result["saleReturnSheetDet.id"] = accountSheetDet.saleReturnSheetDet.id
+	       	 	result["saleReturnSheetDet.name"] = accountSheetDet.saleReturnSheetDet.name
+	        		result["saleReturnSheetDet.typeName"] = accountSheetDet.saleReturnSheetDet.typeName
+	        		result["saleReturnSheetDet.sequence"] = accountSheetDet.saleReturnSheetDet.sequence	        		
+	        	
+	    	}
 		// result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
 		// result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
 

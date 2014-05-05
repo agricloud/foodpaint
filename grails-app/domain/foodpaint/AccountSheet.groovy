@@ -95,6 +95,7 @@ class AccountSheet{
     */
     String name
     static hasMany=[accountSheetDets:AccountSheetDet]
+    
     /*
     * 客戶
     */
@@ -121,20 +122,20 @@ class AccountSheet{
     // Double originalTotalAmount
 
 
-    //  /*
-    // * 本幣應收合計
-    // */
-    // Double subamounts
+     /*
+    * 本幣應收合計
+    */
+    long  subamounts
 
-    //  /*
-    // * 本幣總稅額
-    // */
-    // Double tax
+     /*
+    * 本幣總稅額
+    */
+    long  tax
 
-    // /*
-    // * 本幣應收合計金額    long 
-    // */
-    // Double totalAmount
+    /*
+    * 本幣應收合計金額    
+    */
+    long  totalAmount
 
     // /*
     // * 原幣已收金額

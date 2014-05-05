@@ -22,7 +22,7 @@ class TestService {
         def batchRoute = new BatchRoute(batch:batch,workstation:workstation,sequence:1,operation:operation)
         batch.addToBatchRoutes(batchRoute).save(failOnError: true)
     
-         def currency = new Currency(id:1,currencyName:"台幣",rate:1).save(failOnError: true)
+         def currency = new Currency(currencyName:"台幣",rate:1).save(failOnError: true)
     }
     
 

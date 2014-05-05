@@ -31,11 +31,6 @@ class AccountSheetDet{
      */
     Date lastUpdated
 
-   
-     /**
-     * 憑證日期（自動欄位）
-     */
-    Date documentDateCreated
 
     /*
     * 憑證來源
@@ -47,7 +42,7 @@ class AccountSheetDet{
     */
     String documentTypeName
 
- 
+     String sourceDocumentName
     /*
     * 憑證單號
     */
@@ -108,25 +103,25 @@ class AccountSheetDet{
     * 數量
     */
     long qty
-    /*
-    * 關聯發票
-    */
-    Inovice inovice
+    // /*
+    // * 關聯發票
+    // */
+    // Inovice inovice
     
-    /*
-    * 原幣金額
-    */
-    long  originalAmounts
+    // /*
+    // * 原幣金額
+    // */
+    // long  originalAmounts
 
-     /*
-    * 原幣總稅額
-    */
-    long  originaltax
+    //  /*
+    // * 原幣總稅額
+    // */
+    // long  originaltax
 
-    /*
-    * 原幣合計金額
-    */
-    long  originalTotalAmount
+    // /*
+    // * 原幣合計金額
+    // */
+    // long  originalTotalAmount
 
 
      /*
@@ -144,20 +139,20 @@ class AccountSheetDet{
     */
     long totalAmount
 
-     /**
-     * 狀態
-     */
-    String status
+    //  *
+    //  * 狀態
+     
+    // String status
 
     /**
      *備註
      */
     String remark
 
-    /**
-     *是否簽核
-     */
-    String rauthorize
+    // /**
+    //  *是否簽核
+    //  */
+    // String rauthorize
     
 
     static mapping = {
@@ -168,6 +163,11 @@ class AccountSheetDet{
         site nullable:true
         editor nullable:true
         creator nullable:true
-       
+        saleSheetDet nullable:true
+        saleReturnSheetDet nullable:true
+        remark  nullable:true
+        subamounts nullable:true
+        tax nullable:true
+        totalAmount nullable:true
     }
 }
