@@ -796,12 +796,14 @@ class ConvertService {
     	def result = [:]
 
     	result.dateCreated = saleSheet.dateCreated
-	    result.lastUpdated = saleSheet.lastUpdated
-	    result.site = saleSheet.site
-
-        result.id = saleSheet.id
+	result.lastUpdated = saleSheet.lastUpdated
+	result.site = saleSheet.site
+ //    	result.saleDate =saleSheet.saleDate
+	// result.rate =saleSheet.rate
+	// result.currency =saleSheet.currency
+        	result.id = saleSheet.id
     	result.name = saleSheet.name
-		result.typeName = saleSheet.typeName
+	result.typeName = saleSheet.typeName
 
 		if(saleSheet.customer){
 			result.customer = saleSheet.customer

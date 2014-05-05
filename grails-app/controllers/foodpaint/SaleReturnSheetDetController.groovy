@@ -78,7 +78,7 @@ class SaleReturnSheetDetController {
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
         if((!saleReturnSheetDet.customerOrderDet || saleReturnSheetDet.item == saleReturnSheetDet.customerOrderDet.item) && saleReturnSheetDet.batch == saleReturnSheetDet.saleSheetDet.batch &&saleReturnSheetDet.item==saleReturnSheetDet.saleSheetDet.item){
             if(saleReturnSheetDet.qty>0){
-                 if(saleReturnSheetDet.price>0&&saleReturnSheetDet.tax>=0){ 
+                 if(saleReturnSheetDet.price>0&&saleReturnSheetDet.tax>=0){ //需要寫的共用的方法計算金額
                     def  price  =   saleReturnSheetDet.price* saleReturnSheetDet.qty 
                     params.subamounts = price
                     params.totalAmount =price+saleReturnSheetDet.tax

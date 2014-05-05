@@ -85,21 +85,6 @@ class AccountSheetDet{
 
 
     /*
-    * 批號
-    */
-    Batch batch
-
-    /*
-    * 庫別
-    */
-
-    Warehouse warehouse
-
-    /*
-    * 儲位
-    */
-    WarehouseLocation warehouseLocation
-    /*
     * 數量
     */
     long qty

@@ -81,7 +81,7 @@ class AccountSheetDetController {
                  def  tax  =  accountSheetDet.accountSheet.tax
                 accountSheetDet.accountSheet.tax=tax+accountSheetDet.tax
                  def  totalAmount  =  accountSheetDet.accountSheet.totalAmount
-                accountSheetDet.accountSheet.totalAmount=totalAmount+tax+subamounts
+                accountSheetDet.accountSheet.totalAmount= totalAmount + tax + subamounts
                 render (contentType: 'application/json') {
                     domainService.save(accountSheetDet)
                 }

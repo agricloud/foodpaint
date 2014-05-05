@@ -52,7 +52,7 @@ class AccountSheet{
      /**
      * 匯率
      */
-    Double rate
+    long rate
     
      /**
      * 幣別
