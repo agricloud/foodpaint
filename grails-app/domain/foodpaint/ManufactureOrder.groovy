@@ -41,6 +41,10 @@ class ManufactureOrder {
     * 單號
     */
     String name
+
+    Workstation workstation
+    Supplier supplier
+
     /*
     * 訂單單身
     */
@@ -78,6 +82,8 @@ class ManufactureOrder {
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        workstation nullable:true
+        supplier nullable:true
         customerOrderDet nullable:true
     }
     public String toString(){

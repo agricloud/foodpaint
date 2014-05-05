@@ -146,9 +146,9 @@ class TestService {
         def customerOrderDet11 = new CustomerOrderDet(customerOrder:customerOrder1,typeName:"A11",name:"98100900001",sequence:1,item:item11,qty:3000).save(failOnError: true, flush: true)
 
         //製令
-        def manufactureOrder1 = new ManufactureOrder(typeName:"C11",name:"98100900001",item:item1,qty:1000000,batch:batch1).save(failOnError: true, flush: true)
-        def manufactureOrder2 = new ManufactureOrder(typeName:"C11",name:"98100900002",item:item2,qty:1000,batch:batch2).save(failOnError: true, flush: true)
-        def manufactureOrder3 = new ManufactureOrder(typeName:"C11",name:"98100900003",item:item11,qty:3000,customerOrderDet:customerOrderDet11,batch:batch11).save(failOnError: true, flush: true)
+        def manufactureOrder1 = new ManufactureOrder(typeName:"C11",name:"98100900001",supplier:supplier1,item:item1,qty:1000000,batch:batch1).save(failOnError: true, flush: true)
+        def manufactureOrder2 = new ManufactureOrder(typeName:"C11",name:"98100900002",supplier:supplier1,item:item2,qty:1000,batch:batch2).save(failOnError: true, flush: true)
+        def manufactureOrder3 = new ManufactureOrder(typeName:"C11",name:"98100900003",workstation:workstation1,item:item11,qty:3000,customerOrderDet:customerOrderDet11,batch:batch11).save(failOnError: true, flush: true)
         
         //進貨單
         def purchaseSheet2 = new PurchaseSheet(typeName:"B21",name:"98100900002",supplier:supplier2).save(failOnError: true, flush: true)
@@ -179,7 +179,7 @@ class TestService {
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
         def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         for(int i=2;i<102;i++)
-            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
