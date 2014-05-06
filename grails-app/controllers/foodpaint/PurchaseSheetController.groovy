@@ -2,10 +2,22 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+//generate irepoet
+import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
+import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
+import org.apache.commons.io.FileUtils
+//ireport sorting list
+import net.sf.jasperreports.engine.JRSortField
+import net.sf.jasperreports.engine.design.JRDesignSortField
+import net.sf.jasperreports.engine.type.SortOrderEnum
+import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class PurchaseSheetController {
 
     def domainService
+    def jasperService
+    def springSecurityService
+    def dateService
 
     def index = {
 
@@ -81,5 +93,55 @@ class PurchaseSheetController {
         render (contentType: 'application/json') {
             result
         }
+    }
+
+    def print(){
+        def site
+        if(params.site.id && params.site.id!="null")
+            site = Site.get(params.site.id)
+
+        def reportTitle = message(code: 'purchaseSheet.report.title.label')
+        
+        //報表依指定欄位排序
+        List<JRSortField> sortList = new ArrayList<JRSortField>();
+        JRDesignSortField sortField = new JRDesignSortField();
+        sortField.setName('sequence');
+        sortField.setOrder(SortOrderEnum.ASCENDING);
+        sortField.setType(SortFieldTypeEnum.FIELD);
+        sortList.add(sortField);
+        //設定額外傳入參數
+        def parameters=[:]
+        parameters["site.title"]=site?.title
+        parameters["report.title"]=reportTitle
+        parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
+        parameters["SORT_FIELDS"]=sortList
+        //設定準備傳入的資料
+        def reportData=[]
+        def purchaseSheet = PurchaseSheet.get(params.id)
+        purchaseSheet.purchaseSheetDets.each{ purchaseSheetDet ->
+            def data=[:]
+            data.dateCreated=purchaseSheet.dateCreated
+            data.lastUpdated=purchaseSheet.lastUpdated
+            data.typeName=purchaseSheet.typeName
+            data.name=purchaseSheet.name
+            data.supplier=purchaseSheet.supplier
+            data.sequence=purchaseSheetDet.sequence
+            data.item=purchaseSheetDet.item
+            data.warehouse=purchaseSheetDet.warehouse
+            data.warehouseLocation=purchaseSheetDet.warehouseLocation
+            data.batch=purchaseSheetDet.batch
+            data.qty=purchaseSheetDet.qty
+            reportData << data
+        }
+
+        def reportDef = new JasperReportDef(name:'PurchaseSheet.jasper',parameters:parameters,reportData:reportData,fileFormat:JasperExportFormat.PDF_FORMAT)
+
+        def fileName=dateService.getStrDate('yyyy-MM-dd HHmmss')+" "+reportTitle+".pdf"
+        
+        FileUtils.writeByteArrayToFile(new File("web-app/reportFiles/"+fileName), jasperService.generateReport(reportDef).toByteArray())
+
+        render (contentType: 'application/json') {
+            [fileName:fileName]
+        }   
     }
 }
