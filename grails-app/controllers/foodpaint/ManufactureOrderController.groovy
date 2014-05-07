@@ -161,9 +161,6 @@ class ManufactureOrderController {
 
         def reportTitle = message(code: 'manufactureOrder.report.title.label')
         
-        //報表依指定欄位排序
-        List<JRSortField> sortList = new ArrayList<JRSortField>();
-        JRDesignSortField sortField = new JRDesignSortField();
         //設定額外傳入參數
         def parameters=[:]
         parameters["site.title"]=site?.title
@@ -173,16 +170,7 @@ class ManufactureOrderController {
         def reportData=[]
         def manufactureOrder = ManufactureOrder.get(params.id)
         def data=manufactureOrder.properties
-        // def data=[:]
-        // data.dateCreated=manufactureOrder.dateCreated
-        // data.lastUpdated=manufactureOrder.lastUpdated
-        // data.typeName=manufactureOrder.typeName
-        // data.name=manufactureOrder.name
-        // data.workstation=manufactureOrder.workstation
-        // data.supplier=manufactureOrder.supplier
-        // data.customerOrderDet=manufactureOrder.customerOrderDet
-        // data.item=manufactureOrder.item
-        // data.qty=manufactureOrder.qty
+
         reportData << data
 
         def reportDef = new JasperReportDef(name:'ManufactureOrder.jasper',parameters:parameters,reportData:reportData,fileFormat:JasperExportFormat.PDF_FORMAT)
