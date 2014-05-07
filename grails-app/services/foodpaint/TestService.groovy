@@ -178,8 +178,8 @@ class TestService {
         //入庫單
         def stockInSheet1 = new StockInSheet(typeName:"BD31",name:"98100900001",workstation:workstation1).save(failOnError: true, flush: true)
         def stockInSheetDet11 = new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:1,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:3000,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
-        for(int i=2;i<102;i++)
-            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
+        for(int i=2;i<22;i++)
+            new StockInSheetDet(typeName:"BD31",name:"98100900001",sequence:i,stockInSheet:stockInSheet1,batch:batch11,item:item11,warehouse:warehouse1,warehouseLocation:warehouseLocation1,qty:50*i,manufactureOrder:manufactureOrder3).save(failOnError: true, flush: true)
         
         //託外進貨單
         def outSrcPurchaseSheet1 = new OutSrcPurchaseSheet(typeName:"BD32",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)

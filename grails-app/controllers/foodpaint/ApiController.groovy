@@ -207,6 +207,23 @@ class ApiController {
             [data:suppliers]
         }
     }
+    //查詢指定製令的入庫單單身
+    def queryStockInSheetDetByManufactureOrder(String typeName, String name){
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+
+        render (contentType: 'text/json') {
+            [data: manufactureOrder.stockInSheetDets]
+        }
+    }
+    //查詢指定製令的託外進貨單單身
+    def queryOutSrcPurchaseSheetDetByManufactureOrder(String typeName, String name){
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+
+        render (contentType: 'text/json') {
+            [data: manufactureOrder.outSrcPurchaseSheetDets]
+        }
+    }
+
     //查詢指定供應商、批號的進貨單單身
     def queryPurchaseSheetDetBySupplierAndBatch(String supplierName, String batchName){
         def supplier =Supplier.findByName(supplierName)
@@ -223,10 +240,7 @@ class ApiController {
     //查詢指定製令的領料單單身其所有的批號
     def queryBatchFromMaterialSheetDetByManufactureOrder(String typeName, String name){
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
-        def batchs = []
-        manufactureOrder.materialSheetDets.each(){ materialSheetDet ->
-            batchs << materialSheetDet.batch
-        }
+        def batchs = manufactureOrder.materialSheetDets*.batch.unique()
 
         render (contentType: 'text/json') {
             [data: batchs]
@@ -265,6 +279,15 @@ class ApiController {
         }
     }
 
+    //查詢製令之領料單單身
+    def queryMaterialSheetDetByManufactureOrder(String typeName, String name){
+       def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+
+        render (contentType: 'text/json') {
+            [data: manufactureOrder.materialSheetDets]
+        }
+    }
+
     //查詢指定客戶、批號之銷貨單單身
     def querySaleSheetDetByCustomerAndBatch(String customerName, String batchName){
         def customer=Customer.findByName(customerName)
@@ -283,10 +306,7 @@ class ApiController {
     //查詢指定製令的入庫單單身其所有的批號
     def queryBatchFormStockInSheetDetByManufactureOrder(String typeName, String name){
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
-        def batchs = []
-        manufactureOrder.stockInSheetDets.each(){ stockInSheetDet ->
-            batchs << stockInSheetDet.batch
-        }
+        def batchs = manufactureOrder.stockInSheetDets*.batch.unique()
 
         render (contentType: 'text/json') {
             [data: batchs]
@@ -296,10 +316,7 @@ class ApiController {
     //查詢指定製令的託外進貨單單身其所有的批號
     def queryBatchFormOutSrcPurchaseSheetDetByManufactureOrder(String typeName, String name){
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
-        def batchs = []
-        manufactureOrder.outSrcPurchaseSheetDets.each(){ outSrcPurchaseSheetDet ->
-            batchs << outSrcPurchaseSheetDet.batch
-        }
+        def batchs = manufactureOrder.outSrcPurchaseSheetDets*.batch.unique()
 
         render (contentType: 'text/json') {
             [data: batchs]
