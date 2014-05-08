@@ -23,7 +23,7 @@ class MaterialSheetController {
 
         def list = MaterialSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [materialSheetInstanceList: list, materialSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

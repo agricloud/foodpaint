@@ -23,7 +23,7 @@ class StockInSheetController {
 
         def list = StockInSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [stockInSheetInstanceList: list, stockInSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

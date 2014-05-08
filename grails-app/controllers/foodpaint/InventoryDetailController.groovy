@@ -14,7 +14,7 @@ class InventoryDetailController {
 
 
         render (contentType: 'application/json') {
-            [inventoryDetailInstanceList: list, inventoryDetailInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }
@@ -37,7 +37,7 @@ class InventoryDetailController {
         }.list()
 
         render (contentType: 'application/json') {
-            [inventoryDetailInstanceList: list, inventoryDeatilInstanceTotal: list.size()]
+            [data: list, total: list.size()]
         }
 
     }

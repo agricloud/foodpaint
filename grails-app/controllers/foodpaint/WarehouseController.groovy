@@ -10,7 +10,7 @@ class WarehouseController {
 
 
         render (contentType: 'application/json') {
-            [warehouseInstanceList: list, warehouseInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

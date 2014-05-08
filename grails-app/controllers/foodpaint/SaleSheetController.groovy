@@ -23,7 +23,7 @@ class SaleSheetController {
 
         def list = SaleSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [saleSheetInstanceList: list, saleSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

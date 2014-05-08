@@ -23,7 +23,7 @@ class PurchaseSheetController {
 
         def list = PurchaseSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [purchaseSheetInstanceList: list, purchaseSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

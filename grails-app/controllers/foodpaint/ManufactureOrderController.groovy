@@ -25,7 +25,7 @@ class ManufactureOrderController {
         def list = ManufactureOrder.createCriteria().list(params,params.criteria)
 
         render (contentType: 'application/json') {
-            [manufactureOrderInstanceList: list, manufactureOrderInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
 
 

@@ -23,7 +23,7 @@ class CustomerOrderController {
 
         def list = CustomerOrder.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [customerOrderInstanceList: list, customerOrderInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
 
 

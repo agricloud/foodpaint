@@ -23,7 +23,7 @@ class MaterialReturnSheetController {
 
         def list = MaterialReturnSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [materialReturnSheetInstanceList: list, materialReturnSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

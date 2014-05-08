@@ -23,7 +23,7 @@ class OutSrcPurchaseSheetController {
 
         def list = OutSrcPurchaseSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [outSrcPurchaseSheetInstanceList: list, outSrcPurchaseSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }

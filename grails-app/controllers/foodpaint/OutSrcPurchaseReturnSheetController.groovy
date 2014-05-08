@@ -23,7 +23,7 @@ class OutSrcPurchaseReturnSheetController{
 
         def list = OutSrcPurchaseReturnSheet.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [outSrcPurchaseReturnSheetInstanceList: list, outSrcPurchaseReturnSheetInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
         
     }
