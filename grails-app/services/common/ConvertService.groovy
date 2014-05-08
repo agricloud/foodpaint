@@ -247,6 +247,7 @@ class ConvertService {
 		    result["item.id"] = inventory.item.id
 		    result["item.name"] = inventory.item.name
 		    result["item.title"] = inventory.item.title
+		    result["item.unit"] = inventory.item.unit
 		}
 	    result.qty = inventory.qty
 	    result.lastInDate = dateService.formatWithISO8601(inventory.lastInDate)
@@ -281,6 +282,7 @@ class ConvertService {
 		    result["item.id"] = inventoryDetail.item.id
 		    result["item.name"] = inventoryDetail.item.name
 		    result["item.title"] = inventoryDetail.item.title
+		    result["item.unit"] = inventoryDetail.item.unit
 		}
 		if(inventoryDetail.batch){
 			result.batch = inventoryDetail.batch
