@@ -27,6 +27,16 @@ class SaleSheetController {
         }
         
     }
+
+    def indexByCustomer = {
+
+        def customer = Customer.get(params.customer.id)
+        def list = SaleSheet.findAllByCustomer(customer)
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+    }
+    
     def show = {
         def saleSheet=SaleSheet.get(params.id)
 

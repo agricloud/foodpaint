@@ -27,10 +27,19 @@ class ManufactureOrderController {
         render (contentType: 'application/json') {
             [data: list, total: list.totalCount]
         }
-
-
-        
     }
+
+    def indexByWorkstationOrSupplier = {
+
+        def workstation = Workstation.get(params.workstation.id)
+        def supplier = Supplier.get(params.supplier.id)
+        def list = ManufactureOrder.findAllByWorkstationAndSupplier(workstation,supplier)
+
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+    }
+
     def show = {
 
         def manufactureOrder=ManufactureOrder.get(params.id);

@@ -25,10 +25,17 @@ class CustomerOrderController {
         render (contentType: 'application/json') {
             [data: list, total: list.totalCount]
         }
-
-
-        
     }
+
+    def indexByCustomer = {
+
+        def customer = Customer.get(params.customer.id)
+        def list = CustomerOrder.findAllByCustomer(customer)
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+    }
+
     def show = {
         def customerOrder=CustomerOrder.get(params.id)
 

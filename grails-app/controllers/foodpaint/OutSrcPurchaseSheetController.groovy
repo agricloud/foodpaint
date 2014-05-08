@@ -27,6 +27,17 @@ class OutSrcPurchaseSheetController {
         }
         
     }
+
+    def indexBySupplier = {
+
+        def supplier = Supplier.get(params.supplier.id)
+        def list = OutSrcPurchaseSheet.findAllBySupplier(supplier)
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+        
+    }
+
     def show = {
         def outSrcPurchaseSheet=OutSrcPurchaseSheet.get(params.id)
 

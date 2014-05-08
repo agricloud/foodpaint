@@ -27,6 +27,18 @@ class MaterialSheetController {
         }
         
     }
+
+    def indexByWorkstationOrSupplier = {
+
+        def workstation = Workstation.get(params.workstation.id)
+        def supplier = Supplier.get(params.supplier.id)
+        def list = MaterialSheet.findAllByWorkstationAndSupplier(workstation,supplier)
+
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+    }
+    
     def show = {
         def materialSheet=MaterialSheet.get(params.id)
 
