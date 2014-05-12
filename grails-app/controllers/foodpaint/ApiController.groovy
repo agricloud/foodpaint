@@ -279,12 +279,13 @@ class ApiController {
         }
     }
 
-    //查詢製令之領料單單身
-    def queryMaterialSheetDetByManufactureOrder(String typeName, String name){
-       def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+    //查詢指定批號的領料單單身
+    def queryMaterialSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def materialSheetDets=MaterialSheetDet.findAllByBatch(batch)
 
         render (contentType: 'text/json') {
-            [data: manufactureOrder.materialSheetDets]
+            [data: materialSheetDets]
         }
     }
 
