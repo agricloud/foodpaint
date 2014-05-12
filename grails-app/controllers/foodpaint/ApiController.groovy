@@ -132,51 +132,17 @@ class ApiController {
 
 
     //逆溯
+
     //查詢指定批號的銷貨單單身
     def querySaleSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
-        def sourceSheet=SaleSheetDet.findAllByBatch(batch)
+        def saleSheetDets=SaleSheetDet.findAllByBatch(batch)
 
         render (contentType: 'text/json') {
-            [data:sourceSheet]
+            [data:saleSheetDets]
         }
     }
-    //查詢指定批號的入庫單單身
-    def queryStockInSheetDetByBatch(String batchName){
-        def batch=Batch.findByName(batchName)
-        def sourceSheet=StockInSheetDet.findAllByBatch(batch)
-
-        render (contentType: 'text/json') {
-            [data:sourceSheet]
-        }
-    }
-    //質詢指定批號的託外進貨單單身
-    def queryOutSrcPurchaseSheetDetByBatch(String batchName){
-        def batch=Batch.findByName(batchName)
-        def sourceSheet=OutSrcPurchaseSheetDet.findAllByBatch(batch)
-
-        render (contentType: 'text/json') {
-            [data:sourceSheet]
-        }
-    }
-    //查詢指定批號的進貨單單身
-    def queryPurchaseSheetDetByBatch(String batchName){
-        def batch=Batch.findByName(batchName)
-        def sourceSheet=PurchaseSheetDet.findAllByBatch(batch)
-
-        render (contentType: 'text/json') {
-            [data:sourceSheet]
-        }
-    }
-    //查詢指定批號的製令
-    def queryManufactureOrderByBatch(String batchName){
-        def batch=Batch.findByName(batchName)
-        def sourceSheet=ManufactureOrder.findAllByBatch(batch)
-
-        render (contentType: 'text/json') {
-            [data:sourceSheet]
-        }
-    }
+    
     //查詢指定批號的入庫單單身其所屬的製令
     def queryManufactureOrderFromStockInSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
@@ -187,6 +153,7 @@ class ApiController {
             [data:manufactureOrders]
         }
     }
+
     //查詢指定批號的託外進貨單單身其所屬的製令
     def queryManufactureOrderFromOutSrcPurchaseSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
@@ -197,6 +164,7 @@ class ApiController {
             [data:manufactureOrders]
         }
     }
+
     //查詢指定批號的進貨單單身其所屬的供應商
     def querySupplierFromPurchaseSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
@@ -205,22 +173,6 @@ class ApiController {
 
         render (contentType: 'text/json') {
             [data:suppliers]
-        }
-    }
-    //查詢指定製令的入庫單單身
-    def queryStockInSheetDetByManufactureOrder(String typeName, String name){
-        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
-
-        render (contentType: 'text/json') {
-            [data: manufactureOrder.stockInSheetDets]
-        }
-    }
-    //查詢指定製令的託外進貨單單身
-    def queryOutSrcPurchaseSheetDetByManufactureOrder(String typeName, String name){
-        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
-
-        render (contentType: 'text/json') {
-            [data: manufactureOrder.outSrcPurchaseSheetDets]
         }
     }
 
@@ -237,6 +189,7 @@ class ApiController {
             [data:purchaseSheetDets]
         }
     }
+
     //查詢指定製令的領料單單身其所有的批號
     def queryBatchFromMaterialSheetDetByManufactureOrder(String typeName, String name){
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
@@ -246,15 +199,28 @@ class ApiController {
             [data: batchs]
         }
     }
+
     //順溯
+
     //查詢指定批號的領料單單身其所屬的製令
     def queryManufactureOrderFromMaterialSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
         def materialSheetDets=MaterialSheetDet.findAllByBatch(batch)
-        def sourceSheet=materialSheetDets.manufactureOrder.unique()
+        def manufactureOrders=materialSheetDets.manufactureOrder.unique()
 
         render (contentType: 'text/json') {
-            [data:sourceSheet]
+            [data:manufactureOrders]
+        }
+    }
+
+    //查詢指定批號的領料單單身
+    def queryMaterialSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
+        def batch=Batch.findByName(batchName)
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+        def materialSheetDets=MaterialSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
+
+        render (contentType: 'text/json') {
+            [data: materialSheetDets]
         }
     }
 
@@ -270,25 +236,6 @@ class ApiController {
 
     }
 
-    //查詢指定批號位於哪些倉庫中
-    def queryInventoryByBatchAndGroupByWarehouse(String batchName){
-        def inventoryDetailsGroupByWarehouse = inventoryDetailService.indexByBatchAndGroupByWarehouse(batchName)
-
-        render (contentType: 'text/json') {
-            [data:inventoryDetailsGroupByWarehouse]
-        }
-    }
-
-    //查詢指定批號的領料單單身
-    def queryMaterialSheetDetByBatch(String batchName){
-        def batch=Batch.findByName(batchName)
-        def materialSheetDets=MaterialSheetDet.findAllByBatch(batch)
-
-        render (contentType: 'text/json') {
-            [data: materialSheetDets]
-        }
-    }
-
     //查詢指定客戶、批號之銷貨單單身
     def querySaleSheetDetByCustomerAndBatch(String customerName, String batchName){
         def customer=Customer.findByName(customerName)
@@ -302,6 +249,15 @@ class ApiController {
             [data:saleSheetDets]
         }
 
+    }
+
+    //查詢指定批號位於哪些倉庫中
+    def queryInventoryByBatchAndGroupByWarehouse(String batchName){
+        def inventoryDetailsGroupByWarehouse = inventoryDetailService.indexByBatchAndGroupByWarehouse(batchName)
+
+        render (contentType: 'text/json') {
+            [data:inventoryDetailsGroupByWarehouse]
+        }
     }
 
     //查詢指定製令的入庫單單身其所有的批號
@@ -321,6 +277,71 @@ class ApiController {
 
         render (contentType: 'text/json') {
             [data: batchs]
+        }
+    }
+
+    //順+逆
+
+    //查詢指定批號的入庫單單身
+    def queryStockInSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def stockInSheetDets=StockInSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:stockInSheetDets]
+        }
+    }
+
+    //查詢指定批號的託外進貨單單身
+    def queryOutSrcPurchaseSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def outSrcPurchaseSheetDets=OutSrcPurchaseSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:outSrcPurchaseSheetDets]
+        }
+    }
+
+    //查詢指定批號的進貨單單身
+    def queryPurchaseSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def purchaseSheetDets=PurchaseSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:purchaseSheetDets]
+        }
+    }
+
+    //查詢指定批號的製令
+    def queryManufactureOrderByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def manufactureOrders=ManufactureOrder.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:manufactureOrders]
+        }
+    }
+
+    //查詢指定製令的入庫單單身
+    def queryStockInSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
+        println 12345675432
+        def batch=Batch.findByName(batchName)
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+        def stockInSheetDets=StockInSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
+
+        render (contentType: 'text/json') {
+            [data: stockInSheetDets]
+        }
+    }
+
+    //查詢指定批號與製令的託外進貨單
+    def queryOutSrcPurchaseSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
+        def batch=Batch.findByName(batchName)
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+        def outSrcPurchaseSheetDets=OutSrcPurchaseSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
+
+        render (contentType: 'text/json') {
+            [data: outSrcPurchaseSheetDets]
         }
     }
 
