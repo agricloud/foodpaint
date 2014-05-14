@@ -142,6 +142,15 @@ class ApiController {
             [data:saleSheetDets]
         }
     }
+
+    def querySaleReturnSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def saleReturnSheetDets=SaleReturnSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:saleReturnSheetDets]
+        }
+    }
     
     //查詢指定批號的入庫單單身其所屬的製令
     def queryManufactureOrderFromStockInSheetDetByBatch(String batchName){
@@ -190,6 +199,19 @@ class ApiController {
         }
     }
 
+    def queryPurchaseReturnSheetDetBySupplierAndBatch(String supplierName, String batchName){
+        def supplier =Supplier.findByName(supplierName)
+        def batch=Batch.findByName(batchName)
+
+        def purchaseReturnSheetDets=PurchaseReturnSheetDet.where{
+            purchaseReturnSheet.supplier==supplier && batch==batch
+        }.list()
+
+        render (contentType: 'text/json') {
+            [data:purchaseReturnSheetDets]
+        }
+    }
+
     //查詢指定製令的領料單單身其所有的批號
     def queryBatchFromMaterialSheetDetByManufactureOrder(String typeName, String name){
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
@@ -224,6 +246,16 @@ class ApiController {
         }
     }
 
+    def queryMaterialReturnSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
+        def batch=Batch.findByName(batchName)
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+        def materialReturnSheetDets=MaterialReturnSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
+
+        render (contentType: 'text/json') {
+            [data: materialReturnSheetDets]
+        }
+    }
+
     //查詢指定批號之銷貨單單身其所屬的客戶
     def queryCustomerFromSaleSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
@@ -247,6 +279,20 @@ class ApiController {
 
         render (contentType: 'text/json') {
             [data:saleSheetDets]
+        }
+
+    }
+
+    def querySaleReturnSheetDetByCustomerAndBatch(String customerName, String batchName){
+        def customer=Customer.findByName(customerName)
+        def batch=Batch.findByName(batchName)
+
+        def saleReturnSheetDets=SaleReturnSheetDet.where{
+            saleReturnSheet.customer == customer && batch==batch
+        }.list()
+
+        render (contentType: 'text/json') {
+            [data:saleReturnSheetDets]
         }
 
     }
@@ -302,6 +348,15 @@ class ApiController {
         }
     }
 
+    def queryOutSrcPurchaseReturnSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def outSrcPurchaseReturnSheetDets=OutSrcPurchaseReturnSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:outSrcPurchaseReturnSheetDets]
+        }
+    }
+
     //查詢指定批號的進貨單單身
     def queryPurchaseSheetDetByBatch(String batchName){
         def batch=Batch.findByName(batchName)
@@ -309,6 +364,15 @@ class ApiController {
 
         render (contentType: 'text/json') {
             [data:purchaseSheetDets]
+        }
+    }
+
+    def queryPurchaseReturnSheetDetByBatch(String batchName){
+        def batch=Batch.findByName(batchName)
+        def purchaseReturnSheetDets=PurchaseReturnSheetDet.findAllByBatch(batch)
+
+        render (contentType: 'text/json') {
+            [data:purchaseReturnSheetDets]
         }
     }
 
@@ -342,6 +406,16 @@ class ApiController {
 
         render (contentType: 'text/json') {
             [data: outSrcPurchaseSheetDets]
+        }
+    }
+
+    def queryOutSrcPurchaseReturnSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
+        def batch=Batch.findByName(batchName)
+        def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
+        def outSrcPurchaseReturnSheetDets=OutSrcPurchaseReturnSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
+
+        render (contentType: 'text/json') {
+            [data: outSrcPurchaseReturnSheetDets]
         }
     }
 
