@@ -1,6 +1,6 @@
 package foodpaint
 
- public enum BatchType {
+public enum BatchType {
     PRODUCT
 }
 class Batch  {
@@ -46,25 +46,25 @@ class Batch  {
 	long expectQty = 0//ERP無此資料
 	Date dueDate //失效日
 
-    /*
-    * 製造完成日期
-    */
+    /**
+     * 製造完成日期
+     */
 	Date manufactureDate
 
-    /*
-    * 類型，無 erp 時使用
-    */
+    /**
+     * 類型，無 erp 時使用
+     */
     BatchType batchType = foodpaint.BatchType.PRODUCT
 
 
-    /*
-    * 供應商，無 erp 時使用
-    */
+    /**
+     * 供應商，無 erp 時使用
+     */
    	Supplier supplier
 
-   	/*
-    * 供應商所屬國家
-    */
+   	/**
+     * 供應商所屬國家
+     */
 	Country country = foodpaint.Country.TAIWAN
 
     static mapping = {

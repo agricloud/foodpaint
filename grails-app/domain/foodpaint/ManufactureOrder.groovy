@@ -1,9 +1,7 @@
 package foodpaint
-
-
-    /*
-    * 製造命令
-    */
+ /*
+ * 製造命令
+ */
 class ManufactureOrder {
     int importFlag = -1
 
@@ -31,23 +29,22 @@ class ManufactureOrder {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 
     Workstation workstation
     Supplier supplier
 
-    /*
-    * 訂單單身
-    */
+    /**
+     * 訂單單身
+     */
     CustomerOrderDet customerOrderDet
 
     static hasMany = [
@@ -58,19 +55,19 @@ class ManufactureOrder {
         materialSheetReturnDets: MaterialReturnSheetDet
     ]
 
-    /*
-    * 品項編號
-    */
+    /**
+     * 品項編號
+     */
     Item item
 
-    /*
-    * 生產量
-    */
+    /**
+     * 生產量
+     */
     long qty
 
-    /*
-    * 預計批號
-    */
+    /**
+     * 預計批號
+     */
     Batch batch
 
     static mapping = {

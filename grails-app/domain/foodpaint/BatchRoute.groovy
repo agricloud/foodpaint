@@ -34,15 +34,15 @@ class BatchRoute {
 	Operation operation
 	int sequence
 
-    /*
-    * 開始時間
-    */
+    /**
+     * 開始時間
+     */
 	Date startDate
 
 
-    /*
-    * 結束時間
-    */
+    /**
+     * 結束時間
+     */
 	Date endDate
 
     static mapping = {

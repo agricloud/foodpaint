@@ -30,8 +30,13 @@ class Customer {
 	String name
 	String title
     String tel
+    String fax
 	String email
 	String address
+    /**
+     * 送貨地址
+     */
+    String shippingAddress
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -42,8 +47,10 @@ class Customer {
         creator nullable:true
     	name unique:true, blank: false
         tel nullable:true
+        fax nullable:true
     	email nullable:true
-    	address nullable:true
+        address nullable:true
+    	shippingAddress nullable:true
     }
     
     public String toString(){

@@ -1,9 +1,7 @@
 package foodpaint
-
-
-    /*
-    * 客戶訂單
-    */
+/**
+ * 客戶訂單
+ */
 class CustomerOrder {
 	int importFlag = -1
 
@@ -31,25 +29,25 @@ class CustomerOrder {
 	 * 修改日期（自動欄位）
 	 */
 	Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
 
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[customerOrderDets:CustomerOrderDet]
-	/*
-	* 客戶編號
-	*/
+	/**
+	 * 客戶編號
+	 */
 	Customer customer
 
-	/*
-	* 到期日
-	*/
+	/**
+	 * 到期日
+	 */
 	Date dueDate=new Date()
 
 

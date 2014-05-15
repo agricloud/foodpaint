@@ -28,20 +28,19 @@ class Supplier {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 編號
-    */
+    /**
+     * 編號
+     */
     String name
 
-
-    /*
-    * 名稱
-    */
+    /**
+     * 名稱
+     */
     String title
     
-    /*
-    * 供應商所屬國家
-    */
+    /**
+     * 供應商所屬國家
+     */
     Country country
 
     String tel

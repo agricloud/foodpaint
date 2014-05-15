@@ -1,8 +1,7 @@
 package foodpaint
-
-    /*
-    * 領料單頭
-    */
+/*
+ * 領料單頭
+ */
 class MaterialSheet {
     int importFlag = -1
 
@@ -30,24 +29,23 @@ class MaterialSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[materialSheetDets:MaterialSheetDet]
-    /*
-    * 生產線別
-    */
+    /**
+     * 生產線別
+     */
     Workstation workstation
-    /*
-    * 加工廠商
-    */
+    /**
+     * 加工廠商
+     */
     Supplier supplier
     
     static mapping = {

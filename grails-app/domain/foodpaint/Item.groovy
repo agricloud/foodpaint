@@ -51,15 +51,15 @@ class Item {
 	String description
 
 
-    /*
-    * 規格敘述
-    */
+    /**
+     * 規格敘述
+     */
     String spec
 
 
-    /*
-    * 單位
-    */
+    /**
+     * 單位
+     */
     String unit
 
     /**

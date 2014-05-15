@@ -1,10 +1,7 @@
 package foodpaint
-
-
-
-    /*
-    * 託外進貨單
-    */
+/*
+ * 託外進貨單
+ */
 class OutSrcPurchaseSheet {
     int importFlag = -1
 
@@ -32,20 +29,19 @@ class OutSrcPurchaseSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
-    * 進貨廠商
-    */
+     * 進貨廠商
+     */
 	Supplier supplier
 
     static mapping = {

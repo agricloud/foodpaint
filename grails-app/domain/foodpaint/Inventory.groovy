@@ -15,14 +15,14 @@ class Inventory {
 
     long qty = 0
 
-    /*
-    *  最近入庫日期
-    */
+    /**
+     *  最近入庫日期
+     */
     Date lastInDate = new Date()
 
-    /*
-    *  最近出庫日期
-    */
+    /**
+     *  最近出庫日期
+     */
     Date lastOutDate = new Date()
 
 	static constraints = {

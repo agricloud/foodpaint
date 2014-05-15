@@ -1,5 +1,5 @@
 package foodpaint
-/*
+/**
  * 銷貨單單身
  */
 class SaleSheetDet{
@@ -29,51 +29,48 @@ class SaleSheetDet{
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
 
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
-    /*
-    * 訂單項次，取訂單編號最大單身項次 +1
-    */
+    /**
+     * 訂單項次，取訂單編號最大單身項次 +1
+     */
     int sequence
     static belongsTo=[saleSheet:SaleSheet]
-    /*
-    * 品項
-    */
+    /**
+     * 品項
+     */
     Item item
 
-
-    /*
-    * 訂單單身
-    */
+    /**
+     * 訂單單身
+     */
     CustomerOrderDet customerOrderDet
 
-
-    /*
-    * 批號
-    */
+    /**
+     * 批號
+     */
     Batch batch
 
-    /*
-    * 庫別
-    */
-
+    /**
+     * 庫別
+     */
     Warehouse warehouse
 
-    /*
-    * 儲位
-    */
+    /**
+     * 儲位
+     */
     WarehouseLocation warehouseLocation
-    /*
-    * 數量
-    */
+    /**
+     * 數量
+     */
     long qty
     static mapping = {
         importFlag  defaultValue: -1

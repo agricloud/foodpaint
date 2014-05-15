@@ -29,20 +29,19 @@ class OutSrcPurchaseReturnSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
     static hasMany=[outSrcPurchaseReturnSheetDets:OutSrcPurchaseReturnSheetDet]
-    /*
-    * 退貨廠商
-    */
+    /**
+     * 退貨廠商
+     */
 	Supplier supplier
 
 

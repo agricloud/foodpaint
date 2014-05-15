@@ -1,8 +1,7 @@
 package foodpaint
-
-    /*
-    * 進貨單
-    */
+/**
+ * 進貨單
+ */
 class PurchaseSheet {
     int importFlag = -1
 
@@ -30,22 +29,20 @@ class PurchaseSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 
     static hasMany=[purchaseSheetDets:PurchaseSheetDet]
-    /*
-    * 供應商
-    */
-
+    /**
+     * 供應商
+     */
     Supplier supplier
 
     static mapping = {

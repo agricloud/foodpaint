@@ -14,13 +14,13 @@ class WarehouseLocation {
 	String title
     String description
     
-    /*
-    *  容量
-    */
+    /**
+     *  容量
+     */
     Long capacity
-    /*
-    *  容量單位
-    */
+    /**
+     *  容量單位
+     */
     String capacityUnit
 
     String remark

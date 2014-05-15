@@ -29,51 +29,49 @@ class MaterialSheetDet{
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
-    /*
-    * 訂單項次，取訂單編號最大單身項次 +1
-    */
+    /**
+     * 訂單項次，取訂單編號最大單身項次 +1
+     */
     int sequence
     static belongsTo=[materialSheet:MaterialSheet]
     
-    /*
-    * 製令
-    */
+    /**
+     * 製令
+     */
     static hasOne = [
         manufactureOrder: ManufactureOrder
     ]
 
-    /*
-    * 批號
-    */
+    /**
+     * 批號
+     */
     Batch batch
-    /*
-    * 品項編號，材料編號
-    */
+    /**
+     * 品項編號，材料編號
+     */
     Item item
 
-    /*
-    * 庫別
-    */
-
+    /**
+     * 庫別
+     */
     Warehouse warehouse
 
-    /*
-    * 儲位
-    */
+    /**
+     * 儲位
+     */
     WarehouseLocation warehouseLocation
-    /*
-    * 領料數量
-    */
+    /**
+     * 領料數量
+     */
     long qty = 0
 
     static mapping = {

@@ -29,21 +29,25 @@ class SaleReturnSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[saleReturnSheetDets:SaleReturnSheetDet]
 
-    /*
-    * 客戶
-    */
+    /**
+     * 客戶
+     */
     Customer customer
+    /**
+     * 取件地址
+     */
+    String pickUpAddress
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -53,6 +57,7 @@ class SaleReturnSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
+        pickUpAddress nullable:true
     }
     public String toString(){
         "銷退單：${typeName}-${name}"

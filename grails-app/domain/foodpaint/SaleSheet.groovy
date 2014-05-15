@@ -29,21 +29,24 @@ class SaleSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[saleSheetDets:SaleSheetDet]
-    /*
-    * 客戶
-    */
+    /**
+     * 客戶
+     */
     Customer customer
+    /**
+     * 送貨地址
+     */
+    String shippingAddress
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -53,6 +56,7 @@ class SaleSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
+        shippingAddress nullable:true
     }
     public String toString(){
         "銷貨單：${typeName}-${name}"

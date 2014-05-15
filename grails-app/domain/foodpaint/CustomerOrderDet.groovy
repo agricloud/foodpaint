@@ -30,31 +30,30 @@ class CustomerOrderDet{
      */
     Date lastUpdated
 
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
-    /*
-    * 訂單項次，取訂單編號最大單身項次 +1
-    */
+    /**
+     * 訂單項次，取訂單編號最大單身項次 +1
+     */
     int sequence
 
 
     CustomerOrder customerOrder
-    /*
-    * 關連品項編號
-    */
+    /**
+     * 關連品項編號
+     */
 	Item item
 
-    /*
-    * 訂單數量
-    */
+    /**
+     * 訂單數量
+     */
 	long qty
 
     static mapping = {

@@ -28,56 +28,53 @@ class OutSrcPurchaseReturnSheetDet{
      */
     Date lastUpdated
 
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
-    /*
-    * 訂單項次，取訂單編號最大單身項次 +1
-    */
+    /**
+     * 訂單項次，取訂單編號最大單身項次 +1
+     */
     int sequence
     static belongsTo=[outSrcPurchaseReturnSheet:OutSrcPurchaseReturnSheet]
 
-    /*
-    * 品項編號
-    */
+    /**
+     * 品項編號
+     */
 	Item item
 
-    /*
-    * 庫別
-    */
-
+    /**
+     * 庫別
+     */
     Warehouse warehouse
 
-    /*
-    * 儲位
-    */
+    /**
+     * 儲位
+     */
     WarehouseLocation warehouseLocation
-    /*
-    * 數量
-    */
+    /**
+     * 數量
+     */
 	long qty
 
 
-    /*
-    * 批號
-    */
+    /**
+     * 批號
+     */
 	Batch batch
-    /*
-    * 託外進貨單單身
-    */
+    /**
+     * 託外進貨單單身
+     */
     OutSrcPurchaseSheetDet outSrcPurchaseSheetDet
-    /*
-    * 製令
-    */
+    /**
+     * 製令
+     */
 	ManufactureOrder manufactureOrder
-
 
     static mapping = {
         importFlag  defaultValue: -1
