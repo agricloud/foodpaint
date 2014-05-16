@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockInSheet" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98d4bff0-cec8-431a-9581-738b101c67ed">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="23"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="site.title" class="java.lang.String"/>
 	<parameter name="report.title" class="java.lang.String"/>
@@ -327,7 +327,7 @@
 				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="357" y="0" width="193" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="65c5b027-ddf8-4cf0-993e-c808b71f81bc"/>
+				<reportElement mode="Transparent" x="357" y="0" width="191" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="65c5b027-ddf8-4cf0-993e-c808b71f81bc"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
