@@ -99,7 +99,7 @@ class Item {
         title nullable: true
         description nullable: true
         spec nullable: true
-        unit nullable: true
+        // unit nullable: true
 		// dueDays nullable: true
 		// effectStartDate nullable: true
 		// effectEndDate nullable: true
