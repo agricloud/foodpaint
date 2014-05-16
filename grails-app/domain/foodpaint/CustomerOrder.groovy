@@ -44,6 +44,10 @@ class CustomerOrder {
 	 * 客戶編號
 	 */
 	Customer customer
+    /**
+     * 送貨地址
+     */
+    String shippingAddress
 
 	/**
 	 * 到期日
@@ -63,6 +67,7 @@ class CustomerOrder {
     	site nullable:true
     	dueDate nullable:true
     	customer nullable:true
+        shippingAddress nullable:true
     }
     public String toString(){
         "訂單：${typeName}-${name}"

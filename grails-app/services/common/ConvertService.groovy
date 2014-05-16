@@ -396,8 +396,10 @@ class ConvertService {
     	result.name = customer.name
 		result.title = customer.title
 		result.tel = customer.tel
+		result.fax = customer.fax
 		result.email = customer.email
 		result.address = customer.address
+		result.shippingAddress = customer.shippingAddress
 
 		result
     }
@@ -413,6 +415,7 @@ class ConvertService {
     	result.name = customerOrder.name
 		result.typeName = customerOrder.typeName
 		result.dueDate = dateService.formatWithISO8601(customerOrder.dueDate)
+		result.shippingAddress = customerOrder.shippingAddress
 
 		if(customerOrder.customer){
 			result.customer = customerOrder.customer

@@ -72,7 +72,8 @@ class CustomerOrderController {
     def update = {
 
         def customerOrder= CustomerOrder.get(params.id)
-        if(customerOrder.customerOrderDets && params.customer.id != customerOrder.customer.id){
+
+        if(customerOrder.customerOrderDets && params.customer.id.toLong() != customerOrder.customer.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'customerOrder.customerOrderDets.exists.customer.not.allowed.change', args: [customerOrder])]
             }
@@ -135,9 +136,11 @@ class CustomerOrderController {
             data.typeName=customerOrder.typeName
             data.name=customerOrder.name
             data.customer=customerOrder.customer
+            data.shippingAddress=customerOrder.shippingAddress
             data.sequence=customerOrderDet.sequence
             data.item=customerOrderDet.item
             data.qty=customerOrderDet.qty
+            
             reportData << data
         }
 
