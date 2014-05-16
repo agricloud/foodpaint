@@ -73,7 +73,7 @@ class PurchaseSheetController {
 
     def update = {
         def purchaseSheet= PurchaseSheet.get(params.id)
-        if(purchaseSheet.purchaseSheetDets && params.supplier.id != purchaseSheet.supplier.id){
+        if(purchaseSheet.purchaseSheetDets && params.supplier.id.toLong() != purchaseSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'purchaseSheet.purchaseSheetDets.exists.supplier.not.allowed.change', args: [purchaseSheet])]
             }

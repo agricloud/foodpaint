@@ -73,7 +73,7 @@ class SaleSheetController {
     def update = {
 
         def saleSheet= SaleSheet.get(params.id)
-        if(saleSheet.saleSheetDets && params.customer.id != saleSheet.customer.id){
+        if(saleSheet.saleSheetDets && params.customer.id.toLong() != saleSheet.customer.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'saleSheet.saleSheetDets.exists.customer.not.allowed.change', args: [saleSheet])]
             }

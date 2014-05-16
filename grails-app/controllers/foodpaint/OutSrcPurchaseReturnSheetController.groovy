@@ -63,7 +63,7 @@ class OutSrcPurchaseReturnSheetController{
     def update = {
 
         def outSrcPurchaseReturnSheet= OutSrcPurchaseReturnSheet.get(params.id)
-        if(outSrcPurchaseReturnSheet.outSrcPurchaseReturnSheetDets && params.supplier.id != outSrcPurchaseReturnSheet.supplier.id){
+        if(outSrcPurchaseReturnSheet.outSrcPurchaseReturnSheetDets && params.supplier.id.toLong() != outSrcPurchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'outSrcPurchaseReturnSheet.outSrcPurchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [outSrcPurchaseReturnSheet])]
             }

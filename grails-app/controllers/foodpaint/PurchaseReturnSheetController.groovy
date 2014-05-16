@@ -63,7 +63,7 @@ class PurchaseReturnSheetController{
     def update = {
 
         def purchaseReturnSheet= PurchaseReturnSheet.get(params.id)
-        if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id != purchaseReturnSheet.supplier.id){
+        if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id.toLong() != purchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [purchaseReturnSheet])]
             }

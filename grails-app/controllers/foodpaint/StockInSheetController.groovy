@@ -63,7 +63,7 @@ class StockInSheetController {
     def update = {
 
         def stockInSheet= StockInSheet.get(params.id)
-        if(stockInSheet.stockInSheetDets && params.workstation.id != stockInSheet.workstation.id){
+        if(stockInSheet.stockInSheetDets && params.workstation.id.toLong() != stockInSheet.workstation.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change', args: [stockInSheet])]
             }

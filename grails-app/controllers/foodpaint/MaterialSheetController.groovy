@@ -80,7 +80,7 @@ class MaterialSheetController {
     def update = {
 
         def materialSheet= MaterialSheet.get(params.id)
-        if(materialSheet.materialSheetDets && (params.workstation.id != materialSheet.workstation?.id || params.supplier.id != materialSheet.supplier?.id)){
+        if(materialSheet.materialSheetDets && (params.workstation.id.toLong() != materialSheet.workstation?.id || params.supplier.id.toLong() != materialSheet.supplier?.id)){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
             }

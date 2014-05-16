@@ -68,7 +68,7 @@ class MaterialReturnSheetController {
     def update = {
 
         def materialReturnSheet= MaterialReturnSheet.get(params.id)
-        if(materialReturnSheet.materialReturnSheetDets && (params.workstation.id != materialReturnSheet.workstation?.id || params.supplier.id != materialReturnSheet.supplier?.id)){
+        if(materialReturnSheet.materialReturnSheetDets && (params.workstation.id.toLong() != materialReturnSheet.workstation?.id || params.supplier.id.toLong() != materialReturnSheet.supplier?.id)){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialReturnSheet.materialReturnSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialReturnSheet])]
             }
