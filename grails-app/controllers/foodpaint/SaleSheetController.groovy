@@ -136,6 +136,7 @@ class SaleSheetController {
             data.typeName=saleSheet.typeName
             data.name=saleSheet.name
             data.customer=saleSheet.customer
+            data.shippingAddress=saleSheet.shippingAddress
             data.sequence=saleSheetDet.sequence
             data.item=saleSheetDet.item
             data.warehouse=saleSheetDet.warehouse

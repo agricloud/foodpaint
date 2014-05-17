@@ -124,6 +124,7 @@ class SaleReturnSheetController {
             data.typeName=saleReturnSheet.typeName
             data.name=saleReturnSheet.name
             data.customer=saleReturnSheet.customer
+            data.pickUpAddress=saleReturnSheet.pickUpAddress
             data.sequence=saleReturnSheetDet.sequence
             data.item=saleReturnSheetDet.item
             data.warehouse=saleReturnSheetDet.warehouse

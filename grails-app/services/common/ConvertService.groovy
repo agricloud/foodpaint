@@ -818,12 +818,15 @@ class ConvertService {
         result.id = saleSheet.id
     	result.name = saleSheet.name
 		result.typeName = saleSheet.typeName
+		result.shippingAddress = saleSheet.shippingAddress
 
 		if(saleSheet.customer){
 			result.customer = saleSheet.customer
 			result["customer.id"] = saleSheet.customer.id
 	        result["customer.name"] = saleSheet.customer.name
 	        result["customer.title"] = saleSheet.customer.title
+	        result["customer.tel"] = saleSheet.customer.tel
+	        result["customer.fax"] = saleSheet.customer.fax
 	    }
 
 		result
@@ -1154,12 +1157,15 @@ class ConvertService {
         result.id = saleReturnSheet.id
     	result.name = saleReturnSheet.name
 		result.typeName = saleReturnSheet.typeName
+		result.pickUpAddress = saleReturnSheet.pickUpAddress
 
 		if(saleReturnSheet.customer){
 			result.customer = saleReturnSheet.customer
 			result["customer.id"] = saleReturnSheet.customer.id
 	        result["customer.name"] = saleReturnSheet.customer.name
 	        result["customer.title"] = saleReturnSheet.customer.title
+	        result["customer.tel"] = saleReturnSheet.customer.tel
+	        result["customer.fax"] = saleReturnSheet.customer.fax
 	    }
 
 		result
