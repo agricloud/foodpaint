@@ -128,6 +128,7 @@ class StockInSheetController {
             data.workstation=stockInSheet.workstation
             data.sequence=stockInSheetDet.sequence
             data.item=stockInSheetDet.item
+            data.batch=stockInSheetDet.batch
             data.warehouse=stockInSheetDet.warehouse
             data.warehouseLocation=stockInSheetDet.warehouseLocation
             data.manufactureOrder=stockInSheetDet.manufactureOrder
