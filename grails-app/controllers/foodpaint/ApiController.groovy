@@ -388,7 +388,6 @@ class ApiController {
 
     //查詢指定製令的入庫單單身
     def queryStockInSheetDetByBatchAndManufactureOrder(String batchName, String typeName, String name){
-        println 12345675432
         def batch=Batch.findByName(batchName)
         def manufactureOrder=ManufactureOrder.findByTypeNameAndName(typeName,name)
         def stockInSheetDets=StockInSheetDet.findAllByBatchAndManufactureOrder(batch,manufactureOrder)
