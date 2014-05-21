@@ -44,6 +44,11 @@ class Supplier {
     Country country
 
     String tel
+    String fax
+    /**
+     * 連絡人
+     */
+    String contact
     String email
     String address
 
@@ -57,6 +62,8 @@ class Supplier {
         name unique: true, blank: false
         country nullable:true
         tel nullable:true
+        fax nullable:true
+        contact nullable:true
         email nullable:true
         address nullable:true
 
