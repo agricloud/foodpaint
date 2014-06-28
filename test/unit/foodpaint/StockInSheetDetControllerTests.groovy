@@ -127,7 +127,8 @@ class StockInSheetDetControllerTests {
 
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
-                
+
+        params["id"] = 1                
         params["batch.name"] = "batch2"
         params["qty"] = 500
         controller.update()
@@ -160,6 +161,7 @@ class StockInSheetDetControllerTests {
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
+        params["id"] = 1
         params["batch.name"] = "batch2"
         params["qty"] = 500
 
@@ -189,6 +191,7 @@ class StockInSheetDetControllerTests {
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:stockInSheetDet11.qty).save(failOnError: true, flush: true)
 
+        params["id"] = 1
         controller.delete()
 
         assert response.json.success == true

@@ -29,7 +29,6 @@ class SaleSheetDetControllerTests {
     def populateValidParams(params) {
         assert params != null
         params["saleSheet.id"]=1
-        params["id"] = 1
         params["typeName"] = 'SS'
         params["name"] = '00001'
         params["sequence"] = 1
@@ -117,6 +116,7 @@ class SaleSheetDetControllerTests {
         def inventory2 = new Inventory(warehouse:warehouse1,item:item2,qty:500).save(failOnError: true, flush: true)
         def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item2,batch:batch2,qty:500).save(failOnError: true, flush: true)
 
+        params["id"] = 1
         params["item.id"] = 2
         params["batch.id"] = 2
         params["qty"] = 500
@@ -144,6 +144,7 @@ class SaleSheetDetControllerTests {
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0).save(failOnError: true, flush: true)
 
+        params["id"] = 1
         controller.delete()
 
         assert response.json.success == true
