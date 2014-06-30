@@ -19,13 +19,13 @@ class MaterialSheetDetControllerTests {
 
         def item1 = new Item(name:"item1",title:"原料",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
         def batch1 = new Batch(name:"batch1", item:item1).save(failOnError: true, flush: true)
-        def item2 = new Item(name:"item2",title:"成品").save(failOnError: true, flush: true)
+        def item2 = new Item(name:"item2",title:"成品",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         def workstation1 = new Workstation(name:"workstation1",title:"生產線01").save(failOnError: true)
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
         def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
 
-        def manufactureOrder1 = new ManufactureOrder(typeName:"MO",name:"00001",item:item2,qty:1000,batch:batch2).save(failOnError: true, flush: true)
+        def manufactureOrder1 = new ManufactureOrder(typeName:"MO",name:"00001",item:item2,qty:1000,batch:batch2,workstation:workstation1).save(failOnError: true, flush: true)
         def materialSheet1 = new MaterialSheet(typeName:"MS",name:"00001",workstation:workstation1).save(failOnError: true, flush: true)
 
     }
@@ -33,7 +33,7 @@ class MaterialSheetDetControllerTests {
     def populateValidParams(params) {
         assert params != null
         params["materialSheet.id"]=1
-s        params["typeName"] = 'MS'
+        params["typeName"] = 'MS'
         params["name"] = '00001'
         params["sequence"] = 1
         params["workstation.id"]=1
@@ -98,7 +98,6 @@ s        params["typeName"] = 'MS'
         populateValidParams(params)
 
         controller.save()
-        println MaterialSheetDet.get(1).batch
         assert response.json.success
         assert MaterialSheetDet.list().size() == 1
         assert MaterialSheetDet.get(1).typeName == "MS"
@@ -122,7 +121,7 @@ s        params["typeName"] = 'MS'
         def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:4000).save(failOnError: true, flush: true)
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:4000).save(failOnError: true, flush: true)
 
-        def item3 = new Item(name:"item3",title:"品項3").save(failOnError: true, flush: true)
+        def item3 = new Item(name:"item3",title:"品項3",unit:"kg").save(failOnError: true, flush: true)
         def batch3 = new Batch(name:"batch3", item:item3).save(failOnError: true, flush: true)
         def inventory2 = new Inventory(warehouse:warehouse1,item:item3,qty:500).save(failOnError: true, flush: true)
         def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item3,batch:batch3,qty:500).save(failOnError: true, flush: true)

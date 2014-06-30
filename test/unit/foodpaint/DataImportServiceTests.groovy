@@ -324,7 +324,7 @@ class DataImportServiceTests {
 
 
     void testCustomerOrderDetImport() {
-        new Item(name:"item",title:"item").save(failOnError: true, flush: true)
+        new Item(name:"item",title:"item",unit:"kg").save(failOnError: true, flush: true)
         new CustomerOrder(typeName:"A11",name:"98100900003").save(failOnError: true, flush: true)
         // def customerOrderDetView = new CustomerOrderDetView(typeName: "A11", name: "98100900003",
         //     sequence:1, itemName : "item").save(failOnError: true, flush: true)
@@ -450,8 +450,8 @@ class DataImportServiceTests {
 
         new PurchaseSheet(typeName:"B21",name:"98100900001",supplier:supplier1).save(failOnError: true, flush: true)
         
-        new Item(name:"21006",title:"芝麻有機肥").save(failOnError: true, flush: true)
-        new Item(name:"21007",title:"黃豆有機肥").save(failOnError: true, flush: true)
+        new Item(name:"21006",title:"芝麻有機肥",unit:"kg").save(failOnError: true, flush: true)
+        new Item(name:"21007",title:"黃豆有機肥",unit:"kg").save(failOnError: true, flush: true)
 
         // new PurchaseSheetDetView(typeName:"B21",name:"98100900001",sequence:1,itemName:"21006",batchName:"0927-21006",qty:10000).save(failOnError: true, flush: true)
         // new PurchaseSheetDetView(typeName:"B21",name:"98100900001",sequence:2,itemName:"21007",batchName:"0927-21007",qty:10000).save(failOnError: true, flush: true)
@@ -1018,8 +1018,8 @@ class DataImportServiceTests {
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
         def warehouseLocation1 = new WarehouseLocation(name:"warehouseLocation1",warehouse:warehouse1,title:"儲位1").save(failOnError: true, flush: true)
         def i1=new Item(name:"410001",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種",importFlag:1).save(failOnError: true, flush: true)
-        def item2=new Item(name:"21006",title:"芝麻有機肥",importFlag:1).save(failOnError: true, flush: true)
-        def item3=new Item(name:"21007",title:"黃豆有機肥",importFlag:1).save(failOnError: true, flush: true)
+        def item2=new Item(name:"21006",title:"芝麻有機肥",unit:"kg",importFlag:1).save(failOnError: true, flush: true)
+        def item3=new Item(name:"21007",title:"黃豆有機肥",unit:"kg",importFlag:1).save(failOnError: true, flush: true)
 
         new Batch(name:"0927-21006",item:item2,importFlag:1).save(failOnError: true, flush: true)
         new Batch(name:"0927-21007",item:item3,importFlag:1).save(failOnError: true, flush: true)

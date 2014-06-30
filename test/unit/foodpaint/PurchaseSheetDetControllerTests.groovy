@@ -92,7 +92,7 @@ class PurchaseSheetDetControllerTests {
     }
 
     void testSaveWithIncorrectBatchData(){
-        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+        def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
         //設定傳入的params值
@@ -120,7 +120,7 @@ class PurchaseSheetDetControllerTests {
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:purchaseSheetDet11.qty).save(failOnError: true, flush: true)
 
 
-        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+        def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         params["id"] = 1
@@ -154,7 +154,7 @@ class PurchaseSheetDetControllerTests {
         def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:purchaseSheetDet11.qty).save(failOnError: true, flush: true)
 
 
-        def item2 = new Item(name:"item2",title:"橘子").save(failOnError: true, flush: true)
+        def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
         
         //給定錯誤的更新資料 批號品項與進貨品項不符
