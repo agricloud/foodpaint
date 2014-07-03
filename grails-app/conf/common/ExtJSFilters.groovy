@@ -47,7 +47,7 @@ class ExtJSFilters {
                 }
 
                 params.criteria = {
-                    if(params["site.id"]!="null"){
+                    if(params["site.id"]&&params["site.id"]!="null"){
                         eq('site.id',params["site.id"].toLong())
                     }
 

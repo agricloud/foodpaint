@@ -638,42 +638,6 @@ databaseChangeLog = {
 		}
 	}
 
-	changeSet(author: "pipi (generated)", id: "1404155889824-13") {
-		addColumn(tableName: "customer") {
-			column(name: "contact", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-14") {
-		addColumn(tableName: "customer") {
-			column(name: "fax", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-15") {
-		addColumn(tableName: "customer") {
-			column(name: "shipping_address", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-16") {
-		addColumn(tableName: "customer") {
-			column(name: "tel", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-17") {
-		addColumn(tableName: "customer_order") {
-			column(name: "shipping_address", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-18") {
-		addColumn(tableName: "item_route") {
-			column(name: "supplier_id", type: "bigint")
-		}
-	}
-
 	changeSet(author: "pipi (generated)", id: "1404155889824-19") {
 		addColumn(tableName: "manufacture_order") {
 			column(name: "supplier_id", type: "bigint")
@@ -794,18 +758,6 @@ databaseChangeLog = {
 		}
 	}
 
-	changeSet(author: "pipi (generated)", id: "1404155889824-35") {
-		addColumn(tableName: "supplier") {
-			column(name: "contact", type: "varchar(255)")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-36") {
-		addColumn(tableName: "supplier") {
-			column(name: "fax", type: "varchar(255)")
-		}
-	}
-
 	changeSet(author: "pipi (generated)", id: "1404155889824-37") {
 		modifyDataType(columnName: "qty", newDataType: "bigint", tableName: "customer_order_det")
 	}
@@ -863,55 +815,55 @@ databaseChangeLog = {
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-51") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet", baseTableSchemaName: "foodpaint", constraintName: "FKE88830DC92B046E8")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet", constraintName: "FKE88830DC92B046E8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-52") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet", baseTableSchemaName: "foodpaint", constraintName: "FKE88830DC5FA885C8")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet", constraintName: "FKE88830DC5FA885C8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-53") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FK15391630352752AC")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", constraintName: "FK15391630352752AC")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-54") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FK1539163093A32368")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", constraintName: "FK1539163093A32368")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-55") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FK153916306BCD0205")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", constraintName: "FK153916306BCD0205")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-56") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FK15391630326F8809")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", constraintName: "FK15391630326F8809")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-57") {
-		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FK1539163092B046E8")
+		dropForeignKeyConstraint(baseTableName: "out_src_return_sheet_det", constraintName: "FK1539163092B046E8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-58") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet", baseTableSchemaName: "foodpaint", constraintName: "FK45B9599092B046E8")
+		dropForeignKeyConstraint(baseTableName: "return_sheet", constraintName: "FK45B9599092B046E8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-59") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet", baseTableSchemaName: "foodpaint", constraintName: "FK45B959905FA885C8")
+		dropForeignKeyConstraint(baseTableName: "return_sheet", constraintName: "FK45B959905FA885C8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-60") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FKAF7EC4E4352752AC")
+		dropForeignKeyConstraint(baseTableName: "return_sheet_det", constraintName: "FKAF7EC4E4352752AC")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-61") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FKAF7EC4E493A32368")
+		dropForeignKeyConstraint(baseTableName: "return_sheet_det", constraintName: "FKAF7EC4E493A32368")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-62") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FKAF7EC4E470AA11EB")
+		dropForeignKeyConstraint(baseTableName: "return_sheet_det", constraintName: "FKAF7EC4E470AA11EB")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-63") {
-		dropForeignKeyConstraint(baseTableName: "return_sheet_det", baseTableSchemaName: "foodpaint", constraintName: "FKAF7EC4E492B046E8")
+		dropForeignKeyConstraint(baseTableName: "return_sheet_det", constraintName: "FKAF7EC4E492B046E8")
 	}
 
 	changeSet(author: "pipi (generated)", id: "1404155889824-129") {
@@ -1005,14 +957,6 @@ databaseChangeLog = {
 	changeSet(author: "pipi (generated)", id: "1404155889824-144") {
 		createIndex(indexName: "FK8B96B61D5FA885C8", tableName: "item_route") {
 			column(name: "supplier_id")
-		}
-	}
-
-	changeSet(author: "pipi (generated)", id: "1404155889824-145") {
-		createIndex(indexName: "unique_sequence", tableName: "item_route", unique: "true") {
-			column(name: "item_id")
-
-			column(name: "sequence")
 		}
 	}
 

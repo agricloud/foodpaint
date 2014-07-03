@@ -76,12 +76,12 @@ runtest:
 
 
 deployWar:
-	scp target/foodpaint.war ${remote_user}@${remote_addr}:~/
+	scp target/foodpaintServer.war ${remote_user}@${remote_addr}:~/
 
 	ssh -t ${remote_user}@${remote_addr} \
 	'cd ~/ \
-	&& sudo rm -rf /var/lib/tomcat7/webapps/foodpaint \
-	&& sudo cp foodpaint.war /var/lib/tomcat7/webapps/ \
+	&& sudo rm -rf /var/lib/tomcat7/webapps/foodpaintServer \
+	&& sudo cp foodpaintServer.war /var/lib/tomcat7/webapps/ \
 	&& sudo service tomcat7 restart'
 
 deployConfig:

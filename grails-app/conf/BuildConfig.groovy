@@ -9,7 +9,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.server.port.http = 8180
-grails.project.war.file = "target/${appName}.war"
+grails.project.war.file = "target/foodpaintServer.war"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 
