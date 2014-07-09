@@ -96,7 +96,6 @@ class Item {
         editor nullable:true
         creator nullable:true
 		name unique: true, blank: false
-        title nullable: true
         description nullable: true
         spec nullable: true
         // unit nullable: true

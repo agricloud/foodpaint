@@ -17,11 +17,12 @@ environments {
         dataSource {
             pooled = true
             username = "root"
-            password = "demo"
+            password = "root"
             dbCreate = ''
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-            url = "jdbc:mysql://140.125.94.174:3306/foodpaint?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
+            url = "jdbc:mysql://localhost:3306/foodtest?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
+            
         }
 
         dataSource_erp {
