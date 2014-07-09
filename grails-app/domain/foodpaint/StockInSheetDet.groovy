@@ -65,7 +65,7 @@ class StockInSheetDet{
     /**
      * 入庫數量
      */
-    long qty = 0 
+    double qty = 0 
 
     static hasOne = [manufactureOrder: ManufactureOrder]
     static mapping = {

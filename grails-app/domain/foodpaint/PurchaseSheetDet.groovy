@@ -67,7 +67,7 @@ class PurchaseSheetDet{
     /**
      * 進貨數量
      */
-    long qty
+    double qty
 
 
     static mapping = {

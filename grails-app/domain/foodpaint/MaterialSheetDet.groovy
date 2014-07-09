@@ -72,7 +72,7 @@ class MaterialSheetDet{
     /**
      * 領料數量
      */
-    long qty = 0
+    double qty = 0
 
     static mapping = {
         importFlag  defaultValue: -1

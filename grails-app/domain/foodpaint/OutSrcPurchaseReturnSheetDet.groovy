@@ -60,7 +60,7 @@ class OutSrcPurchaseReturnSheetDet{
     /**
      * 數量
      */
-	long qty
+	double qty
 
 
     /**

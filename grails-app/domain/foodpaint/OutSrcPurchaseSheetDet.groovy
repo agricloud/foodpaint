@@ -59,7 +59,7 @@ class OutSrcPurchaseSheetDet{
     /**
      * 進貨數量
      */
-	long qty
+	double qty
 
     /**
      * 批號

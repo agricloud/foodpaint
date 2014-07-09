@@ -13,7 +13,7 @@ class Inventory {
         item:Item
     ]
 
-    long qty = 0
+    double qty = 0
 
     /**
      *  最近入庫日期
