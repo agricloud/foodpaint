@@ -82,6 +82,7 @@ class ManufactureOrder {
         workstation nullable:true
         supplier nullable:true
         customerOrderDet nullable:true
+        qty min: 0.0d
     }
     public String toString(){
         "製令：${typeName}-${name}"

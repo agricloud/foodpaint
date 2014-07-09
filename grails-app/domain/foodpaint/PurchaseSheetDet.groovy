@@ -79,6 +79,7 @@ class PurchaseSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        qty min: 0.0d
     }
     public String toString(){
         "進貨單單身：${typeName}-${name}-${sequence}"

@@ -67,7 +67,7 @@ class CustomerOrderDet{
         site nullable:true
         item nullable:true
         qty nullable:true
-        
+        qty min: 0.0d
     }
 
     public String toString(){

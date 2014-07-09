@@ -65,7 +65,7 @@ class StockInSheetDet{
     /**
      * 入庫數量
      */
-    double qty = 0 
+    double qty = 0.0d
 
     static hasOne = [manufactureOrder: ManufactureOrder]
     static mapping = {
@@ -77,6 +77,7 @@ class StockInSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
+        qty min: 0.0d
     }
 
     public String toString(){
