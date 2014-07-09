@@ -43,7 +43,7 @@ class Batch  {
 	]
 
 	String name
-	long expectQty = 0//ERP無此資料
+	double expectQty = 0.0d//ERP無此資料
 	Date dueDate //失效日
 
     /**
@@ -76,7 +76,7 @@ class Batch  {
         editor nullable:true
         creator nullable:true
 		name unique: true, blank: false
-		expectQty min: 0L
+		expectQty min: 0.0d
 		dueDate nullable: true
 		manufactureDate nullable: true
 		supplier nullable: true

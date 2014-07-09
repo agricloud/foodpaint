@@ -54,7 +54,7 @@ class CustomerOrderDet{
     /**
      * 訂單數量
      */
-	long qty
+	double qty
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -67,7 +67,7 @@ class CustomerOrderDet{
         site nullable:true
         item nullable:true
         qty nullable:true
-        
+        qty min: 0.0d
     }
 
     public String toString(){

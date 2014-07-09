@@ -72,7 +72,7 @@ class MaterialSheetDet{
     /**
      * 領料數量
      */
-    long qty = 0
+    double qty = 0.0d
 
     static mapping = {
         importFlag  defaultValue: -1
@@ -83,7 +83,7 @@ class MaterialSheetDet{
         editor nullable:true
         creator nullable:true
         batch nullable:true
-        qty min: 0L
+        qty min: 0.0d
     }
     public String toString(){
         "領料單單身：${typeName}-${name}-${sequence}"

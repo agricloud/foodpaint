@@ -71,7 +71,7 @@ class SaleSheetDet{
     /**
      * 數量
      */
-    long qty
+    double qty
     static mapping = {
         importFlag  defaultValue: -1
     }
@@ -82,6 +82,7 @@ class SaleSheetDet{
         creator nullable:true
         batch nullable:true
         customerOrderDet nullable:true
+        qty min: 0.0d
     }
     public String toString(){
         "銷貨單單身：${typeName}-${name}-${sequence}"

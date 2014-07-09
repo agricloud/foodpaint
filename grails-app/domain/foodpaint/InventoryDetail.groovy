@@ -15,7 +15,7 @@ class InventoryDetail {
         batch: Batch
     ]
 
-    long qty = 0
+    double qty = 0.0d
 
     /**
      *  最近入庫日期

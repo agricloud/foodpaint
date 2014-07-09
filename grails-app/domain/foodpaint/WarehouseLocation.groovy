@@ -17,7 +17,7 @@ class WarehouseLocation {
     /**
      *  容量
      */
-    Long capacity
+    double capacity
     /**
      *  容量單位
      */
