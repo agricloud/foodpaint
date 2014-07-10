@@ -80,6 +80,7 @@ deployWar:
 
 	ssh -t ${remote_user}@${remote_addr} \
 	'cd ~/ \
+	&& sudo rm -rf /var/lib/tomcat7/webapps/foodpaint \
 	&& sudo rm -rf /var/lib/tomcat7/webapps/foodpaintServer \
 	&& sudo cp foodpaintServer.war /var/lib/tomcat7/webapps/ \
 	&& sudo service tomcat7 restart'
