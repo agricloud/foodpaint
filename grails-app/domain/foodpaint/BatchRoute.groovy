@@ -50,10 +50,11 @@ class BatchRoute {
     }	 
 
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-    	sequence unique:'batch'
+        sequence(unique:['batch','site'])
     	startDate nullable:true
     	endDate nullable:true
         workstation nullable:true

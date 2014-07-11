@@ -56,10 +56,12 @@ class Supplier {
         importFlag  defaultValue: -1
     }
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-        name unique: true, blank: false
+        name(unique:['site'])
+        name blank: false
         country nullable:true
         tel nullable:true
         fax nullable:true

@@ -35,7 +35,9 @@ class Operation {
         importFlag  defaultValue: -1
     }
     static constraints = {
-    	name unique:true, blank: false
+    	importFlag nullable:true
+    	name(unique:['site'])
+        name blank: false
     	site nullable:true
         editor nullable:true
         creator nullable:true
