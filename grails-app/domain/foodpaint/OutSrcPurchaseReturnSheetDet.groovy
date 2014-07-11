@@ -80,7 +80,10 @@ class OutSrcPurchaseReturnSheetDet{
         importFlag  defaultValue: -1
     }
     static constraints = {
-        sequence(unique:['name','typeName'])
+        importFlag nullable:true
+        sequence(unique:['name','typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         editor nullable:true
         creator nullable:true

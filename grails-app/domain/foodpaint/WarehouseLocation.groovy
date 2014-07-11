@@ -2,6 +2,7 @@ package foodpaint
 
 class WarehouseLocation {
 
+    int importFlag = -1
     Site site
     String editor
     String creator
@@ -25,11 +26,16 @@ class WarehouseLocation {
 
     String remark
 
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
 	static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
 		creator nullable:true
-		name unique: true, blank: false
+		name(unique:['site'])
+        name blank: false
         description nullable: true
         capacity nullable: true
         capacityUnit nullable: true

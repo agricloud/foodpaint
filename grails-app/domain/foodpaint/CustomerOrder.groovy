@@ -60,10 +60,13 @@ class CustomerOrder {
     }
 
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-    	name unique:'typeName'
+    	name(unique:['typeName','site'])
+        name blank: false
+        typeName blank: false
     	site nullable:true
     	dueDate nullable:true
     	customer nullable:true

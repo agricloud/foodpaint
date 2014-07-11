@@ -92,10 +92,12 @@ class Item {
      * 有效起始與結束日期可以不設定
      */
 	static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-		name unique: true, blank: false
+		name(unique:['site'])
+        name blank: false
         description nullable: true
         spec nullable: true
         // unit nullable: true

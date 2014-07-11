@@ -36,10 +36,11 @@ class BatchSource {
         importFlag  defaultValue: -1
     }
     static constraints = {
+        importFlag nullable:true
     	site nullable:true
         editor nullable:true
         creator nullable:true
-    	childBatch unique: 'batch' 
+    	childBatch(unique:['batch','site'])
     }
 
     public String toString(){

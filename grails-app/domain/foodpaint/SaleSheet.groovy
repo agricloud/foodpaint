@@ -52,7 +52,10 @@ class SaleSheet {
         importFlag  defaultValue: -1
     }
     static constraints = {
-        name unique:'typeName'
+        importFlag nullable:true
+        name(unique:['typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         editor nullable:true
         creator nullable:true

@@ -2,6 +2,7 @@ package foodpaint
 
 class InventoryDetail {
 
+    int importFlag = -1
     Site site
     String editor
     String creator
@@ -27,8 +28,12 @@ class InventoryDetail {
      */
     Date lastOutDate = new Date()
 
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
 	static constraints = {
-        batch(unique:['warehouse','warehouseLocation','item'])
+        importFlag nullable:true
+        batch(unique:['warehouse','warehouseLocation','item','site'])
         site nullable:true
         editor nullable:true
 		creator nullable:true

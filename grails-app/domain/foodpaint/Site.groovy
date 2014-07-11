@@ -6,6 +6,7 @@ package foodpaint
 
 class Site {
 
+	int importFlag = -1
     /**
      * 修改者
      */
@@ -35,6 +36,7 @@ class Site {
         importFlag  defaultValue: -1
     }
     static constraints = {
+    	importFlag nullable:true
     	name unique:true, blank: false
         editor nullable:true
         creator nullable:true

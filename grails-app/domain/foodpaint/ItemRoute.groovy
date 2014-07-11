@@ -38,10 +38,11 @@ class ItemRoute {
         importFlag  defaultValue: -1
     }
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-        sequence unique:'item'
+        sequence(unique:['item','site'])
         workstation nullable:true
         supplier nullable:true
     }

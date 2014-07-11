@@ -60,10 +60,13 @@ class CustomerOrderDet{
         importFlag  defaultValue: -1
     }
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-        sequence(unique:['name','typeName'])
+        sequence(unique:['name','typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         item nullable:true
         qty nullable:true
