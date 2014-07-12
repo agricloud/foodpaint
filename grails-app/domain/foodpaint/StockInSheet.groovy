@@ -3,7 +3,7 @@ package foodpaint
  * 入庫單
  */
 class StockInSheet {
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
