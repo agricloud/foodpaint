@@ -3,7 +3,7 @@ package foodpaint
  * 銷貨單單身
  */
 class SaleSheetDet{
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別

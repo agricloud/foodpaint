@@ -6,7 +6,7 @@ package foodpaint
 
 class Site {
 
-	int importFlag = -1
+	String importFlag = -1
     /**
      * 修改者
      */

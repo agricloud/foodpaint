@@ -2,7 +2,7 @@ package foodpaint
 
 class Inventory {
 
-    int importFlag = -1
+    String importFlag = -1
     Site site
     String editor
     String creator

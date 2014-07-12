@@ -4,7 +4,7 @@ public enum BatchType {
     PRODUCT
 }
 class Batch  {
-	int importFlag = -1
+	String importFlag = -1
 
     /**
      * 廠別

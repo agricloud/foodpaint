@@ -1,7 +1,7 @@
 package foodpaint
 
 class Operation {
-	int importFlag = -1
+	String importFlag = -1
 
     /**
      * 廠別
