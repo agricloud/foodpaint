@@ -18,7 +18,7 @@ class WarehouseLocation {
     /**
      *  容量
      */
-    double capacity
+    double capacity = Double.MAX_VALUE
     /**
      *  容量單位
      */
@@ -37,7 +37,7 @@ class WarehouseLocation {
 		name(unique:['site'])
         name blank: false
         description nullable: true
-        capacity nullable: true
+        capacity min: 0.0d
         capacityUnit nullable: true
 		remark nullable: true
 	}

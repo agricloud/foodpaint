@@ -155,6 +155,8 @@ class BatchService {
 				isSuccess = true
 			}
 			if(isSuccess){
+				if(params["site.id"] && params["site.id"] != "null")
+					batch.site = Site.findById(params["site.id"])
 
 				def result=domainService.save(batch)
 

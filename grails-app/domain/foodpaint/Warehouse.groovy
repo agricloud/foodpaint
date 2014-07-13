@@ -20,7 +20,7 @@ class Warehouse {
     /**
      *  容量
      */
-    double capacity
+    double capacity = Double.MAX_VALUE
     /**
      *  容量單位
      */
@@ -38,7 +38,7 @@ class Warehouse {
         creator nullable:true
         name(unique:['site'])
         name blank: false
-        capacity nullable: true
+        capacity min: 0.0d
         capacityUnit nullable: true
         remark nullable: true
         
