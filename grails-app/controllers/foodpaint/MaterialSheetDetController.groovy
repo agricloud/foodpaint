@@ -99,7 +99,7 @@ class MaterialSheetDetController {
             return
         }
 
-        def inventoryConsumeResult = inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, materialSheetDet.dateCreated)
+        def inventoryConsumeResult = inventoryDetailService.consume(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, materialSheetDet.dateCreated)
         if(inventoryConsumeResult.success){
             render (contentType: 'application/json') {
                 domainService.save(materialSheetDet)
@@ -142,12 +142,12 @@ class MaterialSheetDetController {
 
         materialSheetDet = MaterialSheetDet.get(params.id)
         //把更新前已領的數量加回庫存
-        def inventoryReplenishResult = inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+        def inventoryReplenishResult = inventoryDetailService.replenish(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
         
         if(inventoryReplenishResult.success){
             //把欲更新的領料數量扣掉庫存
             def updateBatch = Batch.get(params.batch.id)
-            def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(), null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(), null)
             if(inventoryConsumeResult.success){
                 materialSheetDet.properties = params             
                 render (contentType: 'application/json') {
@@ -156,7 +156,7 @@ class MaterialSheetDetController {
             }
             else{
                 //把更新前已領的數量再扣掉庫存 還原更新前狀態
-                def inventoryRecoveryResult= inventoryDetailService.consume(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+                def inventoryRecoveryResult= inventoryDetailService.consume(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
                 if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryConsumeResult
@@ -184,7 +184,7 @@ class MaterialSheetDetController {
 
         def result
         try {
-            def inventoryReplenishResult = inventoryDetailService.replenish(materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
             
             if(inventoryReplenishResult.success)
                 result = domainService.delete(materialSheetDet)

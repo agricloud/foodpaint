@@ -9,18 +9,20 @@ class InventoryDetailService {
 	def inventoryService
 
 	@Transactional
-	def replenish(warehouseId,warehouseLocationId,itemId,batchName,qty,date){
+	def replenish(params,warehouseId,warehouseLocationId,itemId,batchName,qty,date){
 		Object[] args=[]
 		if(qty>=0){
-
-			inventoryService.replenish(warehouseId,itemId,qty,date)
+			inventoryService.replenish(params,warehouseId,itemId,qty,date)
 
 			def warehouse = Warehouse.get(warehouseId)
 			def warehouseLocation = WarehouseLocation.get(warehouseLocationId)
 			def item = Item.get(itemId)
 			def batch = Batch.findByName(batchName)
+			def site
+			if(params["site.id"] && params["site.id"] != "null")
+				site = Site.findById(params["site.id"])
 
-			def inventoryDetail = InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse,warehouseLocation,item,batch)
+			def inventoryDetail = InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatchAndSite(warehouse,warehouseLocation,item,batch,site)
 
 			if(!inventoryDetail){
 				if(warehouseLocation.warehouse == warehouse){
@@ -30,6 +32,7 @@ class InventoryDetailService {
 					inventoryDetail.item = item
 					inventoryDetail.batch = batch
 					inventoryDetail.qty = qty	
+					inventoryDetail.site = site
 					
 				}
 				else{
@@ -51,18 +54,21 @@ class InventoryDetailService {
 	}
 
 	@Transactional
-	def consume(warehouseId,warehouseLocationId,itemId,batchName,qty,date){
+	def consume(params,warehouseId,warehouseLocationId,itemId,batchName,qty,date){
 		Object[] args=[]
 		if(qty>=0){
 
-			inventoryService.consume(warehouseId,itemId,qty,date)
+			inventoryService.consume(params,warehouseId,itemId,qty,date)
 
 			def warehouse = Warehouse.get(warehouseId)
 			def warehouseLocation = WarehouseLocation.get(warehouseLocationId)
 			def item = Item.get(itemId)
 			def batch = Batch.findByName(batchName)
+			def site
+			if(params["site.id"] && params["site.id"] != "null")
+				site = Site.findById(params["site.id"])
 
-			def inventoryDetail = InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse,warehouseLocation,item,batch)
+			def inventoryDetail = InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatchAndSite(warehouse,warehouseLocation,item,batch,site)
 			if(inventoryDetail && inventoryDetail.qty >= qty){
 				inventoryDetail.qty -= qty
 				if(date && date > inventoryDetail.lastOutDate)
@@ -79,13 +85,14 @@ class InventoryDetailService {
 			return [success:false ,message: messageSource.getMessage("inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
-	def indexByBatchAndGroupByWarehouse(batchName){
+	def indexByBatchAndGroupByWarehouse(params,batchName){
 		def batch=Batch.findByName(batchName)
+		def site
+		if(params["site.id"] && params["site.id"] != "null")
+				site = Site.findById(params["site.id"])
 
-		def inventoryDetails = InventoryDetail.executeQuery("SELECT warehouse.id,warehouse.name,warehouse.title,item.id,item.name,item.title,batch.id,batch.name,SUM(qty) FROM InventoryDetail WHERE batch.id = ? GROUP BY warehouse.id",[batch.id])
+		def inventoryDetails = InventoryDetail.executeQuery("SELECT warehouse.id,warehouse.name,warehouse.title,item.id,item.name,item.title,batch.id,batch.name,SUM(qty) FROM InventoryDetail WHERE batch.id = ? AND site.id = ? GROUP BY warehouse.id",[batch.id,site.id])
 
 		return inventoryDetails
 	}
-	
-
 }

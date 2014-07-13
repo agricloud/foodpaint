@@ -8,18 +8,22 @@ class InventoryService {
 	def domainService
 
 	@Transactional
-	def replenish(warehouseId,itemId,qty,date){
+	def replenish(params,warehouseId,itemId,qty,date){
 		if(qty>=0){
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
+			def site
+			if(params["site.id"] && params["site.id"] != "null")
+				site = Site.findById(params["site.id"])
 
-			def inventory = Inventory.findByWarehouseAndItem(warehouse,item)
+			def inventory = Inventory.findByWarehouseAndItemAndSite(warehouse,item,site)
 
 			if(!inventory){
 				inventory = new Inventory()
 				inventory.warehouse = warehouse
 				inventory.item = item
-				inventory.qty = qty	
+				inventory.qty = qty
+				inventory.site = site
 			}
 			else{
 				inventory.qty += qty
@@ -34,15 +38,18 @@ class InventoryService {
 	}
 
 	@Transactional
-	def consume(warehouseId,itemId,qty,date){
+	def consume(params,warehouseId,itemId,qty,date){
 		Object[] args=[]
 
 		if(qty>=0){
 
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)
+			def site
+			if(params["site.id"] && params["site.id"] != "null")
+				site = Site.findById(params["site.id"])
 
-			def inventory = Inventory.findByWarehouseAndItem(warehouse,item)
+			def inventory = Inventory.findByWarehouseAndItemAndSite(warehouse,item,site)
 			if(inventory && inventory.qty >= qty){
 				inventory.qty -= qty
 				if(date && date > inventory.lastOutDate)

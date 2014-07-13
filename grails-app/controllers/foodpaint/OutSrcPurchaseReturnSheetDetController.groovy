@@ -102,7 +102,7 @@ class OutSrcPurchaseReturnSheetDetController{
             return
         }
 
-        def inventoryConsumeResult = inventoryDetailService.consume(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty, outSrcPurchaseReturnSheetDet.dateCreated)
+        def inventoryConsumeResult = inventoryDetailService.consume(params,outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty, outSrcPurchaseReturnSheetDet.dateCreated)
 
         if(inventoryConsumeResult.success){
             render (contentType: 'application/json') {
@@ -150,11 +150,11 @@ class OutSrcPurchaseReturnSheetDetController{
         outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
 
         // (補充存貨)還原回到還沒退貨
-        def inventoryReplenishResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id, outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
+        def inventoryReplenishResult = inventoryDetailService.replenish(params,outSrcPurchaseReturnSheetDet.warehouse.id, outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
         if(inventoryReplenishResult){
             def updateBatch = Batch.get(params.batch.id)
             // (消耗存貨)做本次託外生產進貨退出
-            def inventoryConsumeResult=inventoryDetailService.consume(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)
+            def inventoryConsumeResult=inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)
             if(inventoryConsumeResult.success){
                 outSrcPurchaseReturnSheetDet.properties = params
                 render (contentType: 'application/json') {
@@ -163,7 +163,7 @@ class OutSrcPurchaseReturnSheetDetController{
             }
             else{
                 // (還原存貨)還原到補充之前
-                def inventoryRecoveryResult= inventoryDetailService.consume(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
+                def inventoryRecoveryResult= inventoryDetailService.consume(params,outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
                 if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryConsumeResult
@@ -190,7 +190,7 @@ class OutSrcPurchaseReturnSheetDetController{
         
         def result
         try {
-            def inventoryReplenishResult = inventoryDetailService.replenish(outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,outSrcPurchaseReturnSheetDet.warehouse.id,outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
             if(inventoryReplenishResult.success){
                 result = domainService.delete(outSrcPurchaseReturnSheetDet)
             }
