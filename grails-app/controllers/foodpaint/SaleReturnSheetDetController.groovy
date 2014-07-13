@@ -104,7 +104,7 @@ class SaleReturnSheetDetController {
             return
         }
 
-        def inventoryReplenishResult = inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty, saleReturnSheetDet.dateCreated)
+        def inventoryReplenishResult = inventoryDetailService.replenish(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty, saleReturnSheetDet.dateCreated)
         
         if(inventoryReplenishResult.success){
             render (contentType: 'application/json') {
@@ -150,10 +150,10 @@ class SaleReturnSheetDetController {
         }
 
         saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
-        def inventoryConsumeResult=inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
+        def inventoryConsumeResult=inventoryDetailService.consume(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
         if(inventoryConsumeResult.success){    
             def updateBatch = Batch.get(params.batch.id)
-            def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)         
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)         
             if(inventoryReplenishResult.success){
                 saleReturnSheetDet.properties = params
                 render (contentType: 'application/json') {
@@ -162,7 +162,7 @@ class SaleReturnSheetDetController {
             }
             else{
                 // (還原存貨)還原到扣除之前
-                def inventoryRecoveryResult= inventoryDetailService.replenish(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
+                def inventoryRecoveryResult= inventoryDetailService.replenish(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
                 if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryConsumeResult
@@ -187,7 +187,7 @@ class SaleReturnSheetDetController {
         def saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
         def result
         try {
-            def inventoryConsumeResult = inventoryDetailService.consume(saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
            
             if(inventoryConsumeResult.success)
                 result = domainService.delete(saleReturnSheetDet)

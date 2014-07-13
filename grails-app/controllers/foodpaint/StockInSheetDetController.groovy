@@ -94,7 +94,7 @@ class StockInSheetDetController {
 
         def result = batchService.findOrCreateBatchInstanceByJson(params, stockInSheetDet)
         if(result.success){
-            def inventoryReplenishResult = inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,stockInSheetDet.dateCreated)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,stockInSheetDet.dateCreated)
             if(inventoryReplenishResult.success){
                 stockInSheetDet.batch = (Batch) result.batch
                 render (contentType: 'application/json') {
@@ -144,10 +144,10 @@ class StockInSheetDetController {
 
         stockInSheetDet = StockInSheetDet.get(params.id)
         //將更新前已入的數量扣除庫存
-        def inventoryConsumeResult= inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
+        def inventoryConsumeResult= inventoryDetailService.consume(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
         if(inventoryConsumeResult.success){
             //將欲更新的數量加入庫存
-            def inventoryReplenishResult=inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(),null)
+            def inventoryReplenishResult=inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(),null)
             if(inventoryReplenishResult.success){
                 stockInSheetDet.properties = params
                 stockInSheetDet.batch = (Batch) result.batch
@@ -157,7 +157,7 @@ class StockInSheetDetController {
             }
             else{
                 //把更新前已入的數量再加回庫存 還原更新前狀態
-                def inventoryRecoveryResult= inventoryDetailService.replenish(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
+                def inventoryRecoveryResult= inventoryDetailService.replenish(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
                 if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryReplenishResult
@@ -183,7 +183,7 @@ class StockInSheetDetController {
         
         def result
         try {
-            def inventoryConsumeResult = inventoryDetailService.consume(stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
             if(inventoryConsumeResult.success){
                 result = domainService.delete(stockInSheetDet)
             }

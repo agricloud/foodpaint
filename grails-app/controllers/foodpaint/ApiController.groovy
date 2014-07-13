@@ -299,7 +299,7 @@ class ApiController {
 
     //查詢指定批號位於哪些倉庫中
     def queryInventoryByBatchAndGroupByWarehouse(String batchName){
-        def inventoryDetailsGroupByWarehouse = inventoryDetailService.indexByBatchAndGroupByWarehouse(batchName)
+        def inventoryDetailsGroupByWarehouse = inventoryDetailService.indexByBatchAndGroupByWarehouse(params,batchName)
 
         render (contentType: 'text/json') {
             [data:inventoryDetailsGroupByWarehouse]

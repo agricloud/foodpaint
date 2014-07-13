@@ -93,7 +93,7 @@ class PurchaseSheetDetController {
             return
         }
 
-        def inventoryReplenishResult = inventoryDetailService.replenish(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, purchaseSheetDet.dateCreated)
+        def inventoryReplenishResult = inventoryDetailService.replenish(params,purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, purchaseSheetDet.dateCreated)
         if(inventoryReplenishResult.success){
             purchaseSheetDet.batch = (Batch) result.batch
             render (contentType: 'application/json') {
@@ -130,11 +130,11 @@ class PurchaseSheetDetController {
         purchaseSheetDet = PurchaseSheetDet.get(params.id)
 
         //將更新前的已進數量扣除庫存
-        def inventoryConsumeResult = inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
+        def inventoryConsumeResult = inventoryDetailService.consume(params,purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
         
         if(inventoryConsumeResult.success){
             //將欲更新的已進數量補充庫存
-            def inventoryReplenishResult = inventoryDetailService.replenish(params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(), null)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(), null)
             if(inventoryReplenishResult.success){
                 //庫存更新完畢，儲存單據
                 purchaseSheetDet.properties = params
@@ -145,7 +145,7 @@ class PurchaseSheetDetController {
             }
             else{
                 //還原更新前的已進數量，補充回庫存
-                def inventoryRecoveryResult = inventoryDetailService.replenish(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
+                def inventoryRecoveryResult = inventoryDetailService.replenish(params,purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
                 if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryReplenishResult
@@ -173,7 +173,7 @@ class PurchaseSheetDetController {
 
         def result
         try {
-            def inventoryConsumeResult = inventoryDetailService.consume(purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
             if(inventoryConsumeResult.success){
                 result = domainService.delete(purchaseSheetDet)
             }
