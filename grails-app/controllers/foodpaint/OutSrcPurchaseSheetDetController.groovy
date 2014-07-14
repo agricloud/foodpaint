@@ -149,7 +149,7 @@ class OutSrcPurchaseSheetDetController {
         def inventoryConsumeResult= inventoryDetailService.consume(params,outSrcPurchaseSheetDet.warehouse.id,outSrcPurchaseSheetDet.warehouseLocation.id, outSrcPurchaseSheetDet.item.id, outSrcPurchaseSheetDet.batch.name, outSrcPurchaseSheetDet.qty, null)
         if(inventoryConsumeResult){
             //將欲更新的數量加入庫存
-            def inventoryReplenishResult=inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(), null)
+            def inventoryReplenishResult=inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toDouble(), null)
             if(inventoryReplenishResult.success){
                 outSrcPurchaseSheetDet.properties = params
                 outSrcPurchaseSheetDet.batch = (Batch) result.batch

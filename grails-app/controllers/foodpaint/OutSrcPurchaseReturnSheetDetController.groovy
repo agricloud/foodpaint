@@ -154,7 +154,7 @@ class OutSrcPurchaseReturnSheetDetController{
         if(inventoryReplenishResult){
             def updateBatch = Batch.get(params.batch.id)
             // (消耗存貨)做本次託外生產進貨退出
-            def inventoryConsumeResult=inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)
+            def inventoryConsumeResult=inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(),null)
             if(inventoryConsumeResult.success){
                 outSrcPurchaseReturnSheetDet.properties = params
                 render (contentType: 'application/json') {

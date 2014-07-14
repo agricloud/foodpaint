@@ -147,7 +147,7 @@ class StockInSheetDetController {
         def inventoryConsumeResult= inventoryDetailService.consume(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
         if(inventoryConsumeResult.success){
             //將欲更新的數量加入庫存
-            def inventoryReplenishResult=inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(),null)
+            def inventoryReplenishResult=inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toDouble(),null)
             if(inventoryReplenishResult.success){
                 stockInSheetDet.properties = params
                 stockInSheetDet.batch = (Batch) result.batch

@@ -64,7 +64,7 @@ class InventoryDetailController {
 
     def save = {
         def batch=Batch.get(params.batch.id)
-        def replenishResult=inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toLong(),new Date())
+        def replenishResult=inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toDouble(),new Date())
         if(replenishResult.success){
             render (contentType: 'application/json') {
                 [success:true, message: message(code: 'default.message.save.success', args: [replenishResult.inventoryDetail])]
