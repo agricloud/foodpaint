@@ -147,7 +147,7 @@ class MaterialSheetDetController {
         if(inventoryReplenishResult.success){
             //把欲更新的領料數量扣掉庫存
             def updateBatch = Batch.get(params.batch.id)
-            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(), null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(), null)
             if(inventoryConsumeResult.success){
                 materialSheetDet.properties = params             
                 render (contentType: 'application/json') {

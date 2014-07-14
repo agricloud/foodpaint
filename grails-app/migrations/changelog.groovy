@@ -1828,4 +1828,6 @@ databaseChangeLog = {
 	include file: '1.0.3.groovy'
 
 	include file: '1.0.4.groovy'
+
+	include file: '1.0.5.groovy'
 }

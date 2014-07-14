@@ -134,7 +134,7 @@ class PurchaseSheetDetController {
         
         if(inventoryConsumeResult.success){
             //將欲更新的已進數量補充庫存
-            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toLong(), null)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, params.batch.name, params.qty.toDouble(), null)
             if(inventoryReplenishResult.success){
                 //庫存更新完畢，儲存單據
                 purchaseSheetDet.properties = params

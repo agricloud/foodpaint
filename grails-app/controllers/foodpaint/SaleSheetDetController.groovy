@@ -133,7 +133,7 @@ class SaleSheetDetController {
         if(inventoryReplenishResult.success){
             //把欲更新的銷貨數量扣掉庫存
             def updateBatch = Batch.get(params.batch.id)
-            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(),null)
             if(inventoryConsumeResult.success){
                 saleSheetDet.properties = params
                 render (contentType: 'application/json') {

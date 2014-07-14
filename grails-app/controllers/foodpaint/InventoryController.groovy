@@ -68,8 +68,8 @@ class InventoryController {
         def inventory = Inventory.get(params.id)
         
         if(!InventoryDetail.findByWarehouseAndItem(inventory.warehouse,inventory.item)){
-            if(inventoryService.consume(inventory.warehouse.id, inventory.item.id, inventory.qty, null).success){
-                if(inventoryService.replenish(params.warehouse.id, params.item.id, params.qty.toLong(), null).success){
+            if(inventoryService.consume(params, inventory.warehouse.id, inventory.item.id, inventory.qty, null).success){
+                if(inventoryService.replenish(params, params.warehouse.id, params.item.id, params.qty.toDouble(), null).success){
                     render (contentType: 'application/json') {
                         [success:true, message: message(code: 'default.message.update.success', args: [inventory, e])]
                     }

@@ -199,6 +199,11 @@ class ConvertService {
 	    result.id = warehouse.id
 	    result.name = warehouse.name
 	    result.title = warehouse.title
+	    if(warehouse.capacity == Double.POSITIVE_INFINITY)
+	    	result.capacity = Double.MAX_VALUE
+	    else
+	    	result.capacity = warehouse.capacity
+	    result.capacityUnit = warehouse.capacityUnit
 	    result.remark = warehouse.remark
 
 	    result
@@ -214,6 +219,11 @@ class ConvertService {
 	    result.id = warehouseLocation.id
 	    result.name = warehouseLocation.name
 	    result.title = warehouseLocation.title
+	    if(warehouseLocation.capacity == Double.POSITIVE_INFINITY)
+	    	result.capacity = Double.MAX_VALUE
+	    else
+	    	result.capacity = warehouseLocation.capacity
+	    result.capacityUnit = warehouseLocation.capacityUnit
 	    result.description = warehouseLocation.description
 	    result.remark = warehouseLocation.remark
 

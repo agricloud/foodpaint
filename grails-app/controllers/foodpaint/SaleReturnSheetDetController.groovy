@@ -153,7 +153,7 @@ class SaleReturnSheetDetController {
         def inventoryConsumeResult=inventoryDetailService.consume(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
         if(inventoryConsumeResult.success){    
             def updateBatch = Batch.get(params.batch.id)
-            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(),null)         
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(),null)         
             if(inventoryReplenishResult.success){
                 saleReturnSheetDet.properties = params
                 render (contentType: 'application/json') {
