@@ -76,6 +76,13 @@ class SaleSheetDetControllerTests {
 
     }
 
+    void testCreate() {
+        populateValidParams(params)
+        controller.create()
+        assert response.json.success
+        assert response.json.data.class == "foodpaint.SaleSheetDet"
+    }
+
     void testSave(){
         def item1 = Item.get(1)
         def batch1 = Batch.get(1)

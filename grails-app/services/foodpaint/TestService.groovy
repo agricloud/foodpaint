@@ -206,6 +206,7 @@ class TestService {
         messageSource.addMessage("default.message.save.failed", Locale.getDefault(), "儲存失敗")
         messageSource.addMessage("default.message.delete.success", Locale.getDefault(), "刪除成功")
         messageSource.addMessage("default.message.update.failed", Locale.getDefault(), "更新失敗")
+        // messageSource.addMessage("default.message.update.success", Locale.getDefault(), "更新成功")
         messageSource.addMessage("default.message.notfound", Locale.getDefault(), "查無資料") 
 
         messageSource.addMessage("batch.name.params.notfound", Locale.getDefault(), "批號未輸入")
