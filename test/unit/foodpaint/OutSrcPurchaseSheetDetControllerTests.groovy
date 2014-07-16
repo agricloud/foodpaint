@@ -77,6 +77,13 @@ class OutSrcPurchaseSheetDetControllerTests {
 
     }
 
+    void testCreate() {
+        populateValidParams(params)
+        controller.create()
+        assert response.json.success
+        assert response.json.data.class == "foodpaint.OutSrcPurchaseSheetDet"
+    }
+
     void testSave(){
         
         def item1 = Item.get(1)
