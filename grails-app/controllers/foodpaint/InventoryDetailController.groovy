@@ -6,6 +6,7 @@ import grails.transaction.Transactional
 class InventoryDetailController {
 
     def domainService
+    def batchService
     def inventoryDetailService
 
     def index() {
@@ -63,7 +64,16 @@ class InventoryDetailController {
     }
 
     def save = {
-        def batch=Batch.get(params.batch.id)
+
+        def result = batchService.findOrCreateBatchInstanceByJson(params, null)
+        if(!result.success){
+             render (contentType: 'application/json') {
+                result
+            }
+            return
+        }
+
+        def batch = (Batch) result.batch
         def replenishResult=inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toDouble(),new Date())
         if(replenishResult.success){
             render (contentType: 'application/json') {
@@ -78,8 +88,16 @@ class InventoryDetailController {
         def inventoryDetail = InventoryDetail.get(params.id)
 
         if(inventoryDetailService.consume(params,inventoryDetail.warehouse.id, inventoryDetail.warehouseLocation.id, inventoryDetail.item.id, inventoryDetail.batch.name, inventoryDetail.qty, null).success){
-            def updateBatch = Batch.get(params.batch.id)
-            def replenishResult = inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toLong(), null)
+            def result = batchService.findOrCreateBatchInstanceByJson(params, null)
+            if(!result.success){
+                 render (contentType: 'application/json') {
+                    result
+                }
+                return
+            }
+
+            def updateBatch = (Batch) result.batch
+            def replenishResult = inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(), null)
             if(replenishResult.success){
                 render (contentType: 'application/json') {
                     [success:true, message: message(code: 'default.message.update.success', args: [inventoryDetail])]
@@ -92,6 +110,8 @@ class InventoryDetailController {
                 }
             }
         }
+        else
+           result = [success:false, message: message(code: 'default.message.update.failed', args: [inventoryDetail])]
     }
 
     @Transactional
@@ -114,6 +134,8 @@ class InventoryDetailController {
                 result
             }
         }
+        else
+           result = [success:false, message: message(code: 'default.message.delete.failed', args: [inventoryDetail])]  
 
     }
     

@@ -58,50 +58,53 @@ class BatchService {
 				return createBatchInstanceByJson(params, sheet)
 			}
 			else{
-
-				if(sheet.instanceOf(PurchaseSheetDet)){
-					if(sheet.item != batch.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+				if(sheet){
+					if(sheet.instanceOf(PurchaseSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.supplier = sheet.purchaseSheet.supplier
+							isSuccess = true
+						}
 					}
-					else{
-						batch.supplier = sheet.purchaseSheet.supplier
-						isSuccess = true
+					if(sheet.instanceOf(StockInSheetDet)){
+						if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							isSuccess = true
+						}
+					}
+					if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
+						if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.supplier = sheet.outSrcPurchaseSheet.supplier
+							isSuccess = true
+						}
+					}
+					if(sheet.instanceOf(ManufactureOrder)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.expectQty = sheet.qty
+							isSuccess = true
+						}
 					}
 				}
-				if(sheet.instanceOf(StockInSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
-					}
-					else{
-						isSuccess = true
-					}
-				}
-				if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
-					}
-					else{
-						batch.supplier = sheet.outSrcPurchaseSheet.supplier
-						isSuccess = true
-					}
-				}
-				if(sheet.instanceOf(ManufactureOrder)){
-					if(sheet.item != batch.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
-					}
-					else{
-						batch.expectQty = sheet.qty
-						isSuccess = true
-					}
-				}
+				else
+					isSuccess = true
 			}
 
 		}
@@ -123,37 +126,42 @@ class BatchService {
 			def batch = new Batch()
 		
 			batch.name = params["batch.name"]
-			batch.item = sheet.item
+			batch.item = Item.get(params.item.id)
 
-			if(sheet.instanceOf(PurchaseSheetDet)){
-				batch.supplier = sheet.purchaseSheet.supplier
-				isSuccess = true
-			}
-			if(sheet.instanceOf(StockInSheetDet)){
-				if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+			if(sheet){
+				if(sheet.instanceOf(PurchaseSheetDet)){
+					batch.supplier = sheet.purchaseSheet.supplier
+					isSuccess = true
 				}
-				else{
-					isSuccess =true
+				if(sheet.instanceOf(StockInSheetDet)){
+					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+					}
+					else{
+						isSuccess =true
+					}
 				}
-			}
-			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-				if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+				if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
+					if(sheet.manufactureOrder.item != batch.item || sheet.manufactureOrder.item != sheet.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", args, Locale.getDefault())
+					}
+					else{
+						batch.supplier = sheet.outSrcPurchaseSheet.supplier
+						isSuccess = true
+					}
 				}
-				else{
-					batch.supplier = sheet.outSrcPurchaseSheet.supplier
+				if(sheet.instanceOf(ManufactureOrder)){
+					batch.expectQty = sheet.qty
 					isSuccess = true
 				}
 			}
-			if(sheet.instanceOf(ManufactureOrder)){
-				batch.expectQty = sheet.qty
+			else
 				isSuccess = true
-			}
+
 			if(isSuccess){
 				if(params["site.id"] && params["site.id"] != "null")
 					batch.site = Site.findById(params["site.id"])
