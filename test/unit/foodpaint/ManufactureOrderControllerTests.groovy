@@ -28,6 +28,13 @@ class ManufactureOrderControllerTests {
         params["workstation.id"]=1
     }
 
+    void testCreate() {
+        populateValidParams(params)
+        controller.create()
+        assert response.json.success
+        assert response.json.data.class == "foodpaint.ManufactureOrder"
+    }
+
     void testSave() {
 
         populateValidParams(params)
