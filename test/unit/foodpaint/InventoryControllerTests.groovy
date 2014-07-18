@@ -67,6 +67,16 @@ class InventoryControllerTests {
         assert Inventory.get(1).qty == 100.5
     }
 
+    void testSaveWithInccorectQtyData(){
+        populateValidParams(params)
+
+        params.qty=-1
+        controller.save()
+        
+        assertFalse response.json.success
+        assert Inventory.list().size() == 0
+    }
+
     void testUpdate(){
         populateValidParams(params)
         def inventory = new Inventory(params).save(failOnError: true)
@@ -81,6 +91,22 @@ class InventoryControllerTests {
         assert Inventory.get(1).item.id == 1
         assert Inventory.get(1).warehouse.id == 1
         assert Inventory.get(1).qty == 50.5
+    }
+
+    void testUpdateWithInccorectQtyData(){
+        populateValidParams(params)
+        def inventory = new Inventory(params).save(failOnError: true)
+
+        params.id = 1
+        params.qty= -1
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert Inventory.list().size() == 1
+        assert Inventory.get(1).item.id == 1
+        assert Inventory.get(1).warehouse.id == 1
+        assert Inventory.get(1).qty == 100.5
     }
 
     void testDelete(){

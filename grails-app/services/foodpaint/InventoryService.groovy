@@ -9,6 +9,8 @@ class InventoryService {
 
 	@Transactional
 	def replenish(params,warehouseId,itemId,qty,date){
+		Object[] args=[]
+		
 		if(qty>=0){
 			def warehouse = Warehouse.get(warehouseId)
 			def item = Item.get(itemId)

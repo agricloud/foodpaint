@@ -57,6 +57,12 @@ class InventoryController {
     }
 
     def save = {
+        if(params.qty.toDouble()<0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventory.qty.must.be.more.than.zero')]
+            }
+            return
+        }
         def inventory=new Inventory(params)
         render (contentType: 'application/json') {
             domainService.save(inventory)
@@ -65,14 +71,33 @@ class InventoryController {
 
     @Transactional
     def update(){
+        if(params.qty.toDouble()<0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventory.qty.must.be.more.than.zero')]
+            }
+            return
+        }
+        
         def inventory = Inventory.get(params.id)
         
         if(!InventoryDetail.findByWarehouseAndItem(inventory.warehouse,inventory.item)){
-            if(inventoryService.consume(params, inventory.warehouse.id, inventory.item.id, inventory.qty, null).success){
-                if(inventoryService.replenish(params, params.warehouse.id, params.item.id, params.qty.toDouble(), null).success){
+            def inventoryConsumeResult = inventoryService.consume(params, inventory.warehouse.id, inventory.item.id, inventory.qty, null)
+            if(inventoryConsumeResult.success){
+                def inventoryReplenishResult = inventoryService.replenish(params, params.warehouse.id, params.item.id, params.qty.toDouble(), null)
+                if(inventoryReplenishResult.success){
                     render (contentType: 'application/json') {
                         [success:true, message: message(code: 'default.message.update.success', args: [inventory, e])]
                     }
+                }
+                else{
+                    render (contentType: 'application/json') {
+                        inventoryReplenishResult
+                    } 
+                }
+            }
+            else{
+                render (contentType: 'application/json') {
+                    inventoryConsumeResult
                 }
             }
         }
