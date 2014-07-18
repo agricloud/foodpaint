@@ -89,13 +89,22 @@ class CustomerOrderDetController {
     def update = {
 
         def customerOrderDet = CustomerOrderDet.get(params.id)
-        customerOrderDet.properties = params
-        if(customerOrderDet.qty<=0){
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != customerOrderDet.typeName || params.name != customerOrderDet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        if(params.qty.toDouble()<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]
             }
             return
         }
+        customerOrderDet.properties = params
         render (contentType: 'application/json') {
             domainService.save(customerOrderDet)
         }         

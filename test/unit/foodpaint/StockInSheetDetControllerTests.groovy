@@ -31,7 +31,6 @@ class StockInSheetDetControllerTests {
     def populateValidParams(params) {
         assert params != null
         params["stockInSheet.id"]=1
-        params["id"] = 1
         params["typeName"] = 'SIS'
         params["name"] = '00001'
         params["sequence"] = 1
