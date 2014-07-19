@@ -136,6 +136,15 @@ class PurchaseReturnSheetDetController {
         }
 
         purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
+        
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != purchaseReturnSheetDet.typeName || params.name != purchaseReturnSheetDet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
         def inventoryReplenishResult = inventoryDetailService.replenish(params,purchaseReturnSheetDet.warehouse.id,purchaseReturnSheetDet.warehouseLocation.id, purchaseReturnSheetDet.item.id, purchaseReturnSheetDet.batch.name, purchaseReturnSheetDet.qty,null)
         if(inventoryReplenishResult.success){
             def updateBatch = Batch.get(params.batch.id)

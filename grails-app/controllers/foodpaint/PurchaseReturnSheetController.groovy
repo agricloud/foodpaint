@@ -63,6 +63,14 @@ class PurchaseReturnSheetController{
     def update = {
 
         def purchaseReturnSheet= PurchaseReturnSheet.get(params.id)
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != purchaseReturnSheet.typeName || params.name != purchaseReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+        //單身建立後不允許變更客戶
         if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id.toLong() != purchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [purchaseReturnSheet])]
