@@ -32,7 +32,6 @@ class SaleSheetDetControllerTests {
         params["typeName"] = 'SS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["customer.id"]=1
         params["item.id"] = 1
         params["warehouse.id"]=1
         params["warehouseLocation.id"]=1

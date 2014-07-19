@@ -27,7 +27,6 @@ class PurchaseSheetDetControllerTests {
         params["typeName"] = 'PS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["supplier.id"]=1
         params["item.id"] = 1
         params["warehouse.id"]=1
         params["warehouseLocation.id"]=1
@@ -99,6 +98,16 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
+    void testSaveWithInccorectQtyData(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert PurchaseSheetDet.list().size() == 0
+    }
+
     void testSaveWithIncorrectBatchData(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
@@ -147,6 +156,23 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==500
     }
 
+    void testUpdateWithInccorectQtyData(){
+        populateValidParams(params)
+        def purchaseSheetDet11 = new PurchaseSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert PurchaseSheetDet.list().size() == 1
+        assert PurchaseSheetDet.get(1).typeName == "PS"
+        assert PurchaseSheetDet.get(1).name == "00001"
+        assert PurchaseSheetDet.get(1).sequence == 1
+        assert PurchaseSheetDet.get(1).qty == 1000
+    }
+
     void testUpdateWithIncorrectBatchData() {
 
         populateValidParams(params)
@@ -179,8 +205,22 @@ class PurchaseSheetDetControllerTests {
         assert PurchaseSheetDet.list().get(0).qty == 1000
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+    }
 
+    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+        populateValidParams(params)
+        def purchaseSheetDet = new PurchaseSheetDet(params).save(failOnError: true)
 
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert PurchaseSheetDet.list().size() == 1
+        assert PurchaseSheetDet.get(1).typeName == "PS"
+        assert PurchaseSheetDet.get(1).name == "00001"
+        assert PurchaseSheetDet.get(1).sequence == 1
     }
 
     void testDelete(){
@@ -204,7 +244,5 @@ class PurchaseSheetDetControllerTests {
         assert PurchaseSheetDet.list().size() == 0
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==0
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==0
-
-
     }
 }

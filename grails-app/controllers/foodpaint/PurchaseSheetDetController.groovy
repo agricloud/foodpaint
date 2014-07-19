@@ -111,6 +111,13 @@ class PurchaseSheetDetController {
     @Transactional
     def update() {
         def purchaseSheetDet = new PurchaseSheetDet(params)
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != purchaseSheetDet.typeName || params.name != purchaseSheetDet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]
@@ -161,8 +168,6 @@ class PurchaseSheetDetController {
                 inventoryConsumeResult
             }
         }
-        
-        
     }
 
 

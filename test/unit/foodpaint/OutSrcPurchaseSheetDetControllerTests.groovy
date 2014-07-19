@@ -32,7 +32,6 @@ class OutSrcPurchaseSheetDetControllerTests {
         params["typeName"] = 'OSPS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["supplier.id"]=1
         params["manufactureOrder.id"] = 1
         params["item.id"] = 1
         params["warehouse.id"]=1

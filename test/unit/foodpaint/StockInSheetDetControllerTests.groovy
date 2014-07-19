@@ -34,7 +34,6 @@ class StockInSheetDetControllerTests {
         params["typeName"] = 'SIS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["workstation.id"]=1
 
         params["manufactureOrder.id"] = 1
         params["item.id"] = 1
