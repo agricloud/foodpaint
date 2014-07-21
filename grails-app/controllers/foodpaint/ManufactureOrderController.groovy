@@ -98,7 +98,7 @@ class ManufactureOrderController {
 
     def update = {
 
-        def manufactureOrder = ManufactureOrder.get(params.id)
+        def manufactureOrder = new ManufactureOrder(params)
 
         if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
             render (contentType: 'application/json') {
@@ -113,7 +113,7 @@ class ManufactureOrderController {
             return
         }
 
-        def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
+        def result = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrder) 
         
         if(!result.success){
             render (contentType: 'application/json') {
@@ -121,6 +121,7 @@ class ManufactureOrderController {
             }
         }
         else{
+            manufactureOrder = ManufactureOrder.get(params.id)
             manufactureOrder.properties = params
             if(manufactureOrder.qty<=0){
                 render (contentType: 'application/json') {

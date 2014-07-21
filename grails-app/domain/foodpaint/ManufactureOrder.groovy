@@ -81,7 +81,6 @@ class ManufactureOrder {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        batch nullable:true
         workstation nullable:true
         supplier nullable:true
         customerOrderDet nullable:true
