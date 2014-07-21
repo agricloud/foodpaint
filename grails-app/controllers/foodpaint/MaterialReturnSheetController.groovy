@@ -67,7 +67,16 @@ class MaterialReturnSheetController {
 
     def update = {
 
-        def materialReturnSheet= MaterialReturnSheet.get(params.id)
+        def materialReturnSheet= new MaterialReturnSheet(params)
+
+        if((materialReturnSheet.workstation && materialReturnSheet.supplier)||(!materialReturnSheet.workstation && !materialReturnSheet.supplier)){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'materialReturnSheet.workstation.supplier.should.exist.one', args: [materialReturnSheet])]
+            }
+            return
+        }
+
+        materialReturnSheet= MaterialReturnSheet.get(params.id)
         if(materialReturnSheet.materialReturnSheetDets && (params.workstation.id.toLong() != materialReturnSheet.workstation?.id || params.supplier.id.toLong() != materialReturnSheet.supplier?.id)){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialReturnSheet.materialReturnSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialReturnSheet])]
@@ -75,12 +84,7 @@ class MaterialReturnSheetController {
             return
         }
         materialReturnSheet.properties = params
-        if((materialReturnSheet.workstation && materialReturnSheet.supplier)||(!materialReturnSheet.workstation && !materialReturnSheet.supplier)){
-            render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialReturnSheet.workstation.supplier.should.exist.one', args: [materialReturnSheet])]
-            }
-            return
-        }
+        
         render (contentType: 'application/json') {
             domainService.save(materialReturnSheet)
         }         

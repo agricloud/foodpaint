@@ -79,7 +79,16 @@ class MaterialSheetController {
 
     def update = {
 
-        def materialSheet= MaterialSheet.get(params.id)
+        def materialSheet= new MaterialSheet(params)
+        
+        if((materialSheet.workstation && materialSheet.supplier)||(!materialSheet.workstation && !materialSheet.supplier)){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'materialSheet.workstation.supplier.should.exist.one', args: [materialSheet])]
+            }
+            return
+        }
+        materialSheet= MaterialSheet.get(params.id)
+
         if(materialSheet.materialSheetDets && (params.workstation.id.toLong() != materialSheet.workstation?.id || params.supplier.id.toLong() != materialSheet.supplier?.id)){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
@@ -88,13 +97,6 @@ class MaterialSheetController {
         }
 
         materialSheet.properties = params
-        
-        if((materialSheet.workstation && materialSheet.supplier)||(!materialSheet.workstation && !materialSheet.supplier)){
-            render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheet.workstation.supplier.should.exist.one', args: [materialSheet])]
-            }
-            return
-        }
         render (contentType: 'application/json') {
             domainService.save(materialSheet)
         }         
