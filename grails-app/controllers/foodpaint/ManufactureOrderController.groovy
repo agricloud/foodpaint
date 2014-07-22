@@ -113,6 +113,16 @@ class ManufactureOrderController {
             return
         }
 
+        manufactureOrder = ManufactureOrder.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != manufactureOrder.typeName || params.name != manufactureOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
         def result = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrder) 
         
         if(!result.success){
@@ -121,26 +131,13 @@ class ManufactureOrderController {
             }
         }
         else{
-            manufactureOrder = ManufactureOrder.get(params.id)
             manufactureOrder.properties = params
-            if(manufactureOrder.qty<=0){
-                render (contentType: 'application/json') {
-                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
-                }
-                return
-            }
+
             manufactureOrder.batch = (Batch) result.batch
             render (contentType: 'application/json') {
                 domainService.save(manufactureOrder)
             }
         }
-
-
-        
-        
-
-
-        
     }
 
 
