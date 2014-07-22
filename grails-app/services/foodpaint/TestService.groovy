@@ -211,6 +211,7 @@ class TestService {
         messageSource.addMessage("default.message.notfound", Locale.getDefault(), "查無資料") 
 
         messageSource.addMessage("batch.name.params.notfound", Locale.getDefault(), "批號未輸入")
+        messageSource.addMessage("batch.name.unique", Locale.getDefault(), "批號：{0} 已存在，請重新輸入。")
         messageSource.addMessage("sheet.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與批號品項不符")
         messageSource.addMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與製令品項、批號品項不符")
         messageSource.addMessage("inventory.qty.must.be.more.than.zero", Locale.getDefault(), "數量必須大於0")
