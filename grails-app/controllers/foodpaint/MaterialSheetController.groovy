@@ -89,7 +89,15 @@ class MaterialSheetController {
         }
         materialSheet= MaterialSheet.get(params.id)
 
-        if(materialSheet.materialSheetDets && (params.workstation.id.toLong() != materialSheet.workstation?.id || params.supplier.id.toLong() != materialSheet.supplier?.id)){
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != materialSheet.typeName || params.name != materialSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        if(materialSheet.materialSheetDets && ((params.workstation?.id && params.workstation.id.toLong() != materialSheet.workstation?.id) || (params.supplier?.id &&params.supplier.id.toLong() != materialSheet.supplier?.id))){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
             }

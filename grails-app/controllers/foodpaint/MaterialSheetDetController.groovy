@@ -78,6 +78,14 @@ class MaterialSheetDetController {
 
         def materialSheetDet = new MaterialSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(materialSheetDet.typeName != materialSheetDet.materialSheet.typeName || materialSheetDet.name != materialSheetDet.materialSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(materialSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
@@ -118,7 +126,7 @@ class MaterialSheetDetController {
     def update() {
 
         def materialSheetDet = new MaterialSheetDet(params)
-        
+
         if(materialSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
@@ -141,6 +149,15 @@ class MaterialSheetDetController {
         }
 
         materialSheetDet = MaterialSheetDet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != materialSheetDet.typeName || params.name != materialSheetDet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+        
         //把更新前已領的數量加回庫存
         def inventoryReplenishResult = inventoryDetailService.replenish(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
         

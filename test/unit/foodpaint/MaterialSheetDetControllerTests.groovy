@@ -54,7 +54,7 @@ class MaterialSheetDetControllerTests {
         //設定傳入的params值
         params["materialSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -73,7 +73,7 @@ class MaterialSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -85,7 +85,7 @@ class MaterialSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["materialSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.MaterialSheetDet"
@@ -114,6 +114,27 @@ class MaterialSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
+    void testSaveWithInccorectQty(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert MaterialSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
+        assertFalse response.json.success
+        assert MaterialSheetDet.list().size() == 0
+    }
+
     void testUpdate() {
 
         populateValidParams(params)
@@ -139,13 +160,47 @@ class MaterialSheetDetControllerTests {
         controller.update()
         //執行結果應允許更新
         assert response.json.success == true
-        assert MaterialSheetDet.list().get(0).batch.name == "batch3"
-        assert MaterialSheetDet.list().get(0).item.id == 3
-        assert MaterialSheetDet.list().get(0).qty == 500
+        assert MaterialSheetDet.get(1).batch.name == "batch3"
+        assert MaterialSheetDet.get(1).item.id == 3
+        assert MaterialSheetDet.get(1).qty == 500
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==5000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==5000
         assert Inventory.findByWarehouseAndItem(warehouse1,item3).qty==0
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item3,batch3).qty==0
+    }
+
+    void testUpdateWithInccorectQty(){
+        populateValidParams(params)
+        def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert MaterialSheetDet.list().size() == 1
+        assert MaterialSheetDet.get(1).typeName == "MS"
+        assert MaterialSheetDet.get(1).name == "00001"
+        assert MaterialSheetDet.get(1).sequence == 1
+        assert MaterialSheetDet.get(1).qty == 1000
+    }
+
+    void testUpdateWithTypeNameAndName(){
+        populateValidParams(params)
+        def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert MaterialSheetDet.list().size() == 1
+        assert MaterialSheetDet.get(1).typeName == "MS"
+        assert MaterialSheetDet.get(1).name == "00001"
+        assert MaterialSheetDet.get(1).sequence == 1
+        assert MaterialSheetDet.get(1).qty == 1000
     }
 
 
