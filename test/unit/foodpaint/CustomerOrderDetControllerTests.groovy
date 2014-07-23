@@ -55,7 +55,7 @@ class CustomerOrderDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["customerOrder.id"] = 1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.CustomerOrderDet"
@@ -72,13 +72,24 @@ class CustomerOrderDetControllerTests {
         assert CustomerOrderDet.get(1).sequence == 1
     }
 
-    void testSaveWithInccorectQtyData(){
+    void testSaveWithInccorectQty(){
         populateValidParams(params)
 
         params.qty=0
         controller.save()
         
         assertFalse response.json.success
+        assert CustomerOrderDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
+        assert response.json.success ==false
         assert CustomerOrderDet.list().size() == 0
     }
 
@@ -99,7 +110,7 @@ class CustomerOrderDetControllerTests {
         assert CustomerOrderDet.get(1).qty == 1500
     }
 
-    void testUpdateWithInccorectQtyData(){
+    void testUpdateWithInccorectQty(){
         populateValidParams(params)
         def customerOrderDet = new CustomerOrderDet(params).save(failOnError: true)
 
@@ -116,7 +127,7 @@ class CustomerOrderDetControllerTests {
         assert CustomerOrderDet.get(1).qty == 1000
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def customerOrderDet = new CustomerOrderDet(params).save(failOnError: true)
 

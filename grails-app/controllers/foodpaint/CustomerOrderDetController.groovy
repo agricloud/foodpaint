@@ -74,6 +74,15 @@ class CustomerOrderDetController {
     def save = {
 
         def customerOrderDet=new CustomerOrderDet(params)
+
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(customerOrderDet.typeName != customerOrderDet.customerOrder.typeName || customerOrderDet.name != customerOrderDet.customerOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(customerOrderDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]

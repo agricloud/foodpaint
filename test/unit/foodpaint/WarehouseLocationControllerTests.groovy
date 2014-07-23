@@ -46,7 +46,7 @@ class WarehouseLocationControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["warehouse.id"] = 1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.WarehouseLocation"

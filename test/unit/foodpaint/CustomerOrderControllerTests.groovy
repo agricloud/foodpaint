@@ -78,7 +78,7 @@ class CustomerOrderControllerTests {
         assert CustomerOrder.get(1).name == "001"
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def customerOrder = new CustomerOrder(params).save(failOnError: true)
 
@@ -93,7 +93,7 @@ class CustomerOrderControllerTests {
         assert CustomerOrder.get(1).name == "001"
     }
 
-    void testUpdateWithForbiddenChangeOfCustomer(){
+    void testUpdateWithCustomerWhenSheetDetailExisted(){
         populateValidParams(params)
         def customerOrder = new CustomerOrder(params).save(failOnError: true)
         def customer2 = new Customer(name:"customer2",title:"客戶2").save(failOnError: true)

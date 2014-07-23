@@ -16,7 +16,7 @@ class ManufactureOrderControllerTests {
         testService.createTestMessage(messageSource)
 
         def item1 = new Item(name:"item1",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
-        def workstation1 = new Workstation(name:"workstation1",title:"生產線01").save(failOnError: true)
+        def workstation1 = new Workstation(name:"workstation1",title:"生產線1").save(failOnError: true)
         def supplier1 = new Supplier(name:"supplier1",title:"供應商1",country:Country.TAIWAN).save(failOnError: true, flush: true)
     }
     def populateValidParams(params) {
@@ -34,7 +34,7 @@ class ManufactureOrderControllerTests {
         //產生預設資料
         def manufactureOrder = new ManufactureOrder(params).save(failOnError: true, flush: true)
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -44,7 +44,7 @@ class ManufactureOrderControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.ManufactureOrder"
@@ -60,7 +60,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.list().get(0).batch.name == "batch1"
     }
 
-    void testSaveWithInccorectQtyData(){
+    void testSaveWithInccorectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -70,7 +70,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.list().size() == 0
     }
 
-    void testSaveWithExistBatchData(){
+    void testSaveWithExistBatch(){
         def item1 = Item.get(1).save(failOnError: true, flush: true)
         def batch1 = new Batch(name:"batch1", item:item1).save(failOnError: true, flush: true)
 
@@ -83,7 +83,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.list().size() == 0
     }
 
-    void testSaveWithWorkstationAndSupplierData(){
+    void testSaveWithWorkstationAndSupplier(){
         //設定傳入的params值
         populateValidParams(params)
         params["supplier.id"] = 1
@@ -114,7 +114,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.get(1).qty == 500
     }
 
-    void testUpdateWithInccorectQtyData(){
+    void testUpdateWithInccorectQty(){
         populateValidParams(params)
         def manufactureOrder = new ManufactureOrder(params).save(failOnError: true, flush: true)
 
@@ -130,7 +130,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.get(1).qty == 1000
     }
 
-    void testUpdateWithExistBatchData(){
+    void testUpdateWithExistBatch(){
         populateValidParams(params)
         def item1 = Item.get(1).save(failOnError: true, flush: true)
         def batch1 = new Batch(name:"batch1", item:item1).save(failOnError: true, flush: true)
@@ -148,7 +148,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.get(1).batch.name == "batch1"
     }
 
-    void testUpdateWithWorkstationAndSupplierData(){
+    void testUpdateWithWorkstationAndSupplier(){
         populateValidParams(params)
         def manufactureOrder = new ManufactureOrder(params).save(failOnError: true, flush: true)
         //設定傳入的params值
@@ -166,7 +166,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.get(1).qty == 1000
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def manufactureOrder = new ManufactureOrder(params).save(failOnError: true, flush: true)
 

@@ -49,7 +49,7 @@ class OutSrcPurchaseSheetDetControllerTests {
         //設定傳入的params值
         params["outSrcPurchaseSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -66,7 +66,7 @@ class OutSrcPurchaseSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -77,7 +77,7 @@ class OutSrcPurchaseSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["outSrcPurchaseSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.OutSrcPurchaseSheetDet"
@@ -105,7 +105,7 @@ class OutSrcPurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithIncorrectBatchData(){
+    void testSaveWithIncorrectBatch(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
@@ -151,7 +151,7 @@ class OutSrcPurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch2).qty==500
     }
 
-    void testUpdateWithIncorrectBatchData() {
+    void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
 

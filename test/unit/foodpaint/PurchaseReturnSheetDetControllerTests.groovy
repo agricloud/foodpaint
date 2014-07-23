@@ -49,7 +49,7 @@ class PurchaseReturnSheetDetControllerTests {
         //設定傳入的params值
         params["purchaseReturnSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -66,7 +66,7 @@ class PurchaseReturnSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -77,7 +77,7 @@ class PurchaseReturnSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["purchaseReturnSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.PurchaseReturnSheetDet"
@@ -100,7 +100,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==0
     }
 
-    void testSaveWithInccorectQtyData(){
+    void testSaveWithInccorectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -112,7 +112,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==1000
     }
 
-    void testSaveWithIncorrectBatchData(){
+    void testSaveWithIncorrectBatch(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
@@ -126,6 +126,17 @@ class PurchaseReturnSheetDetControllerTests {
         assert PurchaseReturnSheetDet.list().size() == 0
         assert Inventory.get(1).qty==1000
         assert InventoryDetail.get(1).qty==1000
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
+        assert response.json.success ==false
+        assert PurchaseReturnSheetDet.list().size() == 0
     }
 
     void testUpdate() {
@@ -145,7 +156,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==500
     }
 
-    void testUpdateWithInccorectQtyData(){
+    void testUpdateWithInccorectQty(){
         populateValidParams(params)
         controller.save()
 
@@ -164,7 +175,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty == 0
     }
 
-    void testUpdateWithIncorrectBatchData() {
+    void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
         controller.save()
@@ -193,7 +204,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==0
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         controller.save()
 

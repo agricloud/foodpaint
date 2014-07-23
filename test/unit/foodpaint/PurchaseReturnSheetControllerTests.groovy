@@ -6,7 +6,9 @@ import common.*
 //主要測試的對象
 @TestFor(PurchaseReturnSheetController)
 //把所有測試中會使用到的domain & service
-@Mock([PurchaseReturnSheetDet, PurchaseReturnSheet, PurchaseSheetDet, PurchaseSheet, Item, Batch, Warehouse, WarehouseLocation, Inventory, InventoryDetail, Supplier, BatchService, InventoryService, InventoryDetailService, DomainService])
+@Mock([PurchaseReturnSheetDet, PurchaseReturnSheet, PurchaseSheetDet, PurchaseSheet, 
+       Item, Batch, Supplier, Warehouse, WarehouseLocation, Inventory, InventoryDetail,
+       BatchService, InventoryService, InventoryDetailService, DomainService])
 class PurchaseReturnSheetControllerTests {
     //開始測試前預備資料
     void setUp(){
@@ -27,7 +29,7 @@ class PurchaseReturnSheetControllerTests {
         //產生預設資料
         def purchaseReturnSheet1 = new PurchaseReturnSheet(params).save(failOnError: true, flush: true)
         
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫tController執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -44,7 +46,7 @@ class PurchaseReturnSheetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -55,7 +57,7 @@ class PurchaseReturnSheetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.PurchaseReturnSheet"
@@ -93,7 +95,7 @@ class PurchaseReturnSheetControllerTests {
         assert PurchaseReturnSheet.get(1).supplier.id == 2
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def purchaseReturnSheet = new PurchaseReturnSheet(params).save(failOnError: true)
 
@@ -108,7 +110,7 @@ class PurchaseReturnSheetControllerTests {
         assert PurchaseReturnSheet.get(1).name == "00001"
     }
 
-    void testUpdateWithForbiddenChangeOfSupplier(){
+    void testUpdateWithSupplier(){
         populateValidParams(params)
         def purchaseReturnSheet1 = new PurchaseReturnSheet(params).save(failOnError: true, flush: true)
         def supplier1 = Supplier.get(1)

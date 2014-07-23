@@ -78,6 +78,14 @@ class PurchaseSheetDetController {
     def save(){
         def purchaseSheetDet=new PurchaseSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(purchaseSheetDet.typeName != purchaseSheetDet.purchaseSheet.typeName || purchaseSheetDet.name != purchaseSheetDet.purchaseSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]

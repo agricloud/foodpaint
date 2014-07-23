@@ -50,7 +50,7 @@ class InventoryControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.Inventory"
@@ -67,7 +67,7 @@ class InventoryControllerTests {
         assert Inventory.get(1).qty == 100.5
     }
 
-    void testSaveWithInccorectQtyData(){
+    void testSaveWithInccorectQty(){
         populateValidParams(params)
 
         params.qty=-1
@@ -93,7 +93,7 @@ class InventoryControllerTests {
         assert Inventory.get(1).qty == 50.5
     }
 
-    void testUpdateWithInccorectQtyData(){
+    void testUpdateWithInccorectQty(){
         populateValidParams(params)
         def inventory = new Inventory(params).save(failOnError: true)
 

@@ -42,7 +42,7 @@ class PurchaseSheetDetControllerTests {
         //設定傳入的params值
         params["purchaseSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -59,7 +59,7 @@ class PurchaseSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -70,7 +70,7 @@ class PurchaseSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["purchaseSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.PurchaseSheetDet"
@@ -98,7 +98,7 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithInccorectQtyData(){
+    void testSaveWithInccorectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -108,7 +108,7 @@ class PurchaseSheetDetControllerTests {
         assert PurchaseSheetDet.list().size() == 0
     }
 
-    void testSaveWithIncorrectBatchData(){
+    void testSaveWithIncorrectBatch(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
@@ -118,6 +118,17 @@ class PurchaseSheetDetControllerTests {
 
         controller.save()
 
+        assert response.json.success ==false
+        assert PurchaseSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
         assert response.json.success ==false
         assert PurchaseSheetDet.list().size() == 0
     }
@@ -156,7 +167,7 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==500
     }
 
-    void testUpdateWithInccorectQtyData(){
+    void testUpdateWithInccorectQty(){
         populateValidParams(params)
         def purchaseSheetDet11 = new PurchaseSheetDet(params).save(failOnError: true, flush: true)
 
@@ -173,7 +184,7 @@ class PurchaseSheetDetControllerTests {
         assert PurchaseSheetDet.get(1).qty == 1000
     }
 
-    void testUpdateWithIncorrectBatchData() {
+    void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
 
@@ -207,7 +218,7 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def purchaseSheetDet = new PurchaseSheetDet(params).save(failOnError: true)
 

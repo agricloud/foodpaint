@@ -27,7 +27,7 @@ class PurchaseSheetControllerTests {
         //產生預設資料
         def purchaseSheet1 = new PurchaseSheet(params).save(failOnError: true, flush: true)
         
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -44,7 +44,7 @@ class PurchaseSheetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -55,7 +55,7 @@ class PurchaseSheetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.PurchaseSheet"
@@ -93,7 +93,7 @@ class PurchaseSheetControllerTests {
         assert PurchaseSheet.get(1).supplier.id == 2
     }
 
-    void testUpdateWithForbiddenChangeOfTypeNameAndName(){
+    void testUpdateWithTypeNameAndName(){
         populateValidParams(params)
         def purchaseSheet = new PurchaseSheet(params).save(failOnError: true)
 
@@ -108,7 +108,7 @@ class PurchaseSheetControllerTests {
         assert PurchaseSheet.get(1).name == "00001"
     }
 
-    void testUpdateWithForbiddenChangeOfSupplier(){
+    void testUpdateWithSupplierWhenSheetDetailExisted(){
         populateValidParams(params)
         def purchaseSheet1 = new PurchaseSheet(params).save(failOnError: true, flush: true)
         def supplier2 = new Supplier(name:"supplier2",title:"供應商2",country:Country.TAIWAN).save(failOnError: true, flush: true)
