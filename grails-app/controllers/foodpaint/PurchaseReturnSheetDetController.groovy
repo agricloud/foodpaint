@@ -146,10 +146,10 @@ class PurchaseReturnSheetDetController {
 
         purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
         
-        //單別、單號一旦建立不允許變更
-        if(params.typeName != purchaseReturnSheetDet.typeName || params.name != purchaseReturnSheetDet.name){
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != purchaseReturnSheetDet.typeName || params.name != purchaseReturnSheetDet.name|| params.sequence.toLong() != purchaseReturnSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
             }
             return
         }
