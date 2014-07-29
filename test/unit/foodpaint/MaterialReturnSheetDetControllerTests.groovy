@@ -155,19 +155,19 @@ class MaterialReturnSheetDetControllerTests {
 
     void testSaveWithIncorrectBatch2(){
         def item1 = Item.get(1)
-        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+        def batch3 = new Batch(name:"batch3", item:item1).save(failOnError: true, flush: true)
 
         //設定傳入的params值
         populateValidParams(params)
         //給定錯誤的資料 批號與託領料單不同
-        params["batch.id"] = 2
+        params["batch.id"] = 3
 
         controller.save()
 
         assert response.json.success == false
         assert MaterialReturnSheetDet.list().size() == 0
-        assert Inventory.get(1).qty==1000
-        assert InventoryDetail.get(1).qty==1000
+        assert Inventory.get(1)==null
+        assert InventoryDetail.get(1)==null
     }
 
 
@@ -241,7 +241,7 @@ class MaterialReturnSheetDetControllerTests {
         controller.save()
 
         def item1 = Item.get(1)
-        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+        def batch3 = new Batch(name:"batch3", item:item1).save(failOnError: true, flush: true)
 
         //給定錯誤的資料 批號與進貨單不同
         params["id"] = 1
@@ -252,8 +252,8 @@ class MaterialReturnSheetDetControllerTests {
         assert MaterialReturnSheetDet.get(1).batch.name == "batch1"
         assert MaterialReturnSheetDet.get(1).item.id == 1
         assert MaterialReturnSheetDet.get(1).qty == 1000
-        assert Inventory.get(1)==1000
-        assert InventoryDetail.get(1)==1000
+        assert Inventory.get(1).qty==1000
+        assert InventoryDetail.get(1).qty==1000
         assert Inventory.get(2)== null
         assert InventoryDetail.get(2)==null
     }
