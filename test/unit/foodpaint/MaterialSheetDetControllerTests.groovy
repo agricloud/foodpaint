@@ -114,7 +114,7 @@ class MaterialSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -169,7 +169,7 @@ class MaterialSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item3,batch3).qty==0
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def materialSheetDet11 = new MaterialSheetDet(params).save(failOnError: true, flush: true)
 

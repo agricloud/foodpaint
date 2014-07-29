@@ -100,7 +100,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==0
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -112,12 +112,30 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==1000
     }
 
-    void testSaveWithIncorrectBatch(){
+    void testSaveWithIncorrectBatch1(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
         //設定傳入的params值
         populateValidParams(params)
+        //給定錯誤的資料 批號品項與採購品項不符
+        params["batch.id"] = 2
+
+        controller.save()
+
+        assert response.json.success == false
+        assert PurchaseReturnSheetDet.list().size() == 0
+        assert Inventory.get(1).qty==1000
+        assert InventoryDetail.get(1).qty==1000
+    }
+
+    void testSaveWithIncorrectBatch2(){
+        def item1 = Item.get(1)
+        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+
+        //設定傳入的params值
+        populateValidParams(params)
+        //給定錯誤的資料 批號與採購單不同
         params["batch.id"] = 2
 
         controller.save()
@@ -156,7 +174,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty==500
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         controller.save()
 
@@ -175,7 +193,7 @@ class PurchaseReturnSheetDetControllerTests {
         assert InventoryDetail.get(1).qty == 0
     }
 
-    void testUpdateWithIncorrectBatch() {
+    void testUpdateWithIncorrectBatch1() {
 
         populateValidParams(params)
         controller.save()
@@ -197,6 +215,26 @@ class PurchaseReturnSheetDetControllerTests {
 
         //執行結果應不允許更新 因此資料不變
         // assert response.json.success == false //回傳的訊息來自controller.save 用來判斷刪除是錯誤的
+        assert PurchaseReturnSheetDet.list().get(0).batch.id == 1
+        assert PurchaseReturnSheetDet.list().get(0).item.id == 1
+        assert PurchaseReturnSheetDet.list().get(0).qty == 1000
+        assert Inventory.get(1).qty==0
+        assert InventoryDetail.get(1).qty==0
+    }
+
+    void testUpdateWithIncorrectBatch2(){
+        populateValidParams(params)
+        controller.save()
+
+        def item1 = Item.get(1)
+        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+
+        //給定錯誤的資料 批號與進貨單不同
+        params["id"] = 1
+        params["batch.id"] = 2
+
+        controller.update()
+
         assert PurchaseReturnSheetDet.list().get(0).batch.id == 1
         assert PurchaseReturnSheetDet.list().get(0).item.id == 1
         assert PurchaseReturnSheetDet.list().get(0).qty == 1000

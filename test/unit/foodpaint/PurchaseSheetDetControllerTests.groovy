@@ -98,7 +98,7 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -167,7 +167,7 @@ class PurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==500
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def purchaseSheetDet11 = new PurchaseSheetDet(params).save(failOnError: true, flush: true)
 

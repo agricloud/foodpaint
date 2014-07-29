@@ -115,7 +115,7 @@ class MaterialReturnSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -124,6 +124,52 @@ class MaterialReturnSheetDetControllerTests {
         assertFalse response.json.success
         assert MaterialReturnSheetDet.list().size() == 0
     }
+
+    void testSaveWithIncorrectBatch1(){
+        def item1=Item.get(1)
+        def batch1=Batch.get(1)
+        def item2=Item.get(2)
+        def batch2=Batch.get(2)
+        def warehouse1=Warehouse.get(1)
+        def warehouseLocation1=WarehouseLocation.get(1)
+
+        def inventory1 = new Inventory(warehouse:warehouse1,item:item1,qty:0d).save(failOnError: true, flush: true)
+        def inventoryDetail1 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item1,batch:batch1,qty:0d).save(failOnError: true, flush: true)
+        def inventory2 = new Inventory(warehouse:warehouse1,item:item2,qty:0d).save(failOnError: true, flush: true)
+        def inventoryDetail2 = new InventoryDetail(warehouse:warehouse1,warehouseLocation:warehouseLocation1,item:item2,batch:batch2,qty:0d).save(failOnError: true, flush: true)
+
+        //設定傳入的params值
+        populateValidParams(params)
+        //給定錯誤的資料 批號品項與領料品項不符
+        params["batch.id"] = 2
+
+        controller.save()
+
+        assert response.json.success == false
+        assert MaterialReturnSheetDet.list().size() == 0
+        assert Inventory.get(1).qty==0
+        assert InventoryDetail.get(1).qty==0
+        assert Inventory.get(2).qty==0
+        assert InventoryDetail.get(2).qty==0
+    }
+
+    void testSaveWithIncorrectBatch2(){
+        def item1 = Item.get(1)
+        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+
+        //設定傳入的params值
+        populateValidParams(params)
+        //給定錯誤的資料 批號與託領料單不同
+        params["batch.id"] = 2
+
+        controller.save()
+
+        assert response.json.success == false
+        assert MaterialReturnSheetDet.list().size() == 0
+        assert Inventory.get(1).qty==1000
+        assert InventoryDetail.get(1).qty==1000
+    }
+
 
     void testSaveWithIncorrectTypeNameAndName(){
         populateValidParams(params)
@@ -161,7 +207,7 @@ class MaterialReturnSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==500
     }
 
-    void testUpdateWithIncorrectBatch() {
+    void testUpdateWithIncorrectBatch1() {
 
         populateValidParams(params)
 
@@ -190,7 +236,29 @@ class MaterialReturnSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item3,batch3)==null
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectBatch2(){
+        populateValidParams(params)
+        controller.save()
+
+        def item1 = Item.get(1)
+        def batch2 = new Batch(name:"batch2", item:item1).save(failOnError: true, flush: true)
+
+        //給定錯誤的資料 批號與進貨單不同
+        params["id"] = 1
+        params["batch.id"] = 2
+
+        controller.update()
+
+        assert MaterialReturnSheetDet.get(1).batch.name == "batch1"
+        assert MaterialReturnSheetDet.get(1).item.id == 1
+        assert MaterialReturnSheetDet.get(1).qty == 1000
+        assert Inventory.get(1)==1000
+        assert InventoryDetail.get(1)==1000
+        assert Inventory.get(2)== null
+        assert InventoryDetail.get(2)==null
+    }
+
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def materialReturnSheetDet11 = new MaterialReturnSheetDet(params).save(failOnError: true, flush: true)
 

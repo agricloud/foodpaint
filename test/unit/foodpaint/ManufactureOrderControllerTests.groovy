@@ -60,7 +60,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.list().get(0).batch.name == "batch1"
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -114,7 +114,7 @@ class ManufactureOrderControllerTests {
         assert ManufactureOrder.get(1).qty == 500
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def manufactureOrder = new ManufactureOrder(params).save(failOnError: true, flush: true)
 

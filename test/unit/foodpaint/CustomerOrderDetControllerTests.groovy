@@ -72,7 +72,7 @@ class CustomerOrderDetControllerTests {
         assert CustomerOrderDet.get(1).sequence == 1
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=0
@@ -110,7 +110,7 @@ class CustomerOrderDetControllerTests {
         assert CustomerOrderDet.get(1).qty == 1500
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def customerOrderDet = new CustomerOrderDet(params).save(failOnError: true)
 

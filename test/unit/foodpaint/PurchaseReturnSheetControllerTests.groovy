@@ -110,7 +110,7 @@ class PurchaseReturnSheetControllerTests {
         assert PurchaseReturnSheet.get(1).name == "00001"
     }
 
-    void testUpdateWithSupplier(){
+    void testUpdateWithSupplierWhenSheetDetailExisted(){
         populateValidParams(params)
         def purchaseReturnSheet1 = new PurchaseReturnSheet(params).save(failOnError: true, flush: true)
         def supplier1 = Supplier.get(1)

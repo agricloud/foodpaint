@@ -67,7 +67,7 @@ class InventoryControllerTests {
         assert Inventory.get(1).qty == 100.5
     }
 
-    void testSaveWithInccorectQty(){
+    void testSaveWithIncorrectQty(){
         populateValidParams(params)
 
         params.qty=-1
@@ -93,7 +93,7 @@ class InventoryControllerTests {
         assert Inventory.get(1).qty == 50.5
     }
 
-    void testUpdateWithInccorectQty(){
+    void testUpdateWithIncorrectQty(){
         populateValidParams(params)
         def inventory = new Inventory(params).save(failOnError: true)
 
