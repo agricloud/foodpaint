@@ -105,6 +105,16 @@ class StockInSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
+    void testSaveWithIncorrectQty(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 0
+    }
+
     void testSaveWithIncorrectBatch(){
 
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
@@ -116,6 +126,17 @@ class StockInSheetDetControllerTests {
 
         controller.save()
 
+        assert response.json.success ==false
+        assert StockInSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
         assert response.json.success ==false
         assert StockInSheetDet.list().size() == 0
     }
@@ -149,6 +170,23 @@ class StockInSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch2).qty==500
     }
 
+    void testUpdateWithIncorrectQty(){
+        populateValidParams(params)
+        def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 1
+        assert StockInSheetDet.get(1).typeName == "SIS"
+        assert StockInSheetDet.get(1).name == "00001"
+        assert StockInSheetDet.get(1).sequence == 1
+        assert StockInSheetDet.get(1).qty == 1000
+    }
+
     void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
@@ -179,8 +217,22 @@ class StockInSheetDetControllerTests {
         assert StockInSheetDet.list().get(0).qty == 1000
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+    }
 
+    void testUpdateWithTypeNameAndName(){
+        populateValidParams(params)
+        def stockInSheetDet = new StockInSheetDet(params).save(failOnError: true)
 
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 1
+        assert StockInSheetDet.get(1).typeName == "SIS"
+        assert StockInSheetDet.get(1).name == "00001"
+        assert StockInSheetDet.get(1).sequence == 1
     }
 
     void testDelete(){

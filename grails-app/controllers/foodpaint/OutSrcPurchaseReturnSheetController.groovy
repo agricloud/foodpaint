@@ -63,6 +63,15 @@ class OutSrcPurchaseReturnSheetController{
     def update = {
 
         def outSrcPurchaseReturnSheet= OutSrcPurchaseReturnSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != outSrcPurchaseReturnSheet.typeName || params.name != outSrcPurchaseReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
         if(outSrcPurchaseReturnSheet.outSrcPurchaseReturnSheetDets && params.supplier.id.toLong() != outSrcPurchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'outSrcPurchaseReturnSheet.outSrcPurchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [outSrcPurchaseReturnSheet])]

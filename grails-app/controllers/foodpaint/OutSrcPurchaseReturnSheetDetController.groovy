@@ -76,6 +76,14 @@ class OutSrcPurchaseReturnSheetDetController{
     def save(){
         def outSrcPurchaseReturnSheetDet=new OutSrcPurchaseReturnSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(outSrcPurchaseReturnSheetDet.typeName != outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.typeName || outSrcPurchaseReturnSheetDet.name != outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.supplier!=outSrcPurchaseReturnSheetDet.outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'outSrcPurchaseReturnSheetDet.outSrcPurchaseReturnSheet.supplier.outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.not.equal', args: [outSrcPurchaseReturnSheetDet])]
@@ -149,6 +157,14 @@ class OutSrcPurchaseReturnSheetDetController{
 
         outSrcPurchaseReturnSheetDet = OutSrcPurchaseReturnSheetDet.get(params.id)
 
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != outSrcPurchaseReturnSheetDet.typeName || params.name != outSrcPurchaseReturnSheetDet.name|| params.sequence.toLong() != outSrcPurchaseReturnSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+        
         // (補充存貨)還原回到還沒退貨
         def inventoryReplenishResult = inventoryDetailService.replenish(params,outSrcPurchaseReturnSheetDet.warehouse.id, outSrcPurchaseReturnSheetDet.warehouseLocation.id, outSrcPurchaseReturnSheetDet.item.id, outSrcPurchaseReturnSheetDet.batch.name, outSrcPurchaseReturnSheetDet.qty,null)
         if(inventoryReplenishResult){

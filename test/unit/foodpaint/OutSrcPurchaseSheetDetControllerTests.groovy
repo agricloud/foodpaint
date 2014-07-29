@@ -105,16 +105,38 @@ class OutSrcPurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
+    void testSaveWithIncorrectQty(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert OutSrcPurchaseSheetDet.list().size() == 0
+    }
+
     void testSaveWithIncorrectBatch(){
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
 
         //設定傳入的params值
         populateValidParams(params)
+        //給定錯誤的更新資料 批號品項與進貨品項不符
         params["batch.name"] = batch2.name
 
         controller.save()
 
+        assert response.json.success ==false
+        assert OutSrcPurchaseSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
         assert response.json.success ==false
         assert OutSrcPurchaseSheetDet.list().size() == 0
     }
@@ -151,6 +173,23 @@ class OutSrcPurchaseSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch2).qty==500
     }
 
+    void testUpdateWithIncorrectQty(){
+        populateValidParams(params)
+        def outSrcPurchaseSheetDet11 = new OutSrcPurchaseSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert OutSrcPurchaseSheetDet.list().size() == 1
+        assert OutSrcPurchaseSheetDet.get(1).typeName == "OSPS"
+        assert OutSrcPurchaseSheetDet.get(1).name == "00001"
+        assert OutSrcPurchaseSheetDet.get(1).sequence == 1
+        assert OutSrcPurchaseSheetDet.get(1).qty == 1000
+    }
+
     void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
@@ -182,7 +221,22 @@ class OutSrcPurchaseSheetDetControllerTests {
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
 
+    }
 
+    void testUpdateWithTypeNameAndName(){
+        populateValidParams(params)
+        def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params).save(failOnError: true)
+
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert OutSrcPurchaseSheetDet.list().size() == 1
+        assert OutSrcPurchaseSheetDet.get(1).typeName == "OSPS"
+        assert OutSrcPurchaseSheetDet.get(1).name == "00001"
+        assert OutSrcPurchaseSheetDet.get(1).sequence == 1
     }
 
     void testDelete(){
