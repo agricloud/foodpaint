@@ -34,7 +34,7 @@ class WarehouseLocation {
         site nullable:true
         editor nullable:true
 		creator nullable:true
-		name(unique:['site'])
+		name(unique:['warehouse','site'])
         name blank: false
         description nullable: true
         capacity min: 0.0d
