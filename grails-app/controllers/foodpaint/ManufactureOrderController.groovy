@@ -30,10 +30,10 @@ class ManufactureOrderController {
     }
 
     def indexByWorkstationOrSupplier = {
-
+        def site = Site.get(params.site.id)
         def workstation = Workstation.get(params.workstation.id)
         def supplier = Supplier.get(params.supplier.id)
-        def list = ManufactureOrder.findAllByWorkstationAndSupplier(workstation,supplier)
+        def list = ManufactureOrder.findAllByWorkstationAndSupplierAndSite(workstation,supplier,site)
 
         render (contentType: 'application/json') {
             [data: list, total: list.size()]
@@ -98,7 +98,7 @@ class ManufactureOrderController {
 
     def update = {
 
-        def manufactureOrder = ManufactureOrder.get(params.id)
+        def manufactureOrder = new ManufactureOrder(params)
 
         if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
             render (contentType: 'application/json') {
@@ -113,7 +113,17 @@ class ManufactureOrderController {
             return
         }
 
-        def result = batchService.createBatchInstanceByJson(params, manufactureOrder) 
+        manufactureOrder = ManufactureOrder.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != manufactureOrder.typeName || params.name != manufactureOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        def result = batchService.findOrCreateBatchInstanceByJson(params, manufactureOrder) 
         
         if(!result.success){
             render (contentType: 'application/json') {
@@ -122,24 +132,12 @@ class ManufactureOrderController {
         }
         else{
             manufactureOrder.properties = params
-            if(manufactureOrder.qty<=0){
-                render (contentType: 'application/json') {
-                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
-                }
-                return
-            }
+
             manufactureOrder.batch = (Batch) result.batch
             render (contentType: 'application/json') {
                 domainService.save(manufactureOrder)
             }
         }
-
-
-        
-        
-
-
-        
     }
 
 

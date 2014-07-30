@@ -63,6 +63,16 @@ class StockInSheetController {
     def update = {
 
         def stockInSheet= StockInSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != stockInSheet.typeName || params.name != stockInSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        //工作站一旦建立不允許變更
         if(stockInSheet.stockInSheetDets && params.workstation.id.toLong() != stockInSheet.workstation.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change', args: [stockInSheet])]

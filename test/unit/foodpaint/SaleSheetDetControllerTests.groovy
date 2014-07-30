@@ -32,7 +32,6 @@ class SaleSheetDetControllerTests {
         params["typeName"] = 'SS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["customer.id"]=1
         params["item.id"] = 1
         params["warehouse.id"]=1
         params["warehouseLocation.id"]=1
@@ -49,7 +48,7 @@ class SaleSheetDetControllerTests {
         //設定傳入的params值
         params["saleSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -66,7 +65,7 @@ class SaleSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -77,7 +76,7 @@ class SaleSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["saleSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.SaleSheetDet"

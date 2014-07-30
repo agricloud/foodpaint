@@ -78,6 +78,15 @@ class StockInSheetDetController {
     @Transactional
     def save(){
         def stockInSheetDet=new StockInSheetDet(params)
+
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(stockInSheetDet.typeName != stockInSheetDet.stockInSheet.typeName || stockInSheetDet.name != stockInSheetDet.stockInSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
         if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
             render (contentType: 'application/json') {
@@ -120,6 +129,7 @@ class StockInSheetDetController {
 
         def stockInSheetDet = new StockInSheetDet(params)
 
+        //入庫單與製令之工作站需相同
         if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal', args: [stockInSheetDet])]
@@ -143,6 +153,15 @@ class StockInSheetDetController {
         }
 
         stockInSheetDet = StockInSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != stockInSheetDet.typeName || params.name != stockInSheetDet.name|| params.sequence.toLong() != stockInSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+
         //將更新前已入的數量扣除庫存
         def inventoryConsumeResult= inventoryDetailService.consume(params,stockInSheetDet.warehouse.id,stockInSheetDet.warehouseLocation.id, stockInSheetDet.item.id, stockInSheetDet.batch.name, stockInSheetDet.qty,null)
         if(inventoryConsumeResult.success){

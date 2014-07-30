@@ -72,7 +72,17 @@ class PurchaseSheetController {
 
 
     def update = {
+
         def purchaseSheet= PurchaseSheet.get(params.id)
+        
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != purchaseSheet.typeName || params.name != purchaseSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+        //單身建立後不允許變更客戶
         if(purchaseSheet.purchaseSheetDets && params.supplier.id.toLong() != purchaseSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'purchaseSheet.purchaseSheetDets.exists.supplier.not.allowed.change', args: [purchaseSheet])]

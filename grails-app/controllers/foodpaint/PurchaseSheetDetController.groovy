@@ -78,6 +78,14 @@ class PurchaseSheetDetController {
     def save(){
         def purchaseSheetDet=new PurchaseSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(purchaseSheetDet.typeName != purchaseSheetDet.purchaseSheet.typeName || purchaseSheetDet.name != purchaseSheetDet.purchaseSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]
@@ -111,6 +119,7 @@ class PurchaseSheetDetController {
     @Transactional
     def update() {
         def purchaseSheetDet = new PurchaseSheetDet(params)
+
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]
@@ -128,6 +137,14 @@ class PurchaseSheetDetController {
         }
 
         purchaseSheetDet = PurchaseSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != purchaseSheetDet.typeName || params.name != purchaseSheetDet.name|| params.sequence.toLong() != purchaseSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
 
         //將更新前的已進數量扣除庫存
         def inventoryConsumeResult = inventoryDetailService.consume(params,purchaseSheetDet.warehouse.id,purchaseSheetDet.warehouseLocation.id, purchaseSheetDet.item.id, purchaseSheetDet.batch.name, purchaseSheetDet.qty, null)
@@ -161,8 +178,6 @@ class PurchaseSheetDetController {
                 inventoryConsumeResult
             }
         }
-        
-        
     }
 
 

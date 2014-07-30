@@ -78,6 +78,14 @@ class OutSrcPurchaseSheetDetController {
     def save(){
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(outSrcPurchaseSheetDet.typeName != outSrcPurchaseSheetDet.outSrcPurchaseSheet.typeName || outSrcPurchaseSheetDet.name != outSrcPurchaseSheetDet.outSrcPurchaseSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier != outSrcPurchaseSheetDet.manufactureOrder.supplier ){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal', args: [outSrcPurchaseSheetDet])]
@@ -145,6 +153,15 @@ class OutSrcPurchaseSheetDetController {
         }
 
         outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != outSrcPurchaseSheetDet.typeName || params.name != outSrcPurchaseSheetDet.name|| params.sequence.toLong() != outSrcPurchaseSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+
         //將更新前已進的數量扣除庫存
         def inventoryConsumeResult= inventoryDetailService.consume(params,outSrcPurchaseSheetDet.warehouse.id,outSrcPurchaseSheetDet.warehouseLocation.id, outSrcPurchaseSheetDet.item.id, outSrcPurchaseSheetDet.batch.name, outSrcPurchaseSheetDet.qty, null)
         if(inventoryConsumeResult){

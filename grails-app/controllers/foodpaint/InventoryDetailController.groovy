@@ -64,6 +64,12 @@ class InventoryDetailController {
     }
 
     def save = {
+        if(params.qty.toDouble()<0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventoryDetail.qty.must.be.more.than.zero')]
+            }
+            return
+        }
 
         def result = batchService.findOrCreateBatchInstanceByJson(params, null)
         if(!result.success){
@@ -84,6 +90,13 @@ class InventoryDetailController {
 
     @Transactional
     def update(){
+        
+        if(params.qty.toDouble()<0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'inventoryDetail.qty.must.be.more.than.zero')]
+            }
+            return
+        }
 
         def inventoryDetail = InventoryDetail.get(params.id)
 

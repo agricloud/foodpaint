@@ -31,11 +31,9 @@ class StockInSheetDetControllerTests {
     def populateValidParams(params) {
         assert params != null
         params["stockInSheet.id"]=1
-        params["id"] = 1
         params["typeName"] = 'SIS'
         params["name"] = '00001'
         params["sequence"] = 1
-        params["workstation.id"]=1
 
         params["manufactureOrder.id"] = 1
         params["item.id"] = 1
@@ -53,7 +51,7 @@ class StockInSheetDetControllerTests {
         //設定傳入的params值
         params["stockInSheet.id"]=1
 
-        //呼叫PurchaseSheetDetController執行index()
+        //呼叫Controller執行index()
         controller.index()
         //驗證結果
         assert response.json.data.size() == 1   
@@ -70,7 +68,7 @@ class StockInSheetDetControllerTests {
         //設定傳入的params值
         params["id"]=1
 
-        //呼叫PurchaseSheetDetController執行show()
+        //呼叫Controller執行show()
         controller.show()
         //驗證結果
         assert response.json.success
@@ -81,7 +79,7 @@ class StockInSheetDetControllerTests {
     }
 
     void testCreate() {
-        populateValidParams(params)
+        params["stockInSheet.id"]=1
         controller.create()
         assert response.json.success
         assert response.json.data.class == "foodpaint.StockInSheetDet"
@@ -107,7 +105,17 @@ class StockInSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
-    void testSaveWithIncorrectBatchData(){
+    void testSaveWithIncorrectQty(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectBatch(){
 
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)
         def batch2 = new Batch(name:"batch2", item:item2).save(failOnError: true, flush: true)
@@ -118,6 +126,17 @@ class StockInSheetDetControllerTests {
 
         controller.save()
 
+        assert response.json.success ==false
+        assert StockInSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
         assert response.json.success ==false
         assert StockInSheetDet.list().size() == 0
     }
@@ -151,7 +170,24 @@ class StockInSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch2).qty==500
     }
 
-    void testUpdateWithIncorrectBatchData() {
+    void testUpdateWithIncorrectQty(){
+        populateValidParams(params)
+        def stockInSheetDet11 = new StockInSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 1
+        assert StockInSheetDet.get(1).typeName == "SIS"
+        assert StockInSheetDet.get(1).name == "00001"
+        assert StockInSheetDet.get(1).sequence == 1
+        assert StockInSheetDet.get(1).qty == 1000
+    }
+
+    void testUpdateWithIncorrectBatch() {
 
         populateValidParams(params)
 
@@ -181,8 +217,22 @@ class StockInSheetDetControllerTests {
         assert StockInSheetDet.list().get(0).qty == 1000
         assert Inventory.findByWarehouseAndItem(warehouse1,item1).qty==1000
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
+    }
 
+    void testUpdateWithTypeNameAndName(){
+        populateValidParams(params)
+        def stockInSheetDet = new StockInSheetDet(params).save(failOnError: true)
 
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert StockInSheetDet.list().size() == 1
+        assert StockInSheetDet.get(1).typeName == "SIS"
+        assert StockInSheetDet.get(1).name == "00001"
+        assert StockInSheetDet.get(1).sequence == 1
     }
 
     void testDelete(){

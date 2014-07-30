@@ -79,15 +79,7 @@ class MaterialSheetController {
 
     def update = {
 
-        def materialSheet= MaterialSheet.get(params.id)
-        if(materialSheet.materialSheetDets && (params.workstation.id.toLong() != materialSheet.workstation?.id || params.supplier.id.toLong() != materialSheet.supplier?.id)){
-            render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
-            }
-            return
-        }
-
-        materialSheet.properties = params
+        def materialSheet= new MaterialSheet(params)
         
         if((materialSheet.workstation && materialSheet.supplier)||(!materialSheet.workstation && !materialSheet.supplier)){
             render (contentType: 'application/json') {
@@ -95,6 +87,25 @@ class MaterialSheetController {
             }
             return
         }
+        materialSheet= MaterialSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != materialSheet.typeName || params.name != materialSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        //工作站/供應商一旦建立不允許變更
+        if(materialSheet.materialSheetDets && ((params.workstation?.id && params.workstation.id.toLong() != materialSheet.workstation?.id) || (params.supplier?.id &&params.supplier.id.toLong() != materialSheet.supplier?.id))){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
+            }
+            return
+        }
+
+        materialSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(materialSheet)
         }         

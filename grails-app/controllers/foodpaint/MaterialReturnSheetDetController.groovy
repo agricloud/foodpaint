@@ -78,6 +78,14 @@ class MaterialReturnSheetDetController {
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(materialReturnSheetDet.typeName != materialReturnSheetDet.materialReturnSheet.typeName || materialReturnSheetDet.name != materialReturnSheetDet.materialReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(materialReturnSheetDet.materialReturnSheet.workstation!=materialReturnSheetDet.materialSheetDet.materialSheet.workstation || materialReturnSheetDet.materialReturnSheet.supplier!=materialReturnSheetDet.materialSheetDet.materialSheet.supplier){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialReturnSheetDet.materialReturnSheet.workstationOrSupplier.materialSheetDet.materialSheet.workstationOrSupplier.not.equal', args: [materialReturnSheetDet])]
@@ -125,6 +133,14 @@ class MaterialReturnSheetDetController {
     def update() {
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != materialReturnSheetDet.typeName || params.name != materialReturnSheetDet.name|| params.sequence.toLong() != materialReturnSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
 
         if(materialReturnSheetDet.materialReturnSheet.workstation!=materialReturnSheetDet.materialSheetDet.materialSheet.workstation || materialReturnSheetDet.materialReturnSheet.supplier!=materialReturnSheetDet.materialSheetDet.materialSheet.supplier){
             render (contentType: 'application/json') {

@@ -90,6 +90,6 @@ class PurchaseReturnSheetDet{
         qty min: 0.0d
     }
     public String toString(){
-        "託外進貨單單身：${typeName}-${name}-${sequence}"
+        "退貨單單身：${typeName}-${name}-${sequence}"
     }
 }

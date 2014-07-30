@@ -67,20 +67,33 @@ class MaterialReturnSheetController {
 
     def update = {
 
-        def materialReturnSheet= MaterialReturnSheet.get(params.id)
-        if(materialReturnSheet.materialReturnSheetDets && (params.workstation.id.toLong() != materialReturnSheet.workstation?.id || params.supplier.id.toLong() != materialReturnSheet.supplier?.id)){
-            render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialReturnSheet.materialReturnSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialReturnSheet])]
-            }
-            return
-        }
-        materialReturnSheet.properties = params
+        def materialReturnSheet= new MaterialReturnSheet(params)
+
         if((materialReturnSheet.workstation && materialReturnSheet.supplier)||(!materialReturnSheet.workstation && !materialReturnSheet.supplier)){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'materialReturnSheet.workstation.supplier.should.exist.one', args: [materialReturnSheet])]
             }
             return
         }
+
+        materialReturnSheet= MaterialReturnSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != materialReturnSheet.typeName || params.name != materialReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+        
+        if(materialReturnSheet.materialReturnSheetDets && ((params.workstation?.id && params.workstation.id.toLong() != materialReturnSheet.workstation?.id) || (params.supplier?.id &&params.supplier.id.toLong() != materialReturnSheet.supplier?.id))){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'materialReturnSheet.materialReturnSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialReturnSheet])]
+            }
+            return
+        }
+        materialReturnSheet.properties = params
+        
         render (contentType: 'application/json') {
             domainService.save(materialReturnSheet)
         }         

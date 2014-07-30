@@ -207,12 +207,16 @@ class TestService {
         messageSource.addMessage("default.message.delete.success", Locale.getDefault(), "刪除成功")
         messageSource.addMessage("default.message.update.failed", Locale.getDefault(), "更新失敗")
         // messageSource.addMessage("default.message.update.success", Locale.getDefault(), "更新成功")
+        messageSource.addMessage("default.message.delete.failed", Locale.getDefault(), "刪除失敗")
         messageSource.addMessage("default.message.notfound", Locale.getDefault(), "查無資料") 
 
         messageSource.addMessage("batch.name.params.notfound", Locale.getDefault(), "批號未輸入")
+        messageSource.addMessage("batch.name.unique", Locale.getDefault(), "批號：{0} 已存在，請重新輸入。")
         messageSource.addMessage("sheet.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與批號品項不符")
         messageSource.addMessage("sheet.item.manufactureOrder.item.batch.item.not.equal", Locale.getDefault(), " {0} 品項與製令品項、批號品項不符")
+        messageSource.addMessage("inventory.qty.must.be.more.than.zero", Locale.getDefault(), "數量必須大於0")
         messageSource.addMessage("inventory.quantity.not.enough", Locale.getDefault(),"{0}、{1} 庫存數量不足")
+        messageSource.addMessage("inventoryDetail.qty.must.be.more.than.zero", Locale.getDefault(), "數量必須大於0")
         messageSource.addMessage("inventoryDetail.quantity.not.enough", Locale.getDefault(), "{0}、{1}、{2}、{3} 庫存數量不足")
         
         messageSource.addMessage("country.TAIWAN.label", Locale.getDefault(), "台灣")

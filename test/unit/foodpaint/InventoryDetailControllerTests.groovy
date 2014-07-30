@@ -71,6 +71,16 @@ class InventoryDetailControllerTests {
         assert InventoryDetail.get(1).qty == 100.5
     }
 
+    void testSaveWithIncorrectQty(){
+        populateValidParams(params)
+
+        params.qty=-1
+        controller.save()
+        
+        assertFalse response.json.success
+        assert InventoryDetail.list().size() == 0
+    }
+
     void testUpdate(){
         populateValidParams(params)
         controller.save()
@@ -80,11 +90,26 @@ class InventoryDetailControllerTests {
 
         controller.update()
         
-        // assert response.json.success
+        // assert response.json.success //回傳的訊息來自controller.save 用來判斷更新是錯誤的
         assert InventoryDetail.list().size() == 1
         assert InventoryDetail.get(1).item.id == 1
         assert InventoryDetail.get(1).warehouse.id == 1
         assert InventoryDetail.get(1).qty == 50.5
+    }
+
+    void testUpdateWithIncorrectQty(){
+        populateValidParams(params)
+        controller.save()
+        params.id = 1
+        params.qty= -1
+
+        controller.update()
+        
+        // assertFalse response.json.success //回傳的訊息來自controller.save 用來判斷更新是錯誤的
+        assert InventoryDetail.list().size() == 1
+        assert InventoryDetail.get(1).item.id == 1
+        assert InventoryDetail.get(1).warehouse.id == 1
+        assert InventoryDetail.get(1).qty == 100.5
     }
 
     void testDelete(){
@@ -94,7 +119,7 @@ class InventoryDetailControllerTests {
         params.id = 1
         controller.delete()
            
-        // assert response.json.success
+        // assert response.json.success //回傳的訊息來自controller.save 用來判斷刪除是錯誤的
         assert InventoryDetail.list().size() == 0
     }
 

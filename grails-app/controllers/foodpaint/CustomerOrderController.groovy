@@ -73,12 +73,22 @@ class CustomerOrderController {
 
         def customerOrder= CustomerOrder.get(params.id)
 
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != customerOrder.typeName || params.name != customerOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        //單身建立後不允許變更客戶
         if(customerOrder.customerOrderDets && params.customer.id.toLong() != customerOrder.customer.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'customerOrder.customerOrderDets.exists.customer.not.allowed.change', args: [customerOrder])]
             }
             return
         }
+        
         customerOrder.properties = params
         render (contentType: 'application/json') {
             domainService.save(customerOrder)
