@@ -1238,6 +1238,91 @@ class ConvertService {
 
 		result
     }
+def accountSheetDetParseJson(accountSheetDet){
+    	def result = [:]
 
+    		result.dateCreated =  accountSheetDet.dateCreated
+	   	result.lastUpdated =  accountSheetDet.lastUpdated
+	    	result.site =  accountSheetDet.site
+        		result.id = accountSheetDet.id
+    		result.name =  accountSheetDet.name
+		result.typeName = accountSheetDet.typeName
+		result.sequence = accountSheetDet.sequence
+		result.qty =  accountSheetDet.qty
+		result.documentSource =  accountSheetDet.documentSource		
+		result.sourceDocumentName =  accountSheetDet.sourceDocumentName 
+		result.documentName =  accountSheetDet.documentName
+		result.documentTypeName = accountSheetDet.documentTypeName
+		result.documentSequence = accountSheetDet.documentSequence
+		result.subamounts =  accountSheetDet.subamounts
+		result.tax = accountSheetDet.tax
+		result.totalAmount =  accountSheetDet.totalAmount
+
+
+
+
+		result.accountSheet = accountSheetDet.accountSheet
+		result["accountSheet.id"] = accountSheetDet.accountSheet.id
+
+		if(accountSheetDet.saleSheetDet){
+			result.saleSheetDet = accountSheetDet.saleSheetDet
+			result["saleSheetDet.id"] = accountSheetDet.saleSheetDet.id
+	       	 	result["saleSheetDet.name"] = accountSheetDet.saleSheetDet.name
+	        		result["saleSheetDet.typeName"] = accountSheetDet.saleSheetDet.typeName
+	        		result["saleSheetDet.sequence"] = accountSheetDet.saleSheetDet.sequence	        		
+	        	
+	    	}
+		if(accountSheetDet.saleReturnSheetDet){
+			result.saleSheetDet = accountSheetDet.saleReturnSheetDet
+			result["saleReturnSheetDet.id"] = accountSheetDet.saleReturnSheetDet.id
+	       	 	result["saleReturnSheetDet.name"] = accountSheetDet.saleReturnSheetDet.name
+	        		result["saleReturnSheetDet.typeName"] = accountSheetDet.saleReturnSheetDet.typeName
+	        		result["saleReturnSheetDet.sequence"] = accountSheetDet.saleReturnSheetDet.sequence	        		
+	        	
+	    	}
+		// result.saleReturnSheet = saleReturnSheetDet.saleReturnSheet
+		// result["saleReturnSheet.id"] = saleReturnSheetDet.saleReturnSheet.id
+
+		// if(saleReturnSheetDet.saleSheetDet){
+		// 	result.saleSheetDet = saleReturnSheetDet.saleSheetDet
+		// 	result["saleSheetDet.id"] = saleReturnSheetDet.saleSheetDet.id
+	 //        		result["saleSheetDet.name"] = saleReturnSheetDet.saleSheetDet.name
+	 //       		result["saleSheetDet.typeName"] = saleReturnSheetDet.saleSheetDet.typeName
+	 //        		result["saleSheetDet.sequence"] = saleReturnSheetDet.saleSheetDet.sequence
+	        		
+	 //    }
+
+	 //    if(saleReturnSheetDet.batch){
+		// 	result.batch = saleReturnSheetDet.batch
+		// 	result["batch.id"] = saleReturnSheetDet.batch.id
+	 //       		result["batch.name"] = saleReturnSheetDet.batch.name
+	 //    }
+
+		// if(saleReturnSheetDet.item){
+		// 	result.item = saleReturnSheetDet.item
+		// 	result["item.id"] = saleReturnSheetDet.item.id
+	 //        result["item.name"] = saleReturnSheetDet.item.name
+	 //        result["item.title"] = saleReturnSheetDet.item.title
+	 //        result["item.spec"] = saleReturnSheetDet.item.spec
+	 //        result["item.unit"] = saleReturnSheetDet.item.unit
+	 //        result["item.description"] = saleReturnSheetDet.item.description
+	 //    }
+
+	 //    if(saleReturnSheetDet.warehouse){
+		// result.warehouse = saleReturnSheetDet.warehouse
+		// result["warehouse.id"] =saleReturnSheetDet.warehouse.id
+	 //       	result["warehouse.name"] = saleReturnSheetDet.warehouse.name
+	 //       	result["warehouse.title"] = saleReturnSheetDet.warehouse.title
+	 //    }
+
+	 //    if(saleReturnSheetDet.warehouseLocation){
+	 //    	result.warehouseLocation = saleReturnSheetDet.warehouseLocation
+		//     result["warehouseLocation.id"] = saleReturnSheetDet.warehouseLocation.id
+		//     result["warehouseLocation.name"] = saleReturnSheetDet.warehouseLocation.name
+		//     result["warehouseLocation.title"] = saleReturnSheetDet.warehouseLocation.title
+		// }
+
+		result
+  }
 
 }
