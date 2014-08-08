@@ -106,6 +106,27 @@ class SaleSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==1000
     }
 
+    void testSaveWithIncorrectQty(){
+        populateValidParams(params)
+
+        params.qty=0
+        controller.save()
+        
+        assertFalse response.json.success
+        assert SaleSheetDet.list().size() == 0
+    }
+
+    void testSaveWithIncorrectTypeNameAndName(){
+        populateValidParams(params)
+
+        params.typeName= "AAA"
+
+        controller.save()
+        
+        assertFalse response.json.success
+        assert SaleSheetDet.list().size() == 0
+    }
+
     void testUpdate() {
         populateValidParams(params)
         def item1 = Item.get(1)
@@ -136,6 +157,40 @@ class SaleSheetDetControllerTests {
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item1,batch1).qty==5000
         assert Inventory.findByWarehouseAndItem(warehouse1,item2).qty==0
         assert InventoryDetail.findByWarehouseAndWarehouseLocationAndItemAndBatch(warehouse1,warehouseLocation1,item2,batch2).qty==0
+    }
+
+    void testUpdateWithIncorrectQty(){
+        populateValidParams(params)
+        def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.qty = 0
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert SaleSheetDet.list().size() == 1
+        assert SaleSheetDet.get(1).typeName == "SS"
+        assert SaleSheetDet.get(1).name == "00001"
+        assert SaleSheetDet.get(1).sequence == 1
+        assert SaleSheetDet.get(1).qty == 1000
+    }
+
+    void testUpdateWithTypeNameAndName(){
+        populateValidParams(params)
+        def saleSheetDet11 = new SaleSheetDet(params).save(failOnError: true, flush: true)
+
+        params.id = 1
+        params.typeName= "AAA"
+
+        controller.update()
+        
+        assertFalse response.json.success
+        assert SaleSheetDet.list().size() == 1
+        assert SaleSheetDet.get(1).typeName == "SS"
+        assert SaleSheetDet.get(1).name == "00001"
+        assert SaleSheetDet.get(1).sequence == 1
+        assert SaleSheetDet.get(1).qty == 1000
     }
 
 
