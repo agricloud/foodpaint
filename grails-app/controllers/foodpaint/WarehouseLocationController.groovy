@@ -10,8 +10,8 @@ class WarehouseLocationController {
         def warehouse = Warehouse.get(params.warehouse.id)
         
         if(warehouse){
-            
-            def warehouseLocation = WarehouseLocation.findAllByWarehouse(warehouse)
+
+            def warehouseLocation = WarehouseLocation.findAllByWarehouse(warehouse,[sort: params.sort, order: params.order])
 
             render (contentType: 'application/json') {
                [success: true, data:warehouseLocation, total: warehouseLocation.size()]
