@@ -2,6 +2,7 @@ package foodpaint
 
 class Warehouse {
 
+    String importFlag = -1
     Site site
     String editor
     String creator
@@ -9,18 +10,41 @@ class Warehouse {
     Date lastUpdated
 
     String name
-	String title
-	String remark
+    String title
+    static hasMany=[
+        warehouseLocations: WarehouseLocation,
+        inventorys: Inventory,
+        inventoryDetails: InventoryDetail
+    ]
 
-	static constraints = {
+    /**
+     *  容量
+     */
+    double capacity = Double.MAX_VALUE
+    /**
+     *  容量單位
+     */
+    String capacityUnit
+
+    String remark
+
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
+    static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
-		creator nullable:true
-		name unique: true, blank: false
-		remark nullable: true
-	}
+        creator nullable:true
+        name(unique:['site'])
+        name blank: false
+        capacity min: 0.0d
+        capacityUnit nullable: true
+        remark nullable: true
+        
+    }
 
-	public String toString(){
-    	"倉庫編號：${name}，倉庫名稱：${title}"
+    public String toString(){
+        "倉庫編號：${name}，倉庫名稱：${title}"
     }
 }

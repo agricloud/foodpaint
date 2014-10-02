@@ -2,6 +2,7 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 class MaterialSheetDetController {
 
@@ -72,86 +73,140 @@ class MaterialSheetDetController {
 
     }
 
-    def save = {
+    @Transactional
+    def save(){
 
         def materialSheetDet = new MaterialSheetDet(params)
+
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(materialSheetDet.typeName != materialSheetDet.materialSheet.typeName || materialSheetDet.name != materialSheetDet.materialSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
+        if(materialSheetDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+            }
+            return
+        }
+        //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
+        if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'materialSheetDet.materialSheet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+            }
+            return
+        }
+        //如果領料品項與製令品項相同 不允許更新領料單身
+        if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'materialSheetDet.materialSheet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+            }
+            return
+        }
+
+        def inventoryConsumeResult = inventoryDetailService.consume(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, materialSheetDet.dateCreated)
+        if(inventoryConsumeResult.success){
+            render (contentType: 'application/json') {
+                domainService.save(materialSheetDet)
+            }
+        }
+        else{
+            render (contentType: 'application/json') {
+                inventoryConsumeResult
+            }
+        }
+
+    }
+
+
+    @Transactional
+    def update() {
+
+        def materialSheetDet = new MaterialSheetDet(params)
+
+        if(materialSheetDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+            }
+            return
+        }
+        //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
+        if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'materialSheetDet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+            }
+            return
+        }
+        //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
+            return
         }
-        else{
-            if(materialSheetDet.qty>0){
 
-                def inventoryConsumeResult = inventoryDetailService.consume(materialSheetDet.warehouse.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
-                if(inventoryConsumeResult.success){
-                    render (contentType: 'application/json') {
-                        domainService.save(materialSheetDet)
-                    }
-                }
-                else{
-                    render (contentType: 'application/json') {
-                        inventoryConsumeResult
-                    }
-                }
+        materialSheetDet = MaterialSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != materialSheetDet.typeName || params.name != materialSheetDet.name|| params.sequence.toLong() != materialSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
             }
-            else{
-                render (contentType: 'application/json') {
-                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
-                }
-            }
+            return
         }
-    }
-
-
-    def update = {
-
-        def  materialSheetDet = new MaterialSheetDet(params)
         
-
-        if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
-            render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
-            }
-        }
-        else{
-            if(materialSheetDet.qty>0){
-                materialSheetDet = MaterialSheetDet.get(params.id)
-                inventoryDetailService.replenish(materialSheetDet.warehouse.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
-                
-                def inventoryConsumeResult = inventoryDetailService.consume(params.warehouse.id, params.item.id, params.batch.name, params.qty.toLong())
-                if(inventoryConsumeResult.success){
-                    materialSheetDet.properties = params             
-                    render (contentType: 'application/json') {
-                        domainService.save(materialSheetDet)
-                    }
+        //把更新前已領的數量加回庫存
+        def inventoryReplenishResult = inventoryDetailService.replenish(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+        
+        if(inventoryReplenishResult.success){
+            //把欲更新的領料數量扣掉庫存
+            def updateBatch = Batch.get(params.batch.id)
+            def inventoryConsumeResult = inventoryDetailService.consume(params,params.warehouse.id,params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(), null)
+            if(inventoryConsumeResult.success){
+                materialSheetDet.properties = params             
+                render (contentType: 'application/json') {
+                    domainService.save(materialSheetDet)
                 }
-                else{
-                    materialSheetDet = MaterialSheetDet.get(params.id)
-                    inventoryDetailService.consume(materialSheetDet.warehouse.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
+            }
+            else{
+                //把更新前已領的數量再扣掉庫存 還原更新前狀態
+                def inventoryRecoveryResult= inventoryDetailService.consume(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+                if(inventoryRecoveryResult.success){
                     render (contentType: 'application/json') {
                         inventoryConsumeResult
                     }
                 }
-            }
-            else{
-                render (contentType: 'application/json') {
-                    [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+                else{
+                    throw new Exception("還原庫存失敗:"+inventoryRecoveryResult.message)
                 }
             }
-        }       
+        }
+        else{
+            render (contentType: 'application/json') {
+                inventoryReplenishResult
+            }
+        }
+     
     }
 
 
 
-    def delete = {
+    @Transactional
+    def delete(){
 
-        def  materialSheetDet = MaterialSheetDet.get(params.id)
+        def materialSheetDet = MaterialSheetDet.get(params.id)
 
         def result
         try {
-            inventoryDetailService.replenish(materialSheetDet.warehouse.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty)
-            result = domainService.delete(materialSheetDet)
+            def inventoryReplenishResult = inventoryDetailService.replenish(params,materialSheetDet.warehouse.id,materialSheetDet.warehouseLocation.id, materialSheetDet.item.id, materialSheetDet.batch.name, materialSheetDet.qty, null)
+            
+            if(inventoryReplenishResult.success)
+                result = domainService.delete(materialSheetDet)
+            else
+                return inventoryReplenishResult
         
         }catch(e){
             log.error e

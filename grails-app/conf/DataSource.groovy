@@ -13,16 +13,17 @@ hibernate {
 }
 // environment specific settings
 environments {
+    TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
     dbToUpdate {
-        // 標準
         dataSource {
             pooled = true
             username = "root"
-            password = "mvagusta"
+            password = "root"
             dbCreate = ''
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-            url = "jdbc:mysql://127.0.0.1:3306/foodpaintold?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
+            url = "jdbc:mysql://localhost:3306/foodtest?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull"
+            
         }
 
         dataSource_erp {
@@ -37,7 +38,6 @@ environments {
    
     development {
         // 標準
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"

@@ -2,6 +2,7 @@ package foodpaint
 
 class Inventory {
 
+    String importFlag = -1
     Site site
     String editor
     String creator
@@ -13,10 +14,24 @@ class Inventory {
         item:Item
     ]
 
-    long qty = 0
+    double qty = 0.0d
 
+    /**
+     *  最近入庫日期
+     */
+    Date lastInDate = new Date()
+
+    /**
+     *  最近出庫日期
+     */
+    Date lastOutDate = new Date()
+    
+    static mapping = {
+        importFlag  defaultValue: -1
+    }
 	static constraints = {
-        item unique:'warehouse'
+        importFlag nullable:true
+        item(unique:['warehouse','site'])
         site nullable:true
         editor nullable:true
 		creator nullable:true

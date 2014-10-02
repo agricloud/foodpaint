@@ -1,10 +1,9 @@
 package foodpaint
-
-    /*
-    * 進貨單
-    */
+/**
+ * 進貨單
+ */
 class PurchaseSheet {
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
@@ -30,33 +29,37 @@ class PurchaseSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 
     static hasMany=[purchaseSheetDets:PurchaseSheetDet]
-    /*
-    * 供應商
-    */
-
+    /**
+     * 供應商
+     */
     Supplier supplier
 
     static mapping = {
         importFlag  defaultValue: -1
     }    
     static constraints = {
-        name unique:'typeName'
+        importFlag nullable:true
+        name(unique:['typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         editor nullable:true
         creator nullable:true
-        purchaseSheetDets nullable:true
         supplier  nullable:true
+    }
+
+    public String toString(){
+        "進貨單：${typeName}-${name}"
     }
 }

@@ -63,19 +63,18 @@ grails.project.dependency.resolution = {
     plugins {
 
         // plugins for the build system only
-        build ':tomcat:7.0.50'
-        
+        build ':tomcat:7.0.52.1' //build ':tomcat:7.0.50'
 
         // plugins for the compile step
-        compile ":scaffolding:2.0.0"
+        compile ':scaffolding:2.0.2' //compile ":scaffolding:2.0.0"
         compile ':cache:1.1.1'
 
         // plugins needed at runtime but not for compilation
-        runtime ':hibernate:3.6.10.7'
-        // compile ':hibernate4:4.1.11.4'
-        runtime ":database-migration:1.3.8"
+        runtime ':hibernate:3.6.10.10' // ':hibernate:3.6.10.7'
+        // runtime ':hibernate4:4.1.11.4'
+        runtime ':database-migration:1.3.8' //runtime ":database-migration:1.3.8"
         runtime ":jquery:1.10.2"
-        runtime ":resources:1.2"
+        runtime ':resources:1.2.7' //runtime ":resources:1.2"
 
 
         runtime ":cors:1.1.0"
@@ -87,5 +86,7 @@ grails.project.dependency.resolution = {
         compile ":crypto:2.0"
 
         compile ":quartz:1.0-RC13"
+
+        compile ":jasper:1.8.0"
     }
 }

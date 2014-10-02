@@ -2,21 +2,40 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
+//generate irepoet
+import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
+import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
+import org.apache.commons.io.FileUtils
+//ireport sorting list
+import net.sf.jasperreports.engine.JRSortField
+import net.sf.jasperreports.engine.design.JRDesignSortField
+import net.sf.jasperreports.engine.type.SortOrderEnum
+import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class CustomerOrderController {
 
     def domainService
+    def jasperService
+    def springSecurityService
+    def dateService
 
     def index = {
 
         def list = CustomerOrder.createCriteria().list(params,params.criteria)
         render (contentType: 'application/json') {
-            [customerOrderInstanceList: list, customerOrderInstanceTotal: list.totalCount]
+            [data: list, total: list.totalCount]
         }
-
-
-        
     }
+
+    def indexByCustomer = {
+
+        def customer = Customer.get(params.customer.id)
+        def list = CustomerOrder.findAllByCustomer(customer)
+        render (contentType: 'application/json') {
+            [data: list, total: list.size()]
+        }
+    }
+
     def show = {
         def customerOrder=CustomerOrder.get(params.id)
 
@@ -52,7 +71,24 @@ class CustomerOrderController {
 
     def update = {
 
-        def  customerOrder= CustomerOrder.get(params.id)
+        def customerOrder= CustomerOrder.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != customerOrder.typeName || params.name != customerOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        //單身建立後不允許變更客戶
+        if(customerOrder.customerOrderDets && params.customer.id.toLong() != customerOrder.customer.id){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'customerOrder.customerOrderDets.exists.customer.not.allowed.change', args: [customerOrder])]
+            }
+            return
+        }
+        
         customerOrder.properties = params
         render (contentType: 'application/json') {
             domainService.save(customerOrder)
@@ -63,7 +99,7 @@ class CustomerOrderController {
 
     def delete = {
         
-        def  customerOrder = CustomerOrder.get(params.id)
+        def customerOrder = CustomerOrder.get(params.id)
 
         def result
         try {
@@ -78,5 +114,54 @@ class CustomerOrderController {
         render (contentType: 'application/json') {
             result
         }
+    }
+
+    def print(){
+        def site
+        if(params.site.id && params.site.id!="null")
+            site = Site.get(params.site.id)
+
+        def reportTitle = message(code: 'customerOrder.report.title.label')
+        
+        //報表依指定欄位排序
+        List<JRSortField> sortList = new ArrayList<JRSortField>();
+        JRDesignSortField sortField = new JRDesignSortField();
+        sortField.setName('sequence');
+        sortField.setOrder(SortOrderEnum.ASCENDING);
+        sortField.setType(SortFieldTypeEnum.FIELD);
+        sortList.add(sortField);
+        //設定額外傳入參數
+        def parameters=[:]
+        parameters["site.title"]=site?.title
+        parameters["report.title"]=reportTitle
+        parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
+        parameters["SORT_FIELDS"]=sortList
+        //設定準備傳入的資料
+        def reportData=[]
+        def customerOrder = CustomerOrder.get(params.id)
+        customerOrder.customerOrderDets.each{ customerOrderDet ->
+            def data=[:]
+            data.dateCreated=customerOrder.dateCreated
+            data.lastUpdated=customerOrder.lastUpdated
+            data.typeName=customerOrder.typeName
+            data.name=customerOrder.name
+            data.customer=customerOrder.customer
+            data.shippingAddress=customerOrder.shippingAddress
+            data.sequence=customerOrderDet.sequence
+            data.item=customerOrderDet.item
+            data.qty=customerOrderDet.qty
+            
+            reportData << data
+        }
+
+        def reportDef = new JasperReportDef(name:'CustomerOrder.jasper',parameters:parameters,reportData:reportData,fileFormat:JasperExportFormat.PDF_FORMAT)
+
+        def fileName=dateService.getStrDate('yyyy-MM-dd HHmmss')+" "+reportTitle+".pdf"
+        
+        FileUtils.writeByteArrayToFile(new File("web-app/reportFiles/"+fileName), jasperService.generateReport(reportDef).toByteArray())
+
+        render (contentType: 'application/json') {
+            [fileName:fileName]
+        }   
     }
 }

@@ -2295,4 +2295,16 @@ databaseChangeLog = {
 	changeSet(author: "Spooky (generated)", id: "1389790098582-104") {
 		addForeignKeyConstraint(baseColumnNames: "site_id", baseTableName: "workstation", constraintName: "FK22AA550392B046E8", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "site", referencesUniqueColumn: "false")
 	}
+
+	include file: '1.0.1.groovy'
+
+	include file: '1.0.2.groovy'
+
+	include file: '1.0.3.groovy'
+
+	include file: '1.0.4.groovy'
+
+	include file: '1.0.5.groovy'
+
+	include file: '1.0.6.groovy'
 }

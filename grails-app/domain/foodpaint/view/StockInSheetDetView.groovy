@@ -40,7 +40,7 @@ class StockInSheetDetView implements Serializable{
     /*
     * 儲位
     */
-    String stockLocationName
+    String warehouseLocationName
 
     /*
     * 製令
@@ -51,7 +51,7 @@ class StockInSheetDetView implements Serializable{
     // long qty
 
     static constraints = {
-        stockLocationName nullable:true      
+        warehouseLocationName nullable:true      
 
     }
 
@@ -68,7 +68,7 @@ class StockInSheetDetView implements Serializable{
         itemName  column: 'TG004', sqlType: "nchar"
         batchName column: 'TG017', sqlType: "nchar"
         warehouseName  column: 'TG010', sqlType: "nchar"
-        stockLocationName column: 'TG034', sqlType: "nchar"
+        warehouseLocationName column: 'TG034', sqlType: "nchar"
         manufactureOrderTypeName column: 'TG014', sqlType: "nchar"
         manufactureOrderName column: 'TG015', sqlType: "nchar"
     }    

@@ -75,6 +75,20 @@ class CustomerOrderDetController {
 
         def customerOrderDet=new CustomerOrderDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(customerOrderDet.typeName != customerOrderDet.customerOrder.typeName || customerOrderDet.name != customerOrderDet.customerOrder.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
+        if(customerOrderDet.qty<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]
+            }
+            return
+        }
         render (contentType: 'application/json') {
             domainService.save(customerOrderDet)
         }
@@ -83,7 +97,22 @@ class CustomerOrderDetController {
 
     def update = {
 
-        def  customerOrderDet = CustomerOrderDet.get(params.id)
+        def customerOrderDet = CustomerOrderDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != customerOrderDet.typeName || params.name != customerOrderDet.name|| params.sequence.toLong() != customerOrderDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+
+        if(params.qty.toDouble()<=0){
+            render (contentType: 'application/json') {
+                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [customerOrderDet])]
+            }
+            return
+        }
         customerOrderDet.properties = params
         render (contentType: 'application/json') {
             domainService.save(customerOrderDet)
@@ -94,7 +123,7 @@ class CustomerOrderDetController {
 
     def delete = {
 
-        def  customerOrderDet = CustomerOrderDet.get(params.id)
+        def customerOrderDet = CustomerOrderDet.get(params.id)
 
         def result
         try {

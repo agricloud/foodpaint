@@ -89,8 +89,9 @@ class BootStrap {
 				def saleSheet1 = new SaleSheet(typeName:"A21",name:"98100900001",customer:customer1).save(failOnError: true, flush: true)
 				def saleSheetDet11 = new SaleSheetDet(saleSheet:saleSheet1,typeName:"A21",name:"98100900001",sequence:1,item:item1,batch:batch1,qty:3000,customerOrderDet:customerOrderDet11).save(failOnError: true, flush: true)
 				*/
-                // def testService = new TestService()
-                // testService.createStdTestData()
+    //             def testService = new TestService()
+    //             testService.createStdTestData()
+    //             testService.createInventoryData()
 				// testService.createOilCaseData()
 
 			}
@@ -101,9 +102,7 @@ class BootStrap {
     }
 
     private jsonParseDefine(){
-        // JSON.registerObjectMarshaller(User) {
-        //     convertService.userParseJson(it)
-        // }
+
         JSON.registerObjectMarshaller(Warehouse) {
             convertService.warehouseParseJson(it)
         }
@@ -133,6 +132,9 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(Workstation) {
             convertService.workstationParseJson(it)
+        }
+        JSON.registerObjectMarshaller(WarehouseLocation) {
+            convertService.warehouseLocationParseJson(it)
         }
         JSON.registerObjectMarshaller(Supplier) {
             convertService.supplierParseJson(it)
@@ -179,6 +181,30 @@ class BootStrap {
         }
         JSON.registerObjectMarshaller(SaleSheetDet) {
             convertService.saleSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(MaterialReturnSheet) {
+            convertService.materialReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(MaterialReturnSheetDet) {
+            convertService.materialReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseReturnSheet) {
+            convertService.purchaseReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(PurchaseReturnSheetDet) {
+            convertService.purchaseReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(OutSrcPurchaseReturnSheet) {
+            convertService.outSrcPurchaseReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(OutSrcPurchaseReturnSheetDet) {
+            convertService.outSrcPurchaseReturnSheetDetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleReturnSheet) {
+            convertService.saleReturnSheetParseJson(it)
+        }
+        JSON.registerObjectMarshaller(SaleReturnSheetDet) {
+            convertService.saleReturnSheetDetParseJson(it)
         }
 
 

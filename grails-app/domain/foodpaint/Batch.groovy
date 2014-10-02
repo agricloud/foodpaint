@@ -1,10 +1,10 @@
 package foodpaint
 
- public enum BatchType {
+public enum BatchType {
     PRODUCT
 }
 class Batch  {
-	int importFlag = -1
+	String importFlag = -1
 
     /**
      * 廠別
@@ -43,28 +43,28 @@ class Batch  {
 	]
 
 	String name
-	long expectQty = 0//ERP無此資料
+	double expectQty = 0.0d//ERP無此資料
 	Date dueDate //失效日
 
-    /*
-    * 製造完成日期
-    */
+    /**
+     * 製造完成日期
+     */
 	Date manufactureDate
 
-    /*
-    * 類型，無 erp 時使用
-    */
-    BatchType batchType
+    /**
+     * 類型，無 erp 時使用
+     */
+    BatchType batchType = foodpaint.BatchType.PRODUCT
 
 
-    /*
-    * 供應商，無 erp 時使用
-    */
+    /**
+     * 供應商，無 erp 時使用
+     */
    	Supplier supplier
 
-   	/*
-    * 供應商所屬國家
-    */
+   	/**
+     * 供應商所屬國家
+     */
 	Country country = foodpaint.Country.TAIWAN
 
     static mapping = {
@@ -72,14 +72,14 @@ class Batch  {
     }
 
 	static constraints = {
+		importFlag nullable:true
 		site nullable:true
         editor nullable:true
         creator nullable:true
-		name unique: true, blank: false
-		expectQty min: 0L
+        name unique:true, blank: false
+		expectQty min: 0.0d
 		dueDate nullable: true
 		manufactureDate nullable: true
-		batchType nullable: true
 		supplier nullable: true
 		
 	}

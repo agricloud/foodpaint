@@ -1,7 +1,7 @@
 package foodpaint
 
 class Operation {
-	int importFlag = -1
+	String importFlag = -1
 
     /**
      * 廠別
@@ -35,10 +35,15 @@ class Operation {
         importFlag  defaultValue: -1
     }
     static constraints = {
-    	name unique:true, blank: false
+    	importFlag nullable:true
+    	name(unique:['site'])
+        name blank: false
     	site nullable:true
         editor nullable:true
         creator nullable:true
         description nullable:true
+    }
+    public String toString(){
+        "製程：${name}，名稱：${title}"
     }
 }

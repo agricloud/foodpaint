@@ -1,7 +1,7 @@
 package foodpaint
 
 class Workstation {
-	int importFlag = -1
+	String importFlag = -1
 
     /**
      * 廠別
@@ -36,10 +36,15 @@ class Workstation {
         importFlag  defaultValue: -1
     }
     static constraints = {
+    	importFlag nullable:true
     	site nullable:true
         editor nullable:true
         creator nullable:true
-    	name unique:true, blank: false
+    	name(unique:['site'])
+        name blank: false
     	description nullable:true
+    }
+    public String toString(){
+    	"工作站：${name}，名稱：${title}"
     }
 }

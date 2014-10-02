@@ -1,7 +1,7 @@
 package foodpaint
 
 class BatchRoute {
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
@@ -34,15 +34,15 @@ class BatchRoute {
 	Operation operation
 	int sequence
 
-    /*
-    * 開始時間
-    */
+    /**
+     * 開始時間
+     */
 	Date startDate
 
 
-    /*
-    * 結束時間
-    */
+    /**
+     * 結束時間
+     */
 	Date endDate
 
     static mapping = {
@@ -50,13 +50,17 @@ class BatchRoute {
     }	 
 
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-    	sequence unique:'batch'
+        sequence(unique:['batch','site'])
     	startDate nullable:true
     	endDate nullable:true
         workstation nullable:true
         supplier nullable:true
+    }
+    public String toString(){
+        "批號：${batch.name}，途程項次:${sequence}"
     }
 }

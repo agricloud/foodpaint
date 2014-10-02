@@ -7,7 +7,7 @@ import grails.converters.*
  * @version 1.0
  */
 class Item {
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
@@ -51,15 +51,15 @@ class Item {
 	String description
 
 
-    /*
-    * 規格敘述
-    */
+    /**
+     * 規格敘述
+     */
     String spec
 
 
-    /*
-    * 單位
-    */
+    /**
+     * 單位
+     */
     String unit
 
     /**
@@ -92,14 +92,15 @@ class Item {
      * 有效起始與結束日期可以不設定
      */
 	static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-		name unique: true, blank: false
-        title nullable: true
+		name(unique:['site'])
+        name blank: false
         description nullable: true
         spec nullable: true
-        unit nullable: true
+        // unit nullable: true
 		// dueDays nullable: true
 		// effectStartDate nullable: true
 		// effectEndDate nullable: true

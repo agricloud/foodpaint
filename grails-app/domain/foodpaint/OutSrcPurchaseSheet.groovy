@@ -1,12 +1,9 @@
 package foodpaint
-
-
-
-    /*
-    * 託外進貨單
-    */
+/*
+ * 託外進貨單
+ */
 class OutSrcPurchaseSheet {
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
@@ -32,36 +29,34 @@ class OutSrcPurchaseSheet {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
 	static hasMany=[outSrcPurchaseSheetDets:OutSrcPurchaseSheetDet]
     /*
-    * 進貨廠商
-    */
+     * 進貨廠商
+     */
 	Supplier supplier
-
-    /*
-    * 託外進貨日期
-    */
-    Date outSrcPurchaseDate = new Date()
-
 
     static mapping = {
         importFlag  defaultValue: -1
     }
     static constraints = {
-        name unique:'typeName'
+        importFlag nullable:true
+        name(unique:['typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         editor nullable:true
         creator nullable:true
-        outSrcPurchaseSheetDets nullable:true
+    }
+    public String toString(){
+        "託外進貨單：${typeName}-${name}"
     }
 }

@@ -58,43 +58,53 @@ class BatchService {
 				return createBatchInstanceByJson(params, sheet)
 			}
 			else{
-
-				if(sheet.instanceOf(PurchaseSheetDet)){
-					if(sheet.item != batch.item){
-						isSuccess = false
-						args=[sheet]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+				if(sheet){
+					if(sheet.instanceOf(PurchaseSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.supplier = sheet.purchaseSheet.supplier
+							isSuccess = true
+						}
 					}
-					else{
-						batch.supplier = sheet.purchaseSheet.supplier
-						isSuccess = true
+					if(sheet.instanceOf(StockInSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							isSuccess = true
+						}
+					}
+					if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.supplier = sheet.outSrcPurchaseSheet.supplier
+							isSuccess = true
+						}
+					}
+					if(sheet.instanceOf(ManufactureOrder)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.expectQty = sheet.qty
+							isSuccess = true
+						}
 					}
 				}
-				if(sheet.instanceOf(StockInSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item){
-						isSuccess = false
-						args=[sheet.manufactureOrder]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
-					}
-					else{
-						isSuccess = true
-					}
-				}
-				if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-					if(sheet.manufactureOrder.item != batch.item){
-						isSuccess = false
-						args=[sheet.manufactureOrder]
-						msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
-					}
-					else{
-						batch.supplier = sheet.outSrcPurchaseSheet.supplier
-						isSuccess = true
-					}
-				}
-				if(sheet.instanceOf(ManufactureOrder)){
-					batch.expectQty = sheet.qty
+				else
 					isSuccess = true
-				}
 			}
 
 		}
@@ -107,34 +117,71 @@ class BatchService {
 	}
 
 	def createBatchInstanceByJson(params, sheet){
+		def isSuccess
 		def msg
 		Object[] args=[]
 		//新增批號 若批號已存在則不允許新增
 		if(params["batch.name"]){
 
-			def batch = new Batch()
-		
-			batch.name = params["batch.name"]
-			batch.item = sheet.item
+			if(Batch.findByName(params["batch.name"])){
+				args[params["batch.name"]]
+				msg = messageSource.getMessage("batch.name.unique", args, Locale.getDefault())
+            	return [success:false, message: msg]
+			}
+			else{
+				def batch = new Batch()
+			
+				batch.name = params["batch.name"]
+				batch.item = Item.get(params.item.id)
 
-			if(sheet.instanceOf(PurchaseSheetDet)){
-				batch.supplier = sheet.purchaseSheet.supplier
-			}
-			if(sheet.instanceOf(StockInSheetDet)){
-			}
-			if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
-				batch.supplier = sheet.outSrcPurchaseSheet.supplier
-			}
-			if(sheet.instanceOf(ManufactureOrder)){
-				batch.expectQty = sheet.qty
-			}
+				if(sheet){
+					if(sheet.instanceOf(PurchaseSheetDet)){
+						batch.supplier = sheet.purchaseSheet.supplier
+						isSuccess = true
+					}
+					if(sheet.instanceOf(StockInSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							isSuccess =true
+						}
+					}
+					if(sheet.instanceOf(OutSrcPurchaseSheetDet)){
+						if(sheet.item != batch.item){
+							isSuccess = false
+							args=[sheet]
+							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+						}
+						else{
+							batch.supplier = sheet.outSrcPurchaseSheet.supplier
+							isSuccess = true
+						}
+					}
+					if(sheet.instanceOf(ManufactureOrder)){
+						batch.expectQty = sheet.qty
+						isSuccess = true
+					}
+				}
+				else
+					isSuccess = true
 
-			def result=domainService.save(batch)
+				if(isSuccess){
+					if(params["site.id"] && params["site.id"] != "null")
+						batch.site = Site.findById(params["site.id"])
 
-			if(result.success){
-				result.batch=batch
+					def result=domainService.save(batch)
+
+					if(result.success){
+						result.batch=batch
+					}
+					return result
+				}
+				else
+					return [success:isSuccess, batch:batch, message: msg]
 			}
-			return result
 		}
 		else{//未指定欲新增之批號
 			msg = messageSource.getMessage("batch.name.params.notfound", args, Locale.getDefault())

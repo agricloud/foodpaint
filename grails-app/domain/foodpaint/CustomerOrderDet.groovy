@@ -3,7 +3,7 @@ package foodpaint
  * 客戶訂單單身
  */
 class CustomerOrderDet{
-    int importFlag = -1
+    String importFlag = -1
 
     /**
      * 廠別
@@ -30,48 +30,50 @@ class CustomerOrderDet{
      */
     Date lastUpdated
 
-    /*
-    * 單別
-    */
+    /**
+     * 單別
+     */
     String typeName
 
-
-    /*
-    * 單號
-    */
+    /**
+     * 單號
+     */
     String name
-    /*
-    * 訂單項次，取訂單編號最大單身項次 +1
-    */
+    /**
+     * 訂單項次，取訂單編號最大單身項次 +1
+     */
     int sequence
 
 
     CustomerOrder customerOrder
-    /*
-    * 關連品項編號
-    */
+    /**
+     * 關連品項編號
+     */
 	Item item
 
-    /*
-    * 訂單數量
-    */
-	long qty
+    /**
+     * 訂單數量
+     */
+	double qty
 
     static mapping = {
         importFlag  defaultValue: -1
     }
     static constraints = {
+        importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-        sequence(unique:['name','typeName'])
+        sequence(unique:['name','typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         item nullable:true
         qty nullable:true
-        
+        qty min: 0.0d
     }
 
     public String toString(){
-        "訂單：${typeName}-${name}-${sequence}"
+        "訂單單身：${typeName}-${name}-${sequence}"
     }
 }
