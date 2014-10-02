@@ -78,6 +78,14 @@ class SaleSheetDetController {
     def save() {
         def saleSheetDet=new SaleSheetDet(params)
 
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(saleSheetDet.typeName != saleSheetDet.saleSheet.typeName || saleSheetDet.name != saleSheetDet.saleSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(saleSheetDet.qty<=0){
             render (contentType: 'application/json') {
                 [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleSheetDet])]
@@ -128,6 +136,15 @@ class SaleSheetDetController {
 
 
         saleSheetDet = SaleSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != saleSheetDet.typeName || params.name != saleSheetDet.name|| params.sequence.toLong() != saleSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+
         //把更新前已銷的數量加回庫存
         def inventoryReplenishResult = inventoryDetailService.replenish(params,saleSheetDet.warehouse.id,saleSheetDet.warehouseLocation.id, saleSheetDet.item.id, saleSheetDet.batch.name, saleSheetDet.qty,null)
         if(inventoryReplenishResult.success){

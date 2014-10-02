@@ -76,6 +76,15 @@ class SaleReturnSheetDetController {
     @Transactional
     def save(){
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
+
+        //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
+        if(saleReturnSheetDet.typeName != saleReturnSheetDet.saleReturnSheet.typeName || saleReturnSheetDet.name != saleReturnSheetDet.saleReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+            }
+            return
+        }
+
         if(saleReturnSheetDet.saleReturnSheet.customer!=saleReturnSheetDet.saleSheetDet.saleSheet.customer){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'saleReturnSheetDet.saleReturnSheet.customer.saleSheetDet.saleSheet.customer.not.equal', args: [saleReturnSheetDet])]
@@ -150,6 +159,15 @@ class SaleReturnSheetDetController {
         }
 
         saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
+        
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != saleReturnSheetDet.typeName || params.name != saleReturnSheetDet.name|| params.sequence.toLong() != saleReturnSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+
         def inventoryConsumeResult=inventoryDetailService.consume(params,saleReturnSheetDet.warehouse.id,saleReturnSheetDet.warehouseLocation.id, saleReturnSheetDet.item.id, saleReturnSheetDet.batch.name, saleReturnSheetDet.qty,null)
         if(inventoryConsumeResult.success){    
             def updateBatch = Batch.get(params.batch.id)

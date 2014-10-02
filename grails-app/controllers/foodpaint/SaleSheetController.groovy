@@ -73,12 +73,23 @@ class SaleSheetController {
     def update = {
 
         def saleSheet= SaleSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != saleSheet.typeName || params.name != saleSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+
+        //單身建立後不允許變更客戶
         if(saleSheet.saleSheetDets && params.customer.id.toLong() != saleSheet.customer.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'saleSheet.saleSheetDets.exists.customer.not.allowed.change', args: [saleSheet])]
             }
             return
         }
+        
         saleSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(saleSheet)

@@ -63,12 +63,22 @@ class SaleReturnSheetController {
     def update = {
 
         def saleReturnSheet= SaleReturnSheet.get(params.id)
+
+        //單別、單號一旦建立不允許變更
+        if(params.typeName != saleReturnSheet.typeName || params.name != saleReturnSheet.name){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+            }
+            return
+        }
+        
         if(saleReturnSheet.saleReturnSheetDets && params.customer.id.toLong() != saleReturnSheet.customer.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: 'saleReturnSheet.saleReturnSheetDets.exists.customer.not.allowed.change', args: [saleReturnSheet])]
             }
             return
         }
+
         saleReturnSheet.properties = params
         render (contentType: 'application/json') {
             domainService.save(saleReturnSheet)

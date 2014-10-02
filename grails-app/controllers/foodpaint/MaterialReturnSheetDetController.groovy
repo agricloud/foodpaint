@@ -134,13 +134,7 @@ class MaterialReturnSheetDetController {
 
         def materialReturnSheetDet = new MaterialReturnSheetDet(params)
 
-        //單別、單號、序號一旦建立不允許變更
-        if(params.typeName != materialReturnSheetDet.typeName || params.name != materialReturnSheetDet.name|| params.sequence.toLong() != materialReturnSheetDet.sequence){
-            render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
-            }
-            return
-        }
+        
 
         if(materialReturnSheetDet.materialReturnSheet.workstation!=materialReturnSheetDet.materialSheetDet.materialSheet.workstation || materialReturnSheetDet.materialReturnSheet.supplier!=materialReturnSheetDet.materialSheetDet.materialSheet.supplier){
             render (contentType: 'application/json') {
@@ -171,6 +165,15 @@ class MaterialReturnSheetDetController {
         }
 
         materialReturnSheetDet = MaterialReturnSheetDet.get(params.id)
+
+        //單別、單號、序號一旦建立不允許變更
+        if(params.typeName != materialReturnSheetDet.typeName || params.name != materialReturnSheetDet.name|| params.sequence.toLong() != materialReturnSheetDet.sequence){
+            render (contentType: 'application/json') {
+                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+            }
+            return
+        }
+        
         def inventoryConsumeResult = inventoryDetailService.consume(params,materialReturnSheetDet.warehouse.id,materialReturnSheetDet.warehouseLocation.id, materialReturnSheetDet.item.id, materialReturnSheetDet.batch.name, materialReturnSheetDet.qty,null)
         
         if(inventoryConsumeResult.success){
