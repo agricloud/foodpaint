@@ -6,10 +6,13 @@ import grails.transaction.Transactional
 
 class MaterialSheetDetController {
 
+    def grailsApplication
     def domainService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def materialSheet = MaterialSheet.get(params.materialSheet.id)
 
@@ -24,7 +27,7 @@ class MaterialSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -32,6 +35,8 @@ class MaterialSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def materialSheetDet=MaterialSheetDet.get(params.id);
 
@@ -43,13 +48,15 @@ class MaterialSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.materialSheet.id){
 
@@ -67,7 +74,7 @@ class MaterialSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.materialSheetDet.message.create.failed")]
             }            
         }
 
@@ -76,33 +83,35 @@ class MaterialSheetDetController {
     @Transactional
     def save(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheetDet = new MaterialSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(materialSheetDet.typeName != materialSheetDet.materialSheet.typeName || materialSheetDet.name != materialSheetDet.materialSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(materialSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [materialSheetDet])]
             }
             return
         }
         //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
         if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.materialSheet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.materialSheetDet.materialSheet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal", args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
         //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.materialSheet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.materialSheetDet.materialSheet.item.manufactureOrder.item.equal", args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
@@ -125,25 +134,27 @@ class MaterialSheetDetController {
     @Transactional
     def update() {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheetDet = new MaterialSheetDet(params)
 
         if(materialSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [materialSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [materialSheetDet])]
             }
             return
         }
         //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
         if(materialSheetDet.materialSheet.workstation != materialSheetDet.manufactureOrder.workstation || materialSheetDet.materialSheet.supplier != materialSheetDet.manufactureOrder.supplier){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.materialSheetDet.workstationOrSupplier.manufactureOrder.workstationOrSupplier.not.equal", args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
         //如果領料品項與製令品項相同 不允許更新領料單身
         if(materialSheetDet.item == materialSheetDet.manufactureOrder.item){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'materialSheetDet.item.manufactureOrder.item.equal', args: [materialSheetDet, materialSheetDet.manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.materialSheetDet.item.manufactureOrder.item.equal", args: [materialSheetDet, materialSheetDet.manufactureOrder])]
             }
             return
         }
@@ -153,7 +164,7 @@ class MaterialSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != materialSheetDet.typeName || params.name != materialSheetDet.name|| params.sequence.toLong() != materialSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -197,6 +208,8 @@ class MaterialSheetDetController {
     @Transactional
     def delete(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheetDet = MaterialSheetDet.get(params.id)
 
         def result
@@ -210,7 +223,7 @@ class MaterialSheetDetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [materialSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [materialSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

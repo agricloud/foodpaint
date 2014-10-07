@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 
 class InventoryController {
 
+    def grailsApplication
     def domainService
     def inventoryService
 
@@ -37,6 +38,9 @@ class InventoryController {
     }
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def inventory=Inventory.get(params.id);  
         if(inventory){   
             render (contentType: 'application/json') {
@@ -44,12 +48,15 @@ class InventoryController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
     
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def inventory=new Inventory()        
         render (contentType: 'application/json') {
             [success: true,data:inventory]
@@ -59,7 +66,7 @@ class InventoryController {
     def save = {
         if(params.qty.toDouble()<0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'inventory.qty.must.be.more.than.zero')]
+                [success:false, message:message(code: "${i18nType}.inventory.qty.must.be.more.than.zero")]
             }
             return
         }
@@ -71,9 +78,12 @@ class InventoryController {
 
     @Transactional
     def update(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         if(params.qty.toDouble()<0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'inventory.qty.must.be.more.than.zero')]
+                [success:false, message:message(code: "${i18nType}.inventory.qty.must.be.more.than.zero")]
             }
             return
         }
@@ -86,7 +96,7 @@ class InventoryController {
                 def inventoryReplenishResult = inventoryService.replenish(params, params.warehouse.id, params.item.id, params.qty.toDouble(), null)
                 if(inventoryReplenishResult.success){
                     render (contentType: 'application/json') {
-                        [success:true, message: message(code: 'default.message.update.success', args: [inventory, e])]
+                        [success:true, message: message(code: "${i18nType}.default.message.update.success", args: [inventory, e])]
                     }
                 }
                 else{
@@ -103,7 +113,7 @@ class InventoryController {
         }
         else{
             render (contentType: 'application/json') {
-                [success:false, message: message(code: 'inventory.inventoryDetail.has.existed', args: [inventory, e])]
+                [success:false, message: message(code: "${i18nType}.inventory.inventoryDetail.has.existed", args: [inventory, e])]
             }
         }
 
@@ -111,6 +121,8 @@ class InventoryController {
 
     @Transactional
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def inventory = Inventory.get(params.id)
         if(!InventoryDetail.findByWarehouseAndItem(inventory.warehouse,inventory.item)){
@@ -121,7 +133,7 @@ class InventoryController {
             
             }catch(DataIntegrityViolationException e){
                 log.error e
-                def msg = message(code: 'default.message.delete.failed', args: [inventory, e])
+                def msg = message(code: "${i18nType}.default.message.delete.failed", args: [inventory, e])
                 result = [success:false, message: msg] 
             }
             
@@ -131,7 +143,7 @@ class InventoryController {
         }
         else{
             render (contentType: 'application/json') {
-                [success:false, message: message(code: 'inventory.inventoryDetail.has.existed', args: [inventory, e])]
+                [success:false, message: message(code: "${i18nType}.inventory.inventoryDetail.has.existed", args: [inventory, e])]
             }
         }
     }

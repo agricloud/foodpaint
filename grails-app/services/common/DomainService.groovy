@@ -3,6 +3,7 @@ import org.springframework.transaction.annotation.Transactional
 
 class DomainService {
 
+    def grailsApplication
 	def messageSource 
 
 
@@ -13,7 +14,7 @@ class DomainService {
 
  //        if (!domainObject) {
 
- //            def msg = messageSource.getMessage("default.message.update.notfound", args, Locale.getDefault())
+ //            def msg = messageSource.getMessage("${i18nType}.default.message.update.not.found", args, Locale.getDefault())
             
  //            return [success:false, message: msg]
             
@@ -29,6 +30,7 @@ class DomainService {
     @Transactional
     def save(domainObject) {
 
+        def i18nType = grailsApplication.config.grails.i18nType
         def success
         def errors=[:]
         def msg
@@ -36,13 +38,13 @@ class DomainService {
 
         if (!domainObject) {
 
-            msg = messageSource.getMessage("default.message.notfound", args, Locale.getDefault())
+            msg = messageSource.getMessage("${i18nType}.default.message.not.found", args, Locale.getDefault())
             
             return [success:false, message: msg]
             
         }else if (domainObject.validate() && domainObject.save()) {
 
-            msg = messageSource.getMessage("default.message.save.success", args, Locale.getDefault())
+            msg = messageSource.getMessage("${i18nType}.default.message.save.success", args, Locale.getDefault())
             success=true;
 
         }else{
@@ -59,7 +61,7 @@ class DomainService {
             }
 
             try{
-                msg = messageSource.getMessage("default.message.save.failed", args, Locale.getDefault())
+                msg = messageSource.getMessage("${i18nType}.default.message.save.failed", args, Locale.getDefault())
             }catch (e){
                 msg = "更新失敗"
 
@@ -73,12 +75,14 @@ class DomainService {
 	}
     @Transactional
     def delete(domainObject) {
+
+        def i18nType = grailsApplication.config.grails.i18nType
     	Object[] args = [domainObject,null];
     	def msg
 
 
         if (!domainObject) {
-            msg = messageSource.getMessage("default.message.notfound", args, Locale.getDefault())
+            msg = messageSource.getMessage("${i18nType}.default.message.not.found", args, Locale.getDefault())
 
             return [success:false, message: msg]
             
@@ -87,7 +91,7 @@ class DomainService {
         try {
             
             domainObject.delete()
-            msg = messageSource.getMessage("default.message.delete.success", args, Locale.getDefault())
+            msg = messageSource.getMessage("${i18nType}.default.message.delete.success", args, Locale.getDefault())
             return [success:true, message: msg]
 
         }
@@ -105,7 +109,7 @@ class DomainService {
 
 
     //     if (!domainObject) {
-    //         msg = messageSource.getMessage("default.not.found.message", args, Locale.getDefault())
+    //         msg = messageSource.getMessage("${i18nType}.default.not.found.message", args, Locale.getDefault())
 
     //         return [success:false, message: msg]
             
@@ -114,14 +118,14 @@ class DomainService {
     //     try {
             
     //         domainObject.delete(flush:true, failOnError:true)               
-    //         msg = messageSource.getMessage("default.message.delete.success", args, Locale.getDefault())
+    //         msg = messageSource.getMessage("${i18nType}.default.message.delete.success", args, Locale.getDefault())
     //         return [success:true, message: msg]
 
     //     }
     //     catch (e) {
     //         log.error e
     //         args[1] = e
-    //         msg = messageSource.getMessage('default.message.delete.failed', args, Locale.getDefault())
+    //         msg = messageSource.getMessage("${i18nType}.default.message.delete.failed", args, Locale.getDefault())
     //         return [success:false, message: msg] 
     //     }
 

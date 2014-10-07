@@ -2,6 +2,7 @@ package foodpaint
 
 class WarehouseController {
 
+    def grailsApplication
     def domainService
 
     def index() {
@@ -17,6 +18,8 @@ class WarehouseController {
 
      def show(Long id){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def warehouse=Warehouse.get(id);  
         if(warehouse){   
             render (contentType: 'application/json') {
@@ -24,7 +27,7 @@ class WarehouseController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -54,6 +57,9 @@ class WarehouseController {
 
 
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def warehouseInstance = Warehouse.get(params.id)
         def result
         try {
@@ -62,7 +68,7 @@ class WarehouseController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [warehouseInstance, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [warehouseInstance, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

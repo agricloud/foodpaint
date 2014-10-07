@@ -6,11 +6,15 @@ import grails.transaction.Transactional
 
 class SaleReturnSheetDetController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheet = SaleReturnSheet.get(params.saleReturnSheet.id)
 
         if(saleReturnSheet){
@@ -24,7 +28,7 @@ class SaleReturnSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -32,6 +36,8 @@ class SaleReturnSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def saleReturnSheetDet = SaleReturnSheetDet.get(params.id);
 
@@ -43,13 +49,15 @@ class SaleReturnSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.saleReturnSheet.id){
 
@@ -67,7 +75,7 @@ class SaleReturnSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.message.create.failed")]
             }            
         }
 
@@ -75,40 +83,43 @@ class SaleReturnSheetDetController {
 
     @Transactional
     def save(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheetDet=new SaleReturnSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(saleReturnSheetDet.typeName != saleReturnSheetDet.saleReturnSheet.typeName || saleReturnSheetDet.name != saleReturnSheetDet.saleReturnSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(saleReturnSheetDet.saleReturnSheet.customer!=saleReturnSheetDet.saleSheetDet.saleSheet.customer){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheetDet.saleReturnSheet.customer.saleSheetDet.saleSheet.customer.not.equal', args: [saleReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.saleReturnSheet.customer.saleSheetDet.saleSheet.customer.not.equal", args: [saleReturnSheetDet])]
             }
             return
         }
 
         if(saleReturnSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleReturnSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [saleReturnSheetDet])]
             }
             return
         }
 
         if(saleReturnSheetDet.item != saleReturnSheetDet.saleSheetDet.item || saleReturnSheetDet.batch != saleReturnSheetDet.saleSheetDet.batch){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal', args:saleReturnSheetDet)]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal", args:saleReturnSheetDet)]
             }
             return
         }
 
         if(saleReturnSheetDet.customerOrderDet != saleReturnSheetDet.saleSheetDet.customerOrderDet){
             render (contentType: 'application/json') {
-                    [success: false,message:message(code: 'saleReturnSheetDet.customerOrderDet.saleSheetDet.customerOrderDet.not.equal', args: [saleReturnSheetDet])]
+                    [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.customerOrderDet.saleSheetDet.customerOrderDet.not.equal", args: [saleReturnSheetDet])]
             }
             return
         }
@@ -129,31 +140,34 @@ class SaleReturnSheetDetController {
 
     @Transactional
     def update(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheetDet = new SaleReturnSheetDet(params)
         if(saleReturnSheetDet.saleReturnSheet.customer!=saleReturnSheetDet.saleSheetDet.saleSheet.customer){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheetDet.saleReturnSheetcustomer.saleSheetDet.saleSheet.customer.not.equal', args: [saleReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.saleReturnSheetcustomer.saleSheetDet.saleSheet.customer.not.equal", args: [saleReturnSheetDet])]
             }
             return
         }
 
         if(saleReturnSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleReturnSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [saleReturnSheetDet])]
             }
             return
         }
 
         if(saleReturnSheetDet.item != saleReturnSheetDet.saleSheetDet.item || saleReturnSheetDet.batch != saleReturnSheetDet.saleSheetDet.batch){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal', args:saleReturnSheetDet)]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.itemOrBatch.saleSheetDet.itemOrBatch.not.equal", args:saleReturnSheetDet)]
             }
             return
         }
 
         if(saleReturnSheetDet.customerOrderDet != saleReturnSheetDet.saleSheetDet.customerOrderDet){
             render (contentType: 'application/json') {
-                    [success: false,message:message(code: 'saleReturnSheetDet.customerOrderDet.saleSheetDet.customerOrderDet.not.equal', args: [saleReturnSheetDet])]
+                    [success: false,message:message(code: "${i18nType}.saleReturnSheetDet.customerOrderDet.saleSheetDet.customerOrderDet.not.equal", args: [saleReturnSheetDet])]
             }
             return
         }
@@ -163,7 +177,7 @@ class SaleReturnSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != saleReturnSheetDet.typeName || params.name != saleReturnSheetDet.name|| params.sequence.toLong() != saleReturnSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -202,6 +216,8 @@ class SaleReturnSheetDetController {
     @Transactional
     def delete(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheetDet = SaleReturnSheetDet.get(params.id)
         def result
         try {
@@ -215,7 +231,7 @@ class SaleReturnSheetDetController {
 
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [saleReturnSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [saleReturnSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

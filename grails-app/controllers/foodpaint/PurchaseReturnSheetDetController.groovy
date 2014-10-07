@@ -6,10 +6,13 @@ import grails.transaction.Transactional
 
 class PurchaseReturnSheetDetController {
 
+    def grailsApplication
     def domainService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def purchaseReturnSheet = PurchaseReturnSheet.get(params.purchaseReturnSheet.id)
 
@@ -24,7 +27,7 @@ class PurchaseReturnSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -32,6 +35,8 @@ class PurchaseReturnSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id);
 
@@ -43,13 +48,15 @@ class PurchaseReturnSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.purchaseReturnSheet.id){
 
@@ -67,7 +74,7 @@ class PurchaseReturnSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheetDet.message.create.failed")]
             }            
         }
 
@@ -75,33 +82,36 @@ class PurchaseReturnSheetDetController {
 
     @Transactional
     def save(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseReturnSheetDet=new PurchaseReturnSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(purchaseReturnSheetDet.typeName != purchaseReturnSheetDet.purchaseReturnSheet.typeName || purchaseReturnSheetDet.name != purchaseReturnSheetDet.purchaseReturnSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(purchaseReturnSheetDet.purchaseReturnSheet.supplier!=purchaseReturnSheetDet.purchaseSheetDet.purchaseSheet.supplier){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheetDet.purchaseReturnSheet.supplier.purchaseSheetDet.purchaseSheet.supplier.not.equal', args: [purchaseReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheetDet.purchaseReturnSheet.supplier.purchaseSheetDet.purchaseSheet.supplier.not.equal", args: [purchaseReturnSheetDet])]
             }
             return
         }
 
         if(purchaseReturnSheetDet.qty<=0){
              render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [purchaseReturnSheetDet])]
             }
             return
         } 
 
         if(purchaseReturnSheetDet.item != purchaseReturnSheetDet.purchaseSheetDet.item || purchaseReturnSheetDet.batch != purchaseReturnSheetDet.purchaseSheetDet.batch){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal', args: [purchaseReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal", args: [purchaseReturnSheetDet])]
             }
             return
         }
@@ -122,24 +132,27 @@ class PurchaseReturnSheetDetController {
 
     @Transactional
     def update() {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseReturnSheetDet = new PurchaseReturnSheetDet(params)
         if(purchaseReturnSheetDet.purchaseReturnSheet.supplier!=purchaseReturnSheetDet.purchaseSheetDet.purchaseSheet.supplier){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheetDet.purchaseReturnSheet.supplier.purchaseSheetDet.purchaseSheet.supplier.not.equal', args: [purchaseReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheetDet.purchaseReturnSheet.supplier.purchaseSheetDet.purchaseSheet.supplier.not.equal", args: [purchaseReturnSheetDet])]
             }
             return
         }
 
         if(purchaseReturnSheetDet.qty<=0){
              render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseReturnSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [purchaseReturnSheetDet])]
             }
             return
         } 
 
         if(purchaseReturnSheetDet.item != purchaseReturnSheetDet.purchaseSheetDet.item || purchaseReturnSheetDet.batch != purchaseReturnSheetDet.purchaseSheetDet.batch){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal', args: [purchaseReturnSheetDet])]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheetDet.itemOrBatch.purchaseSheetDet.itemOrBatch.not.equal", args: [purchaseReturnSheetDet])]
             }
             return
         }
@@ -149,7 +162,7 @@ class PurchaseReturnSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != purchaseReturnSheetDet.typeName || params.name != purchaseReturnSheetDet.name|| params.sequence.toLong() != purchaseReturnSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -186,6 +199,9 @@ class PurchaseReturnSheetDetController {
 
     @Transactional
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def purchaseReturnSheetDet = PurchaseReturnSheetDet.get(params.id)
 
         def result
@@ -202,7 +218,7 @@ class PurchaseReturnSheetDetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [purchaseReturnSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [purchaseReturnSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

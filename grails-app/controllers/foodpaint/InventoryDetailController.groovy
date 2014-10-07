@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 
 class InventoryDetailController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
@@ -44,14 +45,17 @@ class InventoryDetailController {
     }
 
     def show = {
-        def inventoryDetail=InventoryDetail.get(params.id);  
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
+        def inventoryDetail=InventoryDetail.get(params.id) 
         if(inventoryDetail){
             render (contentType: 'application/json') {
                 [success: true,data:inventoryDetail]
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -64,9 +68,12 @@ class InventoryDetailController {
     }
 
     def save = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         if(params.qty.toDouble()<0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'inventoryDetail.qty.must.be.more.than.zero')]
+                [success:false, message:message(code: "${i18nType}.inventoryDetail.qty.must.be.more.than.zero")]
             }
             return
         }
@@ -83,17 +90,19 @@ class InventoryDetailController {
         def replenishResult=inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, batch.name, params.qty.toDouble(),new Date())
         if(replenishResult.success){
             render (contentType: 'application/json') {
-                [success:true, message: message(code: 'default.message.save.success', args: [replenishResult.inventoryDetail])]
+                [success:true, message: message(code: "${i18nType}.default.message.save.success", args: [replenishResult.inventoryDetail])]
             }
         }
     }
 
     @Transactional
     def update(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         if(params.qty.toDouble()<0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'inventoryDetail.qty.must.be.more.than.zero')]
+                [success:false, message:message(code: "${i18nType}.inventoryDetail.qty.must.be.more.than.zero")]
             }
             return
         }
@@ -113,7 +122,7 @@ class InventoryDetailController {
             def replenishResult = inventoryDetailService.replenish(params,params.warehouse.id, params.warehouseLocation.id, params.item.id, updateBatch.name, params.qty.toDouble(), null)
             if(replenishResult.success){
                 render (contentType: 'application/json') {
-                    [success:true, message: message(code: 'default.message.update.success', args: [inventoryDetail])]
+                    [success:true, message: message(code: "${i18nType}.default.message.update.success", args: [inventoryDetail])]
                 }
             }
             else{
@@ -124,11 +133,13 @@ class InventoryDetailController {
             }
         }
         else
-           result = [success:false, message: message(code: 'default.message.update.failed', args: [inventoryDetail])]
+           result = [success:false, message: message(code: "${i18nType}.default.message.update.failed", args: [inventoryDetail])]
     }
 
     @Transactional
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def inventoryDetail = InventoryDetail.get(params.id)
 
@@ -139,7 +150,7 @@ class InventoryDetailController {
             
             }catch(DataIntegrityViolationException e){
                 log.error e
-                def msg = message(code: 'default.message.delete.failed', args: [inventoryDetail, e])
+                def msg = message(code: "${i18nType}.default.message.delete.failed", args: [inventoryDetail, e])
                 result = [success:false, message: msg] 
             }
             
@@ -148,7 +159,7 @@ class InventoryDetailController {
             }
         }
         else
-           result = [success:false, message: message(code: 'default.message.delete.failed', args: [inventoryDetail])]  
+           result = [success:false, message: message(code: "${i18nType}.default.message.delete.failed", args: [inventoryDetail])]  
 
     }
     

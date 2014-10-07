@@ -7,11 +7,14 @@ import grails.converters.JSON
 
 class StockInSheetDetController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def stockInSheet = StockInSheet.get(params.stockInSheet.id)
 
@@ -26,7 +29,7 @@ class StockInSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -34,6 +37,8 @@ class StockInSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def stockInSheetDet = StockInSheetDet.get(params.id);
 
@@ -45,13 +50,15 @@ class StockInSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.stockInSheet.id){
 
@@ -69,7 +76,7 @@ class StockInSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'stockInSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.stockInSheetDet.message.create.failed")]
             }            
         }
 
@@ -77,12 +84,15 @@ class StockInSheetDetController {
 
     @Transactional
     def save(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def stockInSheetDet=new StockInSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(stockInSheetDet.typeName != stockInSheetDet.stockInSheet.typeName || stockInSheetDet.name != stockInSheetDet.stockInSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
@@ -90,13 +100,13 @@ class StockInSheetDetController {
         //如果領料單頭工作站、供應商與製令工作站、供應商不相同 不允許儲存
         if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal', args: [stockInSheetDet])]
+                [success:false, message:message(code: "${i18nType}.stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal", args: [stockInSheetDet])]
             }
             return
         }
         if(stockInSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [stockInSheetDet])]
             }
             return
         }
@@ -127,18 +137,20 @@ class StockInSheetDetController {
     @Transactional
     def update(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def stockInSheetDet = new StockInSheetDet(params)
 
         //入庫單與製令之工作站需相同
         if(stockInSheetDet.stockInSheet.workstation != stockInSheetDet.manufactureOrder.workstation ){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal', args: [stockInSheetDet])]
+                [success:false, message:message(code: "${i18nType}.stockInSheetDet.stockInSheet.workstation.manufactureOrder.workstation.not.equal", args: [stockInSheetDet])]
             }
             return
         }
         if(stockInSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [stockInSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [stockInSheetDet])]
             }
             return
         }
@@ -157,7 +169,7 @@ class StockInSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != stockInSheetDet.typeName || params.name != stockInSheetDet.name|| params.sequence.toLong() != stockInSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -198,6 +210,8 @@ class StockInSheetDetController {
     @Transactional
     def delete(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def stockInSheetDet = StockInSheetDet.get(params.id)
         
         def result
@@ -213,7 +227,7 @@ class StockInSheetDetController {
             } 
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [stockInSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [stockInSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

@@ -4,11 +4,13 @@ import org.springframework.transaction.annotation.Transactional
 
 class InventoryService {
 
+	def grailsApplication
 	def messageSource
 	def domainService
 
 	@Transactional
 	def replenish(params,warehouseId,itemId,qty,date){
+		def i18nType = grailsApplication.config.grails.i18nType
 		Object[] args=[]
 		
 		if(qty>=0){
@@ -36,11 +38,12 @@ class InventoryService {
 			return  [success:true]
 		}
 		else
-			return [success:false ,message: messageSource.getMessage("inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
+			return [success:false ,message: messageSource.getMessage("${i18nType}.inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
 	@Transactional
 	def consume(params,warehouseId,itemId,qty,date){
+		def i18nType = grailsApplication.config.grails.i18nType
 		Object[] args=[]
 
 		if(qty>=0){
@@ -61,11 +64,11 @@ class InventoryService {
 			}
 			else{
 				args = [warehouse, item]
-				return [success:false, message: messageSource.getMessage("inventory.quantity.not.enough", args, Locale.getDefault())]
+				return [success:false, message: messageSource.getMessage("${i18nType}.inventory.quantity.not.enough", args, Locale.getDefault())]
 			}
 		}
 		else
-			return [success:false ,message: messageSource.getMessage("inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
+			return [success:false ,message: messageSource.getMessage("${i18nType}.inventory.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 	
 

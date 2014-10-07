@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class SaleReturnSheetController {
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -28,6 +29,9 @@ class SaleReturnSheetController {
         
     }
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheet=SaleReturnSheet.get(params.id)
 
         if(saleReturnSheet){   
@@ -37,7 +41,7 @@ class SaleReturnSheetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -62,19 +66,21 @@ class SaleReturnSheetController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleReturnSheet= SaleReturnSheet.get(params.id)
 
         //單別、單號一旦建立不允許變更
         if(params.typeName != saleReturnSheet.typeName || params.name != saleReturnSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
         
         if(saleReturnSheet.saleReturnSheetDets && params.customer.id.toLong() != saleReturnSheet.customer.id){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleReturnSheet.saleReturnSheetDets.exists.customer.not.allowed.change', args: [saleReturnSheet])]
+                [success: false,message:message(code: "${i18nType}.saleReturnSheet.saleReturnSheetDets.exists.customer.not.allowed.change", args: [saleReturnSheet])]
             }
             return
         }
@@ -86,6 +92,8 @@ class SaleReturnSheetController {
     }
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def saleReturnSheet = SaleReturnSheet.get(params.id)
 
@@ -95,7 +103,7 @@ class SaleReturnSheetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [saleReturnSheet, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [saleReturnSheet, e])
             result = [success:false, message: msg] 
         }
         
@@ -105,11 +113,14 @@ class SaleReturnSheetController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'saleReturnSheet.report.title.label')
+        def reportTitle = message(code: "${i18nType}.saleReturnSheet.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();
