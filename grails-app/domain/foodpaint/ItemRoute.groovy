@@ -51,11 +51,19 @@ class ItemRoute {
         supplier nullable:true
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [ItemRoute]
         """
-        ${messageSource.getMessage("${i18nType}.itemRoute.label", args, Locale.getDefault())}: ${item.name}/${item.title}/${sequence}
+        ${getMessageSource().getMessage("${i18nType}.itemRoute.label", args, Locale.getDefault())}: ${item.name}/${item.title}/${sequence}
         """
     }
 }

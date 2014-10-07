@@ -61,11 +61,19 @@ class BatchRoute {
         supplier nullable:true
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [BatchRoute]
         """
-        ${messageSource.getMessage("${i18nType}.batchRoute.label", args, Locale.getDefault())}: ${batch.name}/${sequence}
+        ${getMessageSource().getMessage("${i18nType}.batchRoute.label", args, Locale.getDefault())}: ${batch.name}/${sequence}
         """
     }
 }

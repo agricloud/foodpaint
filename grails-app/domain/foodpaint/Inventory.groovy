@@ -40,11 +40,19 @@ class Inventory {
 		creator nullable:true
 	}
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Inventory]
         """
-        ${messageSource.getMessage("${i18nType}.inventory.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${item.name}/${item.title}
+        ${getMessageSource().getMessage("${i18nType}.inventory.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${item.name}/${item.title}
         """
     }
 }

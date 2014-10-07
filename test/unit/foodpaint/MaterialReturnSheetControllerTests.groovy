@@ -16,6 +16,14 @@ class MaterialReturnSheetControllerTests {
         def testService = new TestService()
         testService.createTestMessage(messageSource)
 
+        grailsApplication.config.grails.i18nType='mfg'
+        MaterialReturnSheet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        MaterialReturnSheet.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def workstation1 = new Workstation(name:"workstation1",title:"生產線1").save(failOnError: true)
         def supplier1 = new Supplier(name:"supplier1",title:"供應商1",country:Country.TAIWAN).save(failOnError: true, flush: true)
     }

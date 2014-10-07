@@ -47,12 +47,20 @@ class BatchSource {
     	childBatch(unique:['batch','site'])
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [BatchSource]
         """
-        ${messageSource.getMessage("${i18nType}.batchSource.batchSource.label", args, Locale.getDefault())}: ${batch.name}/
-        ${messageSource.getMessage("${i18nType}.batchSource.childBatch.name.label", args, Locale.getDefault())}: ${childBatch.name}
+        ${getMessageSource().getMessage("${i18nType}.batchSource.batchSource.label", args, Locale.getDefault())}: ${batch.name}/
+        ${getMessageSource().getMessage("${i18nType}.batchSource.childBatch.name.label", args, Locale.getDefault())}: ${childBatch.name}
         """
     }
 }

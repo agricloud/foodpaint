@@ -75,11 +75,19 @@ class Supplier {
 
     }
     
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Supplier]
         """
-        ${messageSource.getMessage("${i18nType}.supplier.label", args, Locale.getDefault())}: ${name}/${title}
+        ${getMessageSource().getMessage("${i18nType}.supplier.label", args, Locale.getDefault())}: ${name}/${title}
         """
     }
 }

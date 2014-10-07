@@ -61,12 +61,20 @@ class OutSrcPurchaseReturnSheet {
         editor nullable:true
         creator nullable:true
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
     
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [OutSrcPurchaseReturnSheet]
         """
-        ${messageSource.getMessage("${i18nType}.outSrcPurchaseReturnSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        ${getMessageSource().getMessage("${i18nType}.outSrcPurchaseReturnSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
         """
     }
 }

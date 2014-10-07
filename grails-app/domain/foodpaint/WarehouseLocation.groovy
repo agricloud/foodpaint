@@ -45,11 +45,19 @@ class WarehouseLocation {
 		remark nullable: true
 	}
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
 	public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [WarehouseLocation]
         """
-        ${messageSource.getMessage("${i18nType}.warehouseLocation.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${warehouseLocation.name}/${warehouseLocation.title}
+        ${getMessageSource().getMessage("${i18nType}.warehouseLocation.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${warehouseLocation.name}/${warehouseLocation.title}
         """
     }
 }

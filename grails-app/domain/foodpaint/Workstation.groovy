@@ -49,11 +49,19 @@ class Workstation {
     	description nullable:true
     }
     
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Workstation]
         """
-        ${messageSource.getMessage("${i18nType}.workstation.label", args, Locale.getDefault())}: ${name}/${title}
+        ${getMessageSource().getMessage("${i18nType}.workstation.label", args, Locale.getDefault())}: ${name}/${title}
         """
     }
 }

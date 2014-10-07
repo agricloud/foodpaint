@@ -109,11 +109,20 @@ class Item {
 		// effectStartDate nullable: true
 		// effectEndDate nullable: true
 	}
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
 	public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Item]
         """
-        ${messageSource.getMessage("${i18nType}.item.label", args, Locale.getDefault())}: ${name}/${title}
+        ${getMessageSource().getMessage("${i18nType}.item.label", args, Locale.getDefault())}: ${name}/${title}
         """
     }
 }

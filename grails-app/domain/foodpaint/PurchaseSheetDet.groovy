@@ -88,12 +88,20 @@ class PurchaseSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
     
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [PurchaseSheetDet]
         """
-        ${messageSource.getMessage("${i18nType}.purchaseSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        ${getMessageSource().getMessage("${i18nType}.purchaseSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
         """
     }
 }

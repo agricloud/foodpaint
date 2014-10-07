@@ -88,11 +88,19 @@ class Batch  {
 		
 	}
 
+	def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
 	public String toString(){
-    	def i18nType = grailsApplication.config.grails.i18nType
+    	def i18nType = getGrailsApplication().config.grails.i18nType
     	Object[] args = [Batch]
     	"""
-    	${messageSource.getMessage("${i18nType}.batch.label", args, Locale.getDefault())}: ${name}
+    	${getMessageSource().getMessage("${i18nType}.batch.label", args, Locale.getDefault())}: ${name}
     	"""
     }	
 }

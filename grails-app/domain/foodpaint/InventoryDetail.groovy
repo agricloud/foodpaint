@@ -42,11 +42,19 @@ class InventoryDetail {
 		creator nullable:true
 	}
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
 	public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [InventoryDetail]
         """
-        ${messageSource.getMessage("${i18nType}.inventoryDetail.label", args, Locale.getDefault())}: 
+        ${getMessageSource().getMessage("${i18nType}.inventoryDetail.label", args, Locale.getDefault())}: 
         ${warehouse.name}/${warehouse.title}/${warehouseLocation.name}/${warehouseLocation.title}/${item.name}/${item.title}/${batch.name}
         """
     }

@@ -35,6 +35,19 @@ import common.*
     BatchService, DomainService])
 class DataImportServiceTests {
 
+    void setUp(){
+        def testService = new TestService()
+        testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
+        MaterialSheetDet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        MaterialSheetDet.metaClass.getMessageSource = {
+            return messageSource
+        }
+    }
+
     void testItemImport() {
 
         // new ItemView(name:"410001",flag:5,title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種").save(failOnError: true, flush: true)
@@ -1076,6 +1089,7 @@ class DataImportServiceTests {
     </typeName>
   </materialSheetDetView>
   <materialSheetDetView id="2">
+
     <batchName>
       0927-21007
     </batchName>

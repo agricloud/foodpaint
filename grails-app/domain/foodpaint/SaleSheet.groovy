@@ -65,12 +65,20 @@ class SaleSheet {
         creator nullable:true
         shippingAddress nullable:true
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
     
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [SaleSheet]
         """
-        ${messageSource.getMessage("${i18nType}.saleSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        ${getMessageSource().getMessage("${i18nType}.saleSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
         """
     }
 }

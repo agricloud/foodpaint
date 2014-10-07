@@ -63,12 +63,20 @@ class Customer {
         address nullable:true
     	shippingAddress nullable:true
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
     
     public String toString(){
-        def i18nType = grailsApplication.config.grails.i18nType
+        def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Customer]
         """
-        ${messageSource.getMessage("${i18nType}.customer.label", args, Locale.getDefault())}: ${name}/${title}
+        ${getMessageSource().getMessage("${i18nType}.customer.label", args, Locale.getDefault())}: ${name}/${title}
         """
     }
 }

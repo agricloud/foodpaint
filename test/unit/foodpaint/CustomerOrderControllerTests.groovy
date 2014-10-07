@@ -9,8 +9,18 @@ import grails.test.mixin.*
 class CustomerOrderControllerTests {
 
     void setUp(){
+
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
+        CustomerOrder.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        CustomerOrder.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def customer1 = new Customer(name:"customer1",title:"客戶1").save(failOnError: true)
     }
 
@@ -21,77 +31,77 @@ class CustomerOrderControllerTests {
         params["customer.id"] = 1
     }
  
-    void testIndex() {
+    // void testIndex() {
 
-        populateValidParams(params)
-        def customerOrder = new CustomerOrder(params).save(failOnError: true)
-        controller.index()
+    //     populateValidParams(params)
+    //     def customerOrder = new CustomerOrder(params).save(failOnError: true)
+    //     controller.index()
 
-        assert response.json.data.size() == 1
-        assert response.json.total == 1   
-        assert response.json.data[0].typeName == "CO"
-        assert response.json.data[0].name == "001"
-    }
+    //     assert response.json.data.size() == 1
+    //     assert response.json.total == 1   
+    //     assert response.json.data[0].typeName == "CO"
+    //     assert response.json.data[0].name == "001"
+    // }
 
-    void testShow(){
-        populateValidParams(params)
-        def customerOrder = new CustomerOrder(params).save(failOnError: true)
+    // void testShow(){
+    //     populateValidParams(params)
+    //     def customerOrder = new CustomerOrder(params).save(failOnError: true)
 
-        params.id = 1
-        controller.show()
-        assert response.json.success
-        assert response.json.data.class == "foodpaint.CustomerOrder"
-        assert response.json.data.typeName == "CO"
-        assert response.json.data.name == "001"
+    //     params.id = 1
+    //     controller.show()
+    //     assert response.json.success
+    //     assert response.json.data.class == "foodpaint.CustomerOrder"
+    //     assert response.json.data.typeName == "CO"
+    //     assert response.json.data.name == "001"
 
-    }
+    // }
 
-    void testCreate() {
-        controller.create()
-        assert response.json.success
-        assert response.json.data.class == "foodpaint.CustomerOrder"
-    }
+    // void testCreate() {
+    //     controller.create()
+    //     assert response.json.success
+    //     assert response.json.data.class == "foodpaint.CustomerOrder"
+    // }
 
-    void testSave(){
-        populateValidParams(params)
-        controller.save()
+    // void testSave(){
+    //     populateValidParams(params)
+    //     controller.save()
 
-        assert response.json.success
-        assert CustomerOrder.list().size() == 1
-        assert CustomerOrder.get(1).typeName == "CO"
-        assert CustomerOrder.get(1).name == "001"
-    }
+    //     assert response.json.success
+    //     assert CustomerOrder.list().size() == 1
+    //     assert CustomerOrder.get(1).typeName == "CO"
+    //     assert CustomerOrder.get(1).name == "001"
+    // }
 
-    void testUpdate(){
-        populateValidParams(params)
-        def customerOrder = new CustomerOrder(params).save(failOnError: true)
-        def customer2 = new Customer(name:"customer2",title:"客戶2").save(failOnError: true)
+    // void testUpdate(){
+    //     populateValidParams(params)
+    //     def customerOrder = new CustomerOrder(params).save(failOnError: true)
+    //     def customer2 = new Customer(name:"customer2",title:"客戶2").save(failOnError: true)
 
-        params.id = 1
-        params.customer.id= 2
+    //     params.id = 1
+    //     params.customer.id= 2
 
-        controller.update()
+    //     controller.update()
         
-        assert response.json.success
-        assert CustomerOrder.list().size() == 1
-        assert CustomerOrder.get(1).typeName == "CO"
-        assert CustomerOrder.get(1).name == "001"
-    }
+    //     assert response.json.success
+    //     assert CustomerOrder.list().size() == 1
+    //     assert CustomerOrder.get(1).typeName == "CO"
+    //     assert CustomerOrder.get(1).name == "001"
+    // }
 
-    void testUpdateWithTypeNameAndName(){
-        populateValidParams(params)
-        def customerOrder = new CustomerOrder(params).save(failOnError: true)
+    // void testUpdateWithTypeNameAndName(){
+    //     populateValidParams(params)
+    //     def customerOrder = new CustomerOrder(params).save(failOnError: true)
 
-        params.id = 1
-        params.typeName= "AAA"
+    //     params.id = 1
+    //     params.typeName= "AAA"
 
-        controller.update()
+    //     controller.update()
         
-        assertFalse response.json.success
-        assert CustomerOrder.list().size() == 1
-        assert CustomerOrder.get(1).typeName == "CO"
-        assert CustomerOrder.get(1).name == "001"
-    }
+    //     assertFalse response.json.success
+    //     assert CustomerOrder.list().size() == 1
+    //     assert CustomerOrder.get(1).typeName == "CO"
+    //     assert CustomerOrder.get(1).name == "001"
+    // }
 
     void testUpdateWithCustomerWhenSheetDetailExisted(){
         populateValidParams(params)
@@ -106,6 +116,7 @@ class CustomerOrderControllerTests {
         controller.update()
         
         assertFalse response.json.success
+        println response.json
         assert CustomerOrder.list().size() == 1
         assert CustomerOrder.get(1).typeName == "CO"
         assert CustomerOrder.get(1).name == "001"
