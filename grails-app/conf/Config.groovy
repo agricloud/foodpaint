@@ -157,3 +157,5 @@ environments {
 
     }
 }
+
+grails.i18nType = 'agri'

@@ -4,12 +4,14 @@ import org.springframework.transaction.annotation.Transactional
 
 class InventoryDetailService {
 
+	def grailsApplication
 	def messageSource
 	def domainService
 	def inventoryService
 
 	@Transactional
 	def replenish(params,warehouseId,warehouseLocationId,itemId,batchName,qty,date){
+		def i18nType = grailsApplication.config.grails.i18nType
 		Object[] args=[]
 		if(qty>=0){
 			inventoryService.replenish(params,warehouseId,itemId,qty,date)
@@ -37,7 +39,7 @@ class InventoryDetailService {
 				}
 				else{
 					args = [warehouse, warehouseLocation]
-					return [success:false, message: messageSource.getMessage("inventoryDetail.warehouseLocation.not.belong.to.warehouse", args, Locale.getDefault())]
+					return [success:false, message: messageSource.getMessage("${i18nType}.inventoryDetail.warehouseLocation.not.belong.to.warehouse", args, Locale.getDefault())]
 				}
 			}
 			else{
@@ -50,11 +52,12 @@ class InventoryDetailService {
 			return [success:true, inventoryDetail:inventoryDetail]
 		}
 		else
-			return [success:false ,message: messageSource.getMessage("inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
+			return [success:false ,message: messageSource.getMessage("${i18nType}.inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
 	@Transactional
 	def consume(params,warehouseId,warehouseLocationId,itemId,batchName,qty,date){
+		def i18nType = grailsApplication.config.grails.i18nType
 		Object[] args=[]
 		if(qty>=0){
 
@@ -78,11 +81,11 @@ class InventoryDetailService {
 			}
 			else{
 				args = [warehouse, warehouseLocation, item, batch]
-				return [success:false, message: messageSource.getMessage("inventoryDetail.quantity.not.enough", args, Locale.getDefault())]
+				return [success:false, message: messageSource.getMessage("${i18nType}.inventoryDetail.quantity.not.enough", args, Locale.getDefault())]
 			}
 		}
 		else
-			return [success:false ,message: messageSource.getMessage("inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
+			return [success:false ,message: messageSource.getMessage("${i18nType}.inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
 	def indexByBatchAndGroupByWarehouse(params,batchName){

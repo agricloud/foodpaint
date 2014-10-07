@@ -3,6 +3,10 @@ package foodpaint
  * 領退單頭
  */
 class MaterialReturnSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -64,8 +68,20 @@ class MaterialReturnSheet {
         supplier nullable:true
         
     }
-    public String toString(){
-        "退料單：${typeName}-${name}"
+
+    def getGrailsApplication(){
+        return grailsApplication
     }
 
+    def getMessageSource(){
+        return messageSource
+    }
+    
+    public String toString(){
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [MaterialReturnSheet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.materialReturnSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
+    }
 }

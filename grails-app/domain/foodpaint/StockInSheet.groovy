@@ -3,6 +3,10 @@ package foodpaint
  * 入庫單
  */
 class StockInSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -56,7 +60,20 @@ class StockInSheet {
         editor nullable:true
         creator nullable:true
     }
+    
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "入庫單：${typeName}-${name}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [StockInSheet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.stockInSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

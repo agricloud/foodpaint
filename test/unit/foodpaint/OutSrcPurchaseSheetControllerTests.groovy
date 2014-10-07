@@ -14,6 +14,15 @@ class OutSrcPurchaseSheetControllerTests {
     void setUp(){
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
+        OutSrcPurchaseSheet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        OutSrcPurchaseSheet.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def supplier1 = new Supplier(name:"supplier1",title:"供應商1",country:Country.TAIWAN).save(failOnError: true, flush: true)
     }
 

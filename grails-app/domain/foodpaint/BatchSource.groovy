@@ -3,6 +3,10 @@ package foodpaint
  * 記錄生產的 batch 是由哪些原物料的 batch 所組成
  */
 class BatchSource {
+
+    def grailsApplication
+    def messageSource
+
 	String importFlag = -1
 
     /**
@@ -43,7 +47,20 @@ class BatchSource {
     	childBatch(unique:['batch','site'])
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        "批號：${batch}，來源批號：${childBatch}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [BatchSource]
+        """
+        ${getMessageSource().getMessage("${i18nType}.batchSource.batchSource.label", args, Locale.getDefault())}: ${batch.name}/
+        ${getMessageSource().getMessage("${i18nType}.batchSource.childBatch.name.label", args, Locale.getDefault())}: ${childBatch.name}
+        """
     }
 }

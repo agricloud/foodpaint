@@ -3,6 +3,10 @@ package foodpaint
  * 客戶訂單
  */
 class CustomerOrder {
+
+    def grailsApplication
+    def messageSource
+
 	String importFlag = -1
 
     /**
@@ -72,7 +76,21 @@ class CustomerOrder {
     	customer nullable:true
         shippingAddress nullable:true
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        "訂單：${typeName}-${name}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [CustomerOrder]
+
+        """
+        ${getMessageSource().getMessage("${i18nType}.customerOrder.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

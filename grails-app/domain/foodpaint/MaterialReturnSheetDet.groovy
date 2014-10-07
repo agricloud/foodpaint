@@ -3,6 +3,10 @@ package foodpaint
  * 領退單身
  */
 class MaterialReturnSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -91,7 +95,20 @@ class MaterialReturnSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "退料單單身：${typeName}-${name}-${sequence}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [MaterialReturnSheetDet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.materialReturnSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

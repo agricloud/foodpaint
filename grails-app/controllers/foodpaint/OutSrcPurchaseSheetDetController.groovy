@@ -6,11 +6,14 @@ import grails.transaction.Transactional
 
 class OutSrcPurchaseSheetDetController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def outSrcPurchaseSheet = OutSrcPurchaseSheet.get(params.outSrcPurchaseSheet.id)
 
@@ -25,7 +28,7 @@ class OutSrcPurchaseSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -33,6 +36,8 @@ class OutSrcPurchaseSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id);
 
@@ -44,13 +49,15 @@ class OutSrcPurchaseSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.outSrcPurchaseSheet.id){
 
@@ -68,7 +75,7 @@ class OutSrcPurchaseSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'outSrcPurchaseSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.outSrcPurchaseSheetDet.message.create.failed")]
             }            
         }
 
@@ -76,26 +83,29 @@ class OutSrcPurchaseSheetDetController {
 
     @Transactional
     def save(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def outSrcPurchaseSheetDet=new OutSrcPurchaseSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(outSrcPurchaseSheetDet.typeName != outSrcPurchaseSheetDet.outSrcPurchaseSheet.typeName || outSrcPurchaseSheetDet.name != outSrcPurchaseSheetDet.outSrcPurchaseSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier != outSrcPurchaseSheetDet.manufactureOrder.supplier ){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal', args: [outSrcPurchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal", args: [outSrcPurchaseSheetDet])]
             }
             return
         }
 
         if(outSrcPurchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [outSrcPurchaseSheetDet])]
             }
             return
         }
@@ -127,18 +137,21 @@ class OutSrcPurchaseSheetDetController {
 
     @Transactional
     def update() {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def outSrcPurchaseSheetDet = new OutSrcPurchaseSheetDet(params)
 
         if(outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier != outSrcPurchaseSheetDet.manufactureOrder.supplier ){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal', args: [outSrcPurchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.outSrcPurchaseSheetDet.outSrcPurchaseSheet.supplier.manufactureOrder.supplier.not.equal", args: [outSrcPurchaseSheetDet])]
             }
             return
         }
         
         if(outSrcPurchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [outSrcPurchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [outSrcPurchaseSheetDet])]
             }
             return
         }
@@ -157,7 +170,7 @@ class OutSrcPurchaseSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != outSrcPurchaseSheetDet.typeName || params.name != outSrcPurchaseSheetDet.name|| params.sequence.toLong() != outSrcPurchaseSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -194,10 +207,10 @@ class OutSrcPurchaseSheetDetController {
         }
     }
 
-
-
     @Transactional
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def outSrcPurchaseSheetDet = OutSrcPurchaseSheetDet.get(params.id)
         
@@ -214,7 +227,7 @@ class OutSrcPurchaseSheetDetController {
             }   
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [outSrcPurchaseSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [outSrcPurchaseSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

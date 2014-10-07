@@ -2,6 +2,10 @@
 package foodpaint
 
 class Supplier {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -70,7 +74,20 @@ class Supplier {
         address nullable:true
 
     }
+    
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "供應商：${name}，名稱：${title}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [Supplier]
+        """
+        ${getMessageSource().getMessage("${i18nType}.supplier.label", args, Locale.getDefault())}: ${name}/${title}
+        """
     }
 }

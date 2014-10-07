@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class StockInSheetController {
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -28,6 +29,9 @@ class StockInSheetController {
         
     }
     def show = {
+        
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def stockInSheet=StockInSheet.get(params.id)
 
         if(stockInSheet){   
@@ -37,7 +41,7 @@ class StockInSheetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -62,12 +66,14 @@ class StockInSheetController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def stockInSheet= StockInSheet.get(params.id)
 
         //單別、單號一旦建立不允許變更
         if(params.typeName != stockInSheet.typeName || params.name != stockInSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
@@ -75,7 +81,7 @@ class StockInSheetController {
         //工作站一旦建立不允許變更
         if(stockInSheet.stockInSheetDets && params.workstation.id.toLong() != stockInSheet.workstation.id){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change', args: [stockInSheet])]
+                [success: false,message:message(code: "${i18nType}.stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change", args: [stockInSheet])]
             }
             return
         }
@@ -88,6 +94,8 @@ class StockInSheetController {
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def stockInSheet = StockInSheet.get(params.id)
 
@@ -97,7 +105,7 @@ class StockInSheetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [stockInSheet, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [stockInSheet, e])
             result = [success:false, message: msg] 
         }
         
@@ -107,11 +115,14 @@ class StockInSheetController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'stockInSheet.report.title.label')
+        def reportTitle = message(code: "${i18nType}.stockInSheet.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();

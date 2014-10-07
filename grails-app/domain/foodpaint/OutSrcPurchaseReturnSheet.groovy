@@ -3,6 +3,10 @@ package foodpaint
  * 託外退貨單
  */
 class OutSrcPurchaseReturnSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -57,7 +61,20 @@ class OutSrcPurchaseReturnSheet {
         editor nullable:true
         creator nullable:true
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "託外退貨單：${typeName}-${name}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [OutSrcPurchaseReturnSheet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.outSrcPurchaseReturnSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

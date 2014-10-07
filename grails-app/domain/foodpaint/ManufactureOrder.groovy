@@ -3,6 +3,10 @@ package foodpaint
  * 製造命令
  */
 class ManufactureOrder {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -86,7 +90,20 @@ class ManufactureOrder {
         customerOrderDet nullable:true
         qty min: 0.0d
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "製令：${typeName}-${name}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [ManufactureOrder]
+        """
+        ${getMessageSource().getMessage("${i18nType}.manufactureOrder.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }
