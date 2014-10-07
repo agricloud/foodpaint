@@ -4,6 +4,10 @@ package foodpaint
  * 退貨單身
  */
 class PurchaseReturnSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -89,7 +93,12 @@ class PurchaseReturnSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+    
     public String toString(){
-        "退貨單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [PurchaseReturnSheetDet]
+        """
+        ${messageSource.getMessage("${i18nType}.purchaseReturnSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

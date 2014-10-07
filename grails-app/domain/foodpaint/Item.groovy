@@ -7,6 +7,10 @@ import grails.converters.*
  * @version 1.0
  */
 class Item {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -106,6 +110,10 @@ class Item {
 		// effectEndDate nullable: true
 	}
 	public String toString(){
-    	"品號：${name}，品名：${title}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [Item]
+        """
+        ${messageSource.getMessage("${i18nType}.item.label", args, Locale.getDefault())}: ${name}/${title}
+        """
     }
 }

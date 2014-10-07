@@ -3,6 +3,10 @@ package foodpaint
  * 銷貨單單身
  */
 class SaleSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -87,7 +91,12 @@ class SaleSheetDet{
         customerOrderDet nullable:true
         qty min: 0.0d
     }
+    
     public String toString(){
-        "銷貨單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [SaleSheetDet]
+        """
+        ${messageSource.getMessage("${i18nType}.saleSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

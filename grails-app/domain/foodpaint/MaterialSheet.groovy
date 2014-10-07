@@ -3,6 +3,10 @@ package foodpaint
  * 領料單頭
  */
 class MaterialSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -62,5 +66,13 @@ class MaterialSheet {
         creator nullable:true
         workstation nullable:true
         supplier nullable:true        
+    }
+
+    public String toString(){
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [MaterialSheet]
+        """
+        ${messageSource.getMessage("${i18nType}.materialSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

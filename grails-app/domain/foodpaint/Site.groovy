@@ -6,6 +6,9 @@ package foodpaint
 
 class Site {
 
+	def grailsApplication
+    def messageSource
+
 	String importFlag = -1
     /**
      * 修改者
@@ -42,5 +45,13 @@ class Site {
         creator nullable:true
         description nullable:true
 		address nullable:true
+    }
+
+    public String toString(){
+    	def i18nType = grailsApplication.config.grails.i18nType
+    	Object[] args = [Site]
+    	"""
+    	${messageSource.getMessage("${i18nType}.site.label", args, Locale.getDefault())}: ${name}/${title}
+    	"""
     }
 }

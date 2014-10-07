@@ -3,6 +3,10 @@ package foodpaint
  * 客戶訂單單身
  */
 class CustomerOrderDet{
+
+    def grailsApplication
+    def messageSource
+
     String importFlag = -1
 
     /**
@@ -74,6 +78,10 @@ class CustomerOrderDet{
     }
 
     public String toString(){
-        "訂單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [CustomerOrderDet]
+        """
+        ${messageSource.getMessage("${i18nType}.customerOrderDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

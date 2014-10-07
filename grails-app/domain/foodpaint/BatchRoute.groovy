@@ -60,7 +60,12 @@ class BatchRoute {
         workstation nullable:true
         supplier nullable:true
     }
+
     public String toString(){
-        "批號：${batch.name}，途程項次:${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [BatchRoute]
+        """
+        ${messageSource.getMessage("${i18nType}.batchRoute.label", args, Locale.getDefault())}: ${batch.name}/${sequence}
+        """
     }
 }

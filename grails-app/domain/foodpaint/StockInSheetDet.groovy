@@ -2,6 +2,9 @@ package foodpaint
 
 class StockInSheetDet{
 
+    def grailsApplication
+    def messageSource
+
     String importFlag = -1
 
     /**
@@ -84,6 +87,10 @@ class StockInSheetDet{
     }
 
     public String toString(){
-        "入庫單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [StockInSheetDet]
+        """
+        ${messageSource.getMessage("${i18nType}.stockInSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

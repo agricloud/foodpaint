@@ -3,6 +3,10 @@ package foodpaint
  * 託外進貨單
  */
 class OutSrcPurchaseSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -56,7 +60,12 @@ class OutSrcPurchaseSheet {
         editor nullable:true
         creator nullable:true
     }
+
     public String toString(){
-        "託外進貨單：${typeName}-${name}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [OutSrcPurchaseSheet]
+        """
+        ${messageSource.getMessage("${i18nType}.outSrcPurchaseSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

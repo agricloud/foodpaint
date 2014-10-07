@@ -1,6 +1,10 @@
 package foodpaint
 
 class Workstation {
+
+    def grailsApplication
+    def messageSource
+    
 	String importFlag = -1
 
     /**
@@ -44,7 +48,12 @@ class Workstation {
         name blank: false
     	description nullable:true
     }
+    
     public String toString(){
-    	"工作站：${name}，名稱：${title}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [Workstation]
+        """
+        ${messageSource.getMessage("${i18nType}.workstation.label", args, Locale.getDefault())}: ${name}/${title}
+        """
     }
 }

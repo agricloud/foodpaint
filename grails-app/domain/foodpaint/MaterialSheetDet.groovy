@@ -3,6 +3,10 @@ package foodpaint
  * 領料單身
  */
 class MaterialSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -88,7 +92,12 @@ class MaterialSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+    
     public String toString(){
-        "領料單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [MaterialSheetDet]
+        """
+        ${messageSource.getMessage("${i18nType}.materialSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

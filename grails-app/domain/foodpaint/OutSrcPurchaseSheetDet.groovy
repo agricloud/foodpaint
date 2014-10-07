@@ -1,6 +1,10 @@
 package foodpaint
 
 class OutSrcPurchaseSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -86,7 +90,12 @@ class OutSrcPurchaseSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+    
     public String toString(){
-        "託外進貨單單身：${typeName}-${name}-${sequence}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [OutSrcPurchaseSheetDet]
+        """
+        ${messageSource.getMessage("${i18nType}.outSrcPurchaseSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

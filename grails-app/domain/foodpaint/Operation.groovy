@@ -1,6 +1,10 @@
 package foodpaint
 
 class Operation {
+
+    def grailsApplication
+    def messageSource
+    
 	String importFlag = -1
 
     /**
@@ -43,7 +47,12 @@ class Operation {
         creator nullable:true
         description nullable:true
     }
+    
     public String toString(){
-        "製程：${name}，名稱：${title}"
+        def i18nType = grailsApplication.config.grails.i18nType
+        Object[] args = [Operation]
+        """
+        ${messageSource.getMessage("${i18nType}.operation.label", args, Locale.getDefault())}: ${name}/${title}
+        """
     }
 }
