@@ -12,6 +12,15 @@ class PurchaseReturnSheetDetControllerTests {
     void setUp(){
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
+        PurchaseReturnSheetDet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        PurchaseReturnSheetDet.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def item1 = new Item(name:"item1",title:"華珍玉米",spec:"華珍甜玉米，高糖分、皮薄",unit:"kg",description:"非基因轉殖品種 (Non-Genetically Modifie) 生長強健，特別耐熱、耐濕及抗倒伏，抗病毒病、葉斑病、螟蟲， 果穗整齊飽滿，著粒完整，穗粒淡黃色， 皮非常薄(有無皮的感覺)，脆嫩香甜，品質非常優良。 糖分保持力較長，較耐貯運。").save(failOnError: true, flush: true)
         def batch1 = new Batch(name:"batch1", item:item1).save(failOnError: true, flush: true)
         def item2 = new Item(name:"item2",title:"橘子",unit:"kg").save(failOnError: true, flush: true)

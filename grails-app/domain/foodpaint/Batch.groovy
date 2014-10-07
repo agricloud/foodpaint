@@ -4,6 +4,10 @@ public enum BatchType {
     PRODUCT
 }
 class Batch  {
+
+	def grailsApplication
+	def messageSource
+
 	String importFlag = -1
 
     /**
@@ -83,8 +87,20 @@ class Batch  {
 		supplier nullable: true
 		
 	}
-	public String toString(){
-    	"批號：${name}"
+
+	def getGrailsApplication(){
+        return grailsApplication
     }
-	
+
+    def getMessageSource(){
+        return messageSource
+    }
+
+	public String toString(){
+    	def i18nType = getGrailsApplication().config.grails.i18nType
+    	Object[] args = [Batch]
+    	"""
+    	${getMessageSource().getMessage("${i18nType}.batch.label", args, Locale.getDefault())}: ${name}
+    	"""
+    }	
 }

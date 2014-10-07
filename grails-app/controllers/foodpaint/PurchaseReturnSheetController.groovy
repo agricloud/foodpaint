@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class PurchaseReturnSheetController{
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -28,6 +29,9 @@ class PurchaseReturnSheetController{
         
     }
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseReturnSheet=PurchaseReturnSheet.get(params.id)
 
         if(purchaseReturnSheet){   
@@ -37,7 +41,7 @@ class PurchaseReturnSheetController{
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -62,18 +66,20 @@ class PurchaseReturnSheetController{
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseReturnSheet= PurchaseReturnSheet.get(params.id)
         //單別、單號一旦建立不允許變更
         if(params.typeName != purchaseReturnSheet.typeName || params.name != purchaseReturnSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
         //單身建立後不允許變更客戶
         if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id.toLong() != purchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change', args: [purchaseReturnSheet])]
+                [success: false,message:message(code: "${i18nType}.purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change", args: [purchaseReturnSheet])]
             }
             return
         }
@@ -86,6 +92,8 @@ class PurchaseReturnSheetController{
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def purchaseReturnSheet = PurchaseReturnSheet.get(params.id)
 
@@ -95,7 +103,7 @@ class PurchaseReturnSheetController{
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [purchaseReturnSheet, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [purchaseReturnSheet, e])
             result = [success:false, message: msg] 
         }
         
@@ -104,12 +112,15 @@ class PurchaseReturnSheetController{
         }
     }
 
-        def print(){
+    def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'purchaseReturnSheet.report.title.label')
+        def reportTitle = message(code: "${i18nType}.purchaseReturnSheet.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();

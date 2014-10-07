@@ -1,6 +1,10 @@
 package foodpaint
 
 class ItemRoute {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -47,7 +51,19 @@ class ItemRoute {
         supplier nullable:true
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-    	"品項：${item.title}，途程項次:${sequence}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [ItemRoute]
+        """
+        ${getMessageSource().getMessage("${i18nType}.itemRoute.label", args, Locale.getDefault())}: ${item.name}/${item.title}/${sequence}
+        """
     }
 }

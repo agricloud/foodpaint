@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class MaterialSheetController {
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -40,6 +41,9 @@ class MaterialSheetController {
     }
     
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheet=MaterialSheet.get(params.id)
 
         if(materialSheet){   
@@ -49,7 +53,7 @@ class MaterialSheetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -64,10 +68,13 @@ class MaterialSheetController {
     }
 
     def save = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheet=new MaterialSheet(params)
         if((materialSheet.workstation && materialSheet.supplier)||(!materialSheet.workstation && !materialSheet.supplier)){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheet.workstation.supplier.should.exist.one', args: [materialSheet])]
+                [success: false,message:message(code: "${i18nType}.materialSheet.workstation.supplier.should.exist.one", args: [materialSheet])]
             }
             return
         }
@@ -79,11 +86,13 @@ class MaterialSheetController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def materialSheet= new MaterialSheet(params)
         
         if((materialSheet.workstation && materialSheet.supplier)||(!materialSheet.workstation && !materialSheet.supplier)){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheet.workstation.supplier.should.exist.one', args: [materialSheet])]
+                [success: false,message:message(code: "${i18nType}.materialSheet.workstation.supplier.should.exist.one", args: [materialSheet])]
             }
             return
         }
@@ -92,7 +101,7 @@ class MaterialSheetController {
         //單別、單號一旦建立不允許變更
         if(params.typeName != materialSheet.typeName || params.name != materialSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
@@ -100,7 +109,7 @@ class MaterialSheetController {
         //工作站/供應商一旦建立不允許變更
         if(materialSheet.materialSheetDets && ((params.workstation?.id && params.workstation.id.toLong() != materialSheet.workstation?.id) || (params.supplier?.id &&params.supplier.id.toLong() != materialSheet.supplier?.id))){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change', args: [materialSheet])]
+                [success: false,message:message(code: "${i18nType}.materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change", args: [materialSheet])]
             }
             return
         }
@@ -114,6 +123,8 @@ class MaterialSheetController {
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def materialSheet = MaterialSheet.get(params.id)
 
@@ -123,7 +134,7 @@ class MaterialSheetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [materialSheet, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [materialSheet, e])
             result = [success:false, message: msg] 
         }
         
@@ -133,11 +144,14 @@ class MaterialSheetController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'materialSheet.report.title.label')
+        def reportTitle = message(code: "${i18nType}.materialSheet.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();

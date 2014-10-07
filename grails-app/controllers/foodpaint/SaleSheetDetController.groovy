@@ -6,11 +6,14 @@ import grails.transaction.Transactional
 
 class SaleSheetDetController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def saleSheet = SaleSheet.get(params.saleSheet.id)
 
@@ -25,7 +28,7 @@ class SaleSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -33,6 +36,8 @@ class SaleSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def saleSheetDet = SaleSheetDet.get(params.id);
 
@@ -44,13 +49,15 @@ class SaleSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.saleSheet.id){
 
@@ -68,7 +75,7 @@ class SaleSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'saleSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.saleSheetDet.message.create.failed")]
             }            
         }
 
@@ -76,19 +83,22 @@ class SaleSheetDetController {
 
     @Transactional
     def save() {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleSheetDet=new SaleSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(saleSheetDet.typeName != saleSheetDet.saleSheet.typeName || saleSheetDet.name != saleSheetDet.saleSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(saleSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [saleSheetDet])]
             }
             return
         }
@@ -96,7 +106,7 @@ class SaleSheetDetController {
         //檢查銷貨單品項必須等於批號品項，若有選訂單單身，銷貨單品項必須等於訂單單身品項
         if((saleSheetDet.customerOrderDet && saleSheetDet.item != saleSheetDet.customerOrderDet.item) || saleSheetDet.item != saleSheetDet.batch.item ){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleSheetDet.customerOrderDet)]
+                [success: false,message:message(code: "${i18nType}.sheet.item.batch.item.not.equal", args:saleSheetDet.customerOrderDet)]
             }
             return
         }
@@ -117,11 +127,14 @@ class SaleSheetDetController {
 
     @Transactional
     def update() {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleSheetDet = new SaleSheetDet(params)
 
         if(saleSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [saleSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [saleSheetDet])]
             }
             return
         }
@@ -129,7 +142,7 @@ class SaleSheetDetController {
         //檢查銷貨單品項必須等於批號品項，若有選訂單單身，銷貨單品項必須等於訂單單身品項
         if((saleSheetDet.customerOrderDet && saleSheetDet.item != saleSheetDet.customerOrderDet.item) || saleSheetDet.item != saleSheetDet.batch.item ){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.item.batch.item.not.equal', args:saleSheetDet.customerOrderDet)]
+                [success: false,message:message(code: "${i18nType}.sheet.item.batch.item.not.equal", args:saleSheetDet.customerOrderDet)]
             }
             return
         }
@@ -140,7 +153,7 @@ class SaleSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != saleSheetDet.typeName || params.name != saleSheetDet.name|| params.sequence.toLong() != saleSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -182,6 +195,8 @@ class SaleSheetDetController {
     @Transactional
     def delete(){
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def saleSheetDet = SaleSheetDet.get(params.id)
 
         def result
@@ -191,7 +206,7 @@ class SaleSheetDetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [saleSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [saleSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

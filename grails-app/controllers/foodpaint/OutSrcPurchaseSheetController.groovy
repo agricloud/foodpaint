@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class OutSrcPurchaseSheetController {
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -39,6 +40,9 @@ class OutSrcPurchaseSheetController {
     }
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def outSrcPurchaseSheet=OutSrcPurchaseSheet.get(params.id)
 
         if(outSrcPurchaseSheet){   
@@ -48,7 +52,7 @@ class OutSrcPurchaseSheetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -73,19 +77,21 @@ class OutSrcPurchaseSheetController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def outSrcPurchaseSheet= OutSrcPurchaseSheet.get(params.id)
 
         //單別、單號一旦建立不允許變更
         if(params.typeName != outSrcPurchaseSheet.typeName || params.name != outSrcPurchaseSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
 
         if(outSrcPurchaseSheet.outSrcPurchaseSheetDets && params.supplier.id.toLong() != outSrcPurchaseSheet.supplier.id){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'outSrcPurchaseSheet.outSrcPurchaseSheetDets.exists.supplier.not.allowed.change', args: [outSrcPurchaseSheet])]
+                [success: false,message:message(code: "${i18nType}.outSrcPurchaseSheet.outSrcPurchaseSheetDets.exists.supplier.not.allowed.change", args: [outSrcPurchaseSheet])]
             }
             return
         }
@@ -98,6 +104,8 @@ class OutSrcPurchaseSheetController {
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def outSrcPurchaseSheet = OutSrcPurchaseSheet.get(params.id)
 
@@ -107,7 +115,7 @@ class OutSrcPurchaseSheetController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [outSrcPurchaseSheet, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [outSrcPurchaseSheet, e])
             result = [success:false, message: msg] 
         }
         
@@ -117,11 +125,14 @@ class OutSrcPurchaseSheetController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'outSrcPurchaseSheet.report.title.label')
+        def reportTitle = message(code: "${i18nType}.outSrcPurchaseSheet.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();

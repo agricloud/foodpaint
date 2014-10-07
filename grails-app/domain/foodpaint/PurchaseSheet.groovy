@@ -3,6 +3,10 @@ package foodpaint
  * 進貨單
  */
 class PurchaseSheet {
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -59,7 +63,19 @@ class PurchaseSheet {
         supplier  nullable:true
     }
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
     public String toString(){
-        "進貨單：${typeName}-${name}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [PurchaseSheet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.purchaseSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
+        """
     }
 }

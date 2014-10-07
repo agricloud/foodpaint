@@ -16,6 +16,14 @@ class SaleSheetControllerTests {
         def testService = new TestService()
         testService.createTestMessage(messageSource)
 
+        grailsApplication.config.grails.i18nType='mfg'
+        SaleSheet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        SaleSheet.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def customer1 = new Customer(name:"customer1",title:"客戶1").save(failOnError: true)
     }
 

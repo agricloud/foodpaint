@@ -2,6 +2,7 @@ package foodpaint
 
 class BatchService {
 
+	def grailsApplication
 	def messageSource
 	def domainService
 
@@ -46,6 +47,7 @@ class BatchService {
 	}
 	def findOrCreateBatchInstanceByJson(params, sheet){
 		//如果批號欄位沒有資料則不新增batch
+		def i18nType = grailsApplication.config.grails.i18nType
 		def msg
 		def isSuccess
 		Object[] args=[]
@@ -63,7 +65,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							batch.supplier = sheet.purchaseSheet.supplier
@@ -74,7 +76,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							isSuccess = true
@@ -84,7 +86,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							batch.supplier = sheet.outSrcPurchaseSheet.supplier
@@ -95,7 +97,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							batch.expectQty = sheet.qty
@@ -110,13 +112,15 @@ class BatchService {
 		}
 		else{//未指定欲新增之批號
 			isSuccess = false
-			msg = messageSource.getMessage("batch.name.params.notfound", args, Locale.getDefault())  
+			msg = messageSource.getMessage("${i18nType}.batch.name.params.not.found", args, Locale.getDefault())  
 		}
 
 		return [success:isSuccess, batch:batch, message: msg]
 	}
 
 	def createBatchInstanceByJson(params, sheet){
+
+		def i18nType = grailsApplication.config.grails.i18nType
 		def isSuccess
 		def msg
 		Object[] args=[]
@@ -125,7 +129,7 @@ class BatchService {
 
 			if(Batch.findByName(params["batch.name"])){
 				args[params["batch.name"]]
-				msg = messageSource.getMessage("batch.name.unique", args, Locale.getDefault())
+				msg = messageSource.getMessage("${i18nType}.batch.name.unique", args, Locale.getDefault())
             	return [success:false, message: msg]
 			}
 			else{
@@ -143,7 +147,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							isSuccess =true
@@ -153,7 +157,7 @@ class BatchService {
 						if(sheet.item != batch.item){
 							isSuccess = false
 							args=[sheet]
-							msg = messageSource.getMessage("sheet.item.batch.item.not.equal", args, Locale.getDefault())
+							msg = messageSource.getMessage("${i18nType}.sheet.item.batch.item.not.equal", args, Locale.getDefault())
 						}
 						else{
 							batch.supplier = sheet.outSrcPurchaseSheet.supplier
@@ -184,7 +188,7 @@ class BatchService {
 			}
 		}
 		else{//未指定欲新增之批號
-			msg = messageSource.getMessage("batch.name.params.notfound", args, Locale.getDefault())
+			msg = messageSource.getMessage("${i18nType}.batch.name.params.not.found", args, Locale.getDefault())
             return [success:false, message: msg]
 		}
 	}

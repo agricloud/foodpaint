@@ -6,7 +6,7 @@ class TraceService{
 
 
     //追溯單據產生BatchSource關聯
-    def generateBatchSourceInstance(){   
+    def generateBatchSourceInstance(){
 
         //未來若要針對一張單據處理批號關係，直接將批號加入batchNames=[]即可。
         def batchNames=Batch.list()*.name

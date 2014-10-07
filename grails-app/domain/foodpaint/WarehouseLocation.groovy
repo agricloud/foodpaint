@@ -2,6 +2,9 @@ package foodpaint
 
 class WarehouseLocation {
 
+    def grailsApplication
+    def messageSource
+
     String importFlag = -1
     Site site
     String editor
@@ -42,7 +45,19 @@ class WarehouseLocation {
 		remark nullable: true
 	}
 
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
 	public String toString(){
-    	"儲位編號：${name}，儲位名稱：${title}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [WarehouseLocation]
+        """
+        ${getMessageSource().getMessage("${i18nType}.warehouseLocation.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${warehouseLocation.name}/${warehouseLocation.title}
+        """
     }
 }

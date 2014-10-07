@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class ManufactureOrderController {
 
+    def grailsApplication
     def domainService
     def batchService
     def jasperService
@@ -42,6 +43,8 @@ class ManufactureOrderController {
 
     def show = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def manufactureOrder=ManufactureOrder.get(params.id);
 
 
@@ -52,7 +55,7 @@ class ManufactureOrderController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -65,17 +68,20 @@ class ManufactureOrderController {
     }
 
     def save = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def manufactureOrder=new ManufactureOrder(params)
 
         if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'manufactureOrder.workstation.supplier.should.exist.one', args: [manufactureOrder])]
+                [success: false,message:message(code: "${i18nType}.manufactureOrder.workstation.supplier.should.exist.one", args: [manufactureOrder])]
             }
             return
         }
         if(manufactureOrder.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [manufactureOrder])]
             }
             return
         }
@@ -98,17 +104,19 @@ class ManufactureOrderController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def manufactureOrder = new ManufactureOrder(params)
 
         if((manufactureOrder.workstation && manufactureOrder.supplier)||(!manufactureOrder.workstation && !manufactureOrder.supplier)){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'manufactureOrder.workstation.supplier.should.exist.one', args: [manufactureOrder])]
+                [success: false,message:message(code: "${i18nType}.manufactureOrder.workstation.supplier.should.exist.one", args: [manufactureOrder])]
             }
             return
         }
         if(manufactureOrder.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [manufactureOrder])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [manufactureOrder])]
             }
             return
         }
@@ -118,7 +126,7 @@ class ManufactureOrderController {
         //單別、單號一旦建立不允許變更
         if(params.typeName != manufactureOrder.typeName || params.name != manufactureOrder.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
@@ -142,6 +150,8 @@ class ManufactureOrderController {
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def manufactureOrder = ManufactureOrder.get(params.id)
 
@@ -152,7 +162,7 @@ class ManufactureOrderController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [manufactureOrder, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [manufactureOrder, e])
             result = [success:false, message: msg] 
         }
         
@@ -162,11 +172,14 @@ class ManufactureOrderController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'manufactureOrder.report.title.label')
+        def reportTitle = message(code: "${i18nType}.manufactureOrder.report.title.label")
         
         //設定額外傳入參數
         def parameters=[:]

@@ -6,11 +6,14 @@ import grails.transaction.Transactional
 
 class PurchaseSheetDetController {
 
+    def grailsApplication
     def domainService
     def batchService
     def inventoryDetailService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def purchaseSheet = PurchaseSheet.get(params.purchaseSheet.id)
 
@@ -25,7 +28,7 @@ class PurchaseSheetDetController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }
         }
         
@@ -33,6 +36,8 @@ class PurchaseSheetDetController {
 
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def purchaseSheetDet = PurchaseSheetDet.get(params.id);
 
@@ -44,13 +49,15 @@ class PurchaseSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.purchaseSheet.id){
 
@@ -68,7 +75,7 @@ class PurchaseSheetDetController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'purchaseSheetDet.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.purchaseSheetDet.message.create.failed")]
             }            
         }
 
@@ -76,19 +83,22 @@ class PurchaseSheetDetController {
 
     @Transactional
     def save(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseSheetDet=new PurchaseSheetDet(params)
 
         //「單身單別、單號」與「單頭單別、單號」不同不允許儲存
         if(purchaseSheetDet.typeName != purchaseSheetDet.purchaseSheet.typeName || purchaseSheetDet.name != purchaseSheetDet.purchaseSheet.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sheet.typeName.name.not.equal')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sheet.typeName.name.not.equal")]
             }
             return
         }
 
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [purchaseSheetDet])]
             }
             return
         }
@@ -118,11 +128,14 @@ class PurchaseSheetDetController {
 
     @Transactional
     def update() {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def purchaseSheetDet = new PurchaseSheetDet(params)
 
         if(purchaseSheetDet.qty<=0){
             render (contentType: 'application/json') {
-                [success:false, message:message(code: 'sheet.qty.must.more.than.zero', args: [purchaseSheetDet])]
+                [success:false, message:message(code: "${i18nType}.sheet.qty.must.more.than.zero", args: [purchaseSheetDet])]
             }
             return
         }
@@ -141,7 +154,7 @@ class PurchaseSheetDetController {
         //單別、單號、序號一旦建立不允許變更
         if(params.typeName != purchaseSheetDet.typeName || params.name != purchaseSheetDet.name|| params.sequence.toLong() != purchaseSheetDet.sequence){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheetDetail.typeName.name.sequence.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheetDetail.typeName.name.sequence.not.allowed.change")]
             }
             return
         }
@@ -184,6 +197,9 @@ class PurchaseSheetDetController {
 
     @Transactional
     def delete(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def purchaseSheetDet = PurchaseSheetDet.get(params.id)
 
         def result
@@ -199,7 +215,7 @@ class PurchaseSheetDetController {
             }
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [purchaseSheetDet, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [purchaseSheetDet, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class CustomerOrderController {
 
+    def grailsApplication
     def domainService
     def jasperService
     def springSecurityService
@@ -37,6 +38,9 @@ class CustomerOrderController {
     }
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def customerOrder=CustomerOrder.get(params.id)
 
         if(customerOrder){   
@@ -46,7 +50,7 @@ class CustomerOrderController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }          
         }
     }
@@ -71,12 +75,14 @@ class CustomerOrderController {
 
     def update = {
 
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def customerOrder= CustomerOrder.get(params.id)
 
         //單別、單號一旦建立不允許變更
         if(params.typeName != customerOrder.typeName || params.name != customerOrder.name){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'sheet.typeName.name.not.allowed.change')]
+                [success: false,message:message(code: "${i18nType}.sheet.typeName.name.not.allowed.change")]
             }
             return
         }
@@ -84,7 +90,7 @@ class CustomerOrderController {
         //單身建立後不允許變更客戶
         if(customerOrder.customerOrderDets && params.customer.id.toLong() != customerOrder.customer.id){
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'customerOrder.customerOrderDets.exists.customer.not.allowed.change', args: [customerOrder])]
+                [success: false,message:message(code: "${i18nType}.customerOrder.customerOrderDets.exists.customer.not.allowed.change", args: [customerOrder])]
             }
             return
         }
@@ -98,6 +104,8 @@ class CustomerOrderController {
 
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
         
         def customerOrder = CustomerOrder.get(params.id)
 
@@ -107,7 +115,7 @@ class CustomerOrderController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [customerOrder, e])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [customerOrder, e])
             result = [success:false, message: msg] 
         }
         
@@ -117,11 +125,14 @@ class CustomerOrderController {
     }
 
     def print(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def site
         if(params.site.id && params.site.id!="null")
             site = Site.get(params.site.id)
 
-        def reportTitle = message(code: 'customerOrder.report.title.label')
+        def reportTitle = message(code: "${i18nType}.customerOrder.report.title.label")
         
         //報表依指定欄位排序
         List<JRSortField> sortList = new ArrayList<JRSortField>();

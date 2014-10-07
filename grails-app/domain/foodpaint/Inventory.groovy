@@ -2,6 +2,9 @@ package foodpaint
 
 class Inventory {
 
+    def grailsApplication
+    def messageSource
+
     String importFlag = -1
     Site site
     String editor
@@ -37,7 +40,19 @@ class Inventory {
 		creator nullable:true
 	}
 
-	public String toString(){
-    	"倉庫：${warehouse.name}, 品項：${item.name}"
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+
+    public String toString(){
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [Inventory]
+        """
+        ${getMessageSource().getMessage("${i18nType}.inventory.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}/${item.name}/${item.title}
+        """
     }
 }

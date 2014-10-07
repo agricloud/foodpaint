@@ -17,6 +17,20 @@ class MaterialReturnSheetDetControllerTests {
         def testService = new TestService()
         testService.createTestMessage(messageSource)
 
+        grailsApplication.config.grails.i18nType='mfg'
+        MaterialReturnSheetDet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        MaterialReturnSheetDet.metaClass.getMessageSource = {
+            return messageSource
+        }
+        ManufactureOrder.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        ManufactureOrder.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def item1 = new Item(name:"item1",title:"原料",unit:"kg").save(failOnError: true, flush: true)
         def batch1 = new Batch(name:"batch1", item:item1).save(failOnError: true, flush: true)
         def item2 = new Item(name:"item2",title:"成品",unit:"kg").save(failOnError: true, flush: true)

@@ -3,6 +3,10 @@ package foodpaint
  * 進貨單身
  */
 class PurchaseSheetDet{
+
+    def grailsApplication
+    def messageSource
+    
     String importFlag = -1
 
     /**
@@ -84,7 +88,20 @@ class PurchaseSheetDet{
         batch nullable:true
         qty min: 0.0d
     }
+
+    def getGrailsApplication(){
+        return grailsApplication
+    }
+
+    def getMessageSource(){
+        return messageSource
+    }
+    
     public String toString(){
-        "進貨單單身：${typeName}-${name}-${sequence}"
+        def i18nType = getGrailsApplication().config.grails.i18nType
+        Object[] args = [PurchaseSheetDet]
+        """
+        ${getMessageSource().getMessage("${i18nType}.purchaseSheetDet.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
+        """
     }
 }

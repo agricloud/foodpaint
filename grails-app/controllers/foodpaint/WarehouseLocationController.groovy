@@ -3,9 +3,12 @@ package foodpaint
 
 class WarehouseLocationController {
 
+    def grailsApplication
     def domainService
 
     def index = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         def warehouse = Warehouse.get(params.warehouse.id)
         
@@ -19,7 +22,7 @@ class WarehouseLocationController {
         }
         else{
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }            
         }
 
@@ -27,6 +30,9 @@ class WarehouseLocationController {
     }
 
     def show = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+
         def warehouseLocation=WarehouseLocation.get(params.id);
         if(warehouseLocation){
             render (contentType: 'application/json') {
@@ -34,7 +40,7 @@ class WarehouseLocationController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'default.message.show.failed')]
+                [success: false,message:message(code: "${i18nType}.default.message.show.failed")]
             }            
         } 
     }
@@ -42,6 +48,8 @@ class WarehouseLocationController {
 
 
     def create = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         if(params.warehouse.id){
 
@@ -52,7 +60,7 @@ class WarehouseLocationController {
             }
         }else {
             render (contentType: 'application/json') {
-                [success: false,message:message(code: 'warehouseLocation.message.create.failed')]
+                [success: false,message:message(code: "${i18nType}.warehouseLocation.message.create.failed")]
             }            
         }   
     }
@@ -75,6 +83,9 @@ class WarehouseLocationController {
     }
 
     def delete = {
+
+        def i18nType = grailsApplication.config.grails.i18nType
+        
         def warehouseLocation = WarehouseLocation.get(params.id)
         def result
         try {
@@ -83,7 +94,7 @@ class WarehouseLocationController {
         
         }catch(e){
             log.error e
-            def msg = message(code: 'default.message.delete.failed', args: [warehouseLocation, e.getMessage()])
+            def msg = message(code: "${i18nType}.default.message.delete.failed", args: [warehouseLocation, e.getMessage()])
             result = [success:false, message: msg] 
         }
         

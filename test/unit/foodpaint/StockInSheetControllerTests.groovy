@@ -14,6 +14,15 @@ class StockInSheetControllerTests {
     void setUp(){
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
+        StockInSheet.metaClass.getGrailsApplication = {
+            return grailsApplication
+        }
+        StockInSheet.metaClass.getMessageSource = {
+            return messageSource
+        }
+
         def workstation1 = new Workstation(name:"workstation1",title:"生產線1").save(failOnError: true)
     }
 
