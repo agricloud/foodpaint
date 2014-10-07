@@ -158,4 +158,4 @@ environments {
     }
 }
 
-grails.i18nType = 'mfg'
+grails.i18nType = 'agri'
