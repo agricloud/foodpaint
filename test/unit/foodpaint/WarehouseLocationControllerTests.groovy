@@ -11,6 +11,8 @@ class WarehouseLocationControllerTests {
     void setUp(){
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+        
+        grailsApplication.config.grails.i18nType='mfg'
 
         def warehouse1 = new Warehouse(name:"warehouse1",title:"倉庫1").save(failOnError: true, flush: true)
     }

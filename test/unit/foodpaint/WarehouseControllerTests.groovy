@@ -11,6 +11,8 @@ class WarehouseControllerTests {
     void setUp(){
         def testService = new TestService()
         testService.createTestMessage(messageSource)
+
+        grailsApplication.config.grails.i18nType='mfg'
     }
 
     def populateValidParams(params) {
