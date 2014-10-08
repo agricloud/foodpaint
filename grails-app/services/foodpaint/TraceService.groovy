@@ -4,9 +4,12 @@ import grails.converters.*
 
 class TraceService{
 
+    def grailsApplication
 
     //追溯單據產生BatchSource關聯
     def generateBatchSourceInstance(){
+
+        def i18nType = grailsApplication.config.grails.i18nType
 
         //未來若要針對一張單據處理批號關係，直接將批號加入batchNames=[]即可。
         def batchNames=Batch.list()*.name
@@ -37,6 +40,11 @@ class TraceService{
 
                         if (!batchSource.validate() || !batchSource.save(flush: true)){
                             batchSource.errors.allErrors.each{ 
+
+                                it.codes.eachWithIndex{ code, i ->
+                                    it.codes[i] = i18nType+"."+code
+                                }
+                    
                                 log.error messageSource.getMessage(it, Locale.getDefault())
                             }
                         }
