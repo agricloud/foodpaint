@@ -50,7 +50,10 @@ class DomainService {
         }else{
 
             domainObject.errors.allErrors.each{ 
-                
+
+                it.codes.eachWithIndex{ code, i ->
+                    it.codes[i] = i18nType+"."+code
+                }
 
                 if(it.field == 'operation' || it.field == 'workstation' || it.field == 'item')
                     errors[it.field+".name"]=messageSource.getMessage(it, Locale.getDefault())
