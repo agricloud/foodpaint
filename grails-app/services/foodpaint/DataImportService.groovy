@@ -16,6 +16,8 @@ class DataImportService {
     @XmlJavaTypeAdapter(GrailsCxfMapAdapter.class)
 	Map doDataImport(@WebParam(name="xmlString")String xmlString){
 
+		def i18nType = grailsApplication.config.grails.i18nType
+
 		def result=[:]
 			
 			def writer = new StringWriter()
@@ -122,6 +124,11 @@ class DataImportService {
 
 						if (!domain.validate() || !domain.save(flush: true)){
 				            domain.errors.allErrors.each{ 
+
+				            	it.codes.eachWithIndex{ code, j ->
+				                    it.codes[j] = i18nType+"."+code
+				                }
+
 				                log.error messageSource.getMessage(it, Locale.getDefault())
 				            }
 						}

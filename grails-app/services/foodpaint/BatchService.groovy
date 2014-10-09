@@ -7,6 +7,9 @@ class BatchService {
 	def domainService
 
 	def findOrCreateBatchInstanceByXml(recordXml, sheet){
+
+		def i18nType = grailsApplication.config.grails.i18nType
+		
 		//如果批號欄位沒有資料則不新增batch
 		//但單據仍會儲存
 		if(recordXml.batchName.text() || recordXml.batchName.text().trim()){
@@ -33,6 +36,10 @@ class BatchService {
 
 			if (!batch.validate() || !batch.save(flush: true)){
 				batch.errors.allErrors.each{ 
+					it.codes.eachWithIndex{ code, i ->
+	                    it.codes[i] = i18nType+"."+code
+	                }
+
 					log.error messageSource.getMessage(it, Locale.getDefault())
 				}
 
