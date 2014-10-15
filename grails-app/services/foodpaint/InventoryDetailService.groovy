@@ -88,11 +88,7 @@ class InventoryDetailService {
 			return [success:false ,message: messageSource.getMessage("${i18nType}.inventoryDetail.qty.must.be.more.than.zero", args, Locale.getDefault())]
 	}
 
-	def indexByBatchAndGroupByWarehouse(params,batchName){
-		def batch=Batch.findByName(batchName)
-		def site
-		if(params["site.id"] && params["site.id"] != "null")
-				site = Site.findById(params["site.id"])
+	def indexByBatchAndGroupByWarehouse(batch, site){
 
 		def inventoryDetails = InventoryDetail.executeQuery("SELECT warehouse.id,warehouse.name,warehouse.title,item.id,item.name,item.title,batch.id,batch.name,SUM(qty) FROM InventoryDetail WHERE batch.id = ? AND site.id = ? GROUP BY warehouse.id",[batch.id,site.id])
 
