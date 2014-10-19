@@ -47,9 +47,11 @@ class ExtJSFilters {
                 }
 
                 params.criteria = {
-                    if(params["site.id"]&&params["site.id"]!="null"){
+
+                    if(params["site.id"] && params["site.id"]!="null")
                         eq('site.id',params["site.id"].toLong())
-                    }
+                    else
+                        isNull('site.id')
 
                     if(params.filter){
                         def filterJson = grails.converters.JSON.parse(params.filter)
