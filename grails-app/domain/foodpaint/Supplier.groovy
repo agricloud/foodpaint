@@ -70,7 +70,7 @@ class Supplier {
         tel nullable:true
         fax nullable:true
         contact nullable:true
-        email nullable:true
+        email nullable:true, email: true
         address nullable:true
 
     }
