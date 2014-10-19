@@ -59,7 +59,7 @@ class Warehouse {
         def i18nType = getGrailsApplication().config.grails.i18nType
         Object[] args = [Warehouse]
         """
-        ${getMessageSource().getMessage("${i18nType}.warehouse.label", args, Locale.getDefault())}: ${warehouse.name}/${warehouse.title}
+        ${getMessageSource().getMessage("${i18nType}.warehouse.label", args, Locale.getDefault())}: ${name}/${title}
         """
     }
 }
