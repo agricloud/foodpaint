@@ -45,7 +45,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="130" splitType="Stretch">
+		<band height="138" splitType="Stretch">
 			<textField>
 				<reportElement x="254" y="0" width="294" height="20" uuid="24553b5a-cfbc-4878-a7d2-c5f0960fd5ee"/>
 				<textElement textAlignment="Center">
@@ -62,13 +62,13 @@
 				<textFieldExpression><![CDATA[$P{report.title}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="124" width="802" height="1" uuid="6b5c100f-5f91-47f9-bee6-578287d9b1f7"/>
+				<reportElement x="0" y="132" width="802" height="1" uuid="6b5c100f-5f91-47f9-bee6-578287d9b1f7"/>
 				<graphicElement>
 					<pen lineWidth="1.25"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement mode="Transparent" x="69" y="79" width="226" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7c1f0169-3b3a-4491-9e13-c3b9347f31bb"/>
+				<reportElement mode="Transparent" x="69" y="87" width="226" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7c1f0169-3b3a-4491-9e13-c3b9347f31bb"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -76,20 +76,20 @@
 				<textFieldExpression><![CDATA[$F{typeName}+"-"+$F{name}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="74" width="802" height="1" uuid="a150c7c2-d9f8-4ea8-aa08-66d3e0c3ee22"/>
+				<reportElement x="0" y="82" width="802" height="1" uuid="a150c7c2-d9f8-4ea8-aa08-66d3e0c3ee22"/>
 				<graphicElement>
 					<pen lineWidth="1.25"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="295" y="79" width="72" height="20" uuid="931390b4-7544-4c41-978e-0e12e2ba106d"/>
+				<reportElement x="295" y="87" width="72" height="20" uuid="931390b4-7544-4c41-978e-0e12e2ba106d"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[供應商編號：]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="367" y="79" width="256" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fbac0d6d-29a3-487f-a0f8-91d4c439e3dc"/>
+				<reportElement mode="Transparent" x="367" y="87" width="256" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fbac0d6d-29a3-487f-a0f8-91d4c439e3dc"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -97,7 +97,7 @@
 				<textFieldExpression><![CDATA[$F{supplier.name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="61" y="51" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bae9e222-ce59-4a02-a679-de5f28c06157"/>
+				<reportElement mode="Transparent" x="61" y="59" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bae9e222-ce59-4a02-a679-de5f28c06157"/>
 				<textElement verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -105,14 +105,14 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="716" y="51" width="37" height="20" uuid="5ddd9a84-6c28-41a7-9716-0608fb4f2266"/>
+				<reportElement x="716" y="59" width="37" height="20" uuid="5ddd9a84-6c28-41a7-9716-0608fb4f2266"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[頁碼：]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="753" y="51" width="17" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="355dfa82-ef36-4126-9c63-6f507000611f"/>
+				<reportElement mode="Transparent" x="753" y="59" width="17" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="355dfa82-ef36-4126-9c63-6f507000611f"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -120,14 +120,14 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="295" y="99" width="72" height="20" uuid="8165ccfd-164c-46e0-a557-45c16ed91094"/>
+				<reportElement x="295" y="107" width="72" height="20" uuid="8165ccfd-164c-46e0-a557-45c16ed91094"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[供應商名稱：]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="367" y="99" width="256" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e55d97b1-ed4a-417c-8e62-48828b3b3e0b"/>
+				<reportElement mode="Transparent" x="367" y="107" width="256" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e55d97b1-ed4a-417c-8e62-48828b3b3e0b"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -135,21 +135,21 @@
 				<textFieldExpression><![CDATA[$F{supplier.title}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="99" width="69" height="20" uuid="311452ba-13e8-42db-9b05-ad576db7da8e"/>
+				<reportElement x="0" y="107" width="69" height="20" uuid="311452ba-13e8-42db-9b05-ad576db7da8e"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[單據日期：]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="79" width="69" height="20" uuid="18540bd1-871b-44b9-b653-9bf8eefc5ee9"/>
+				<reportElement x="0" y="87" width="69" height="20" uuid="18540bd1-871b-44b9-b653-9bf8eefc5ee9"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[單別-單號：]]></text>
 			</staticText>
 			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="785" y="51" width="17" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="51e6ad3f-f2ca-42f2-b165-e85a3baaf793"/>
+				<reportElement mode="Transparent" x="785" y="59" width="17" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="51e6ad3f-f2ca-42f2-b165-e85a3baaf793"/>
 				<textElement verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -157,7 +157,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="61" y="51" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="df8af54d-4966-4018-92fa-fc998073ec2c"/>
+				<reportElement mode="Transparent" x="61" y="59" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="df8af54d-4966-4018-92fa-fc998073ec2c"/>
 				<textElement verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -165,14 +165,14 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="770" y="51" width="15" height="20" uuid="a3fb52e4-4d4a-4f9b-9f4b-e754b29f8e86"/>
+				<reportElement x="770" y="59" width="15" height="20" uuid="a3fb52e4-4d4a-4f9b-9f4b-e754b29f8e86"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="69" y="99" width="226" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a8220194-e62c-4b99-a1f1-7b0cc2904c47"/>
+				<reportElement mode="Transparent" x="69" y="107" width="226" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a8220194-e62c-4b99-a1f1-7b0cc2904c47"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -180,12 +180,16 @@
 				<textFieldExpression><![CDATA[$F{dateCreated}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="51" width="61" height="20" uuid="f56f0d69-bbf4-4cef-989e-1e56d07428b5"/>
+				<reportElement x="0" y="59" width="61" height="20" uuid="f56f0d69-bbf4-4cef-989e-1e56d07428b5"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[製表日期：]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="136" height="49" uuid="bc7b6433-a0b3-423d-a6f0-eb3797bce306"/>
+				<imageExpression><![CDATA["/Users/pipi/Documents/logo_foodprint2.png"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
