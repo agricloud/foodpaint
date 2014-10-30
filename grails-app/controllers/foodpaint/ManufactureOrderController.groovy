@@ -186,6 +186,7 @@ class ManufactureOrderController {
         parameters["site.title"]=site?.title
         parameters["report.title"]=reportTitle
         parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
+        parameters["IMAGE_DIR"]=servletContext.getResource("/images/")
         //設定準備傳入的資料
         def reportData=[]
         def manufactureOrder = ManufactureOrder.get(params.id)

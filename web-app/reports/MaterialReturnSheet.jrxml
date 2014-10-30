@@ -5,6 +5,9 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="site.title" class="java.lang.String"/>
 	<parameter name="report.title" class="java.lang.String"/>
+	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/pipi/pipi/projects/foodprint/web-app/images/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -189,8 +192,8 @@
 				<text><![CDATA[製表日期：]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="136" height="49" uuid="5ebfada5-a8bc-4c1c-8f3e-c3c397765782"/>
-				<imageExpression><![CDATA["/Users/pipi/Documents/logo_foodprint2.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="136" height="49" uuid="29568a05-d214-4467-b4f3-65660b2b78e4"/>
+				<imageExpression><![CDATA[$P{IMAGE_DIR}+"logo-foodprint.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>

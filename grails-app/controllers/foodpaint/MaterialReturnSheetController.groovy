@@ -154,6 +154,7 @@ class MaterialReturnSheetController {
         parameters["report.title"]=reportTitle
         parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
         parameters["SORT_FIELDS"]=sortList
+        parameters["IMAGE_DIR"]=servletContext.getResource("/images/")
         //設定準備傳入的資料
         def reportData=[]
         def materialReturnSheet = MaterialReturnSheet.get(params.id)
