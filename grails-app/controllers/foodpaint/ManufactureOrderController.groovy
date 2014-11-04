@@ -2,10 +2,7 @@ package foodpaint
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
-//generate irepoet
-import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat
-import org.codehaus.groovy.grails.plugins.jasper.JasperReportDef
-import org.apache.commons.io.FileUtils
+
 //ireport sorting list
 import net.sf.jasperreports.engine.JRSortField
 import net.sf.jasperreports.engine.design.JRDesignSortField
@@ -17,9 +14,8 @@ class ManufactureOrderController {
     def grailsApplication
     def domainService
     def batchService
-    def jasperService
-    def springSecurityService
     def dateService
+    def jasperReportService
 
     def index = {
 
@@ -174,18 +170,11 @@ class ManufactureOrderController {
     def print(){
 
         def i18nType = grailsApplication.config.grails.i18nType
-        
-        def site
-        if(params.site.id && params.site.id!="null")
-            site = Site.get(params.site.id)
-
         def reportTitle = message(code: "${i18nType}.manufactureOrder.report.title.label")
         
         //設定額外傳入參數
         def parameters=[:]
-        parameters["site.title"]=site?.title
-        parameters["report.title"]=reportTitle
-        parameters["REPORT_TIME_ZONE"]=dateService.getTimeZone()
+
         //設定準備傳入的資料
         def reportData=[]
         def manufactureOrder = ManufactureOrder.get(params.id)
@@ -193,14 +182,8 @@ class ManufactureOrderController {
 
         reportData << data
 
-        def reportDef = new JasperReportDef(name:'ManufactureOrder.jasper',parameters:parameters,reportData:reportData,fileFormat:JasperExportFormat.PDF_FORMAT)
-
-        def fileName=dateService.getStrDate('yyyy-MM-dd HHmmss')+" "+reportTitle+".pdf"
+        def reportFile = jasperReportService.printPdf params, 'ManufactureOrder.jasper', reportTitle, parameters, reportData
         
-        FileUtils.writeByteArrayToFile(new File("web-app/reportFiles/"+fileName), jasperService.generateReport(reportDef).toByteArray())
-
-        render (contentType: 'application/json') {
-            [fileName:fileName]
-        }   
+        render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf')  
     }
 }
