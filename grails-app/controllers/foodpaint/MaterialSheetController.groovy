@@ -102,7 +102,7 @@ class MaterialSheetController {
             return
         }
 
-        //工作站/供應商一旦建立不允許變更
+        //單身建立後不允許變更工作站/供應商
         if(materialSheet.materialSheetDets && ((params.workstation?.id && params.workstation.id.toLong() != materialSheet.workstation?.id) || (params.supplier?.id &&params.supplier.id.toLong() != materialSheet.supplier?.id))){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: "${i18nType}.materialSheet.materialSheetDets.exists.workstationOrSupplier.not.allowed.change", args: [materialSheet])]
