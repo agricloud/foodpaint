@@ -74,7 +74,7 @@ class StockInSheetController {
             return
         }
 
-        //工作站一旦建立不允許變更
+        ////單身建立後不允許變更工作站
         if(stockInSheet.stockInSheetDets && params.workstation.id.toLong() != stockInSheet.workstation.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: "${i18nType}.stockInSheet.stockInSheetDets.exists.workstation.not.allowed.change", args: [stockInSheet])]

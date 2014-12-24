@@ -93,7 +93,6 @@ class SaleReturnSheetDet{
         site nullable:true
         editor nullable:true
         creator nullable:true
-        batch nullable:true
         customerOrderDet nullable:true
         qty min: 0.0d
     }

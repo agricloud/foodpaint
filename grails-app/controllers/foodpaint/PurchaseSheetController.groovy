@@ -84,7 +84,7 @@ class PurchaseSheetController {
             }
             return
         }
-        //單身建立後不允許變更客戶
+        //單身建立後不允許變更供應商
         if(purchaseSheet.purchaseSheetDets && params.supplier.id.toLong() != purchaseSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: "${i18nType}.purchaseSheet.purchaseSheetDets.exists.supplier.not.allowed.change", args: [purchaseSheet])]
