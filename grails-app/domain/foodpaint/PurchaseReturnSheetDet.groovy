@@ -90,7 +90,6 @@ class PurchaseReturnSheetDet{
         site nullable:true
         editor nullable:true
         creator nullable:true
-        batch nullable:true
         qty min: 0.0d
     }
 

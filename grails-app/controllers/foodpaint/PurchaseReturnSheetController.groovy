@@ -72,7 +72,7 @@ class PurchaseReturnSheetController{
             }
             return
         }
-        //單身建立後不允許變更客戶
+        //單身建立後不允許變更供應商
         if(purchaseReturnSheet.purchaseReturnSheetDets && params.supplier.id.toLong() != purchaseReturnSheet.supplier.id){
             render (contentType: 'application/json') {
                 [success: false,message:message(code: "${i18nType}.purchaseReturnSheet.purchaseReturnSheetDets.exists.supplier.not.allowed.change", args: [purchaseReturnSheet])]

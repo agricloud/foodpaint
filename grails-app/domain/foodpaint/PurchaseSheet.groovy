@@ -60,7 +60,6 @@ class PurchaseSheet {
         site nullable:true
         editor nullable:true
         creator nullable:true
-        supplier  nullable:true
     }
 
     def getGrailsApplication(){
@@ -73,7 +72,7 @@ class PurchaseSheet {
 
     public String toString(){
         def i18nType = getGrailsApplication().config.grails.i18nType
-        Object[] args = [PurchaseSheet]
+        Object[] args = [PurchaseOrder]
         """
         ${getMessageSource().getMessage("${i18nType}.purchaseSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
         """
