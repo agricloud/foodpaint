@@ -72,7 +72,7 @@ class PurchaseSheet {
 
     public String toString(){
         def i18nType = getGrailsApplication().config.grails.i18nType
-        Object[] args = [PurchaseOrder]
+        Object[] args = [PurchaseSheet]
         """
         ${getMessageSource().getMessage("${i18nType}.purchaseSheet.label", args, Locale.getDefault())}: ${typeName}-${name}
         """
