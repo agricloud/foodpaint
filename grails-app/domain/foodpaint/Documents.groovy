@@ -72,7 +72,7 @@ class Documents{
 
 	public String toString(){
 		def i18nType = getGrailsApplication().config.grails.i18nType
-		Object[] args = [Report]
+		Object[] args = [Documents]
 		"""
 		${getMessageSource().getMessage("${i18nType}.report.label", args, Locale.getDefault())}: ${name}/${title}
 		"""
