@@ -12,7 +12,8 @@ class Documents{
 	def grailsApplication
 	def messageSource
      
-
+    
+    String importFlag = -1
 	 /**
 	 * 廠別
 	 */
