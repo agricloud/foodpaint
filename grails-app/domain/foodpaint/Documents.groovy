@@ -46,17 +46,18 @@ class Documents{
 	String title
 
 	String description
-
 	Date effectStartDate
-
 	Date effectEndDate
-
-	static constraints = {
+     static mapping = {
+        importFlag  defaultValue: -1
+    }
+    static constraints = {
+        importFlag nullable:true
 		site nullable:true
 		editor nullable:true
 		creator nullable:true
-		name(unique:['site'])
-	    name blank: false
+		name(unique:['typeName','site'])
+		name blank: false
 		description nullable:true
 		effectStartDate nullable:true
 		effectEndDate nullable:true
@@ -74,7 +75,7 @@ class Documents{
 		def i18nType = getGrailsApplication().config.grails.i18nType
 		Object[] args = [Documents]
 		"""
-		${getMessageSource().getMessage("${i18nType}.report.label", args, Locale.getDefault())}: ${name}/${title}
+		${getMessageSource().getMessage("${i18nType}.documents.label", args, Locale.getDefault())}: ${name}/${title}
 		"""
     }
 }
