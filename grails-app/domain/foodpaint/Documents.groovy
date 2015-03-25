@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 
 
 package foodpaint
@@ -48,10 +50,6 @@ class Documents{
 	Date effectStartDate
 
 	Date effectEndDate
-
-	static hasMany=[saleSheetDets:SaleSheetDet]
-
-
 
 	static constraints = {
 		site nullable:true
