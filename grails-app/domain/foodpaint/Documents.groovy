@@ -53,7 +53,7 @@ class Documents{
         importFlag  defaultValue: -1
     }
     static constraints = {
-        importFlag nullable:true
+        		importFlag nullable:true
 		site nullable:true
 		editor nullable:true
 		creator nullable:true
