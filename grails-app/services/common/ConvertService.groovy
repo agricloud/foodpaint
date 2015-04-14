@@ -1250,4 +1250,29 @@ class ConvertService {
     }
 
 
+	def documentsParseJson(documents){
+ 	    def result = [:]
+ 	    result.dateCreated = dateService.formatWithISO8601(documents.dateCreated)
+	    result.lastUpdated = dateService.formatWithISO8601(documents.lastUpdated)
+	    result.id= documents.id
+	    result.site =documents.site
+	    result.name = documents.name
+	    result.title = documents.title
+	    def documentsType = enumService.name(documents.documentsType)
+	    result.documentsType = documentsType.name
+	    result.description = documents.description
+	    result.effectStartDate = dateService.formatWithISO8601(documents.effectStartDate)
+	    result.effectEndDate = dateService.formatWithISO8601(documents.effectEndDate)
+	    result
+    }
+
+
+
+
+
+
+
+
+
+
 }

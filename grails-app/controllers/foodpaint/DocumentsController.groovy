@@ -11,7 +11,7 @@ import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 
 class DocumentsController {
 
-    static allowedMethods = [create:"POST",update: "POST",  delete: "POST"]
+  //  static allowedMethods = [create:"POST",update: "POST",  delete: "POST"]
     def grailsApplication
     def domainService
 
@@ -95,48 +95,48 @@ class DocumentsController {
         }
     }
     
-     def print(){
+    //  def print(){
 
-        def i18nType = grailsApplication.config.grails.i18nType
-        def documentsTitle = message(code: "${i18nType}.documents.documents.title.label")
+    //     def i18nType = grailsApplication.config.grails.i18nType
+    //     def documentsTitle = message(code: "${i18nType}.documents.documents.title.label")
         
-        //報表依指定欄位排序
-        List<JRSortField> sortList = new ArrayList<JRSortField>();
-        JRDesignSortField sortField = new JRDesignSortField();
+    //     //報表依指定欄位排序
+    //     List<JRSortField> sortList = new ArrayList<JRSortField>();
+    //     JRDesignSortField sortField = new JRDesignSortField();
 
-        sortField.setName('dateCreated');
-        sortField.setOrder(SortOrderEnum.ASCENDING);
-        sortField.setType(SortFieldTypeEnum.FIELD);
-        sortList.add(sortField);
-        //設定額外傳入參數
-        def parameters=[:]
-        parameters["SORT_FIELDS"]=sortList
+    //     sortField.setName('dateCreated');
+    //     sortField.setOrder(SortOrderEnum.ASCENDING);
+    //     sortField.setType(SortFieldTypeEnum.FIELD);
+    //     sortList.add(sortField);
+    //     //設定額外傳入參數
+    //     def parameters=[:]
+    //     parameters["SORT_FIELDS"]=sortList
 
-        //設定準備傳入的資料
-        def reportData=[]
-        def purchaseSheet = PurchaseSheet.get(params.id)
+    //     //設定準備傳入的資料
+    //     def reportData=[]
+    //     def purchaseSheet = PurchaseSheet.get(params.id)
 
-              //迴圈設計  日期 排序資料
+    //           //迴圈設計  日期 排序資料
       
 
-        purchaseSheet.purchaseSheetDets.each{ purchaseSheetDet ->
-            def data=[:]
-            data.dateCreated=purchaseSheet.dateCreated
-            data.lastUpdated=purchaseSheet.lastUpdated
-            data.typeName=purchaseSheet.typeName
-            data.name=purchaseSheet.name
-            data.supplier=purchaseSheet.supplier
-            data.sequence=purchaseSheetDet.sequence
-            data.item=purchaseSheetDet.item
-            data.batch=purchaseSheetDet.batch
-            data.qty=purchaseSheetDet.qty
-            reportData << data
-        }
+    //     purchaseSheet.purchaseSheetDets.each{ purchaseSheetDet ->
+    //         def data=[:]
+    //         data.dateCreated=purchaseSheet.dateCreated
+    //         data.lastUpdated=purchaseSheet.lastUpdated
+    //         data.typeName=purchaseSheet.typeName
+    //         data.name=purchaseSheet.name
+    //         data.supplier=purchaseSheet.supplier
+    //         data.sequence=purchaseSheetDet.sequence
+    //         data.item=purchaseSheetDet.item
+    //         data.batch=purchaseSheetDet.batch
+    //         data.qty=purchaseSheetDet.qty
+    //         reportData << data
+    //     }
 
-        def reportFile = jasperReportService.printPdf(params, 'FertilizerPurchaseRecordSheet.jasper', documentTitle, parameters, reportData)
+    //     def reportFile = jasperReportService.printPdf(params, 'FertilizerPurchaseRecordSheet.jasper', documentTitle, parameters, reportData)
         
-        render (file:documentFile, fileNmae:'${documentTitle}.pdf',contentType:'application/pdf')  
-    }
+    //     render (file:documentFile, fileNmae:'${documentTitle}.pdf',contentType:'application/pdf')  
+    // }
 
 
 
