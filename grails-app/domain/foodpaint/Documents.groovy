@@ -1,8 +1,3 @@
-/**
- * 
- */
-
-
 package foodpaint
 /**
  * 文件單身
@@ -46,9 +41,17 @@ class Documents{
 
 	String title
 
+	
+	String documentsType
+
+
 	String description
+
+
 	Date effectStartDate
+
 	Date effectEndDate
+
      static mapping = {
         importFlag  defaultValue: -1
     }
@@ -58,7 +61,7 @@ class Documents{
 		editor nullable:true
 		creator nullable:true
 		name(unique:['typeName','site'])
-		name blank: false
+		name nullable:true
 		description nullable:true
 		effectStartDate nullable:true
 		effectEndDate nullable:true
