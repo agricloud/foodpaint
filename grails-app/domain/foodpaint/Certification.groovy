@@ -1,7 +1,10 @@
 package foodpaint
 
-class BatchRoute {
+class Certification {
     String importFlag = -1
+    def grailsApplication
+    def messageSource
+
 
     /**
      * 廠別
@@ -28,37 +31,60 @@ class BatchRoute {
      */
     Date lastUpdated
 
-	static belongsTo=[batch:Batch]
-	Workstation workstation
+
+
+static hasMany=[certificationDocuments:CertificationDocuments]
+
+    // static hasMany = [
+    //     batchRoutes: BatchRoute,
+    //     batchSources: BatchSource,
+    //     inventoryDetails: InventoryDetail
+    // ]
+       /**
+     * 證別
+     */
+    String typeName
+
+    /**
+     * 證號
+     */
+    String name
+    double expectQty = 0.0d//ERP無此資料
+    Date dueDate //失效日
+
+
+    /**
+     * 完成日期
+     */
+    Date certificateDate
+
+
+    /**
+     * 供應商
+     */
     Supplier supplier
-	Operation operation
-	int sequence
 
     /**
-     * 開始時間
+     * 供應商所屬國家
      */
-	Date startDate
-
-
-    /**
-     * 結束時間
-     */
-	Date endDate
+    Country country = foodpaint.Country.TAIWAN
 
     static mapping = {
         importFlag  defaultValue: -1
-    }	 
+    }
 
     static constraints = {
         importFlag nullable:true
         site nullable:true
         editor nullable:true
         creator nullable:true
-        sequence(unique:['batch','site'])
-    	startDate nullable:true
-    	endDate nullable:true
-        workstation nullable:true
-        supplier nullable:true
+        typeName nullable: true       
+        name unique:true, blank: false
+        expectQty min: 0.0d
+        dueDate nullable: true
+        certificateDate nullable: true
+        supplier nullable: true
+        
     }
 
     def getGrailsApplication(){

@@ -1,6 +1,10 @@
 package foodpaint
-
-class BatchRoute {
+/*
+ * 單身
+ */
+class CertificationDocuments{
+    def grailsApplication
+    def messageSource
     String importFlag = -1
 
     /**
@@ -27,38 +31,35 @@ class BatchRoute {
      * 修改日期（自動欄位）
      */
     Date lastUpdated
-
-	static belongsTo=[batch:Batch]
-	Workstation workstation
-    Supplier supplier
-	Operation operation
-	int sequence
+    /**
+     * 單別
+     */
+    String typeName
 
     /**
-     * 開始時間
+     * 單號
      */
-	Date startDate
-
-
+    String name
     /**
-     * 結束時間
+     * 
      */
-	Date endDate
+    int sequence    
+
+    static belongsTo=[certification:Certification]
+
 
     static mapping = {
         importFlag  defaultValue: -1
-    }	 
-
+    }
     static constraints = {
         importFlag nullable:true
+        sequence(unique:['name','typeName','site'])
+        name blank: false
+        typeName blank: false
         site nullable:true
         editor nullable:true
         creator nullable:true
-        sequence(unique:['batch','site'])
-        startDate nullable:true
-        endDate nullable:true
-        workstation nullable:true
-        supplier nullable:true
+        qty min: 0.0d
     }
 
     def getGrailsApplication(){
@@ -68,12 +69,13 @@ class BatchRoute {
     def getMessageSource(){
         return messageSource
     }
-
+    
     public String toString(){
         def i18nType = getGrailsApplication().config.grails.i18nType
-        Object[] args = [BatchRoute]
+        Object[] args = [CertificationDocuments]
         """
-        ${getMessageSource().getMessage("${i18nType}.batchRoute.label", args, Locale.getDefault())}: ${batch.name}/${sequence}
+        ${getMessageSource().getMessage("${i18nType}.certificationDocuments.label", args, Locale.getDefault())}: ${typeName}-${name}-${sequence}
         """
     }
 }
+
