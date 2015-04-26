@@ -1,5 +1,12 @@
-package foodprint
+package foodpaint
+import grails.converters.JSON
+import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 
+//jasperreport sorting list
+import net.sf.jasperreports.engine.JRSortField
+import net.sf.jasperreports.engine.design.JRDesignSortField
+import net.sf.jasperreports.engine.type.SortOrderEnum
+import net.sf.jasperreports.engine.type.SortFieldTypeEnum
 import grails.converters.*
 
 class CertificationTrackController {
@@ -14,326 +21,377 @@ class CertificationTrackController {
         }
         
     }
-    def index = {
 
-        log.info "log.info"
-        log.debug "log.debug"
+   def print(index){  //傳入原物料資料
+        def i18nType = grailsApplication.config.grails.i18nType
+       
+     if(index==3 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "栽培工作紀錄")//報表名稱   
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
 
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return 
-        }
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
 
-        def batch = Batch.findByName(params.name)
-        def product = [:]
-        product.head = [:]
-        product.body = [:]
-        product.title = " 產品說明"
-
-
-        product.head["batch.name"] = batch.name
-        product.head["item.title"] = batch.item.title
-        product.head["item.description"] = batch.item.description
-        product.head["batch.remark"] = batch?.remark
-
-
-        product.body["item.name"] = batch.item.name
-        product.body["batch.manufactureDate"] = g.formatDate(date: batch.manufactureDate, format: 'yyyy.MM.dd')
-        product.body["batch.expirationDate"] = g.formatDate(date: batch.expirationDate, format: 'yyyy.MM.dd')        
-        product.body["item.spec"] = batch.item.spec
-
-        
-        def otherReports=[]
-        def batchReportDets = BatchReportDet.findAllByBatch(batch)
-        def domainReports = batchReportDets.reportParams*.report.unique()
+            //設定準備傳入的資料
+            def reportDataA=[]
+            def reportDataB=[]
+            def reportDataC=[]
+            def reportDataD=[]
+            def reportDataE=[]
+            def reportDataF=[]
+            def reportData=[]
 
 
 
+            def batch = Batch.findByName(params.name)
+            batch.batchRoutes.each(){ batchRoute ->
 
-        domainReports.each(){ report ->
-            def reportMap = [:]
-            reportMap.params=[]
-            reportMap.title = report.title
-            reportMap.reportType = report.reportType
-
-
-            if(reportMap.reportType == ReportType.OTHER){
-                batchReportDets.each(){ batchReportDet ->
-                    if(batchReportDet.reportParams.report == report){
-                        def param = [:]
-
-                        param["param.name"] = batchReportDet.reportParams.param.name
-                        param["param.title"] = batchReportDet.reportParams.param.title
-                        param["param.description"] = batchReportDet.reportParams.param.description
-                        param["batchReportDet.value"] = batchReportDet.value
-
-                        reportMap.params << param
-                    }
-                }
-                otherReports << reportMap 
+                if(batchRoute.id.charAt(5)=="A"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataA = [:]//3
+                dataA.agriculture.operation.type = "種苗與接穗"
+                dataA.agriculture.operation.title = batchRoute?.operation?.title
+                dataA.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataA.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataA.operation.description = batchRoute?.operation?.description
+                reportDataA << dataA    
             }
-
-        }
-
-
-        [batch: batch, product: product,reports: otherReports]
-
-
-
-    }
-
-
-
-
-
-
-    def nutrition = {
-
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return 
-        }
-
-        def batch = Batch.findByName(params.name)
-
-        def batchReportDets = BatchReportDet.findAllByBatch(batch)
-        def domainReports = batchReportDets.reportParams*.report.unique()
-
-        def reportMap = [:]
-
-
-        reportMap.params=[]
-
-        domainReports.each(){ report ->
-            
-            if(report.reportType == ReportType.NUTRITION){
-
-                reportMap.title = report.title
-                reportMap.reportType = report.reportType
-
-                batchReportDets.each(){ batchReportDet ->
-                    if(batchReportDet.reportParams.report == report){
-                        def param = [:]
-
-                        param["param.name"] = batchReportDet.reportParams.param.name
-                        param["param.title"] = batchReportDet.reportParams.param.title
-                        param["param.description"] = batchReportDet.reportParams.param.description
-                        param["param.unit"] = batchReportDet.reportParams.param.unit
-                        param["batchReportDet.value"] = batchReportDet.value
-
-                        reportMap.params << param
-
-                    }
-                }
+                if(batchRoute.id.charAt(5)=="B"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataB = [:]//4
+                dataB.agriculture.operation.type = "農場準備"
+                dataB.agriculture.operation.title = batchRoute?.operation?.title
+                dataB.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataB.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataB.operation.description = batchRoute?.operation?.description
+                reportDataB << dataB             
             }
-        }
-
-        [batch: batch, report: reportMap]
-
-
-
-    }
-
-    def material = {
-
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return
-        }
-
-        def batch = Batch.findByName(params.name)
-        
-
-        def batchSourceReportMap = [:]
-        batchSourceReportMap.title = "原料履歷"
-        batchSourceReportMap.params=[]
-
-
-        def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
-
-        batchFinal.batchChilds.each(){ childBatch ->
-
-            def param = [:]
-            // param["batch.name"] = childBatch.name
-            // param["item.name"] = childBatch.item.name
-            param["item.title"] = childBatch.item.title
-            param["item.spec"] = childBatch.item.spec
-            param["supplier.title"] = childBatch?.supplier?.title
-            param["batch.country"] = childBatch.country
-            param["item.description"] = childBatch.item.description
-            param["default.image"] = "/attachment/show/${childBatch.item.id}?domainName=item&fileType=jpg&site.id=${batch.site?.id}"
-
-            batchSourceReportMap.params << param
-
-        }
-
-        [batch: batch, report: batchSourceReportMap]
-
-    }
-    def cultivate = {
-
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return
-        }
-
-        def batch = Batch.findByName(params.name)
-        
-        def batchRouteReportMap = [:]
-        batchRouteReportMap.title = "栽種履歷"
-
-        batchRouteReportMap.params=[]
-
-
-
-        batch.batchRoutes.each(){ batchRoute ->
-            def param = [:]
-            // param["batchRoute.id"] = batchRoute.id
-            // param["batchRoute.sequence"] = batchRoute.sequence
-
-
-            
-            param["agriculture.operation.title"] = batchRoute?.operation?.title
-
-            param["agriculture.batchRoute.endDate"] = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-
-            param["agriculture.workstation.title"] = batchRoute?.workstation?.title
-            param["operation.description"] = batchRoute?.operation?.description
-
-            param["default.image"] = "/attachment/show/${batchRoute.id}?domainName=batchRoute&fileType=jpg&site.id=${batch.site?.id}"
-
-            batchRouteReportMap.params << param
-
-        }
-
-        [batch: batch, report: batchRouteReportMap]
-
-    }
-    def quality = {
-
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return
-        }
-
-        def batch = Batch.findByName(params.name)
-        
-
-
-        def batchReportDets = BatchReportDet.findAllByBatch(batch)
-        def domainReports = batchReportDets.reportParams*.report.unique()
-
-        def reportMap = [:]
-
-
-        reportMap.params=[]
-
-        domainReports.each(){ report ->
-            
-            if(report.reportType == ReportType.INSPECT){
-
-                reportMap.title = report.title
-                reportMap.reportType = report.reportType
-
-                batchReportDets.each(){ batchReportDet ->
-                    if(batchReportDet.reportParams.report == report){
-                        def param = [:]
-
-                        param["inspect.param.title"] = batchReportDet.reportParams.param.title
-                        param["inspect.batchReportDet.value"] = batchReportDet.value?.toFloat()
-
-                        param["param.upper"] = batchReportDet.reportParams.param.upper?.toFloat()
-
-                        if(param["inspect.batchReportDet.value"] <= param["param.upper"])
-                            param["inspect.qualified"] = true
-                        else param["inspect.qualified"] = false
-
-                        param["inspect.dateCreated"] = batchReportDet.batchRoute.endDate.format('yyyy-MM-dd')
-                        param["inspect.param.unit"] = batchReportDet.reportParams.param.unit
-
-                        reportMap.params << param
-
-                    }
-                }
+                if(batchRoute.id.charAt(5)=="C"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataC = [:]//4
+                dataC.agriculture.operation.type = "定植"
+                dataC.agriculture.operation.title = batchRoute?.operation?.title
+                dataC.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataC.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataC.operation.description = batchRoute?.operation?.description
+                reportDataC << dataC 
             }
+                if(batchRoute.id.charAt(5)=="D"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataD = [:]//10
+                dataD.agriculture.operation.type = "栽培管理"
+                dataD.agriculture.operation.title = batchRoute?.operation?.title
+                dataD.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataD.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataD.operation.description = batchRoute?.operation?.description
+                reportDataD << dataD                
+            }
+                if(batchRoute.id.charAt(5)=="E"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataE = [:]//3
+                dataE.agriculture.operation.type = "其他作業"
+                dataE.agriculture.operation.title = batchRoute?.operation?.title
+                dataE.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataE.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataE.operation.description = batchRoute?.operation?.description
+                reportDataE << dataE                
+            }
+                if(batchRoute.id.charAt(5)=="F"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                def dataF = [:]//10
+                dataF.agriculture.operation.type = "查核"
+                dataF.agriculture.operation.title = batchRoute?.operation?.title
+                dataF.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
+                dataF.agriculture.workstation.title = batchRoute?.workstation?.title
+                dataF.operation.description = batchRoute?.operation?.description
+                reportDataF << dataF
+            }
+            }
+                reportData.add(reportDataA);   //[  [A] ,  [B] ,  [C]  ,  [D]  ,   [E]     ]   排序  (A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                reportData.add(reportDataB);
+                reportData.add(reportDataC);    
+                reportData.add(reportDataD);  
+                reportData.add(reportDataE);  
+                reportData.add(reportDataF);                        
 
-        }
-
-        [batch: batch, report: reportMap]
-
-    }
-
-    def operator = {
-
-        if(!params?.name || params?.name == 'null'){
-            flash.message = "未指定批號！"
-            render (view: 'search')
-            return
-        }
-
-        def batch = Batch.findByName(params.name)
-        
-        def batchRouteReportMap = [:]
-        batchRouteReportMap.title = "農民履歷"//20140720-E64001
-
-        batchRouteReportMap.params=[]
-
-
-
-        def operators = batch.batchRoutes*.operator.unique()
-
-        operators.each{ operator ->
-            if(operator){
-                def param = [:]
+                def reportFile = jasperReportService.printPdf(params, 'BatchRouteRecordSheet.jasper', reportTitle, parameters, reportData)
                 
-                param["default.image"] = "/attachment/show/${operator.id}?domainName=employee&fileType=jpg&site.id=${batch.site.id}"
-                param["agriculture.operator.title"] = operator.title
-                param["agriculture.operator.introduce"] = operator.introduce
-                param["agriculture.operator.experience"] = operator.experience
-                param["agriculture.operator.mainWork"] = operator.mainWork
-                param["agriculture.operator.area"] = operator.area
-                param["agriculture.operator.description"] = operator.description
-                
-
-                batchRouteReportMap.params << param
+                render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf')  
             }
 
+
+
+        if(index==4) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "肥料施用紀錄")//報表名稱
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
+
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
+
+            //設定準備傳入的資料
+            def reportData=[]
+
+
+            def batch = Batch.findByName(params.name)//尋找批號
+            def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
+
+            batchFinal.batchChilds.each(){ childBatch ->
+                def data = [:]
+                if(childBatch.item.name.charAt(1)=="F"  ){//判斷品項編碼,區隔使用資材
+               
+                data.dateCreated=childBatch.item.materialSheet.materialSheetDet.dateCreated
+                data.sequence=childBatch.item.materialSheet.materialSheetDet.item.sequence
+                data.item.name=childBatch.item.materialSheet.materialSheetDet.item.name
+                data.item.title = childBatch.item.materialSheet.materialSheetDet.item.title
+                data.batch.name = childBatch.item.materialSheet.materialSheetDet.item.batch.name
+                data.item.spec = childBatch.item.materialSheet.materialSheetDet.item.spec
+                data.item.unit=childBatch.item.materialSheet.materialSheetDet.item.unit
+                data.qty=childBatch.item.materialSheet.materialSheetDet.item.qty
+                data.remark = childBatch.item.description
+
+                if(childBatch.item.name.substring(1,3)=="01"){//肥料別(01石灰施用 02基肥 03追肥 04次量及微量元素施用)
+                     data.item.type="石灰施用"
+                }
+                if(childBatch.item.name.substring(1,3)=="02"){//肥料別(01石灰施用 02基肥 03追肥 04次量及微量元素施用)
+                     data.item.type="基肥"
+                }
+                if(childBatch.item.name.substring(1,3)=="03"){//肥料別(01石灰施用 02基肥 03追肥 04次量及微量元素施用)
+                     data.item.type="追肥"
+                }
+                if(childBatch.item.name.substring(1,3)=="04"){//肥料別(01石灰施用 02基肥 03追肥 04次量及微量元素施用)
+                     data.item.type="次量及微量元素施用"
+                }
+                }
+            reportData << data
         }
 
-        [batch: batch, report: batchRouteReportMap]
-
-    }
-
-    def search = {
-        render (view: 'search')
-    }    
-
-    def query = {
-
-
-        def batch = Batch.findByName(params.name)
-
-        if(batch) {
-            redirect (uri: '/reports/'+batch.name)
-            return 
-        }else  {
-            if(params.name == "")
-                flash.message = "請輸入批號！"
-            else flash.message = "查無批號！"
-            redirect (uri: '/reports')
+            def reportFile = jasperReportService.printPdf(params, 'FertilizerRecordSheet.jasper', reportTitle, parameters, reportData)
+            
+            render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf') 
+  
         }
-        
+
+
+
+        if(index==5) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "病蟲草害防治施用紀錄")//報表名稱
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
+
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
+
+            //設定準備傳入的資料
+            def reportData=[]
+
+
+            def batch = Batch.findByName(params.name)//尋找批號
+            def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
+
+            batchFinal.batchChilds.each(){ childBatch ->
+                def data = [:]
+                if(childBatch.item.name.charAt(1) =="P"){//判斷品項編碼,區隔使用資材更新:P A030 EC 01
+                    data.dateCreated=childBatch.item.materialSheet.materialSheetDet.dateCreated
+                    data.item.type= childBatch.item.description//防治對象    
+                    data.sequence=childBatch.item.materialSheet.materialSheetDet.item.sequence
+                    data.item.name=childBatch.item.materialSheet.materialSheetDet.item.name
+                    data.item.title = childBatch.item.materialSheet.materialSheetDet.item.title
+                    data.batch.name = childBatch.item.materialSheet.materialSheetDet.item.batch.name
+                    data.item.unit=childBatch.item.materialSheet.materialSheetDet.item.unit                    
+                    data.item.spec = childBatch.item.materialSheet.materialSheetDet.item.spec
+                    data.qty=childBatch.item.materialSheet.materialSheetDet.item.qty
+                    data.remark = childBatch.item.description
+                }
+            reportData << data
+        }
+            def reportFile = jasperReportService.printPdf(params, 'PestRecordSheet.jasper', reportTitle, parameters, reportData)
+            
+            render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf')  
+           }
+
+
+
+
+
+        if(index==9 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "肥料採購紀錄")//報表名稱
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
+
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
+
+            //設定準備傳入的資料
+            def reportData=[]
+
+
+            def batch = Batch.findByName(params.name)//尋找批號
+            def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
+
+            batchFinal.batchChilds.each(){ childBatch ->
+                def data = [:]
+                if(childBatch.item.name.charAt(1)=="F"  ){//判斷品項編碼,區隔使用資材
+               
+                data.dateCreated=childBatch.item.purchaseSheet.purchaseSheetDet.dateCreated
+                data.sequence=childBatch.item.purchaseSheet.purchaseSheetDet.item.sequence
+                data.item.name=childBatch.item.purchaseSheet.purchaseSheetDet.item.name
+                data.item.title = childBatch.item.purchaseSheet.purchaseSheetDet.item.title
+                data.supplier.title=childBatch.item.purchaseSheet.supplier.title
+                data.batch.name = childBatch.item.purchaseSheet.purchaseSheetDet.item.batch.name
+                data.item.unit=childBatch.item.purchaseSheet.purchaseSheetDet.item.unit
+                data.qty=childBatch.item.purchaseSheet.purchaseSheetDet.item.qty
+                data.item.spec = childBatch.item.purchaseSheet.purchaseSheetDet.item.description
+                }
+            reportData << data
+        }
+
+            def reportFile = jasperReportService.printPdf(params, 'MaterialPurchaseRecordSheet.jasper', reportTitle, parameters, reportData)
+            
+            render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf') 
+  
+        }
+
+
+        if(index==10 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "防治資材採購紀錄")//報表名稱
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
+
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
+
+            //設定準備傳入的資料
+            def reportData=[]
+
+
+            def batch = Batch.findByName(params.name)//尋找批號
+            def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
+
+            batchFinal.batchChilds.each(){ childBatch ->
+                def data = [:]
+                if(childBatch.item.name.charAt(1)=="P"  ){//判斷品項編碼,區隔使用資材
+               
+                
+                data.dateCreated=childBatch.item.purchaseSheet.purchaseSheetDet.dateCreated
+                data.sequence=childBatch.item.purchaseSheet.purchaseSheetDet.item.sequence
+                data.item.name=childBatch.item.purchaseSheet.purchaseSheetDet.item.name
+                data.item.title = childBatch.item.purchaseSheet.purchaseSheetDet.item.title
+                data.supplier.title=childBatch.item.purchaseSheet.supplier.title
+                data.batch.name = childBatch.item.purchaseSheet.purchaseSheetDet.item.batch.name
+                data.item.unit=childBatch.item.purchaseSheet.purchaseSheetDet.item.unit
+                data.qty=childBatch.item.purchaseSheet.purchaseSheetDet.item.qty
+                data.item.spec = childBatch.item.purchaseSheet.purchaseSheetDet.item.description
+                }
+            reportData << data
+        }
+
+            def reportFile = jasperReportService.printPdf(params, 'MaterialPurchaseRecordSheet.jasper', reportTitle, parameters, reportData)
+            
+            render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf') 
+  
+        }
+
+
+
+        if(index==11 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
+            def reportTitle = message(code: "其他資材採購紀錄")//報表名稱
+            //報表依指定欄位排序
+            List<JRSortField> sortList = new ArrayList<JRSortField>();
+            JRDesignSortField sortField = new JRDesignSortField();
+            sortField.setName('sequence');
+            sortField.setOrder(SortOrderEnum.ASCENDING);
+            sortField.setType(SortFieldTypeEnum.FIELD);
+            sortList.add(sortField);
+
+            //設定額外傳入參數
+            def parameters=[:]
+            parameters["SORT_FIELDS"]=sortList
+
+            //設定準備傳入的資料
+            def reportData=[]
+
+
+            def batch = Batch.findByName(params.name)//尋找批號
+            def batchFinal=batchAnalyzeService.backwardTraceToFinal(batch)
+
+            batchFinal.batchChilds.each(){ childBatch ->
+                def data = [:]
+                if(childBatch.item.name.charAt(1)=="T"  ){//判斷品項編碼,區隔使用資材
+                 
+                data.dateCreated=childBatch.item.purchaseSheet.purchaseSheetDet.dateCreated
+                data.sequence=childBatch.item.purchaseSheet.purchaseSheetDet.item.sequence
+                data.item.name=childBatch.item.purchaseSheet.purchaseSheetDet.item.name
+                data.item.title = childBatch.item.purchaseSheet.purchaseSheetDet.item.title
+                data.supplier.title=childBatch.item.purchaseSheet.supplier.title
+                data.batch.name = childBatch.item.purchaseSheet.purchaseSheetDet.item.batch.name
+                data.item.unit=childBatch.item.purchaseSheet.purchaseSheetDet.item.unit
+                data.qty=childBatch.item.purchaseSheet.purchaseSheetDet.item.qty
+                data.item.spec = childBatch.item.purchaseSheet.purchaseSheetDet.item.description
+                }
+            reportData << data
+        }
+
+            def reportFile = jasperReportService.printPdf(params, 'MaterialPurchaseRecordSheet.jasper', reportTitle, parameters, reportData)
+            
+            render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf') 
+  
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
-
-    def questionnaire = {
-        redirect(url: "https://docs.google.com/forms/d/1nbMqNMfWWHh6Y2unpzDz5biqqLtRMGFgg9mKuCBwNCA/viewform")
-        
-    }
-
-
 }
