@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MaterialPurchaseRecordSheet" language="groovy" pageWidth="1024" pageHeight="595" orientation="Landscape" columnWidth="984" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98d4bff0-cec8-431a-9581-738b101c67ed">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="550"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="warehouse.title" class="java.lang.String"/>
-	<parameter name="documents.title" class="java.lang.String"/>
+	<parameter name="site.title" class="java.lang.String"/>
+	<parameter name="report.title" class="java.lang.String"/>
 	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/pipi/pipi/projects/foodprint/web-app/images/"]]></defaultValueExpression>
 	</parameter>
@@ -55,7 +55,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="14" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{warehouse.title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{site.title}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement mode="Transparent" x="254" y="24" width="294" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="367970e5-529d-4008-8118-a9a2ffcf2161"/>
@@ -63,7 +63,7 @@
 					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{documents.title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report.title}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="false">
 				<reportElement mode="Transparent" x="61" y="59" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="88cd4c29-7dc7-497b-9a28-d5e26f3f7a19"/>
@@ -141,7 +141,7 @@
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="MSung-Light" pdfEncoding="UniCNS-UCS2-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{item.name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[創毅資訊]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

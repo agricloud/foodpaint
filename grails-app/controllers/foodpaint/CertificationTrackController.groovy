@@ -54,66 +54,66 @@ class CertificationTrackController {
             batch.batchRoutes.each(){ batchRoute ->
 
                 if(batchRoute.id.charAt(5)=="A"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataA = [:]//3
+                def dataA = [:]
                 dataA.agriculture.operation.type = "種苗與接穗"
                 dataA.agriculture.operation.title = batchRoute?.operation?.title
                 dataA.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataA.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataA.operation.description = batchRoute?.operation?.description
                 reportDataA << dataA    
             }
                 if(batchRoute.id.charAt(5)=="B"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataB = [:]//4
+                def dataB = [:]
                 dataB.agriculture.operation.type = "農場準備"
                 dataB.agriculture.operation.title = batchRoute?.operation?.title
                 dataB.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataB.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataB.operation.description = batchRoute?.operation?.description
                 reportDataB << dataB             
             }
                 if(batchRoute.id.charAt(5)=="C"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataC = [:]//4
+                def dataC = [:]
                 dataC.agriculture.operation.type = "定植"
                 dataC.agriculture.operation.title = batchRoute?.operation?.title
                 dataC.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataC.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataC.operation.description = batchRoute?.operation?.description
                 reportDataC << dataC 
             }
                 if(batchRoute.id.charAt(5)=="D"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataD = [:]//10
+                def dataD = [:]
                 dataD.agriculture.operation.type = "栽培管理"
                 dataD.agriculture.operation.title = batchRoute?.operation?.title
                 dataD.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataD.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataD.operation.description = batchRoute?.operation?.description
                 reportDataD << dataD                
             }
                 if(batchRoute.id.charAt(5)=="E"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataE = [:]//3
+                def dataE = [:]
                 dataE.agriculture.operation.type = "其他作業"
                 dataE.agriculture.operation.title = batchRoute?.operation?.title
                 dataE.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataE.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataE.operation.description = batchRoute?.operation?.description
                 reportDataE << dataE                
             }
                 if(batchRoute.id.charAt(5)=="F"  ){//(A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                def dataF = [:]//10
+                def dataF = [:]
                 dataF.agriculture.operation.type = "查核"
                 dataF.agriculture.operation.title = batchRoute?.operation?.title
                 dataF.agriculture.batchRoute.endDate = g.formatDate(date: batchRoute?.startDate, format: 'yyyy.MM.dd')
-                dataF.agriculture.workstation.title = batchRoute?.workstation?.title
                 dataF.operation.description = batchRoute?.operation?.description
                 reportDataF << dataF
             }
             }
-                reportData.add(reportDataA);   //[  [A] ,  [B] ,  [C]  ,  [D]  ,   [E]     ]   排序  (A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                reportData.add(reportDataB);
-                reportData.add(reportDataC);    
-                reportData.add(reportDataD);  
-                reportData.add(reportDataE);  
-                reportData.add(reportDataF);                        
+                if(reportDataA[0]==null  ){}
+                reportData.add(reportDataA);   }//[  [A] ,  [B] ,  [C]  ,  [D]  ,   [E]     ]   排序  (A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                if(reportDataB[0]==null  ){}
+                reportData.add(reportDataB);    }
+                if(reportDataC[0]==null  ){}               
+                reportData.add(reportDataC);    }
+                if(reportDataD[0]==null  ){}                     
+                reportData.add(reportDataD);    }
+                if(reportDataE[0]==null  ){}                     
+                reportData.add(reportDataE);     }
+                if(reportDataF[0]==null  ){}                     
+                reportData.add(reportDataF);     }                   
 
                 def reportFile = jasperReportService.printPdf(params, 'BatchRouteRecordSheet.jasper', reportTitle, parameters, reportData)
                 
