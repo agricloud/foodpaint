@@ -102,18 +102,18 @@ class CertificationTrackController {
                 reportDataF << dataF
             }
             }
-                if(reportDataA[0]==null  ){}
-                reportData.add(reportDataA);   }//[  [A] ,  [B] ,  [C]  ,  [D]  ,   [E]     ]   排序  (A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
-                if(reportDataB[0]==null  ){}
-                reportData.add(reportDataB);    }
-                if(reportDataC[0]==null  ){}               
-                reportData.add(reportDataC);    }
-                if(reportDataD[0]==null  ){}                     
-                reportData.add(reportDataD);    }
-                if(reportDataE[0]==null  ){}                     
-                reportData.add(reportDataE);     }
-                if(reportDataF[0]==null  ){}                     
-                reportData.add(reportDataF);     }                   
+                // if(reportDataA[0]==null  ){}
+                // reportData.add(reportDataA);   }//[  [A] ,  [B] ,  [C]  ,  [D]  ,   [E]     ]   排序  (A種苗與接穗、B農場準備、C定植、D栽培管理、E其他作業、F查核)
+                // if(reportDataB[0]==null  ){}
+                // reportData.add(reportDataB);    }
+                // if(reportDataC[0]==null  ){}               
+                // reportData.add(reportDataC);    }
+                // if(reportDataD[0]==null  ){}                     
+                // reportData.add(reportDataD);    }
+                // if(reportDataE[0]==null  ){}                     
+                // reportData.add(reportDataE);     }
+                // if(reportDataF[0]==null  ){}                     
+                // reportData.add(reportDataF);     }                   
 
                 def reportFile = jasperReportService.printPdf(params, 'BatchRouteRecordSheet.jasper', reportTitle, parameters, reportData)
                 
