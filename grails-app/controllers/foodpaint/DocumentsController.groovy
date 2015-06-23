@@ -39,7 +39,7 @@ class DocumentsController {
 
 
 
- def print(index){  //傳入原物料資料
+ def print(index){  //傳入資料
         def i18nType = grailsApplication.config.grails.i18nType
        
      if(index==3 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
