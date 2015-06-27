@@ -261,9 +261,7 @@ class DocumentsController {
             render (file:reportFile, fileNmae:'${reportTitle}.pdf',contentType:'application/pdf') 
   
                 }
-        }
-
-    
+                  
      if(params.id==3 ) {    //資料    1 基本資料 ; 2 種子(苗)登記表 ;3栽培工作紀錄;4肥料施用紀錄;5病蟲草害防治施用紀錄;6採收記錄;7採收後處理記錄;8出貨紀錄;9肥料資材採購紀錄表;10防治資材採購紀錄表;11其他資材採購紀錄表
             def reportTitle = message(code: "栽培工作紀錄")//報表名稱   
             //報表依指定欄位排序
@@ -366,6 +364,9 @@ class DocumentsController {
 
 
 
+        }
+
+  
 
 
 
